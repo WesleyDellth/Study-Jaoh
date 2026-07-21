@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบทดสอบ — ความรู้เกี่ยวกับผู้ตรวจการแผ่นดิน</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #F7F8FA;
+  --surface: #FFFFFF;
+  --surface-alt: #F0F2F5;
+  --ink: #1A1D23;
+  --ink-soft: #5A5F6B;
+  --ink-muted: #8E939E;
+  --border: #DFE1E6;
+  --primary: #1B56B0;
+  --primary-soft: #E8EFF9;
+  --primary-hover: #154291;
+  --correct: #0E7C3A;
+  --correct-bg: #E6F5EC;
+  --correct-border: #A3D9B5;
+  --wrong: #C4280E;
+  --wrong-bg: #FDE8E4;
+  --wrong-border: #F0ADA0;
+  --warning: #B8600B;
+  --warning-bg: #FFF3E0;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-lg: 0 4px 20px rgba(0,0,0,.08);
+  --font: 'IBM Plex Sans Thai', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+  --transition: 180ms ease;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 20px 16px 80px;
+}
+
+/* ─── START SCREEN ─── */
+.start-screen {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.start-screen .logo {
+  width: 72px; height: 72px;
+  background: var(--primary);
+  border-radius: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.start-screen h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+
+.start-screen .subtitle {
+  color: var(--ink-soft);
+  font-size: 15px;
+  margin-bottom: 36px;
+}
+
+.mode-cards {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mode-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  width: 260px;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: left;
+}
+
+.mode-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.mode-card .mode-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.mode-card h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.mode-card p {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.start-meta {
+  margin-top: 32px;
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+/* ─── HEADER BAR ─── */
+.header-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+
+.header-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-mode {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.header-progress-text {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+}
+
+.header-score {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--correct);
+  font-family: var(--mono);
+}
+
+.progress-bar-track {
+  max-width: 780px;
+  margin: 0 auto;
+  height: 3px;
+  background: var(--surface-alt);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--primary);
+  transition: width 300ms ease;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ─── QUESTION CARD ─── */
+.question-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 28px;
+  margin-top: 24px;
+}
+
+.q-number {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.q-text {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: left;
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+  width: 100%;
+}
+
+.option-btn:hover:not(.disabled) {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.option-btn .opt-letter {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--mono);
+  color: var(--ink-soft);
+  transition: all var(--transition);
+  margin-top: 1px;
+}
+
+.option-btn:hover:not(.disabled) .opt-letter {
+  background: var(--primary);
+  color: #fff;
+}
+
+.option-btn.selected {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.option-btn.selected .opt-letter {
+  background: var(--primary);
+  color: #fff;
+}
+
+.option-btn.correct-answer {
+  border-color: var(--correct-border) !important;
+  background: var(--correct-bg) !important;
+}
+
+.option-btn.correct-answer .opt-letter {
+  background: var(--correct) !important;
+  color: #fff !important;
+}
+
+.option-btn.wrong-answer {
+  border-color: var(--wrong-border) !important;
+  background: var(--wrong-bg) !important;
+}
+
+.option-btn.wrong-answer .opt-letter {
+  background: var(--wrong) !important;
+  color: #fff !important;
+}
+
+.option-btn.disabled {
+  cursor: default;
+  opacity: 0.65;
+}
+
+.option-btn.correct-answer.disabled,
+.option-btn.wrong-answer.disabled {
+  opacity: 1;
+}
+
+/* ─── EXPLANATION ─── */
+.explanation-box {
+  margin-top: 20px;
+  padding: 16px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.7;
+  display: none;
+}
+
+.explanation-box.correct {
+  background: var(--correct-bg);
+  border-left: 4px solid var(--correct);
+  color: #0a5c2b;
+}
+
+.explanation-box.wrong {
+  background: var(--wrong-bg);
+  border-left: 4px solid var(--wrong);
+  color: #8a1e08;
+}
+
+.explanation-box .exp-label {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* ─── NAVIGATION ─── */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  gap: 12px;
+}
+
+.btn {
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--surface-alt);
+  color: var(--ink-soft);
+}
+
+.btn-secondary:hover {
+  background: var(--border);
+  color: var(--ink);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ─── QUESTION NAV GRID ─── */
+.q-nav-toggle {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.q-nav-toggle button {
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+
+.q-nav-toggle button:hover {
+  text-decoration: underline;
+}
+
+.q-nav-grid {
+  display: none;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+  margin-top: 12px;
+  background: var(--surface);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.q-nav-grid.open {
+  display: grid;
+}
+
+.q-nav-cell {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+.q-nav-cell:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.q-nav-cell.current {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.q-nav-cell.answered {
+  background: var(--surface-alt);
+  color: var(--ink);
+}
+
+.q-nav-cell.answered-correct {
+  background: var(--correct-bg);
+  color: var(--correct);
+  border-color: var(--correct-border);
+}
+
+.q-nav-cell.answered-wrong {
+  background: var(--wrong-bg);
+  color: var(--wrong);
+  border-color: var(--wrong-border);
+}
+
+/* ─── RESULTS SCREEN ─── */
+.results-screen {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.results-badge {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.results-badge.pass {
+  background: var(--correct-bg);
+  border: 3px solid var(--correct);
+}
+
+.results-badge.fail {
+  background: var(--wrong-bg);
+  border: 3px solid var(--wrong);
+}
+
+.results-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.results-verdict {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 4px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.results-verdict.pass {
+  background: var(--correct-bg);
+  color: var(--correct);
+}
+
+.results-verdict.fail {
+  background: var(--wrong-bg);
+  color: var(--wrong);
+}
+
+.results-score-big {
+  font-size: 56px;
+  font-weight: 700;
+  font-family: var(--mono);
+  margin-bottom: 4px;
+}
+
+.results-score-big.pass { color: var(--correct); }
+.results-score-big.fail { color: var(--wrong); }
+
+.results-detail {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+}
+
+.results-stats {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 16px 24px;
+  box-shadow: var(--shadow);
+  min-width: 120px;
+}
+
+.stat-card .stat-num {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.stat-card .stat-label {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+.stat-card.green .stat-num { color: var(--correct); }
+.stat-card.red .stat-num { color: var(--wrong); }
+.stat-card.gray .stat-num { color: var(--ink-soft); }
+
+.results-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+/* ─── REVIEW SECTION ─── */
+.review-section {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.review-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+.review-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 16px;
+  border-left: 4px solid var(--wrong);
+}
+
+.review-card .review-q-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+
+.review-card .review-q-text {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.review-answer {
+  font-size: 14px;
+  padding: 6px 0;
+  line-height: 1.5;
+}
+
+.review-answer.your-answer {
+  color: var(--wrong);
+}
+
+.review-answer.correct-ans {
+  color: var(--correct);
+  font-weight: 600;
+}
+
+.review-explanation {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  padding: 10px 14px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-sm);
+  line-height: 1.6;
+}
+
+/* ─── UTILITIES ─── */
+.hidden { display: none !important; }
+
+.timer-display {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 600px) {
+  .container { padding: 12px 12px 60px; }
+  .question-card { padding: 20px 16px; }
+  .q-text { font-size: 15px; }
+  .option-btn { padding: 12px 14px; font-size: 14px; }
+  .q-nav-grid { grid-template-columns: repeat(10, 1fr); gap: 4px; padding: 12px; }
+  .q-nav-cell { font-size: 10px; }
+  .mode-card { width: 100%; }
+  .results-score-big { font-size: 44px; }
+  .start-screen { padding: 40px 12px; }
+  .start-screen h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ START SCREEN ═══ -->
+<div id="startScreen" class="container start-screen">
+  <div class="logo">ผ</div>
+  <h1>แบบทดสอบความรู้เกี่ยวกับผู้ตรวจการแผ่นดิน</h1>
+  <p class="subtitle">ข้อสอบปรนัย 100 ข้อ — รัฐธรรมนูญ 2560 มาตรา 230 / พ.ร.ป. ผู้ตรวจการแผ่นดิน / แผนยุทธศาสตร์</p>
+  <div class="mode-cards">
+    <div class="mode-card" onclick="startQuiz('practice')">
+      <div class="mode-icon">📖</div>
+      <h3>Practice Mode</h3>
+      <p>เฉลยทันทีหลังตอบทุกข้อ พร้อมคำอธิบาย เหมาะสำหรับทบทวนก่อนสอบ</p>
+    </div>
+    <div class="mode-card" onclick="startQuiz('exam')">
+      <div class="mode-icon">📝</div>
+      <h3>Exam Mode</h3>
+      <p>เฉลยเมื่อทำข้อสอบเสร็จทั้งหมด จับเวลา 100 นาที เกณฑ์ผ่าน 70%</p>
+    </div>
+  </div>
+  <p class="start-meta">เกณฑ์ผ่าน 70 ข้อจาก 100 ข้อ (70%)</p>
+</div>
+
+<!-- ═══ HEADER BAR ═══ -->
+<div id="headerBar" class="header-bar hidden">
+  <div class="header-inner">
+    <div class="header-left">
+      <span id="headerMode" class="header-mode">PRACTICE</span>
+      <span id="headerProgress" class="header-progress-text">1 / 100</span>
+    </div>
+    <div class="header-left">
+      <span id="timerDisplay" class="timer-display hidden">⏱ <span id="timerText">100:00</span></span>
+      <span id="headerScore" class="header-score"></span>
+    </div>
+  </div>
+  <div class="progress-bar-track">
+    <div id="progressFill" class="progress-bar-fill" style="width:0%"></div>
+  </div>
+</div>
+
+<!-- ═══ QUIZ AREA ═══ -->
+<div id="quizArea" class="container hidden">
+  <div class="question-card">
+    <div id="qNumber" class="q-number"></div>
+    <div id="qText" class="q-text"></div>
+    <div id="optionsList" class="options-list"></div>
+    <div id="explanationBox" class="explanation-box"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button id="prevBtn" class="btn btn-secondary" onclick="navigate(-1)">← ก่อนหน้า</button>
+    <button id="nextBtn" class="btn btn-primary" onclick="navigate(1)">ถัดไป →</button>
+    <button id="submitBtn" class="btn btn-primary hidden" onclick="finishExam()">ส่งคำตอบ ✓</button>
+  </div>
+
+  <div class="q-nav-toggle">
+    <button onclick="toggleNav()">📋 เลือกข้อ</button>
+  </div>
+  <div id="qNavGrid" class="q-nav-grid"></div>
+</div>
+
+<!-- ═══ RESULTS SCREEN ═══ -->
+<div id="resultsScreen" class="results-screen container hidden">
+</div>
+
+<!-- ═══ QUESTIONS DATA ═══ -->
+<script>
+const quizQuestions = [
+  {
+    id: 1,
+    question: "ตามรัฐธรรมนูญแห่งราชอาณาจักรไทย พุทธศักราช 2560 มาตรา 230 ข้อใดคือหน้าที่และอำนาจประการแรกของผู้ตรวจการแผ่นดิน",
+    options: [
+      "แสวงหาข้อเท็จจริงเมื่อเห็นว่ามีผู้ได้รับความเดือดร้อน",
+      "เสนอแนะต่อหน่วยงานของรัฐเพื่อให้มีการปรับปรุงกฎหมาย กฎ ข้อบังคับ ระเบียบ หรือคำสั่ง",
+      "เสนอต่อคณะรัฐมนตรีให้ทราบถึงการที่หน่วยงานของรัฐยังมิได้ปฏิบัติให้ถูกต้อง",
+      "ส่งเรื่องให้คณะกรรมการสิทธิมนุษยชนแห่งชาติดำเนินการต่อไป"
+    ],
+    correct: 1,
+    explanation: "ตามรัฐธรรมนูญ มาตรา 230 (1) ระบุหน้าที่และอำนาจประการแรกคือการเสนอแนะต่อหน่วยงานของรัฐที่เกี่ยวข้องเพื่อให้มีการปรับปรุงกฎหมาย กฎ ข้อบังคับ ระเบียบ หรือคำสั่ง"
+  },
+  {
+    id: 2,
+    question: "หากหน่วยงานของรัฐยังมิได้ปฏิบัติให้ถูกต้องครบถ้วนตามหมวด 5 หน้าที่ของรัฐ ผู้ตรวจการแผ่นดินต้องเสนอต่อใคร",
+    options: [
+      "นายกรัฐมนตรี",
+      "รัฐสภา",
+      "คณะรัฐมนตรี",
+      "ศาลรัฐธรรมนูญ"
+    ],
+    correct: 2,
+    explanation: "มาตรา 230 (3) กำหนดให้ผู้ตรวจการแผ่นดินมีหน้าที่เสนอต่อคณะรัฐมนตรีให้ทราบถึงการที่หน่วยงานของรัฐยังมิได้ปฏิบัติให้ถูกต้องครบถ้วน ตามหมวด 5 หน้าที่ของรัฐ"
+  },
+  {
+    id: 3,
+    question: "ในกรณีที่หน่วยงานของรัฐไม่ดำเนินการตามข้อเสนอแนะของผู้ตรวจการแผ่นดินโดยไม่มีเหตุผลอันสมควร ผู้ตรวจการแผ่นดินต้องแจ้งให้ใครทราบเพื่อพิจารณาสั่งการ",
+    options: [
+      "คณะรัฐมนตรี",
+      "ประธานรัฐสภา",
+      "ศาลปกครองสูงสุด",
+      "ประธานศาลรัฐธรรมนูญ"
+    ],
+    correct: 0,
+    explanation: "มาตรา 230 (4) ระบุว่าให้ผู้ตรวจการแผ่นดินแจ้งให้คณะรัฐมนตรีทราบเพื่อพิจารณาสั่งการตามที่เห็นสมควรต่อไป"
+  },
+  {
+    id: 4,
+    question: "หากการดำเนินการตรวจสอบแสวงหาข้อเท็จจริงเป็นกรณีที่เกี่ยวกับการละเมิดสิทธิมนุษยชน ผู้ตรวจการแผ่นดินต้องส่งเรื่องให้หน่วยงานใดดำเนินการต่อไป",
+    options: [
+      "ศาลรัฐธรรมนูญ",
+      "คณะกรรมการสิทธิมนุษยชนแห่งชาติ",
+      "คณะกรรมการป้องกันและปราบปรามการทุจริตแห่งชาติ",
+      "สำนักงานอัยการสูงสุด"
+    ],
+    correct: 1,
+    explanation: "มาตรา 230 (5) ระบุว่าให้ผู้ตรวจการแผ่นดินส่งเรื่องให้คณะกรรมการสิทธิมนุษยชนแห่งชาติดำเนินการต่อไป"
+  },
+  {
+    id: 5,
+    question: "เมื่อผู้ตรวจการแผ่นดินเห็นว่าบทบัญญัติแห่งกฎหมายใดมีปัญหาเกี่ยวกับความชอบด้วยรัฐธรรมนูญ จะต้องเสนอเรื่องพร้อมด้วยความเห็นต่อหน่วยงานใด",
+    options: [
+      "ศาลปกครอง",
+      "ศาลรัฐธรรมนูญ",
+      "คณะรัฐมนตรี",
+      "สภาผู้แทนราษฎร"
+    ],
+    correct: 1,
+    explanation: "ตามรัฐธรรมนูญกำหนดไว้ว่าเมื่อเห็นว่าบทบัญญัติแห่งกฎหมายใดมีปัญหาเกี่ยวกับความชอบด้วยรัฐธรรมนูญ ให้เสนอเรื่องพร้อมด้วยความเห็นต่อศาลรัฐธรรมนูญ"
+  },
+  {
+    id: 6,
+    question: "เมื่อกฎ คำสั่ง หรือการกระทำอื่นใดของหน่วยงานของรัฐ มีปัญหาเกี่ยวกับความชอบด้วยรัฐธรรมนูญหรือกฎหมาย ผู้ตรวจการแผ่นดินต้องเสนอเรื่องต่อศาลใด",
+    options: [
+      "ศาลรัฐธรรมนูญ",
+      "ศาลปกครอง",
+      "ศาลฎีกา",
+      "ศาลยุติธรรม"
+    ],
+    correct: 1,
+    explanation: "หากกฎ คำสั่ง หรือการกระทำอื่นใดของหน่วยงานของรัฐ มีปัญหาเกี่ยวกับความชอบด้วยรัฐธรรมนูญหรือกฎหมาย ให้เสนอเรื่องพร้อมด้วยความเห็นต่อศาลปกครอง"
+  },
+  {
+    id: 7,
+    question: "ตามพระราชบัญญัติประกอบรัฐธรรมนูญว่าด้วยผู้ตรวจการแผ่นดิน พ.ศ. 2560 มาตรา 41 ข้อใดคือหน้าที่และอำนาจของสำนักงานผู้ตรวจการแผ่นดิน",
+    options: [
+      "วินิจฉัยความชอบด้วยรัฐธรรมนูญของกฎหมาย",
+      "รับผิดชอบงานธุรการและดำเนินการเพื่อให้ผู้ตรวจการแผ่นดินบรรลุภารกิจ",
+      "สั่งการให้คณะรัฐมนตรีปรับปรุงกฎหมาย",
+      "พิจารณาวินิจฉัยข้อร้องเรียนแทนผู้ตรวจการแผ่นดิน"
+    ],
+    correct: 1,
+    explanation: "มาตรา 41 (1) กำหนดให้สำนักงานมีหน้าที่รับผิดชอบงานธุรการและดำเนินการเพื่อให้ผู้ตรวจการแผ่นดินบรรลุภารกิจและหน้าที่"
+  },
+  {
+    id: 8,
+    question: "ใครคือผู้ดำรงตำแหน่งประธานผู้ตรวจการแผ่นดินตามภาพและข้อมูลในเอกสาร",
+    options: [
+      "นายทรงศัก สายเชื้อ",
+      "พล.ต.อ.สรายุทธ สงวนโภคัย",
+      "นายสุจินต์ ไชยชุมศักดิ์",
+      "นายทรงศักดิ์ สายแก้ว"
+    ],
+    correct: 0,
+    explanation: "จากภาพถ่ายและข้อความบรรยายใต้ภาพในเอกสารระบุชัดเจนว่า นายทรงศัก สายเชื้อ ดำรงตำแหน่งประธานผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 9,
+    question: "พล.ต.อ.สรายุทธ สงวนโภคัย ดำรงตำแหน่งใดในองค์กรผู้ตรวจการแผ่นดิน",
+    options: [
+      "ประธานผู้ตรวจการแผ่นดิน",
+      "เลขาธิการสำนักงานผู้ตรวจการแผ่นดิน",
+      "ผู้ตรวจการแผ่นดิน",
+      "รองเลขาธิการสำนักงานผู้ตรวจการแผ่นดิน"
+    ],
+    correct: 2,
+    explanation: "จากภาพถ่ายและข้อความบรรยายใต้ภาพระบุว่า พล.ต.อ.สรายุทธ สงวนโภคัย ดำรงตำแหน่งผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 10,
+    question: "นายสุจินต์ ไชยชุมศักดิ์ ดำรงตำแหน่งใดในองค์กร",
+    options: [
+      "ประธานผู้ตรวจการแผ่นดิน",
+      "ผู้ตรวจการแผ่นดิน",
+      "เลขาธิการสำนักงานผู้ตรวจการแผ่นดิน",
+      "ที่ปรึกษาผู้ตรวจการแผ่นดิน"
+    ],
+    correct: 1,
+    explanation: "จากภาพถ่ายและข้อความบรรยายใต้ภาพระบุว่า นายสุจินต์ ไชยชุมศักดิ์ ดำรงตำแหน่งผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 11,
+    question: "ข้อใดคือวิสัยทัศน์ (Vision) ของผู้ตรวจการแผ่นดิน",
+    options: [
+      "ตรวจสอบการใช้อำนาจรัฐเพื่อให้เกิดความเป็นธรรมที่ยั่งยืน",
+      "ผู้ตรวจการแผ่นดินเป็นองค์กรหลักในการทำงานเชิงรุก ที่มุ่งแก้ไขปัญหาความเดือดร้อน หรือความไม่เป็นธรรมของประชาชนที่เกิดจากการปฏิบัติหน้าที่ของหน่วยงานรัฐ หรือเจ้าหน้าที่ของรัฐ",
+      "ศึกษา รวบรวม วิเคราะห์ข้อมูล และสนับสนุนให้มีการวิจัยเกี่ยวกับการทำงาน",
+      "ประชาชนมีทัศนคติและพฤติกรรมในการต่อต้านการทุจริตและประพฤติมิชอบ"
+    ],
+    correct: 1,
+    explanation: "ข้อความดังกล่าวระบุไว้ตรงส่วนของ วิสัยทัศน์ (Vision) ในเอกสารอย่างชัดเจน"
+  },
+  {
+    id: 12,
+    question: "ข้อใดคือพันธกิจ (Mission) ของผู้ตรวจการแผ่นดิน",
+    options: [
+      "ประเทศไทยปลอดการทุจริตและประพฤติมิชอบ",
+      "ภาครัฐมีขีดสมรรถนะสูง เทียบเท่ามาตรฐานสากล",
+      "ตรวจสอบการใช้อำนาจรัฐเพื่อให้เกิดความเป็นธรรมที่ยั่งยืน",
+      "บริการภาครัฐมีประสิทธิภาพเพิ่มขึ้นและมีคุณภาพเป็นที่ยอมรับ"
+    ],
+    correct: 2,
+    explanation: "ในส่วน พันธกิจ (Mission) ระบุข้อความหลักไว้คือ \"ตรวจสอบการใช้อำนาจรัฐเพื่อให้เกิดความเป็นธรรมที่ยั่งยืน\""
+  },
+  {
+    id: 13,
+    question: "พันธกิจข้อใดของผู้ตรวจการแผ่นดินที่เกี่ยวข้องโดยตรงกับรัฐธรรมนูญหมวด 5",
+    options: [
+      "การแสวงหาข้อเท็จจริงเพื่อแก้ไขความเดือดร้อนของประชาชนอย่างเป็นธรรม",
+      "การเสนอแนะต่อหน่วยงานของรัฐเพื่อปรับปรุง แก้ไขกฎหมายที่ก่อให้เกิดความเดือดร้อน",
+      "รายงานการปฏิบัติตามรัฐธรรมนูญหมวด 5 หน้าที่ของรัฐ",
+      "การดำเนินการตามหน้าที่และอำนาจอื่นตามที่กำหนดไว้ในกฎหมายอื่น"
+    ],
+    correct: 2,
+    explanation: "พันธกิจข้อที่ 3 ระบุไว้ชัดเจนว่า \"รายงานการปฏิบัติตามรัฐธรรมนูญหมวด 5 หน้าที่ของรัฐ\""
+  },
+  {
+    id: 14,
+    question: "ยุทธศาสตร์ชาติยุทธศาสตร์ที่ 6 ที่เชื่อมโยงกับภารกิจของสำนักงานผู้ตรวจการแผ่นดินคือด้านใด",
+    options: [
+      "ด้านความมั่นคง",
+      "ด้านการสร้างความสามารถในการแข่งขัน",
+      "ด้านการปรับสมดุลและพัฒนาระบบบริหารจัดการภาครัฐ",
+      "ด้านการพัฒนาและเสริมสร้างศักยภาพทรัพยากรมนุษย์"
+    ],
+    correct: 2,
+    explanation: "ในตารางความเชื่อมโยงภารกิจระบุว่า ยุทธศาสตร์ที่ 6 คือด้านการปรับสมดุลและพัฒนาระบบบริหารจัดการภาครัฐ"
+  },
+  {
+    id: 15,
+    question: "แผนแม่บทประเด็นที่ 20 เกี่ยวข้องกับเรื่องใด",
+    options: [
+      "กฎหมายและกระบวนการยุติธรรม",
+      "การบริการประชาชนและประสิทธิภาพภาครัฐ",
+      "การต่อต้านการทุจริตและประพฤติมิชอบ",
+      "การพัฒนาเศรษฐกิจดิจิทัล"
+    ],
+    correct: 1,
+    explanation: "ในตารางแผนระดับที่ 2 ระบุประเด็นที่ (20) การบริการประชาชนและประสิทธิภาพภาครัฐ"
+  },
+  {
+    id: 16,
+    question: "แผนย่อยที่ 4 ภายใต้แผนแม่บทประเด็นที่ 20 มุ่งเน้นเรื่องใด",
+    options: [
+      "การพัฒนากฎหมาย",
+      "การพัฒนากระบวนการยุติธรรม",
+      "การพัฒนาระบบบริหารงานภาครัฐ",
+      "การป้องกันการทุจริตและประพฤติมิชอบ"
+    ],
+    correct: 2,
+    explanation: "ภายใต้ประเด็นที่ 20 แผนย่อยที่ 4 คือการพัฒนาระบบบริหารงานภาครัฐ"
+  },
+  {
+    id: 17,
+    question: "ตัวชี้วัดของแผนแม่บทประเด็นที่ 20 คืออะไร",
+    options: [
+      "ระดับความพึงพอใจในคุณภาพการให้บริการของภาครัฐ",
+      "คะแนนเฉลี่ย 5 ปัจจัยของดัชนีนิติธรรม",
+      "ดัชนีการรับรู้การทุจริตของประเทศไทย",
+      "ร้อยละความสำเร็จในการเบิกจ่ายงบประมาณ"
+    ],
+    correct: 0,
+    explanation: "ตัวชี้วัดของเป้าหมายประเด็นที่ 20 คือ \"ระดับความพึงพอใจในคุณภาพการให้บริการของภาครัฐ\""
+  },
+  {
+    id: 18,
+    question: "แผนแม่บทประเด็นที่ 22 คือเรื่องใด",
+    options: [
+      "การต่อต้านการทุจริตและประพฤติมิชอบ",
+      "กฎหมายและกระบวนการยุติธรรม",
+      "การบริการประชาชนและประสิทธิภาพภาครัฐ",
+      "โครงสร้างพื้นฐานดิจิทัล"
+    ],
+    correct: 1,
+    explanation: "ในตารางแผนระดับที่ 2 ระบุประเด็นที่ (22) กฎหมายและกระบวนการยุติธรรม"
+  },
+  {
+    id: 19,
+    question: "ตัวชี้วัดคะแนนเฉลี่ย 5 ปัจจัยของดัชนีนิติธรรม ในแผนย่อยการพัฒนากฎหมาย ไม่ได้รวมปัจจัยในข้อใด",
+    options: [
+      "การจำกัดอำนาจรัฐ",
+      "ปราศจากการคอรัปชั่น",
+      "รัฐบาลโปร่งใส",
+      "กระบวนการยุติธรรมทางอาญา"
+    ],
+    correct: 3,
+    explanation: "5 ปัจจัย ได้แก่ 1.การจำกัดอำนาจรัฐ 2.ปราศจากการคอรัปชั่น 3.รัฐบาลโปร่งใส 4.สิทธิขั้นพื้นฐาน 5.ความเป็นระเบียบและความมั่นคง ส่วนกระบวนการยุติธรรมทางอาญาอยู่ในแผนย่อยที่ 2"
+  },
+  {
+    id: 20,
+    question: "คะแนนเฉลี่ย 3 ปัจจัยของดัชนีนิติธรรม ได้แก่ การบังคับใช้กฎหมาย กระบวนการยุติธรรมทางแพ่ง และกระบวนการยุติธรรมทางอาญา เป็นตัวชี้วัดของแผนย่อยใด",
+    options: [
+      "แผนย่อยที่ 1 การพัฒนากฎหมาย",
+      "แผนย่อยที่ 2 การพัฒนากระบวนการยุติธรรม",
+      "แผนย่อยที่ 4 การพัฒนาระบบบริหารงานภาครัฐ",
+      "แผนย่อยที่ 1 การป้องกันการทุจริตและประพฤติมิชอบ"
+    ],
+    correct: 1,
+    explanation: "คะแนนเฉลี่ย 3 ปัจจัยเป็นตัวชี้วัดภายใต้แผนย่อยที่ 2 การพัฒนากระบวนการยุติธรรม"
+  },
+  {
+    id: 21,
+    question: "แผนแม่บทประเด็นที่ 21 คือเรื่องใด",
+    options: [
+      "การบริการประชาชนและประสิทธิภาพภาครัฐ",
+      "กฎหมายและกระบวนการยุติธรรม",
+      "การต่อต้านการทุจริตและประพฤติมิชอบ",
+      "การพัฒนาเศรษฐกิจดิจิทัล"
+    ],
+    correct: 2,
+    explanation: "ในตารางแผนระดับที่ 2 ระบุประเด็นที่ (21) การต่อต้านการทุจริตและประพฤติมิชอบ"
+  },
+  {
+    id: 22,
+    question: "แผนแม่บทประเด็นที่ 21 ใช้ตัวชี้วัดใดในการประเมินเป้าหมายประเทศไทยปลอดการทุจริต",
+    options: [
+      "ระดับความพึงพอใจในคุณภาพการให้บริการของภาครัฐ",
+      "ดัชนีการรับรู้การทุจริตของประเทศไทย (อันดับ / คะแนน)",
+      "คะแนนเฉลี่ย 5 ปัจจัยของดัชนีนิติธรรม",
+      "ร้อยละของผู้มีส่วนได้ส่วนเสียมีความเชื่อมั่น"
+    ],
+    correct: 1,
+    explanation: "ตัวชี้วัดของเป้าหมายประเทศไทยปลอดการทุจริตคือ ดัชนีการรับรู้การทุจริตของประเทศไทย (อันดับ / คะแนน)"
+  },
+  {
+    id: 23,
+    question: "หมุดหมายใดในแผนพัฒนาเศรษฐกิจและสังคมแห่งชาติ ฉบับที่ 13 ที่เชื่อมโยงกับภารกิจของสำนักงานผู้ตรวจการแผ่นดิน",
+    options: [
+      "หมุดหมายที่ 10 ไทยมีภาครัฐที่ทันสมัย",
+      "หมุดหมายที่ 11 ไทยมีกระบวนการยุติธรรมที่โปร่งใส",
+      "หมุดหมายที่ 12 ไทยปลอดการทุจริต",
+      "หมุดหมายที่ 13 ไทยมีภาครัฐที่ทันสมัย มีประสิทธิภาพ และตอบโจทย์ประชาชน"
+    ],
+    correct: 3,
+    explanation: "ในแผนระดับที่ 2 ระบุข้อความเชื่อมโยงคือ หมุดหมายที่ 13 ไทยมีภาครัฐที่ทันสมัย มีประสิทธิภาพ และตอบโจทย์ประชาชน"
+  },
+  {
+    id: 24,
+    question: "ยุทธศาสตร์ที่ 4 ของแผนพัฒนาเศรษฐกิจดิจิทัลฯ ระยะ 20 ปี (2561-2580) มุ่งเน้นเรื่องใด",
+    options: [
+      "การพัฒนาโครงสร้างพื้นฐานดิจิทัลประสิทธิภาพสูง",
+      "การปรับเปลี่ยนภาครัฐเป็นรัฐบาลดิจิทัล",
+      "การพัฒนากำลังคนให้พร้อมเข้าสู่เศรษฐกิจดิจิทัล",
+      "สร้างความเชื่อมั่นในการใช้เทคโนโลยีดิจิทัล"
+    ],
+    correct: 1,
+    explanation: "ยุทธศาสตร์ที่ 4 ของแผนพัฒนาเศรษฐกิจดิจิทัลฯ ระยะ 20 ปี คือ การปรับเปลี่ยนภาครัฐเป็นรัฐบาลดิจิทัล"
+  },
+  {
+    id: 25,
+    question: "แผนพัฒนารัฐบาลดิจิทัลของประเทศไทย (2566-2570) ยุทธศาสตร์ที่ 2 มุ่งเน้นเรื่องใด",
+    options: [
+      "ยกระดับการเปลี่ยนผ่านดิจิทัลภาครัฐ",
+      "พัฒนาบริการที่สะดวกและเข้าถึงง่าย",
+      "ส่งเสริมการมีส่วนร่วมของประชาชน และเปิดเผยข้อมูลเปิดภาครัฐ",
+      "พัฒนากำลังคนภาครัฐ"
+    ],
+    correct: 1,
+    explanation: "ยุทธศาสตร์ที่ 2 คือพัฒนาบริการที่สะดวกและเข้าถึงง่าย"
+  },
+  {
+    id: 26,
+    question: "ข้อใดไม่ใช่แผนงานตามยุทธศาสตร์การจัดสรรงบประมาณที่สำนักงานผู้ตรวจการแผ่นดินเกี่ยวข้อง",
+    options: [
+      "แผนงานบุคลากรภาครัฐ",
+      "แผนงานพื้นฐาน ด้านการปรับสมดุลและพัฒนาระบบบริหารจัดการภาครัฐ",
+      "แผนงานยุทธศาสตร์พัฒนากฎหมายและกระบวนการยุติธรรม",
+      "แผนงานบูรณาการพัฒนาโครงสร้างพื้นฐานดิจิทัล"
+    ],
+    correct: 3,
+    explanation: "ไม่มีแผนงานบูรณาการพัฒนาโครงสร้างพื้นฐานดิจิทัลในแผนงานที่สำนักงานผู้ตรวจการแผ่นดินเกี่ยวข้อง"
+  },
+  {
+    id: 27,
+    question: "ตัวชี้วัดผลสัมฤทธิ์ของหน่วยงาน (สำนักงานผู้ตรวจการแผ่นดิน) ในแผนระดับที่ 2 มีกี่ตัวชี้วัด",
+    options: ["1 ตัวชี้วัด", "2 ตัวชี้วัด", "3 ตัวชี้วัด", "4 ตัวชี้วัด"],
+    correct: 1,
+    explanation: "มี 2 ตัวชี้วัด คือ 1.ร้อยละความสำเร็จในการแก้ไขความเดือดร้อนฯ 2.ร้อยละของประชาชนมีความเชื่อมั่นต่อองค์กรฯ"
+  },
+  {
+    id: 28,
+    question: "ข้อใดคือตัวชี้วัดองค์กรที่ 1 ของแผนยุทธศาสตร์สำนักงานผู้ตรวจการแผ่นดิน ฉบับที่ 5 (พ.ศ. 2566-2570)",
+    options: [
+      "ร้อยละของผู้มีส่วนได้ส่วนเสียมีความเชื่อมั่นต่อองค์กรผู้ตรวจการแผ่นดิน",
+      "ร้อยละความสำเร็จในการแก้ไขความเดือดร้อนหรือความไม่เป็นธรรมของประชาชนของผู้ตรวจการแผ่นดิน",
+      "ร้อยละของประชาชนที่รู้จักบทบาทภารกิจของผู้ตรวจการแผ่นดิน",
+      "ร้อยละความสำเร็จในการเบิกจ่ายงบประมาณของสำนักงานผู้ตรวจการแผ่นดิน"
+    ],
+    correct: 1,
+    explanation: "ตัวชี้วัดองค์กรที่ 1 คือ ร้อยละความสำเร็จในการแก้ไขความเดือดร้อนหรือความไม่เป็นธรรมของประชาชนของผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 29,
+    question: "แผนยุทธศาสตร์สำนักงานผู้ตรวจการแผ่นดิน ฉบับที่ 5 (พ.ศ. 2566-2570) มีประเด็นยุทธศาสตร์ทั้งหมดกี่ประเด็น",
+    options: ["3 ประเด็นยุทธศาสตร์", "4 ประเด็นยุทธศาสตร์", "5 ประเด็นยุทธศาสตร์", "6 ประเด็นยุทธศาสตร์"],
+    correct: 2,
+    explanation: "แผนภาพแสดงกล่องข้อความยุทธศาสตร์เรียงกันทั้งหมด 5 ยุทธศาสตร์ (ยุทธศาสตร์ที่ 1 ถึง 5)"
+  },
+  {
+    id: 30,
+    question: "ยุทธศาสตร์ที่ 1 ของแผนยุทธศาสตร์สำนักงานผู้ตรวจการแผ่นดิน ฉบับที่ 5 มุ่งเน้นเรื่องใด",
+    options: [
+      "การเสนอแนะการปรับปรุงแก้ไขกฎหมาย กฎ ระเบียบที่ล้าสมัย",
+      "การรายงานการปฏิบัติหน้าที่ของรัฐตามหมวด 5",
+      "ยกระดับประสิทธิภาพการปฏิบัติงานของสำนักงานผู้ตรวจการแผ่นดินในการแก้ไขความเดือดร้อนหรือความไม่เป็นธรรมของประชาชน",
+      "เสริมสร้างการสื่อสารประชาสัมพันธ์และการขับเคลื่อนงานด้านเครือข่าย"
+    ],
+    correct: 2,
+    explanation: "ยุทธศาสตร์ที่ 1 คือ ยกระดับประสิทธิภาพการปฏิบัติงานของสำนักงานผู้ตรวจการแผ่นดินในการแก้ไขความเดือดร้อนหรือความไม่เป็นธรรมของประชาชน"
+  },
+  {
+    id: 31,
+    question: "ตัวชี้วัดระดับยุทธศาสตร์ของยุทธศาสตร์ที่ 1 คือข้อใด",
+    options: [
+      "ความพึงพอใจของผู้ร้องเรียนต่อกระบวนการตรวจสอบและแสวงหาข้อเท็จจริงของผู้ตรวจการแผ่นดิน",
+      "ระดับความคิดเห็นของผู้มีส่วนได้ส่วนเสียที่ได้รับประโยชน์จากข้อเสนอแนะ",
+      "ร้อยละของความสำเร็จในการดำเนินการตรวจสอบการปฏิบัติหน้าที่ของรัฐตามหมวด 5",
+      "ร้อยละของประชาชนที่รู้จักบทบาทภารกิจของผู้ตรวจการแผ่นดิน"
+    ],
+    correct: 0,
+    explanation: "ตัวชี้วัดระดับยุทธศาสตร์ของยุทธศาสตร์ที่ 1 คือ ความพึงพอใจของผู้ร้องเรียนต่อกระบวนการตรวจสอบและแสวงหาข้อเท็จจริง"
+  },
+  {
+    id: 32,
+    question: "เป้าประสงค์ของยุทธศาสตร์ที่ 3 กำหนดให้รัฐต้องดำเนินการโดยประชาชนมีลักษณะอย่างไร",
+    options: [
+      "ต้องยื่นคำร้องต่อผู้ตรวจการแผ่นดินเท่านั้น",
+      "ต้องผ่านการเห็นชอบจากสภาก่อน",
+      "\"ไม่ต้องใช้สิทธิร้องขอ\"",
+      "ต้องชำระค่าธรรมเนียมตามกฎหมาย"
+    ],
+    correct: 2,
+    explanation: "ในเป้าประสงค์ของยุทธศาสตร์ที่ 3 ระบุว่า ประชาชน \"ไม่ต้องใช้สิทธิร้องขอ\""
+  },
+  {
+    id: 33,
+    question: "ยุทธศาสตร์ที่ 4 กำหนดตัวชี้วัดระดับยุทธศาสตร์ไว้กี่ตัวชี้วัด",
+    options: ["1 ตัวชี้วัด", "2 ตัวชี้วัด", "3 ตัวชี้วัด", "4 ตัวชี้วัด"],
+    correct: 1,
+    explanation: "ยุทธศาสตร์ที่ 4 มี 2 ตัวชี้วัด คือ ตัวชี้วัดที่ 1 ร้อยละของประชาชนที่รู้จักบทบาทภารกิจฯ และตัวชี้วัดที่ 2 ร้อยละของเครือข่ายฯ"
+  },
+  {
+    id: 34,
+    question: "ตัวชี้วัดความสำเร็จในการเบิกจ่ายงบประมาณของสำนักงานผู้ตรวจการแผ่นดิน เป็นตัวชี้วัดของยุทธศาสตร์ใด",
+    options: ["ยุทธศาสตร์ที่ 2", "ยุทธศาสตร์ที่ 3", "ยุทธศาสตร์ที่ 4", "ยุทธศาสตร์ที่ 5"],
+    correct: 3,
+    explanation: "ตัวชี้วัดเรื่องร้อยละความสำเร็จในการเบิกจ่ายงบประมาณ ถูกระบุอยู่ภายใต้ยุทธศาสตร์ที่ 5"
+  },
+  {
+    id: 35,
+    question: "กลยุทธ์ที่ 1.1 ภายใต้ประเด็นยุทธศาสตร์ที่ 1 คือเรื่องใด",
+    options: [
+      "การพัฒนาประสิทธิภาพกระบวนการตรวจสอบและการแสวงหาข้อเท็จจริง",
+      "การพัฒนาประสิทธิภาพการให้บริการคำปรึกษาและช่องทางการร้องเรียน",
+      "การพัฒนากระบวนการติดตามปฏิบัติตามผลวินิจฉัยและข้อเสนอแนะ",
+      "การเสนอแนะการปรับปรุงแก้ไขกฎหมาย"
+    ],
+    correct: 0,
+    explanation: "กลยุทธ์ 1.1 คือ การพัฒนาประสิทธิภาพกระบวนการตรวจสอบและการแสวงหาข้อเท็จจริง"
+  },
+  {
+    id: 36,
+    question: "กลยุทธ์ใดมุ่งเน้นการแก้ไขความเดือดร้อนในเชิงระบบที่เกิดจากคำสั่ง หรือขั้นตอนการปฏิบัติงานของหน่วยงานของรัฐที่ส่งผลกระทบต่อประชาชนในวงกว้าง",
+    options: ["กลยุทธ์ที่ 2.1", "กลยุทธ์ที่ 2.2", "กลยุทธ์ที่ 3.1", "กลยุทธ์ที่ 3.2"],
+    correct: 1,
+    explanation: "กลยุทธ์ที่ 2.2 คือการแก้ไขความเดือดร้อนในเชิงระบบที่เกิดจากคำสั่งหรือขั้นตอนการปฏิบัติงานของหน่วยงานของรัฐที่ส่งผลกระทบในวงกว้าง"
+  },
+  {
+    id: 37,
+    question: "การพัฒนาฐานข้อมูล และระบบดิจิทัลเพื่อติดตามและรายงานการปฏิบัติตามหมวด 5 หน้าที่ของรัฐ เป็นกลยุทธ์ที่เท่าใด",
+    options: ["กลยุทธ์ที่ 1.3", "กลยุทธ์ที่ 3.1", "กลยุทธ์ที่ 3.2", "กลยุทธ์ที่ 5.5"],
+    correct: 1,
+    explanation: "กลยุทธ์ที่ 3.1 คือ การพัฒนาฐานข้อมูล และระบบดิจิทัลเพื่อติดตามและรายงานการปฏิบัติตามหมวด 5"
+  },
+  {
+    id: 38,
+    question: "กลยุทธ์ที่ 4.4 ของยุทธศาสตร์ที่ 4 มุ่งเน้นบทบาทสำคัญของผู้ตรวจการแผ่นดินในภูมิภาคใด",
+    options: ["เอเชียใต้", "เอเชียตะวันออก", "เอเชียตะวันออกเฉียงใต้", "ยุโรปและเอเชีย"],
+    correct: 2,
+    explanation: "กลยุทธ์ที่ 4.4 ระบุถึงบทบาทที่สำคัญของผู้ตรวจการแผ่นดินในเอเชียตะวันออกเฉียงใต้"
+  },
+  {
+    id: 39,
+    question: "กลยุทธ์ใดเกี่ยวข้องกับการเสริมสร้างธรรมาภิบาล และค่านิยมหลักของบุคลากรสำนักงานผู้ตรวจการแผ่นดิน",
+    options: ["กลยุทธ์ที่ 5.1", "กลยุทธ์ที่ 5.2", "กลยุทธ์ที่ 5.3", "กลยุทธ์ที่ 5.4"],
+    correct: 2,
+    explanation: "กลยุทธ์ที่ 5.3 คือ การเสริมสร้างธรรมาภิบาล และค่านิยมหลักของบุคลากรสำนักงานผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 40,
+    question: "การพัฒนาปรับปรุงกระบวนการทำงานเพื่อลดขั้นตอนการปฏิบัติงานเพื่อการเปลี่ยนแปลงสู่การพัฒนาเป็นองค์กรดิจิทัล เป็นกลยุทธ์ที่เท่าใด",
+    options: ["กลยุทธ์ที่ 5.1", "กลยุทธ์ที่ 5.3", "กลยุทธ์ที่ 5.4", "กลยุทธ์ที่ 5.5"],
+    correct: 3,
+    explanation: "กลยุทธ์ที่ 5.5 คือ การพัฒนาปรับปรุงกระบวนการทำงานเพื่อลดขั้นตอนการปฏิบัติงาน เพื่อการเปลี่ยนแปลงสู่การพัฒนาเป็นองค์กรดิจิทัล"
+  },
+  {
+    id: 41,
+    question: "ตามโครงสร้างการแบ่งส่วนงาน ใครเป็นผู้บังคับบัญชาสูงสุดเหนือสำนักงานผู้ตรวจการแผ่นดิน",
+    options: [
+      "นายกรัฐมนตรี",
+      "ประธานผู้ตรวจการแผ่นดินและผู้ตรวจการแผ่นดิน",
+      "เลขาธิการฯ",
+      "คณะกรรมการตรวจสอบ"
+    ],
+    correct: 1,
+    explanation: "ตามแผนภาพโครงสร้าง กล่องข้อความบนสุดที่เป็นผู้บังคับบัญชาสูงสุดคือ ประธานผู้ตรวจการแผ่นดินและผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 42,
+    question: "ตำแหน่งใดทำหน้าที่บริหารงานและอยู่ใต้บังคับบัญชาโดยตรงของประธานผู้ตรวจการแผ่นดิน",
+    options: [
+      "เลขาธิการฯ",
+      "รองเลขาธิการฯ",
+      "ผู้อำนวยการสำนักสอบสวน",
+      "หัวหน้าส่วนสารบรรณ"
+    ],
+    correct: 0,
+    explanation: "แผนภาพแสดงตำแหน่ง \"เลขาธิการฯ\" อยู่ใต้ประธานและผู้ตรวจการแผ่นดินโดยตรง"
+  },
+  {
+    id: 43,
+    question: "ภายใต้โครงสร้างการแบ่งส่วนงาน มีตำแหน่งรองเลขาธิการฯ ปรากฏอยู่ทั้งหมดกี่คน",
+    options: ["2 คน", "3 คน", "4 คน", "5 คน"],
+    correct: 2,
+    explanation: "ในแผนภาพโครงสร้าง มีการแบ่งสายงานออกเป็น 4 สายหลัก โดยแต่ละสายงานมี \"รองเลขาธิการฯ\" รวม 4 คน"
+  },
+  {
+    id: 44,
+    question: "\"สำนักตรวจสอบหน้าที่ของรัฐ\" อยู่ภายใต้การกำกับดูแลของรองเลขาธิการฯ ลำดับแรก (ซ้ายสุด) ร่วมกับสำนักใด",
+    options: [
+      "สำนักกฎหมายและคดี",
+      "สำนักสอบสวน 1",
+      "สำนักสอบสวน 2",
+      "สำนักเทคโนโลยีสารสนเทศและการสื่อสาร"
+    ],
+    correct: 1,
+    explanation: "ภายใต้รองเลขาธิการฯ คนแรก มี สำนักสอบสวน 1, สำนักตรวจสอบหน้าที่ของรัฐ, สำนักนโยบายและแผน และสถาบันตรวจการแผ่นดินศึกษา"
+  },
+  {
+    id: 45,
+    question: "\"สำนักนโยบายและแผน\" ประกอบด้วยส่วนงานใดบ้าง",
+    options: [
+      "ส่วนสอบสวน 1 และ ส่วนสอบสวน 2",
+      "ส่วนยุทธศาสตร์และงบประมาณ และ ส่วนติดตามและประเมินผล",
+      "ส่วนวิจัยและพัฒนา และ ส่วนวิชาการและเผยแพร่",
+      "ส่วนการเงินและบัญชี และ ส่วนการพัสดุ"
+    ],
+    correct: 1,
+    explanation: "สำนักนโยบายและแผน มี 2 ส่วน คือ ส่วนยุทธศาสตร์และงบประมาณ กับ ส่วนติดตามและประเมินผล"
+  },
+  {
+    id: 46,
+    question: "\"สำนักตรวจสอบเรื่องร้องเรียน\" ประกอบไปด้วยส่วนงานใดเป็นหลัก",
+    options: [
+      "ส่วนตรวจสอบเรื่องร้องเรียนกลาง, ส่วนตรวจสอบเรื่องร้องเรียนดิจิทัล, ส่วนตรวจสอบและปฏิบัติเร่งด่วน",
+      "ส่วนสอบสวน 1, ส่วนสอบสวน 2, ส่วนสอบสวน 3",
+      "ส่วนความร่วมมือพหุภาคี, ส่วนความร่วมมือทวิภาคี",
+      "ส่วนสื่อสารองค์กร, ส่วนผลิตสื่อประชาสัมพันธ์"
+    ],
+    correct: 0,
+    explanation: "สำนักตรวจสอบเรื่องร้องเรียน ประกอบด้วย 3 ส่วนงาน ตามตัวเลือก ก."
+  },
+  {
+    id: 47,
+    question: "สำนักใดรับผิดชอบเกี่ยวกับ \"ส่วนโครงสร้างพื้นฐานและความมั่นคงปลอดภัย\" และ \"ส่วนพัฒนาระบบสารสนเทศ\"",
+    options: [
+      "สำนักบริหารการคลัง",
+      "สำนักเทคโนโลยีสารสนเทศและการสื่อสาร",
+      "สำนักสื่อสารองค์กรและประชาสัมพันธ์",
+      "สำนักเครือข่ายและการมีส่วนร่วม"
+    ],
+    correct: 1,
+    explanation: "สำนักเทคโนโลยีสารสนเทศและการสื่อสาร ประกอบด้วย ส่วนโครงสร้างพื้นฐานและความมั่นคงปลอดภัย และ ส่วนพัฒนาระบบสารสนเทศ"
+  },
+  {
+    id: 48,
+    question: "สำนักใดประกอบด้วย \"ส่วนความร่วมมือพหุภาคี\" และ \"ส่วนความร่วมมือทวิภาคี\"",
+    options: [
+      "สำนักเครือข่ายและการมีส่วนร่วม",
+      "สำนักการต่างประเทศ",
+      "สำนักบริหารทรัพยากรมนุษย์",
+      "สำนักกิจการผู้ตรวจการแผ่นดินและเลขาธิการ"
+    ],
+    correct: 1,
+    explanation: "สำนักการต่างประเทศ ประกอบด้วย ส่วนความร่วมมือพหุภาคี และ ส่วนความร่วมมือทวิภาคี"
+  },
+  {
+    id: 49,
+    question: "คณะกรรมการตรวจสอบ เป็นคณะกรรมการที่แต่งตั้งโดยใคร",
+    options: [
+      "คณะรัฐมนตรี",
+      "ประธานรัฐสภา",
+      "ผู้ตรวจการแผ่นดิน",
+      "เลขาธิการสำนักงานผู้ตรวจการแผ่นดิน"
+    ],
+    correct: 2,
+    explanation: "หมายเหตุท้ายแผนภาพโครงสร้างระบุว่า คณะกรรมการตรวจสอบเป็นคณะกรรมการที่แต่งตั้งโดยผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 50,
+    question: "ข้อมูลโครงสร้างการแบ่งส่วนงานที่ปรากฏในเอกสาร เป็นข้อมูล ณ วันที่เท่าใด",
+    options: [
+      "4 ธันวาคม 2560",
+      "15 พฤษภาคม 2566",
+      "15 พฤษภาคม 2569",
+      "14 กรกฎาคม 2570"
+    ],
+    correct: 2,
+    explanation: "ที่มุมขวาล่างสุดของแผนภาพโครงสร้างระบุว่า \"ข้อมูล ณ วันที่ 15 พฤษภาคม 2569\""
+  },
+  {
+    id: 51,
+    question: "ตามรัฐธรรมนูญ มาตรา 230 การปฏิบัติงานของรัฐที่เข้าข่ายให้ผู้ตรวจการแผ่นดินเสนอแนะเพื่อปรับปรุงกฎหมาย ต้องมีลักษณะอย่างไร",
+    options: [
+      "ก่อให้เกิดผลประโยชน์ทับซ้อนในองค์กร",
+      "ก่อให้เกิดความเดือดร้อนหรือความไม่เป็นธรรมแก่ประชาชน",
+      "เป็นการปฏิบัติหน้าที่ในเขตพื้นที่ชายแดน",
+      "เป็นการใช้งบประมาณแผ่นดินเกินกว่าที่สภากำหนด"
+    ],
+    correct: 1,
+    explanation: "มาตรา 230 (1) ระบุว่าต้องเป็นบรรดาที่ก่อให้เกิดความเดือดร้อนหรือความไม่เป็นธรรมแก่ประชาชน"
+  },
+  {
+    id: 52,
+    question: "ข้อใดคือขั้นตอนการปฏิบัติงานของรัฐที่ผู้ตรวจการแผ่นดินสามารถเสนอแนะให้ปรับปรุงแก้ไขได้ตามมาตรา 230 (1)",
+    options: [
+      "ขั้นตอนที่ถูกระบุไว้ในรัฐธรรมนูญโดยตรง",
+      "ขั้นตอนที่เป็นภาระแก่ประชาชนโดยไม่จำเป็นหรือเกินสมควรแก่เหตุ",
+      "ขั้นตอนการลงมติรับหลักการของสภาผู้แทนราษฎร",
+      "ขั้นตอนการแต่งตั้งคณะรัฐมนตรีชุดใหม่"
+    ],
+    correct: 1,
+    explanation: "มาตรา 230 (1) ระบุถึงขั้นตอนที่เป็นภาระแก่ประชาชนโดยไม่จำเป็นหรือเกินสมควรแก่เหตุ"
+  },
+  {
+    id: 53,
+    question: "หน้าที่และอำนาจตามมาตรา 230 (2) กำหนดให้ผู้ตรวจการแผ่นดินทำสิ่งใดเมื่อเห็นว่ามีผู้ได้รับความเดือดร้อนจากการไม่ปฏิบัติตามกฎหมาย",
+    options: [
+      "สั่งพักงานเจ้าหน้าที่ของรัฐทันที",
+      "แสวงหาข้อเท็จจริงเพื่อเสนอแนะต่อหน่วยงานของรัฐที่เกี่ยวข้อง",
+      "ส่งเรื่องให้ศาลฎีกาแผนกคดีอาญาของผู้ดำรงตำแหน่งทางการเมือง",
+      "ฟ้องร้องดำเนินคดีแพ่งเรียกค่าเสียหายแทนประชาชน"
+    ],
+    correct: 1,
+    explanation: "มาตรา 230 (2) กำหนดให้ผู้ตรวจการแผ่นดิน แสวงหาข้อเท็จจริง เพื่อเสนอแนะต่อหน่วยงานของรัฐที่เกี่ยวข้องให้ขจัดหรือระงับความเดือดร้อน"
+  },
+  {
+    id: 54,
+    question: "ในกรณีที่หน่วยงานของรัฐ \"ปฏิบัตินอกเหนือหน้าที่และอำนาจตามกฎหมาย\" ผู้ตรวจการแผ่นดินมีอำนาจหน้าที่ตามข้อใด",
+    options: [
+      "แสวงหาข้อเท็จจริงเพื่อเสนอแนะให้ขจัดหรือระงับความเดือดร้อน",
+      "มีคำสั่งยกเลิกกฎหมายฉบับนั้นทันที",
+      "ถอดถอนหัวหน้าหน่วยงานของรัฐออกจากตำแหน่ง",
+      "ส่งเรื่องให้ผู้ว่าราชการจังหวัดพิจารณาลงโทษ"
+    ],
+    correct: 0,
+    explanation: "มาตรา 230 (2) ครอบคลุมกรณี \"ปฏิบัตินอกเหนือหน้าที่\" โดยให้แสวงหาข้อเท็จจริงเพื่อเสนอแนะให้ระงับความเดือดร้อน"
+  },
+  {
+    id: 55,
+    question: "การแจ้งให้คณะรัฐมนตรีทราบเพื่อพิจารณาสั่งการตามมาตรา 230 (4) จะเกิดขึ้นภายใต้เงื่อนไขใด",
+    options: [
+      "เมื่อมีการร้องเรียนจากประชาชนมากกว่า 100,000 คน",
+      "เมื่อหน่วยงานของรัฐไม่ดำเนินการตามข้อเสนอแนะโดยไม่มีเหตุผลอันสมควร",
+      "เมื่อศาลรัฐธรรมนูญส่งเรื่องกลับคืนมาให้ผู้ตรวจการแผ่นดิน",
+      "เมื่อสำนักงานผู้ตรวจการแผ่นดินขาดแคลนงบประมาณในการสอบสวน"
+    ],
+    correct: 1,
+    explanation: "มาตรา 230 (4) ระบุว่าเมื่อหน่วยงานของรัฐไม่ดำเนินการตามข้อเสนอแนะโดยไม่มีเหตุผลอันสมควร"
+  },
+  {
+    id: 56,
+    question: "การเสนอเรื่องต่อศาลรัฐธรรมนูญของผู้ตรวจการแผ่นดิน จะกระทำได้เมื่อมีความเห็นในลักษณะใด",
+    options: [
+      "เมื่อเห็นว่ากฎ คำสั่ง หรือการกระทำของเจ้าหน้าที่รัฐขัดต่อกฎหมายท้องถิ่น",
+      "เมื่อเห็นว่าบทบัญญัติแห่งกฎหมายใดมีปัญหาเกี่ยวกับความชอบด้วยรัฐธรรมนูญ",
+      "เมื่อเห็นว่ามีการทุจริตเชิงนโยบายในคณะรัฐมนตรี",
+      "เมื่อเห็นว่ากระบวนการยุติธรรมทางอาญามีความล่าช้า"
+    ],
+    correct: 1,
+    explanation: "ผู้ตรวจการแผ่นดินอาจเสนอเรื่องต่อศาลรัฐธรรมนูญได้เมื่อเห็นว่าบทบัญญัติแห่งกฎหมายใดมีปัญหาเกี่ยวกับความชอบด้วยรัฐธรรมนูญ"
+  },
+  {
+    id: 57,
+    question: "พระราชบัญญัติประกอบรัฐธรรมนูญว่าด้วยวิธีพิจารณาของศาลรัฐธรรมนูญ เข้ามาเกี่ยวข้องกับผู้ตรวจการแผ่นดินในกรณีใด",
+    options: [
+      "การแสวงหาข้อเท็จจริงในคดีละเมิดสิทธิมนุษยชน",
+      "การพิจารณาวินิจฉัยของศาลรัฐธรรมนูญหลังจากผู้ตรวจการแผ่นดินเสนอเรื่อง",
+      "การแต่งตั้งประธานผู้ตรวจการแผ่นดินคนใหม่",
+      "การจัดทำแผนยุทธศาสตร์สำนักงานผู้ตรวจการแผ่นดิน"
+    ],
+    correct: 1,
+    explanation: "เมื่อผู้ตรวจการแผ่นดินเสนอเรื่องพร้อมความเห็นต่อศาลรัฐธรรมนูญ การพิจารณาวินิจฉัยจะเป็นไปตาม พ.ร.ป. ว่าด้วยวิธีพิจารณาของศาลรัฐธรรมนูญ"
+  },
+  {
+    id: 58,
+    question: "เมื่อผู้ตรวจการแผ่นดินเห็นว่า \"กฎ คำสั่ง หรือการกระทำอื่นใดของหน่วยงานของรัฐ\" มีปัญหาเกี่ยวกับความชอบด้วยรัฐธรรมนูญหรือกฎหมาย จะต้องเสนอเรื่องต่อศาลใด",
+    options: ["ศาลปกครอง", "ศาลรัฐธรรมนูญ", "ศาลแพ่ง", "ศาลทหาร"],
+    correct: 0,
+    explanation: "หากเป็นกรณีกฎ คำสั่ง หรือการกระทำอื่นใด ให้เสนอเรื่องพร้อมด้วยความเห็นต่อศาลปกครอง"
+  },
+  {
+    id: 59,
+    question: "กฎหมายใดที่รองรับการพิจารณาวินิจฉัยของศาลปกครอง เมื่อผู้ตรวจการแผ่นดินเสนอเรื่องเกี่ยวกับกฎหรือคำสั่งที่มีปัญหา",
+    options: [
+      "พระราชบัญญัติประกอบรัฐธรรมนูญว่าด้วยผู้ตรวจการแผ่นดิน",
+      "กฎหมายว่าด้วยการจัดตั้งศาลปกครอง และวิธีพิจารณาคดีปกครอง",
+      "พระราชบัญญัติระเบียบบริหารราชการแผ่นดิน",
+      "ประมวลกฎหมายวิธีพิจารณาความแพ่ง"
+    ],
+    correct: 1,
+    explanation: "การพิจารณาวินิจฉัยของศาลปกครองจะเป็นไปตามกฎหมายว่าด้วยการจัดตั้งศาลปกครอง และวิธีพิจารณาคดีปกครอง"
+  },
+  {
+    id: 60,
+    question: "ตามมาตรา 41 (2) แห่ง พ.ร.ป. ว่าด้วยผู้ตรวจการแผ่นดิน พ.ศ. 2560 ข้อใดคือหน้าที่โดยตรงของสำนักงานผู้ตรวจการแผ่นดิน",
+    options: [
+      "วินิจฉัยชี้ขาดข้อพิพาทระหว่างหน่วยงานรัฐ",
+      "อำนวยความสะดวก ช่วยเหลือ ส่งเสริม และสนับสนุน การปฏิบัติงานของผู้ตรวจการแผ่นดิน",
+      "ร่างกฎหมายเพื่อนำเสนอต่อรัฐสภาโดยตรง",
+      "ควบคุมและตรวจสอบการเลือกตั้งสมาชิกสภาผู้แทนราษฎร"
+    ],
+    correct: 1,
+    explanation: "มาตรา 41 (2) กำหนดให้สำนักงานมีหน้าที่อำนวยความสะดวก ช่วยเหลือ ส่งเสริม และสนับสนุน การปฏิบัติงานของผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 61,
+    question: "หน้าที่และอำนาจตามมาตรา 41 (3) กำหนดให้สำนักงานผู้ตรวจการแผ่นดินสนับสนุนสิ่งใด",
+    options: [
+      "สนับสนุนให้มีการจัดตั้งพรรคการเมืองใหม่",
+      "สนับสนุนการลงทุนของภาคเอกชนในระบบดิจิทัล",
+      "ศึกษา รวบรวม วิเคราะห์ข้อมูล และสนับสนุนให้มีการวิจัยเกี่ยวกับงานของผู้ตรวจการแผ่นดิน",
+      "สนับสนุนงบประมาณให้แก่ศาลปกครองและศาลรัฐธรรมนูญ"
+    ],
+    correct: 2,
+    explanation: "มาตรา 41 (3) กำหนดให้สำนักงานศึกษา รวบรวม วิเคราะห์ข้อมูล และสนับสนุนให้มีการวิจัยเกี่ยวกับงานของผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 62,
+    question: "ข้อใดคือหน้าที่ของสำนักงานผู้ตรวจการแผ่นดินตามมาตรา 41 (4) ในการทำงานร่วมกับภาคส่วนอื่น",
+    options: [
+      "ดำเนินการหรือส่งเสริมและสนับสนุนหรือประสานงานกับหน่วยงานของรัฐหรือภาคเอกชน ในการเผยแพร่ความรู้ความเข้าใจแก่ประชาชน",
+      "ทำสัญญาจ้างบริษัทเอกชนเข้ามารับผิดชอบงานสอบสวนทั้งหมดแทนสำนักงาน",
+      "ร่วมมือกับภาคเอกชนในการจัดตั้งกองทุนกู้ยืมเพื่อประชาชนที่เดือดร้อน",
+      "ตรวจสอบบัญชีทรัพย์สินและหนี้สินของบริษัทเอกชนที่คู่สัญญากับรัฐ"
+    ],
+    correct: 0,
+    explanation: "มาตรา 41 (4) กำหนดอำนาจหน้าที่ในการเผยแพร่ความรู้ความเข้าใจแก่ประชาชนเกี่ยวกับหน้าที่และอำนาจของผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 63,
+    question: "สำนักงานผู้ตรวจการแผ่นดินปฏิบัติหน้าที่อื่นใดนอกเหนือจากที่ระบุในมาตรา 41 (1)-(4) ได้ภายใต้เงื่อนไขข้อใด",
+    options: [
+      "เมื่อนายกรัฐมนตรีออกคำสั่งเป็นกรณีพิเศษ",
+      "ตามที่มีกฎหมายกำหนดหรือที่ผู้ตรวจการแผ่นดินมีมติมอบหมาย",
+      "เมื่อประชาชนเข้าชื่อร้องขอไม่น้อยกว่า 50,000 คน",
+      "เมื่อประธานศาลฎีกาทำหนังสือขอความช่วยเหลือ"
+    ],
+    correct: 1,
+    explanation: "มาตรา 41 (5) เปิดช่องให้สำนักงานปฏิบัติหน้าที่อื่นใดตามที่มีกฎหมายกำหนดหรือที่ผู้ตรวจการแผ่นดินมีมติมอบหมาย"
+  },
+  {
+    id: 64,
+    question: "จากแผนภาพความเชื่อมโยงภารกิจ ยุทธศาสตร์ชาติที่ 6 กำหนดประเด็นหลักที่เกี่ยวข้องกับกระบวนการยุติธรรมไว้ในประเด็นที่เท่าใด",
+    options: ["ประเด็นที่ 20", "ประเด็นที่ 21", "ประเด็นที่ 22", "ประเด็นที่ 23"],
+    correct: 2,
+    explanation: "ประเด็นที่ (22) กฎหมายและกระบวนการยุติธรรม"
+  },
+  {
+    id: 65,
+    question: "คะแนนเฉลี่ย 5 ปัจจัยของดัชนีนิติธรรม ปรากฏอยู่ในแผนย่อยใดของแผนแม่บทประเด็นที่ 22",
+    options: [
+      "แผนย่อยที่ 1 การพัฒนากฎหมาย",
+      "แผนย่อยที่ 2 การพัฒนากระบวนการยุติธรรม",
+      "แผนย่อยที่ 3 การส่งเสริมสิทธิมนุษยชน",
+      "แผนย่อยที่ 4 การพัฒนาระบบบริหารงานภาครัฐ"
+    ],
+    correct: 0,
+    explanation: "คะแนนเฉลี่ย 5 ปัจจัยของดัชนีนิติธรรมอยู่ในแผนย่อยที่ 1 การพัฒนากฎหมาย"
+  },
+  {
+    id: 66,
+    question: "ข้อใดไม่ใช่ 1 ใน 5 ปัจจัยของดัชนีนิติธรรมที่ใช้เป็นตัวชี้วัดในแผนย่อยการพัฒนากฎหมาย",
+    options: [
+      "การจำกัดอำนาจรัฐ",
+      "ปราศจากการคอรัปชั่น",
+      "รัฐบาลโปร่งใส",
+      "กระบวนการยุติธรรมทางแพ่ง"
+    ],
+    correct: 3,
+    explanation: "5 ปัจจัย ได้แก่ การจำกัดอำนาจรัฐ, ปราศจากการคอรัปชั่น, รัฐบาลโปร่งใส, สิทธิขั้นพื้นฐาน, ความเป็นระเบียบและความมั่นคง ส่วนกระบวนการยุติธรรมทางแพ่งอยู่ในแผนย่อยที่ 2"
+  },
+  {
+    id: 67,
+    question: "เป้าหมาย \"การอำนวยความยุติธรรมเป็นไปโดยความเสมอภาค โปร่งใส เป็นธรรม ทั่วถึง\" เป็นเป้าหมายของประเด็นใด",
+    options: [
+      "ประเด็นที่ 20 การบริการประชาชนและประสิทธิภาพภาครัฐ",
+      "ประเด็นที่ 21 การต่อต้านการทุจริตและประพฤติมิชอบ",
+      "ประเด็นที่ 22 กฎหมายและกระบวนการยุติธรรม",
+      "หมุดหมายที่ 13 ของแผนพัฒนาเศรษฐกิจและสังคมฯ"
+    ],
+    correct: 2,
+    explanation: "เป้าหมายนี้อยู่ในประเด็นที่ (22) กฎหมายและกระบวนการยุติธรรม"
+  },
+  {
+    id: 68,
+    question: "คะแนนเฉลี่ย 3 ปัจจัยของดัชนีนิติธรรมในแผนย่อยที่ 2 ประกอบด้วยปัจจัยใดบ้าง",
+    options: [
+      "การจำกัดอำนาจรัฐ, ปราศจากการคอรัปชั่น, รัฐบาลโปร่งใส",
+      "สิทธิขั้นพื้นฐาน, ความเป็นระเบียบและความมั่นคง, การบังคับใช้กฎหมาย",
+      "การบังคับใช้กฎหมาย, กระบวนการยุติธรรมทางแพ่ง, กระบวนการยุติธรรมทางอาญา",
+      "การบริการภาครัฐ, ขีดสมรรถนะภาครัฐ, ความคล่องตัวภาครัฐ"
+    ],
+    correct: 2,
+    explanation: "3 ปัจจัย ได้แก่ การบังคับใช้กฎหมาย, กระบวนการยุติธรรมทางแพ่ง, กระบวนการยุติธรรมทางอาญา"
+  },
+  {
+    id: 69,
+    question: "แผนย่อยที่ 1 ของประเด็นที่ 21 มุ่งเน้นเป้าหมายให้ประชาชนมีลักษณะอย่างไร",
+    options: [
+      "มีขีดสมรรถนะสูง เทียบเท่ามาตรฐานสากล",
+      "มีวัฒนธรรมและพฤติกรรมซื่อสัตย์สุจริต",
+      "ได้รับสิทธิขั้นพื้นฐานโดยไม่ต้องร้องขอ",
+      "มีความพึงพอใจต่อการให้บริการของรัฐ"
+    ],
+    correct: 1,
+    explanation: "เป้าหมายแผนย่อยที่ 1 คือ \"ประชาชนมีวัฒนธรรมและพฤติกรรมซื่อสัตย์สุจริต\""
+  },
+  {
+    id: 70,
+    question: "แผนพัฒนารัฐบาลดิจิทัลของประเทศไทย (2566-2570) ยุทธศาสตร์ที่ 1 มุ่งเน้นการเปลี่ยนผ่านดิจิทัลภาครัฐไปสู่ระดับใด",
+    options: [
+      "ขยายสู่หน่วยงานภาครัฐระดับท้องถิ่น",
+      "ขยายสู่บริษัทเอกชนในตลาดหลักทรัพย์",
+      "เชื่อมโยงกับองค์กรระหว่างประเทศทั่วมุมโลก",
+      "จำกัดเฉพาะหน่วยงานส่วนกลางของกรุงเทพมหานคร"
+    ],
+    correct: 0,
+    explanation: "ยุทธศาสตร์ที่ 1 ระบุว่ายกระดับการเปลี่ยนผ่านดิจิทัลภาครัฐ ขยายสู่หน่วยงานภาครัฐระดับท้องถิ่น"
+  },
+  {
+    id: 71,
+    question: "ยุทธศาสตร์ที่ 4 ของแผนพัฒนารัฐบาลดิจิทัลของประเทศไทย (2566-2570) ระบุถึงเรื่องใด",
+    options: [
+      "การพัฒนาโครงสร้างพื้นฐานดิจิทัลประสิทธิภาพสูงให้ครอบคลุมทั่วประเทศ",
+      "การพัฒนากำลังคนให้พร้อมเข้าสู่เศรษฐกิจและสังคมดิจิทัล",
+      "ส่งเสริมการมีส่วนร่วมของประชาชน และเปิดเผยข้อมูลเปิดภาครัฐ",
+      "สร้างความเชื่อมั่นในการใช้เทคโนโลยีดิจิทัล"
+    ],
+    correct: 2,
+    explanation: "ยุทธศาสตร์ที่ 4 คือ ส่งเสริมการมีส่วนร่วมของประชาชน และเปิดเผยข้อมูลเปิดภาครัฐ"
+  },
+  {
+    id: 72,
+    question: "ข้อใดคือตัวชี้วัดผลสัมฤทธิ์ของหน่วยงานข้อที่ 2 ในแผนระดับที่ 2",
+    options: [
+      "ร้อยละความสำเร็จในการแก้ไขความเดือดร้อนหรือความไม่เป็นธรรมของประชาชน",
+      "ร้อยละของประชาชนมีความเชื่อมั่นต่อองค์กรผู้ตรวจการแผ่นดิน",
+      "ร้อยละความสำเร็จในการเบิกจ่ายงบประมาณของสำนักงานผู้ตรวจการแผ่นดิน",
+      "ร้อยละของเครือข่ายผู้ตรวจการแผ่นดินที่สนับสนุนการดำเนินงาน"
+    ],
+    correct: 1,
+    explanation: "ตัวชี้วัดผลสัมฤทธิ์ข้อที่ 2 คือ ร้อยละของประชาชนมีความเชื่อมั่นต่อองค์กรผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 73,
+    question: "แผนระดับที่ 3 ของสำนักงานผู้ตรวจการแผ่นดิน คือแผนยุทธศาสตร์ฉบับที่เท่าใด และครอบคลุมปี พ.ศ. ใด",
+    options: [
+      "ฉบับที่ 4 (พ.ศ. 2561 - 2565)",
+      "ฉบับที่ 5 (พ.ศ. 2566 - 2570)",
+      "ฉบับที่ 6 (พ.ศ. 2571 - 2575)",
+      "ฉบับที่ 13 (พ.ศ. 2566 - 2570)"
+    ],
+    correct: 1,
+    explanation: "แผนระดับที่ 3 คือ แผนยุทธศาสตร์สำนักงานผู้ตรวจการแผ่นดิน ฉบับที่ 5 (พ.ศ. 2566 - 2570)"
+  },
+  {
+    id: 74,
+    question: "เป้าหมายองค์กรกำหนดให้ประชาชนได้รับการแก้ไขปัญหาความเดือดร้อนอย่างมีลักษณะอย่างไร",
+    options: [
+      "ชั่วคราวและเร่งด่วน",
+      "รวดเร็วและยั่งยืน",
+      "ประหยัดและลับเฉพาะ",
+      "เสมอภาคและมีเงื่อนไข"
+    ],
+    correct: 1,
+    explanation: "เป้าหมายระบุว่า ประชาชนได้รับการแก้ไขปัญหา \"อย่างรวดเร็วและยั่งยืน\""
+  },
+  {
+    id: 75,
+    question: "ตัวชี้วัดองค์กรที่ 2 ของแผนยุทธศาสตร์ฯ ฉบับที่ 5 คือข้อใด",
+    options: [
+      "ร้อยละความสำเร็จในการเบิกจ่ายงบประมาณ",
+      "ร้อยละของผู้มีส่วนได้ส่วนเสียมีความเชื่อมั่นต่อองค์กรผู้ตรวจการแผ่นดิน",
+      "ร้อยละของประชาชนที่รู้จักบทบาทภารกิจของผู้ตรวจการแผ่นดิน",
+      "ร้อยละของความสำเร็จในการตรวจสอบการปฏิบัติหน้าที่ของรัฐ"
+    ],
+    correct: 1,
+    explanation: "ตัวชี้วัดองค์กรที่ 2 คือ ร้อยละของผู้มีส่วนได้ส่วนเสียมีความเชื่อมั่นต่อองค์กรผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 76,
+    question: "ข้อใดคือเป้าประสงค์ของยุทธศาสตร์ที่ 2 ของสำนักงานผู้ตรวจการแผ่นดิน",
+    options: [
+      "ประชาชนได้รับการแก้ไขปัญหาความเดือดร้อนจากการปฏิบัติหน้าที่ของรัฐ",
+      "กฎหมาย หรือกระบวนงานของหน่วยงานภาครัฐที่ล้าสมัย หรือก่อให้เกิดความเหลื่อมล้ำ ได้รับการปรับปรุง",
+      "ประชาชนได้รับสิทธิขั้นพื้นฐานตามหมวด 5",
+      "ประชาชน และหน่วยงานภาครัฐ รู้จักบทบาทภารกิจของผู้ตรวจการแผ่นดิน"
+    ],
+    correct: 1,
+    explanation: "เป้าประสงค์ของยุทธศาสตร์ที่ 2 คือ กฎหมายหรือกระบวนงานที่ล้าสมัยหรือก่อให้เกิดความเหลื่อมล้ำได้รับการปรับปรุง"
+  },
+  {
+    id: 77,
+    question: "ตัวชี้วัดระดับยุทธศาสตร์ของยุทธศาสตร์ที่ 2 คือข้อใด",
+    options: [
+      "ระดับความคิดเห็นของผู้มีส่วนได้ส่วนเสียที่ได้รับประโยชน์จากข้อเสนอแนะหรือแนวทางแก้ไขปัญหาเชิงระบบ",
+      "ความพึงพอใจของผู้ร้องเรียนต่อกระบวนการตรวจสอบและแสวงหาข้อเท็จจริง",
+      "ร้อยละของความสำเร็จในการดำเนินการตรวจสอบการปฏิบัติหน้าที่ของรัฐตามหมวด 5",
+      "ร้อยละความสำเร็จในการเบิกจ่ายงบประมาณ"
+    ],
+    correct: 0,
+    explanation: "ตัวชี้วัดระดับยุทธศาสตร์ของยุทธศาสตร์ที่ 2 คือ ระดับความคิดเห็นของผู้มีส่วนได้ส่วนเสียที่ได้รับประโยชน์จากข้อเสนอแนะ"
+  },
+  {
+    id: 78,
+    question: "ยุทธศาสตร์ที่ 3 มีตัวชี้วัดระดับยุทธศาสตร์คือข้อใด",
+    options: [
+      "ร้อยละของประชาชนที่รู้จักบทบาทภารกิจของผู้ตรวจการแผ่นดิน",
+      "ร้อยละของความสำเร็จในการดำเนินการตรวจสอบการปฏิบัติหน้าที่ของรัฐตามหมวด 5",
+      "ร้อยละของเครือข่ายผู้ตรวจการแผ่นดินที่สนับสนุนการดำเนินงาน",
+      "ร้อยละความสำเร็จในการเบิกจ่ายงบประมาณ"
+    ],
+    correct: 1,
+    explanation: "ตัวชี้วัดระดับยุทธศาสตร์ของยุทธศาสตร์ที่ 3 คือ ร้อยละของความสำเร็จในการตรวจสอบการปฏิบัติหน้าที่ของรัฐตามหมวด 5"
+  },
+  {
+    id: 79,
+    question: "เป้าประสงค์ข้อที่ 2 ของยุทธศาสตร์ที่ 4 คือเรื่องใด",
+    options: [
+      "ประชาชน และหน่วยงานภาครัฐ รู้จักบทบาทภารกิจของผู้ตรวจการแผ่นดิน",
+      "เครือข่ายขององค์กรผู้ตรวจการแผ่นดินทั้งภายในประเทศและต่างประเทศ มีส่วนช่วยสนับสนุนขับเคลื่อนการทำงาน",
+      "บุคลากรมีความรู้ความสามารถ และการบริหารจัดการที่เท่าทันต่อการเปลี่ยนแปลง",
+      "สำนักงานผู้ตรวจการแผ่นดินมีการปรับปรุงพัฒนาขั้นตอนการปฏิบัติงานด้วยระบบเทคโนโลยีดิจิทัล"
+    ],
+    correct: 1,
+    explanation: "เป้าประสงค์ข้อที่ 2 ของยุทธศาสตร์ที่ 4 คือ เครือข่ายขององค์กรผู้ตรวจการแผ่นดินมีส่วนช่วยสนับสนุนขับเคลื่อนการทำงาน"
+  },
+  {
+    id: 80,
+    question: "ตัวชี้วัดที่ 1 ของยุทธศาสตร์ที่ 4 คือข้อใด",
+    options: [
+      "ร้อยละความสำเร็จในการแก้ไขความเดือดร้อน",
+      "ร้อยละของประชาชนที่รู้จักบทบาทภารกิจของผู้ตรวจการแผ่นดิน",
+      "ร้อยละของเครือข่ายผู้ตรวจการแผ่นดินที่สนับสนุนการดำเนินงาน",
+      "ร้อยละความสำเร็จในการเบิกจ่ายงบประมาณ"
+    ],
+    correct: 1,
+    explanation: "ตัวชี้วัดที่ 1 ของยุทธศาสตร์ที่ 4 คือ ร้อยละของประชาชนที่รู้จักบทบาทภารกิจของผู้ตรวจการแผ่นดิน"
+  },
+  {
+    id: 81,
+    question: "เป้าประสงค์ของยุทธศาสตร์ที่ 5 ไม่ได้รวมถึงเรื่องใดต่อไปนี้",
+    options: [
+      "ประชาชนและหน่วยงานของรัฐยอมรับ และเชื่อถือในงานวิชาการสำนักงานผู้ตรวจการแผ่นดิน",
+      "บุคลากรมีความรู้ความสามารถ และการบริหารจัดการที่เท่าทันต่อการเปลี่ยนแปลง",
+      "สำนักงานผู้ตรวจการแผ่นดินมีการปรับปรุงพัฒนาด้วยระบบเทคโนโลยีดิจิทัล",
+      "ประชาชนได้รับสิทธิขั้นพื้นฐานตามหมวด 5 โดยไม่ต้องใช้สิทธิร้องขอ"
+    ],
+    correct: 3,
+    explanation: "ข้อ ง. เป็นเป้าประสงค์ของยุทธศาสตร์ที่ 3 ไม่ใช่ยุทธศาสตร์ที่ 5"
+  },
+  {
+    id: 82,
+    question: "กลยุทธ์ที่ 1.2 ของยุทธศาสตร์ที่ 1 มุ่งเน้นการพัฒนาสิ่งใด",
+    options: [
+      "ประสิทธิภาพกระบวนการตรวจสอบและการแสวงหาข้อเท็จจริง",
+      "ประสิทธิภาพการให้บริการคำปรึกษาและช่องทางการร้องเรียนของประชาชน",
+      "กระบวนการติดตามปฏิบัติตามผลวินิจฉัยและข้อเสนอแนะ",
+      "การเสนอแนะการปรับปรุงแก้ไขกฎหมาย กฎ ของหน่วยงานของรัฐที่ล้าสมัย"
+    ],
+    correct: 1,
+    explanation: "กลยุทธ์ที่ 1.2 คือ การพัฒนาประสิทธิภาพการให้บริการคำปรึกษาและช่องทางการร้องเรียนของประชาชน"
+  },
+  {
+    id: 83,
+    question: "กลยุทธ์ใดระบุถึง \"การพัฒนาประสิทธิภาพการสื่อสารภายในองค์กร\"",
+    options: ["กลยุทธ์ที่ 4.1", "กลยุทธ์ที่ 4.2", "กลยุทธ์ที่ 4.3", "กลยุทธ์ที่ 4.4"],
+    correct: 1,
+    explanation: "กลยุทธ์ที่ 4.2 คือ การพัฒนาประสิทธิภาพการสื่อสารภายในองค์กร"
+  },
+  {
+    id: 84,
+    question: "กลยุทธ์ที่ 4.3 ภายใต้ยุทธศาสตร์ที่ 4 กำหนดแนวทางไว้อย่างไร",
+    options: [
+      "การประชาสัมพันธ์เชิงรุกเพื่อสร้างการรับรู้",
+      "การสร้างพัฒนา ส่งเสริม และสนับสนุนการมีส่วนร่วมงานด้านเครือข่ายในประเทศ",
+      "การส่งเสริมบทบาทและความร่วมมือระหว่างประเทศ",
+      "การเสริมสร้างธรรมาภิบาล และค่านิยมหลักของบุคลากร"
+    ],
+    correct: 1,
+    explanation: "กลยุทธ์ที่ 4.3 คือ การสร้างพัฒนา ส่งเสริม และสนับสนุนการมีส่วนร่วมงานด้านเครือข่ายในประเทศ"
+  },
+  {
+    id: 85,
+    question: "กลยุทธ์ใดทำหน้าที่พัฒนาศักยภาพความเชี่ยวชาญของบุคลากรด้านการตรวจการแผ่นดินและด้านงานสนับสนุน",
+    options: ["กลยุทธ์ที่ 5.1", "กลยุทธ์ที่ 5.2", "กลยุทธ์ที่ 5.3", "กลยุทธ์ที่ 5.4"],
+    correct: 1,
+    explanation: "กลยุทธ์ที่ 5.2 คือ การพัฒนาศักยภาพความเชี่ยวชาญของบุคลากรด้านการตรวจการแผ่นดินและด้านงานสนับสนุน"
+  },
+  {
+    id: 86,
+    question: "กลยุทธ์ที่ 5.4 มุ่งยกระดับมาตรฐานและพัฒนาความร่วมมือในงานด้านใดกับหน่วยงานภายนอก",
+    options: [
+      "งานเทคโนโลยีสารสนเทศและการสื่อสาร",
+      "งานการเงินและงานพัสดุ",
+      "งานด้านวิชาการ และงานวิจัยเพื่อสนับสนุนภารกิจของผู้ตรวจการแผ่นดิน",
+      "งานประชาสัมพันธ์เชิงรุก"
+    ],
+    correct: 2,
+    explanation: "กลยุทธ์ที่ 5.4 คือ การยกระดับมาตรฐานและพัฒนาความร่วมมืองานด้านวิชาการและงานวิจัยกับหน่วยงานภายนอก"
+  },
+  {
+    id: 87,
+    question: "ตามโครงสร้าง หน่วยงานใดขึ้นตรงต่อเลขาธิการฯ โดยอยู่คนละฝั่งกับคณะกรรมการตรวจสอบ",
+    options: [
+      "สำนักสอบสวน 1",
+      "หน่วยตรวจสอบภายใน",
+      "สำนักกฎหมายและคดี",
+      "สำนักบริหารกลาง"
+    ],
+    correct: 1,
+    explanation: "ด้านล่างของ \"เลขาธิการฯ\" แยกเป็นสองฝั่งคือ \"คณะกรรมการตรวจสอบ\" และ \"หน่วยตรวจสอบภายใน\""
+  },
+  {
+    id: 88,
+    question: "โครงสร้างรองเลขาธิการฯ ลำดับแรก (ซ้ายสุด) ไม่ได้กำกับดูแลสำนักใด",
+    options: [
+      "สำนักสอบสวน 1",
+      "สำนักตรวจสอบหน้าที่ของรัฐ",
+      "สำนักนโยบายและแผน",
+      "สำนักตรวจสอบเรื่องร้องเรียน"
+    ],
+    correct: 3,
+    explanation: "สำนักตรวจสอบเรื่องร้องเรียน อยู่ภายใต้รองเลขาธิการฯ ลำดับที่ 2 ไม่ใช่คนแรก"
+  },
+  {
+    id: 89,
+    question: "\"ส่วนตรวจสอบหน้าที่ของรัฐ 1\" และ \"ส่วนตรวจสอบหน้าที่ของรัฐ 2\" สังกัดอยู่ภายใต้สำนักใด",
+    options: [
+      "สำนักสอบสวน 1",
+      "สำนักตรวจสอบหน้าที่ของรัฐ",
+      "สำนักนโยบายและแผน",
+      "สถาบันตรวจการแผ่นดินศึกษา"
+    ],
+    correct: 1,
+    explanation: "สำนักตรวจสอบหน้าที่ของรัฐ ประกอบด้วย ส่วนตรวจสอบหน้าที่ของรัฐ 1, 2 และ 3"
+  },
+  {
+    id: 90,
+    question: "\"สถาบันตรวจการแผ่นดินศึกษา\" ประกอบด้วยส่วนงานย่อยใดบ้าง",
+    options: [
+      "ส่วนยุทธศาสตร์และงบประมาณ และ ส่วนติดตามและประเมินผล",
+      "ส่วนวิจัยและพัฒนา และ ส่วนวิชาการและเผยแพร่",
+      "ส่วนสอบสวน 1 และ ส่วนสอบสวน 2",
+      "ส่วนสารบรรณ และ ส่วนบริหารทั่วไป"
+    ],
+    correct: 1,
+    explanation: "สถาบันตรวจการแผ่นดินศึกษา ประกอบด้วย ส่วนวิจัยและพัฒนา และ ส่วนวิชาการและเผยแพร่"
+  },
+  {
+    id: 91,
+    question: "รองเลขาธิการฯ ลำดับที่ 2 ทำหน้าที่กำกับดูแลสำนักใดบ้าง",
+    options: [
+      "สำนักสอบสวน 1 และ สำนักสอบสวน 2",
+      "สำนักกฎหมายและคดี, สำนักตรวจสอบเรื่องร้องเรียน, สำนักสอบสวน 3, สำนักเทคโนโลยีสารสนเทศและการสื่อสาร",
+      "สำนักบริหารกลาง, สำนักบริหารการคลัง, สำนักสื่อสารองค์กรและประชาสัมพันธ์",
+      "สำนักสอบสวน 2, สำนักสอบสวน 4, สำนักบริหารทรัพยากรมนุษย์, สำนักการต่างประเทศ"
+    ],
+    correct: 1,
+    explanation: "รองเลขาธิการฯ คนที่ 2 กำกับดูแล สำนักกฎหมายและคดี, สำนักตรวจสอบเรื่องร้องเรียน, สำนักสอบสวน 3 และสำนักเทคโนโลยีสารสนเทศฯ"
+  },
+  {
+    id: 92,
+    question: "\"ส่วนตรวจสอบเรื่องร้องเรียนกลาง\" และ \"ส่วนตรวจสอบและปฏิบัติเร่งด่วน\" เป็นส่วนงานของสำนักใด",
+    options: [
+      "สำนักสอบสวน 3",
+      "สำนักกฎหมายและคดี",
+      "สำนักตรวจสอบเรื่องร้องเรียน",
+      "สำนักบริหารกลาง"
+    ],
+    correct: 2,
+    explanation: "สำนักตรวจสอบเรื่องร้องเรียน ประกอบด้วย 3 ส่วนงานย่อยดังกล่าว"
+  },
+  {
+    id: 93,
+    question: "รองเลขาธิการฯ ลำดับที่ 3 มีหน้าที่กำกับดูแลสำนักใดเป็นลำดับแรกสุดในสายงานของตน",
+    options: [
+      "สำนักบริหารกลาง",
+      "สำนักบริหารการคลัง",
+      "สำนักสื่อสารองค์กรและประชาสัมพันธ์",
+      "สำนักเครือข่ายและการมีส่วนร่วม"
+    ],
+    correct: 0,
+    explanation: "สำนักแรกสุดในสายงานของรองเลขาธิการฯ คนที่ 3 คือ สำนักบริหารกลาง"
+  },
+  {
+    id: 94,
+    question: "\"ส่วนการเงินและบัญชี\" และ \"ส่วนการพัสดุ\" สังกัดอยู่ภายใต้สำนักใด",
+    options: [
+      "สำนักบริหารกลาง",
+      "สำนักบริหารการคลัง",
+      "สำนักนโยบายและแผน",
+      "สำนักกิจการผู้ตรวจการแผ่นดินและเลขาธิการ"
+    ],
+    correct: 1,
+    explanation: "ส่วนการเงินและบัญชี และส่วนการพัสดุ สังกัดอยู่ภายใต้สำนักบริหารการคลัง"
+  },
+  {
+    id: 95,
+    question: "\"ส่วนสร้างและพัฒนาเครือข่าย\" และ \"ส่วนส่งเสริมการมีส่วนร่วม\" เป็นส่วนงานภายใต้สำนักใด",
+    options: [
+      "สำนักสื่อสารองค์กรและประชาสัมพันธ์",
+      "สำนักเครือข่ายและการมีส่วนร่วม",
+      "สำนักบริหารทรัพยากรมนุษย์",
+      "สำนักการต่างประเทศ"
+    ],
+    correct: 1,
+    explanation: "สำนักเครือข่ายและการมีส่วนร่วม ประกอบด้วย ส่วนสร้างและพัฒนาเครือข่าย และส่วนส่งเสริมการมีส่วนร่วม"
+  },
+  {
+    id: 96,
+    question: "สำนักใดประกอบด้วย \"ส่วนอำนวยการผู้ตรวจการแผ่นดิน\" และ \"ส่วนอำนวยการผู้บริหาร\"",
+    options: [
+      "สำนักบริหารกลาง",
+      "สำนักกิจการผู้ตรวจการแผ่นดินและเลขาธิการ",
+      "สำนักบริหารทรัพยากรมนุษย์",
+      "สำนักนโยบายและแผน"
+    ],
+    correct: 1,
+    explanation: "สำนักกิจการผู้ตรวจการแผ่นดินและเลขาธิการ ประกอบด้วย ส่วนอำนวยการผู้ตรวจการแผ่นดิน และส่วนอำนวยการผู้บริหาร"
+  },
+  {
+    id: 97,
+    question: "รองเลขาธิการฯ ลำดับที่ 4 (ขวาสุด) กำกับดูแลสำนักสอบสวนใดบ้าง",
+    options: [
+      "สำนักสอบสวน 1 และ สำนักสอบสวน 2",
+      "สำนักสอบสวน 2 และ สำนักสอบสวน 3",
+      "สำนักสอบสวน 2 และ สำนักสอบสวน 4",
+      "สำนักสอบสวน 3 และ สำนักสอบสวน 4"
+    ],
+    correct: 2,
+    explanation: "รองเลขาธิการฯ คนที่ 4 กำกับดูแล สำนักสอบสวน 2 และ สำนักสอบสวน 4"
+  },
+  {
+    id: 98,
+    question: "\"ส่วนพัฒนาทรัพยากรมนุษย์และสวัสดิการ\" สังกัดอยู่ภายใต้สำนักใด",
+    options: [
+      "สำนักบริหารกลาง",
+      "สำนักบริหารทรัพยากรมนุษย์",
+      "สำนักกิจการผู้ตรวจการแผ่นดินและเลขาธิการ",
+      "สำนักนโยบายและแผน"
+    ],
+    correct: 1,
+    explanation: "สำนักบริหารทรัพยากรมนุษย์ ประกอบด้วย ส่วนบริหารทรัพยากรมนุษย์ และส่วนพัฒนาทรัพยากรมนุษย์และสวัสดิการ"
+  },
+  {
+    id: 99,
+    question: "ในแผนภาพโครงสร้าง สำนักสอบสวนใดบ้างที่แยกส่วนการทำงานเป็น \"ส่วนสอบสวน 1\" ถึง \"ส่วนสอบสวน 4\" เหมือนกันทั้งหมด",
+    options: [
+      "สำนักสอบสวน 1, 2, 3 และ 4",
+      "เฉพาะสำนักสอบสวน 1 และ 2 เท่านั้น",
+      "เฉพาะสำนักสอบสวน 3 และ 4 เท่านั้น",
+      "สำนักสอบสวน 1 และ 3 เท่านั้น"
+    ],
+    correct: 0,
+    explanation: "ทุกสำนักสอบสวน (1, 2, 3 และ 4) มีการแบ่งส่วนงานภายในเหมือนกันคือ ส่วนสอบสวน 1 ถึง 4"
+  },
+  {
+    id: 100,
+    question: "ระเบียบผู้ตรวจการแผ่นดินว่าด้วยคณะกรรมการตรวจสอบของสำนักงานผู้ตรวจการแผ่นดิน ที่ใช้อ้างอิงในหมายเหตุคือ พ.ศ. ใด",
+    options: ["พ.ศ. 2560", "พ.ศ. 2562", "พ.ศ. 2565", "พ.ศ. 2566"],
+    correct: 3,
+    explanation: "หมายเหตุท้ายแผนภาพระบุว่า ตามระเบียบผู้ตรวจการแผ่นดินว่าด้วยคณะกรรมการตรวจสอบฯ พ.ศ. 2566"
+  }
+];
+
+</script>
+
+<!-- ═══ APP LOGIC ═══ -->
+<script>
+let mode = 'practice';
+let currentQ = 0;
+let answers = {};
+let timerInterval = null;
+let timeLeft = 6000; // 100 minutes in seconds
+
+function startQuiz(m) {
+  mode = m;
+  currentQ = 0;
+  answers = {};
+  timeLeft = 6000;
+
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('headerBar').classList.remove('hidden');
+  document.getElementById('quizArea').classList.remove('hidden');
+  document.getElementById('resultsScreen').classList.add('hidden');
+
+  document.getElementById('headerMode').textContent = mode === 'practice' ? 'PRACTICE' : 'EXAM';
+
+  if (mode === 'exam') {
+    document.getElementById('timerDisplay').classList.remove('hidden');
+    startTimer();
+  } else {
+    document.getElementById('timerDisplay').classList.add('hidden');
+  }
+
+  buildNavGrid();
+  renderQuestion();
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+      return;
+    }
+    const m = Math.floor(timeLeft / 60);
+    const s = timeLeft % 60;
+    document.getElementById('timerText').textContent =
+      String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    if (timeLeft <= 300) {
+      document.getElementById('timerDisplay').style.color = 'var(--wrong)';
+    }
+  }, 1000);
+}
+
+function renderQuestion() {
+  const q = quizQuestions[currentQ];
+  document.getElementById('qNumber').textContent = `ข้อ ${q.id} จาก 100`;
+  document.getElementById('qText').textContent = q.question;
+
+  const labels = ['ก', 'ข', 'ค', 'ง'];
+  const ol = document.getElementById('optionsList');
+  ol.innerHTML = '';
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="opt-letter">${labels[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectOption(i);
+
+    // Restore state
+    const ans = answers[currentQ];
+    if (ans !== undefined) {
+      if (mode === 'practice') {
+        btn.classList.add('disabled');
+        if (i === q.correct) btn.classList.add('correct-answer');
+        if (i === ans && ans !== q.correct) btn.classList.add('wrong-answer');
+      } else {
+        if (i === ans) btn.classList.add('selected');
+      }
+    }
+    ol.appendChild(btn);
+  });
+
+  // Explanation
+  const expBox = document.getElementById('explanationBox');
+  if (mode === 'practice' && answers[currentQ] !== undefined) {
+    const isCorrect = answers[currentQ] === q.correct;
+    expBox.className = 'explanation-box ' + (isCorrect ? 'correct' : 'wrong');
+    expBox.innerHTML = `<div class="exp-label">${isCorrect ? '✓ ถูกต้อง' : '✗ ไม่ถูกต้อง'}</div>${q.explanation}`;
+    expBox.style.display = 'block';
+  } else {
+    expBox.style.display = 'none';
+  }
+
+  // Nav buttons
+  document.getElementById('prevBtn').disabled = currentQ === 0;
+  if (currentQ === quizQuestions.length - 1) {
+    if (mode === 'exam') {
+      document.getElementById('nextBtn').classList.add('hidden');
+      document.getElementById('submitBtn').classList.remove('hidden');
+    } else {
+      const allDone = Object.keys(answers).length === quizQuestions.length;
+      document.getElementById('nextBtn').classList.toggle('hidden', allDone);
+      document.getElementById('submitBtn').classList.toggle('hidden', !allDone);
+      if (!allDone) {
+        document.getElementById('nextBtn').textContent = 'ถัดไป →';
+      }
+    }
+  } else {
+    document.getElementById('nextBtn').classList.remove('hidden');
+    document.getElementById('submitBtn').classList.add('hidden');
+    document.getElementById('nextBtn').textContent = 'ถัดไป →';
+  }
+
+  updateHeader();
+  updateNavGrid();
+}
+
+function selectOption(idx) {
+  if (answers[currentQ] !== undefined && mode === 'practice') return;
+  if (answers[currentQ] !== undefined && mode === 'exam') {
+    // Allow changing answer in exam mode
+  }
+
+  answers[currentQ] = idx;
+
+  if (mode === 'practice') {
+    const q = quizQuestions[currentQ];
+    const btns = document.querySelectorAll('.option-btn');
+    btns.forEach((b, i) => {
+      b.classList.add('disabled');
+      if (i === q.correct) b.classList.add('correct-answer');
+      if (i === idx && idx !== q.correct) b.classList.add('wrong-answer');
+    });
+
+    const isCorrect = idx === q.correct;
+    const expBox = document.getElementById('explanationBox');
+    expBox.className = 'explanation-box ' + (isCorrect ? 'correct' : 'wrong');
+    expBox.innerHTML = `<div class="exp-label">${isCorrect ? '✓ ถูกต้อง' : '✗ ไม่ถูกต้อง'}</div>${q.explanation}`;
+    expBox.style.display = 'block';
+
+    // Auto-advance check for last question
+    if (currentQ === quizQuestions.length - 1) {
+      const allDone = Object.keys(answers).length === quizQuestions.length;
+      if (allDone) {
+        document.getElementById('nextBtn').classList.add('hidden');
+        document.getElementById('submitBtn').classList.remove('hidden');
+      }
+    }
+  } else {
+    // Exam mode: highlight selected
+    const btns = document.querySelectorAll('.option-btn');
+    btns.forEach((b, i) => {
+      b.classList.toggle('selected', i === idx);
+    });
+  }
+
+  updateHeader();
+  updateNavGrid();
+}
+
+function navigate(dir) {
+  currentQ += dir;
+  currentQ = Math.max(0, Math.min(quizQuestions.length - 1, currentQ));
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToQuestion(idx) {
+  currentQ = idx;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateHeader() {
+  const answered = Object.keys(answers).length;
+  document.getElementById('headerProgress').textContent = `${currentQ + 1} / 100`;
+
+  if (mode === 'practice') {
+    const correct = Object.entries(answers).filter(([k,v]) => quizQuestions[k].correct === v).length;
+    document.getElementById('headerScore').textContent = `${correct} ✓ / ${answered}`;
+  } else {
+    document.getElementById('headerScore').textContent = `ตอบแล้ว ${answered}/100`;
+  }
+
+  const pct = ((currentQ + 1) / quizQuestions.length * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function buildNavGrid() {
+  const grid = document.getElementById('qNavGrid');
+  grid.innerHTML = '';
+  for (let i = 0; i < quizQuestions.length; i++) {
+    const cell = document.createElement('button');
+    cell.className = 'q-nav-cell';
+    cell.textContent = i + 1;
+    cell.onclick = () => goToQuestion(i);
+    grid.appendChild(cell);
+  }
+}
+
+function updateNavGrid() {
+  const cells = document.querySelectorAll('.q-nav-cell');
+  cells.forEach((cell, i) => {
+    cell.className = 'q-nav-cell';
+    if (i === currentQ) cell.classList.add('current');
+    else if (answers[i] !== undefined) {
+      if (mode === 'practice') {
+        cell.classList.add(answers[i] === quizQuestions[i].correct ? 'answered-correct' : 'answered-wrong');
+      } else {
+        cell.classList.add('answered');
+      }
+    }
+  });
+}
+
+function toggleNav() {
+  document.getElementById('qNavGrid').classList.toggle('open');
+}
+
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const total = quizQuestions.length;
+  let correct = 0;
+  let wrong = 0;
+  let unanswered = 0;
+  const wrongList = [];
+
+  quizQuestions.forEach((q, i) => {
+    if (answers[i] === undefined) {
+      unanswered++;
+      wrongList.push(i);
+    } else if (answers[i] === q.correct) {
+      correct++;
+    } else {
+      wrong++;
+      wrongList.push(i);
+    }
+  });
+
+  const pct = Math.round(correct / total * 100);
+  const passed = pct >= 70;
+
+  document.getElementById('headerBar').classList.add('hidden');
+  document.getElementById('quizArea').classList.add('hidden');
+  document.getElementById('resultsScreen').classList.remove('hidden');
+  document.getElementById('resultsScreen').style.display = 'block';
+
+  const labels = ['ก', 'ข', 'ค', 'ง'];
+
+  let reviewHTML = '';
+  if (wrongList.length > 0) {
+    reviewHTML = `<div class="review-section"><h3>📝 ทบทวนข้อที่ตอบผิด / ไม่ได้ตอบ (${wrongList.length} ข้อ)</h3>`;
+    wrongList.forEach(i => {
+      const q = quizQuestions[i];
+      const userAns = answers[i];
+      const userAnsText = userAns !== undefined ? `${labels[userAns]}. ${q.options[userAns]}` : 'ไม่ได้ตอบ';
+      reviewHTML += `
+        <div class="review-card">
+          <div class="review-q-num">ข้อ ${q.id}</div>
+          <div class="review-q-text">${q.question}</div>
+          <div class="review-answer your-answer">✗ คำตอบของคุณ: ${userAnsText}</div>
+          <div class="review-answer correct-ans">✓ เฉลย: ${labels[q.correct]}. ${q.options[q.correct]}</div>
+          <div class="review-explanation">${q.explanation}</div>
+        </div>`;
+    });
+    reviewHTML += '</div>';
+  }
+
+  document.getElementById('resultsScreen').innerHTML = `
+    <div class="results-badge ${passed ? 'pass' : 'fail'}">${passed ? '🎉' : '📚'}</div>
+    <div class="results-title">ผลการสอบ</div>
+    <div class="results-verdict ${passed ? 'pass' : 'fail'}">${passed ? '✓ ผ่านเกณฑ์' : '✗ ไม่ผ่านเกณฑ์'}</div>
+    <div class="results-score-big ${passed ? 'pass' : 'fail'}">${pct}%</div>
+    <div class="results-detail">${correct} คะแนน จาก ${total} ข้อ (เกณฑ์ผ่าน 70%)</div>
+    <div class="results-stats">
+      <div class="stat-card green">
+        <div class="stat-num">${correct}</div>
+        <div class="stat-label">ถูกต้อง</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-num">${wrong}</div>
+        <div class="stat-label">ไม่ถูกต้อง</div>
+      </div>
+      <div class="stat-card gray">
+        <div class="stat-num">${unanswered}</div>
+        <div class="stat-label">ไม่ได้ตอบ</div>
+      </div>
+    </div>
+    <div class="results-actions">
+      <button class="btn btn-secondary" onclick="retryWrong()">🔄 ทำเฉพาะข้อที่ผิด</button>
+      <button class="btn btn-primary" onclick="location.reload()">🏠 กลับหน้าแรก</button>
+    </div>
+    ${reviewHTML}
+  `;
+
+  window.scrollTo({ top: 0 });
+}
+
+function retryWrong() {
+  const wrongIndices = [];
+  quizQuestions.forEach((q, i) => {
+    if (answers[i] === undefined || answers[i] !== q.correct) {
+      wrongIndices.push(i);
+    }
+  });
+
+  if (wrongIndices.length === 0) {
+    alert('ตอบถูกทุกข้อแล้ว!');
+    return;
+  }
+
+  // Reset only wrong answers
+  const oldAnswers = { ...answers };
+  answers = {};
+  // Keep correct answers
+  quizQuestions.forEach((q, i) => {
+    if (oldAnswers[i] !== undefined && oldAnswers[i] === q.correct) {
+      answers[i] = oldAnswers[i];
+    }
+  });
+
+  currentQ = wrongIndices[0];
+  mode = 'practice';
+
+  document.getElementById('resultsScreen').classList.add('hidden');
+  document.getElementById('resultsScreen').style.display = 'none';
+  document.getElementById('headerBar').classList.remove('hidden');
+  document.getElementById('quizArea').classList.remove('hidden');
+  document.getElementById('headerMode').textContent = 'PRACTICE';
+  document.getElementById('timerDisplay').classList.add('hidden');
+
+  buildNavGrid();
+  renderQuestion();
+  window.scrollTo({ top: 0 });
+}
+</script>
+</body>
+</html>
