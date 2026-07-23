@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบทดสอบ: วิเคราะห์งาน · กำหนดตำแหน่ง · วางแผนอัตรากำลัง</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #242836;
+  --border: #2e3345;
+  --text: #e4e6ef;
+  --text-dim: #8b8fa5;
+  --primary: #6c8aff;
+  --primary-dim: rgba(108,138,255,0.12);
+  --correct: #34d399;
+  --correct-dim: rgba(52,211,153,0.12);
+  --wrong: #f87171;
+  --wrong-dim: rgba(248,113,113,0.12);
+  --warn: #fbbf24;
+  --warn-dim: rgba(251,191,36,0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ===== HEADER ===== */
+.app-header {
+  text-align: center;
+  padding: 40px 20px 30px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 30px;
+}
+.app-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.app-header .subtitle {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+}
+
+/* ===== MODE SELECT ===== */
+#mode-select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 60px 20px;
+}
+.mode-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.mode-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 520px;
+}
+.mode-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.mode-card:hover {
+  border-color: var(--primary);
+  background: var(--primary-dim);
+}
+.mode-card .icon { font-size: 2rem; margin-bottom: 12px; }
+.mode-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+.mode-card p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
+
+/* ===== PROGRESS BAR ===== */
+.progress-wrap {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.82rem;
+}
+.progress-top .mode-badge {
+  background: var(--primary-dim);
+  color: var(--primary);
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.progress-bar {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+/* ===== QUESTION NAVIGATOR ===== */
+.nav-toggle {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: inherit;
+  margin-bottom: 16px;
+  transition: all 0.2s;
+}
+.nav-toggle:hover { border-color: var(--primary); color: var(--text); }
+
+.q-navigator {
+  display: none;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.q-navigator.open { display: flex; }
+.q-nav-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  font-family: 'IBM Plex Mono', monospace;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-weight: 500;
+}
+.q-nav-btn:hover { border-color: var(--primary); color: var(--text); }
+.q-nav-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.q-nav-btn.answered { background: var(--primary-dim); border-color: var(--primary); color: var(--primary); }
+.q-nav-btn.correct-nav { background: var(--correct-dim); border-color: var(--correct); color: var(--correct); }
+.q-nav-btn.wrong-nav { background: var(--wrong-dim); border-color: var(--wrong); color: var(--wrong); }
+
+/* ===== QUESTION CARD ===== */
+.question-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 24px;
+  margin-bottom: 20px;
+}
+.q-number {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: 0.05em;
+}
+.q-text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+/* ===== OPTIONS ===== */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.65;
+  transition: all 0.2s;
+  width: 100%;
+}
+.option-btn:hover:not(.disabled) {
+  border-color: var(--primary);
+  background: var(--primary-dim);
+}
+.option-btn .opt-label {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-top: 1px;
+}
+.option-btn.selected {
+  border-color: var(--primary);
+  background: var(--primary-dim);
+}
+.option-btn.selected .opt-label {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.option-btn.correct-opt {
+  border-color: var(--correct);
+  background: var(--correct-dim);
+}
+.option-btn.correct-opt .opt-label {
+  background: var(--correct);
+  color: #fff;
+  border-color: var(--correct);
+}
+.option-btn.wrong-opt {
+  border-color: var(--wrong);
+  background: var(--wrong-dim);
+}
+.option-btn.wrong-opt .opt-label {
+  background: var(--wrong);
+  color: #fff;
+  border-color: var(--wrong);
+}
+.option-btn.disabled { cursor: default; opacity: 0.7; }
+.option-btn.disabled.correct-opt, .option-btn.disabled.wrong-opt { opacity: 1; }
+
+/* ===== EXPLANATION ===== */
+.explanation {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  line-height: 1.75;
+  display: none;
+}
+.explanation.show { display: block; }
+.explanation.correct-expl {
+  background: var(--correct-dim);
+  border: 1px solid rgba(52,211,153,0.25);
+  color: var(--correct);
+}
+.explanation.wrong-expl {
+  background: var(--wrong-dim);
+  border: 1px solid rgba(248,113,113,0.25);
+  color: var(--wrong);
+}
+.explanation .expl-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+}
+
+/* ===== NAV BUTTONS ===== */
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+}
+.btn {
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover { filter: brightness(1.15); }
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: default;
+  filter: none;
+}
+.btn-secondary {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--primary); }
+.btn-submit {
+  background: var(--warn);
+  color: #000;
+}
+.btn-submit:hover { filter: brightness(1.1); }
+
+/* ===== RESULTS ===== */
+#results {
+  display: none;
+  padding: 20px;
+}
+.results-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 30px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.score-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.score-circle.pass {
+  border: 4px solid var(--correct);
+  background: var(--correct-dim);
+}
+.score-circle.fail {
+  border: 4px solid var(--wrong);
+  background: var(--wrong-dim);
+}
+.score-circle .pct {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.score-circle.pass .pct { color: var(--correct); }
+.score-circle.fail .pct { color: var(--wrong); }
+.score-circle .pct-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+.result-badge {
+  display: inline-block;
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+.result-badge.pass { background: var(--correct-dim); color: var(--correct); }
+.result-badge.fail { background: var(--wrong-dim); color: var(--wrong); }
+.result-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+.stat-box {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 16px 12px;
+}
+.stat-box .stat-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.stat-box .stat-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+.stat-box.s-correct .stat-num { color: var(--correct); }
+.stat-box.s-wrong .stat-num { color: var(--wrong); }
+.stat-box.s-total .stat-num { color: var(--primary); }
+
+.review-section { margin-top: 30px; }
+.review-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: left;
+}
+.review-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+.review-item .ri-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.ri-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+.ri-badge.ri-correct { background: var(--correct-dim); color: var(--correct); }
+.ri-badge.ri-wrong { background: var(--wrong-dim); color: var(--wrong); }
+.review-item .ri-q {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.review-item .ri-answer {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+}
+.ri-your {
+  background: var(--wrong-dim);
+  border: 1px solid rgba(248,113,113,0.2);
+}
+.ri-right {
+  background: var(--correct-dim);
+  border: 1px solid rgba(52,211,153,0.2);
+}
+.ri-expl {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.65;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.review-filter {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.filter-btn {
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn.active {
+  background: var(--primary-dim);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* ===== TIMER (Exam mode) ===== */
+.timer {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--warn);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .container { padding: 12px; }
+  .app-header { padding: 24px 12px 20px; }
+  .app-header h1 { font-size: 1.2rem; }
+  .mode-cards { grid-template-columns: 1fr; }
+  .question-card { padding: 20px 16px; }
+  .q-text { font-size: 0.9rem; }
+  .result-stats { grid-template-columns: 1fr; }
+  .q-nav-btn { width: 34px; height: 34px; font-size: 0.72rem; }
+  .btn { padding: 10px 16px; font-size: 0.82rem; }
+}
+
+/* ===== HIDE SECTIONS ===== */
+#quiz-area { display: none; }
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="app-header">
+    <h1>📊 วิเคราะห์งาน · กำหนดตำแหน่ง · วางแผนอัตรากำลัง</h1>
+    <div class="subtitle">แนวข้อสอบอัตนัย 40 ข้อ — Job Analysis · Job Evaluation · Manpower Planning</div>
+  </header>
+
+  <!-- MODE SELECT -->
+  <div id="mode-select">
+    <div class="mode-title">เลือกโหมดการทำข้อสอบ</div>
+    <div class="mode-cards">
+      <div class="mode-card" onclick="startQuiz('practice')">
+        <div class="icon">📖</div>
+        <h3>Practice Mode</h3>
+        <p>เฉลยทันทีทุกข้อ พร้อมคำอธิบาย เหมาะสำหรับทบทวน</p>
+      </div>
+      <div class="mode-card" onclick="startQuiz('exam')">
+        <div class="icon">🎯</div>
+        <h3>Exam Mode</h3>
+        <p>ทำครบทุกข้อก่อนเฉลย จับเวลา 60 นาที ผ่าน 70%</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ AREA -->
+  <div id="quiz-area">
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span id="progress-text">ข้อ 1 / 40</span>
+        <span id="mode-label" class="mode-badge">PRACTICE</span>
+        <span id="timer-display" class="timer hidden">60:00</span>
+        <span id="score-live">คะแนน: 0/0</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <button class="nav-toggle" id="nav-toggle" onclick="toggleNavigator()">📑 สารบัญข้อสอบ</button>
+    <div class="q-navigator" id="q-navigator"></div>
+
+    <div class="question-card" id="question-card">
+      <div class="q-number" id="q-number">Q01 / 40</div>
+      <div class="q-text" id="q-text"></div>
+      <div class="options-list" id="options-list"></div>
+      <div class="explanation" id="explanation-box">
+        <div class="expl-title" id="expl-title"></div>
+        <div id="expl-text"></div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" id="btn-prev" onclick="prevQuestion()">← ย้อนกลับ</button>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-submit hidden" id="btn-finish" onclick="finishExam()">ส่งข้อสอบ</button>
+        <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()">ข้อถัดไป →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <div class="results-card">
+      <div class="score-circle" id="score-circle">
+        <div class="pct" id="score-pct">0%</div>
+        <div class="pct-label">คะแนนรวม</div>
+      </div>
+      <div class="result-badge" id="result-badge">PASS</div>
+      <div id="result-msg" style="font-size:0.9rem;color:var(--text-dim);margin-top:8px;"></div>
+      <div class="result-stats">
+        <div class="stat-box s-correct">
+          <div class="stat-num" id="stat-correct">0</div>
+          <div class="stat-label">ตอบถูก</div>
+        </div>
+        <div class="stat-box s-wrong">
+          <div class="stat-num" id="stat-wrong">0</div>
+          <div class="stat-label">ตอบผิด</div>
+        </div>
+        <div class="stat-box s-total">
+          <div class="stat-num" id="stat-total">40</div>
+          <div class="stat-label">ข้อทั้งหมด</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-section">
+      <div class="review-title">📝 ทบทวนคำตอบ</div>
+      <div class="review-filter">
+        <button class="filter-btn active" onclick="filterReview('all', this)">ทั้งหมด</button>
+        <button class="filter-btn" onclick="filterReview('wrong', this)">เฉพาะข้อผิด</button>
+        <button class="filter-btn" onclick="filterReview('correct', this)">เฉพาะข้อถูก</button>
+      </div>
+      <div id="review-list"></div>
+    </div>
+
+    <div class="btn-row" style="justify-content:center;margin-top:30px;">
+      <button class="btn btn-secondary" onclick="location.reload()">🔄 ทำใหม่อีกครั้ง</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// === QUESTIONS DATA PLACEHOLDER (will be replaced during merge) ===
+const quizData = [
+{id:1,question:"คณะกรรมการบริหารอัตรากำลังกำหนดตำแหน่ง \"เจ้าพนักงานธุรการ\" เพิ่ม 5 อัตรา แต่ให้ปฏิบัติหน้าที่ดูแลสวนหย่อมและยกของหนักแทนงานเอกสาร นายสมคิดปฏิเสธอ้างว่าไม่ตรง Job Description ข้อกำหนดนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นดุลพินิจของคณะกรรมการอัตรากำลัง","ไม่ชอบด้วยกฎหมาย เพราะหน้าที่บิดเบือนจากมาตรฐานสายงานธุรการ ขัดต่อหลักการวิเคราะห์งานและระบบคุณธรรม","ชอบด้วยกฎหมาย หากมีเหตุจำเป็นทางราชการ","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีที่ไม่แจ้งล่วงหน้า"],correct:1,explanation:"หน้าที่ดูแลสวนหย่อมและยกของหนักเป็นลักษณะงานของสายงานอื่น (พนักงานสนาม) ไม่ตรงกับมาตรฐานกำหนดตำแหน่งธุรการ ถือเป็นการใช้ดุลพินิจโดยมิชอบ (Abuse of Discretion) นายสมคิดมีสิทธิ์ปฏิเสธได้โดยชอบ"},
+{id:2,question:"คณะกรรมการวิเคราะห์งานมีมติปรับลด Job Specification ของ \"นักกฎหมายชำนาญการพิเศษ\" จากปริญญาตรีนิติศาสตร์ เหลือ ม.6 อ้างเปิดโอกาสให้บุคลากรภายในที่มีประสบการณ์ มตินี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะประสบการณ์สำคัญกว่าวุฒิการศึกษา","ชอบด้วยกฎหมาย หากได้รับอนุมัติจาก ก.พ.","ไม่ชอบด้วยกฎหมาย เพราะเป็นตำแหน่งวิชาชีพเฉพาะที่คุณวุฒินิติศาสตร์เป็น Bona Fide Occupational Qualification","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีลดต่ำกว่าปริญญาตรี"],correct:2,explanation:"นักกฎหมายชำนาญการพิเศษเป็นตำแหน่งวิชาชีพเฉพาะที่ต้องใช้ความเชี่ยวชาญสูงในการตีความกฎหมาย คุณวุฒิปริญญาตรีนิติศาสตร์เป็นคุณสมบัติที่แยกไม่ได้จากลักษณะงาน คณะกรรมการระดับหน่วยงานไม่มีอำนาจลดมาตรฐานกำหนดตำแหน่งวิชาชีพเฉพาะ"},
+{id:3,question:"ผู้บริหารท้องถิ่นสั่งเพิ่มตำแหน่ง 10 อัตราในแผนอัตรากำลัง ทั้งที่ผลคำนวณภาระงาน (Workload) ระบุว่างานลดลงเพราะใช้ระบบดิจิทัล เพื่อเตรียมบรรจุญาติ การกระทำนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นการเตรียมรองรับงานในอนาคต","ชอบด้วยกฎหมาย หากได้รับอนุมัติจากสภาท้องถิ่น","ไม่ชอบด้วยกฎหมาย เพราะไม่มีภาระงานรองรับ เป็นการใช้ดุลพินิจเพื่อเอื้อเครือญาติ (Nepotism)","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีเพิ่มเกิน 5 อัตรา"],correct:2,explanation:"การกำหนดอัตรากำลังต้องเป็นไปตามปริมาณภาระงาน (Workload Analysis) เมื่อภาระงานลดลงแต่เพิ่มตำแหน่ง 10 อัตราเพื่อบรรจุญาติ ถือเป็นการใช้ดุลพินิจโดยมิชอบ ขัดต่อหลักความจำเป็น ความคุ้มค่า และระบบคุณธรรม"},
+{id:4,question:"ในโครงการประเมินค่างาน (Job Evaluation) ฝ่าย HR นำคะแนนความพึงพอใจส่วนตัวของอธิบดี มาคิดเป็นค่างาน 50% ทำให้นางสาวสมศรีที่ผลงานดีแต่ไม่สนิทอธิบดีชวดเลื่อนตำแหน่ง เกณฑ์นี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นดุลพินิจของผู้บังคับบัญชา","ไม่ชอบด้วยกฎหมาย เพราะการประเมินค่างานต้องวัดตัวงาน ไม่ใช่ความพึงพอใจส่วนตัวต่อตัวบุคคล","ชอบด้วยกฎหมาย หากอธิบดีให้คะแนนอย่างเป็นธรรม","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีที่คะแนนเกิน 30%"],correct:1,explanation:"Job Evaluation ต้องวัดความยาก ซับซ้อน ผลกระทบของ 'ตัวตำแหน่งงาน (Job)' ไม่ใช่ความพึงพอใจส่วนตัวในตัวบุคคล การนำปัจจัยอัตวิสัยมาคิด 50% ทำลายความเที่ยงตรงของการประเมิน เปิดช่องให้เกิดระบบอุปถัมภ์"},
+{id:5,question:"Job Description ของตำแหน่ง \"นักวิเคราะห์นโยบายและแผน\" ถูกกำหนดให้รวมหน้าที่สอดส่องโซเชียลมีเดียส่วนตัวของข้าราชการทุกคนในกอง ข้อกำหนดนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นการรักษาภาพลักษณ์องค์กร","ชอบด้วยกฎหมาย หากมีนโยบายป้องกันข้อมูลรั่วไหล","ไม่ชอบด้วยกฎหมาย เพราะละเมิดสิทธิ์ความเป็นส่วนตัวตามรัฐธรรมนูญ ไม่เกี่ยวกับเนื้องานหลัก ขัดต่อ PDPA","ไม่ชอบด้วยกฎหมาย แต่ผู้ครองตำแหน่งต้องปฏิบัติตาม"],correct:2,explanation:"สิทธิ์ความเป็นส่วนตัวและเสรีภาพในการสื่อสารได้รับการคุ้มครองตามรัฐธรรมนูญ การสอดส่องโซเชียลไม่ตรงกับเนื้องานวางแผน ขัดต่อ PDPA ข้อกำหนดตกเป็นโมฆะ นายประกรณ์มีสิทธิ์ปฏิเสธ"},
+{id:6,question:"แผนอัตรากำลังยุบตำแหน่ง \"นักวิชาการคอมพิวเตอร์ชำนาญการ\" แล้วโอนนายสมศักดิ์ไปเป็น \"พนักงานขับรถยนต์\" ที่เงินเดือนต่ำกว่ามาก เพราะหน่วยงาน Outsource ระบบ IT แล้ว คำสั่งนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นไปตามแผนอัตรากำลัง","ไม่ชอบด้วยกฎหมาย เพราะต้องย้ายไปตำแหน่งที่ระดับและเงินเดือนไม่ต่ำกว่าเดิม","ชอบด้วยกฎหมาย หากไม่มีตำแหน่งว่างอื่น","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีที่ไม่แจ้งล่วงหน้า"],correct:1,explanation:"กฎหมายคุ้มครองชัดเจนว่าเมื่อยุบตำแหน่ง ต้องจัดหาตำแหน่งประเภทเดียวกันหรือสายงานเกี่ยวข้องที่ระดับและเงินเดือนไม่ต่ำกว่าเดิม การย้ายจากวิชาการคอมพิวเตอร์ไปขับรถเป็นการลิดรอนสิทธิ์อย่างร้ายแรง"},
+{id:7,question:"แผน Manpower Planning ของรัฐวิสาหกิจห้ามกำหนดตำแหน่งระดับบริหารสูงให้พนักงานเพศหญิง อ้างสถิติลาป่วย/ลาคลอดสูง ข้อกำหนดนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะมีสถิติรองรับ","ชอบด้วยกฎหมาย เพราะเป็นการวางแผนต่อเนื่อง","ไม่ชอบด้วยกฎหมาย เพราะเป็นการเลือกปฏิบัติทางเพศ (Gender Discrimination) ขัดต่อรัฐธรรมนูญ","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีตำแหน่ง CEO"],correct:2,explanation:"ขัดต่อหลักความเสมอภาคทางเพศ (Gender Equality) ที่รัฐธรรมนูญและ พ.ร.บ.ความเท่าเทียมระหว่างเพศคุ้มครอง การลาคลอดเป็นสิทธิ์ตามกฎหมาย ตำแหน่งบริหารต้องพิจารณาจากสมรรถนะไม่ใช่เพศ"},
+{id:8,question:"ฝ่าย HR แอบเข้าตรวจค้นเอกสารส่วนตัวและไดอารี่ลับของอาจารย์ในเวลากลางคืน อ้างว่าเป็น Direct Observation เพื่อวิเคราะห์งาน วิธีการนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นเครื่องคอมพิวเตอร์/โต๊ะของหน่วยงาน","ชอบด้วยกฎหมาย หากเป็นไปเพื่อวัตถุประสงค์การวิจัย","ไม่ชอบด้วยกฎหมาย อาจผิดอาญาฐานบุกรุก ขัดต่อ PDPA ข้อมูลที่ได้ใช้ไม่ได้","ไม่ชอบด้วยกฎหมาย แต่ข้อมูลที่ได้ยังนำไปใช้ได้"],correct:2,explanation:"Direct Observation คือการสังเกตพฤติกรรมงานอย่างเปิดเผยในเวลาทำงาน ไม่ใช่การลักลอบค้นเอกสารยามวิกาล ผิดอาญาฐานบุกรุก ขัด PDPA ข้อมูลที่ได้เป็น Fruit of the Poisonous Tree ใช้ไม่ได้"},
+{id:9,question:"ตำแหน่งนักวิชาการเงินฯ มีภาระงานล้นเกณฑ์ 200% แต่คณะกรรมการไม่กำหนดตำแหน่งเพิ่ม เพื่อนำงบเงินเดือนที่เหลือจ่ายเป็นโบนัสให้กรรมการบริหาร มตินี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นการบริหารงบประมาณอย่างคุ้มค่า","ชอบด้วยกฎหมาย เพราะงบเหลือจ่ายสามารถจัดสรรใหม่ได้","ไม่ชอบด้วยกฎหมาย เพราะเป็นการใช้ดุลพินิจบิดเบือนเพื่อประโยชน์ส่วนตน (Improper Motive)","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีภาระงานเกิน 150%"],correct:2,explanation:"คณะกรรมการมีหน้าที่กำหนดตำแหน่งตามภาระงานจริง การงดเพิ่มตำแหน่งเพื่อเอางบไปจ่ายโบนัสให้พวกตนเอง เป็นการใช้ดุลพินิจบิดเบือนวัตถุประสงค์ (Misuse of Discretion) ขัดต่อวินัยการเงินการคลัง"},
+{id:10,question:"ประกาศเกณฑ์ประเมินค่างานระดับเชี่ยวชาญ บังคับให้ผู้ขอประเมินลงนามสละสิทธิ์อุทธรณ์ล่วงหน้าทุกกรณี ข้อกำหนดนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นข้อตกลงที่สมัครใจ","ชอบด้วยกฎหมาย เพราะช่วยให้กระบวนการรวดเร็ว","ไม่ชอบด้วยกฎหมาย ข้อกำหนดตกเป็นโมฆะ เพราะสิทธิ์อุทธรณ์เป็น Inalienable Right ที่สละล่วงหน้าไม่ได้","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีที่ผลประเมินเป็นผลร้าย"],correct:2,explanation:"สิทธิ์อุทธรณ์คำสั่งทางปกครองเป็นสิทธิ์ขั้นพื้นฐานที่กฎหมายว่าด้วยวิธีปฏิบัติราชการทางปกครองรับรอง ไม่สามารถสละล่วงหน้าได้ ข้อกำหนดตกเป็นโมฆะ การลงนามไม่มีผลตัดสิทธิ์"},
+{id:11,question:"อปท. กำหนดตำแหน่ง \"ที่ปรึกษากิตติมศักดิ์\" เงินเดือนสูงกว่าปลัดฯ 2 เท่า ให้ผู้บริหารแต่งตั้งใครก็ได้โดยไม่ต้องคัดเลือกหรือดูภาระงาน การกำหนดตำแหน่งนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นตำแหน่งกิตติมศักดิ์","ชอบด้วยกฎหมาย หากมีงบประมาณเพียงพอ","ไม่ชอบด้วยกฎหมาย เพราะค่าตอบแทนเกินส่วน ไม่มีภาระงานรองรับ เป็นช่องทางเอื้อพวกพ้อง (Cronyism)","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีเงินเดือนเกิน 1.5 เท่าของปลัดฯ"],correct:2,explanation:"การสร้างตำแหน่งที่เงินเดือนสูงเกินส่วน ไม่มีภาระงาน และแต่งตั้งได้โดยพลการ ขัดต่อ พ.ร.บ.บริหารงานบุคคลส่วนท้องถิ่น เป็นช่องทางถ่ายโอนงบประมาณให้พวกพ้องโดยมิชอบ"},
+{id:12,question:"หน่วยงานเพิ่มชั่วโมงทำงานพยาบาลวิชาชีพจาก 40 เป็น 60 ชม./สัปดาห์ ไม่เพิ่มอัตรากำลัง ไม่จ่าย OT อ้างแผนเพิ่มผลผลิต ข้อกำหนดนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นไปตามแผนกลยุทธ์องค์กร","ชอบด้วยกฎหมาย หากพยาบาลยินยอม","ไม่ชอบด้วยกฎหมาย เพราะเกินมาตรฐาน 40 ชม. ไม่จ่าย OT ลิดรอนสิทธิ์แรงงาน เสี่ยงต่อความปลอดภัยผู้ป่วย","ไม่ชอบด้วยกฎหมาย เฉพาะส่วนที่เกิน 48 ชม."],correct:2,explanation:"เกินมาตรฐาน 40 ชม./สัปดาห์ การทำงานเกินเวลาต้องจ่าย OT ตามสิทธิ์ การเพิ่มเป็น 60 ชม.โดยไม่ชดเชยลิดรอนสิทธิ์แรงงาน และเสี่ยงต่อ Burnout ที่กระทบความปลอดภัยผู้ป่วย"},
+{id:13,question:"Job Specification ของ \"นักประชาสัมพันธ์\" กำหนดห้ามผู้มีภูมิลำเนาจังหวัดภาคใต้สมัคร อ้างว่าต้องทำงานส่วนกลางเป็นหลัก นายมานพจากยะลาถูกตัดสิทธิ์ เกณฑ์นี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นความจำเป็นของตำแหน่ง","ชอบด้วยกฎหมาย หากมีเหตุผลด้านความมั่นคง","ไม่ชอบด้วยกฎหมาย เพราะเป็นการเลือกปฏิบัติด้วยถิ่นที่อยู่ ขัดต่อรัฐธรรมนูญและระบบคุณธรรม","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีจังหวัดชายแดนใต้"],correct:2,explanation:"ภูมิลำเนาไม่เกี่ยวกับความสามารถในการทำงาน ผู้มีภูมิลำเนาจังหวัดใดก็เดินทางมาทำงานส่วนกลางได้ เป็นการเลือกปฏิบัติที่ไร้เหตุผล (Irrelevant Consideration) ขัดต่อรัฐธรรมนูญ"},
+{id:14,question:"นายนิพนธ์ยื่นผลงานวิจัยปลอมเพื่อประเมินค่างานสู่ตำแหน่งทรงคุณวุฒิ ตรวจพบหลัง 3 ปี สู้ว่าได้รับโปรดเกล้าฯ แล้วเพิกถอนไม่ได้ ข้อต่อสู้ฟังขึ้นหรือไม่?",options:["ฟังขึ้น เพราะคำสั่งโปรดเกล้าฯ ไม่อาจเพิกถอน","ฟังขึ้น เพราะเลยระยะเวลาอุทธรณ์ 90 วัน","ฟังไม่ขึ้น เพราะคำสั่งเกิดจากการทุจริต ไม่ได้รับความคุ้มครองตามหลักความเชื่อถือโดยสุจริต เพิกถอนได้ไม่มีอายุความ","ฟังไม่ขึ้น แต่ต้องรอคำสั่งศาล"],correct:2,explanation:"เมื่อคำสั่งเกิดจากเอกสารปลอม/ข้อมูลเท็จ ผู้รับคำสั่งไม่ได้รับความคุ้มครองตามหลักความเชื่อถือไว้วางใจโดยสุจริต เพิกถอนได้ตลอดเวลาไม่มีข้อจำกัดระยะเวลา การโปรดเกล้าฯ เป็นเพียงพิธีการ ไม่ลบล้างการทุจริต"},
+{id:15,question:"คณะกรรมการ Succession Planning ลบชื่อนายสมคิดจากบัญชีผู้มีสิทธิ์เป็นผู้อำนวยการสำนัก เพราะเคยวิพากษ์วิจารณ์การวางแผนกำลังคนในสัมมนาวิชาการ ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะผู้บริหารต้องไม่วิพากษ์องค์กร","ชอบด้วยกฎหมาย หากการวิพากษ์สร้างความเสียหาย","ไม่ชอบด้วยกฎหมาย เพราะเป็นการตอบโต้เสรีภาพทางวิชาการ ใช้ดุลพินิจโดยมีเจตนากลั่นแกล้ง (Retaliation)","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีวิพากษ์ในที่ประชุมภายนอก"],correct:2,explanation:"การวิพากษ์วิจารณ์เชิงวิชาการในสัมมนาเป็นเสรีภาพทางวิชาการที่ชอบธรรม Succession Planning ต้องประเมินจากสมรรถนะ การนำเหตุนี้มาตอบโต้เป็นการใช้ดุลพินิจโดยปัจจัยที่ไม่เกี่ยวข้อง (Irrelevant Consideration)"},
+{id:16,question:"ระบบ AI วิเคราะห์ภาระงานเกิด Bug ทำให้ผลภาระงานของนางสาวราตรีต่ำกว่าจริง ตำแหน่งถูกยุบ หน่วยงานอ้างเป็นข้อผิดพลาดเทคโนโลยีที่ควบคุมไม่ได้ หน่วยงานต้องรับผิดหรือไม่?",options:["ไม่ต้องรับผิด เพราะเป็นเหตุสุดวิสัยทางเทคโนโลยี","ต้องรับผิดชอบ เพราะเลือกใช้ AI จึงต้องรับผิดในความผิดพลาดของเครื่องมือ (Fault of Service)","ไม่ต้องรับผิด เพราะเป็นความผิดของบริษัทผู้พัฒนา AI","ต้องรับผิดเฉพาะกรณีที่จงใจไม่แก้ไข"],correct:1,explanation:"ความผิดพลาดของเครื่องมือที่รัฐเลือกใช้ถือเป็นความรับผิดชอบของหน่วยงาน ข้ออ้างฟังไม่ขึ้น ต้องทบทวนวิเคราะห์ภาระงานใหม่ด้วยระบบที่ถูกต้อง (Manual Audit) และคืนกรอบตำแหน่ง"},
+{id:17,question:"ระบบออนไลน์รับข้อมูลภาระงานล่มตอน 23.58 น. ทำให้ข้อมูลของนายปรีชาบันทึกเสร็จ 00.03 น. วันถัดไป เจ้าหน้าที่ตัดสิทธิ์และประเมินภาระงานเป็นศูนย์ ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเลยกำหนดเวลา","ชอบด้วยกฎหมาย เพราะเป็นเกณฑ์เดียวกันสำหรับทุกคน","ไม่ชอบด้วยกฎหมาย เพราะระบบล่มเป็นความบกพร่องของหน่วยงาน ไม่ใช่ความผิดของนายปรีชา","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีที่ระบบล่มเกิน 30 นาที"],correct:2,explanation:"นายปรีชาส่งข้อมูลตอน 23.58 น. ยังอยู่ในกำหนด ระบบล่มเป็นความบกพร่องฝั่งราชการ การตัดสิทธิ์และประเมินเป็นศูนย์ขัดต่อหลักความยุติธรรมตามธรรมชาติและหลักความพอสมควรแก่เหตุ"},
+{id:18,question:"คณะกรรมการปรับ Job Description ให้ \"นักวิชาการตรวจสอบภายใน\" ทำหน้าที่เป็นหัวหน้าคณะกรรมการจัดซื้อจัดจ้างด้วย นายวิชาญคัดค้านว่าขัดหลักความเป็นอิสระของตรวจสอบ ข้อคัดค้านฟังขึ้นหรือไม่?",options:["ฟังไม่ขึ้น เพราะเป็นการเพิ่มภาระงาน","ฟังขึ้น เพราะขัดต่อหลักความเป็นอิสระของการตรวจสอบภายใน (Independence and Objectivity) เกิด Conflict of Interest","ฟังไม่ขึ้น เพราะเป็นคำสั่งผู้บังคับบัญชา","ฟังขึ้นบางส่วน เฉพาะโครงการที่เกิน 1 ล้านบาท"],correct:1,explanation:"ผู้ตรวจสอบภายในต้องเป็นอิสระจากกิจกรรมที่ตรวจสอบ การให้ทำจัดซื้อจัดจ้างเองทำให้ต้องตรวจสอบงานตัวเองในอนาคต ขัดต่อกฎหมายวินัยการเงินการคลังและมาตรฐานตรวจสอบภายใน"},
+{id:19,question:"โครงการประเมินค่างานเรียกเก็บเงินมัดจำ 20,000 บาท หากประเมินไม่ผ่านริบเงินเข้ากองทุนสวัสดิการ ข้อกำหนดนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นค่าธรรมเนียมตรวจผลงาน","ชอบด้วยกฎหมาย หากมีระเบียบภายในรองรับ","ไม่ชอบด้วยกฎหมาย เพราะไม่มีฐานอำนาจกฎหมายเรียกเก็บเงิน กีดกันผู้ขาดทุนทรัพย์ ขัดหลักความเสมอภาค","ไม่ชอบด้วยกฎหมาย เฉพาะส่วนการริบเงิน"],correct:2,explanation:"การประเมินค่างานเป็นสิทธิ์ความก้าวหน้าตามระบบคุณธรรม ค่าใช้จ่ายเป็นรายจ่ายปกติของรัฐ ไม่มีกฎหมายให้อำนาจเรียกเก็บเงินจากข้าราชการ กีดกันผู้ขาดทุนทรัพย์ ต้องคืนเงินทั้งหมด"},
+{id:20,question:"ประกาศสัดส่วนอัตรากำลัง (Manpower Ratio) ล็อกโควตาตำแหน่งชำนาญการพิเศษให้เฉพาะศิษย์เก่ามหาวิทยาลัย X อ้างความกลมเกลียวทางวิชาการ ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะแนวคิดวิชาการต้องเป็นทิศทางเดียวกัน","ชอบด้วยกฎหมาย หากมหาวิทยาลัย X มีชื่อเสียงด้านนี้","ไม่ชอบด้วยกฎหมาย เพราะเป็นการเลือกปฏิบัติโดยสถาบันนิยม (Institutional Favoritism) ขัดหลักความเสมอภาค","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีที่จำกัดเฉพาะ 1 สถาบัน"],correct:2,explanation:"สถาบันการศึกษาที่จบไม่ใช่ดัชนีชี้วัดค่างาน ข้าราชการที่จบจากสถาบันที่ ก.พ. รับรองมีสิทธิ์เท่ากัน การล็อกโควตาเป็น Institutional Favoritism ขัดต่อหลักความเสมอภาคและระบบคุณธรรม"},
+{id:21,question:"หัวหน้างานจงใจดองเรื่องไม่ส่งแบบประเมินภาระงานของนายสมเกียรติเข้าคณะกรรมการอัตรากำลังนาน 1 ปี โดยไม่มีเหตุผล ทำให้เสียโอกาสเลื่อนตำแหน่ง การกระทำนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นดุลพินิจของหัวหน้างาน","ชอบด้วยกฎหมาย หากมีเหตุผลทางราชการ","ไม่ชอบด้วยกฎหมาย เพราะเป็นการปฏิบัติหน้าที่ล่าช้าเกินสมควร ถือเป็นการละเลยต่อหน้าที่ตามกฎหมาย","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีที่ล่าช้าเกิน 6 เดือน"],correct:2,explanation:"หัวหน้างานมีหน้าที่กลั่นกรองและส่งเรื่องภายในเวลาปกติ (15-30 วัน) การดองเรื่อง 1 ปีโดยไม่มีเหตุจำเป็นเป็นการละเลยหน้าที่ นายสมเกียรติฟ้องศาลปกครองได้และเรียกค่าเสียหายเงินประจำตำแหน่งที่สูญเสีย"},
+{id:22,question:"คณะกรรมการฯ ยุบตำแหน่ง \"นักสังคมสงเคราะห์\" ทั้งหมด เพราะเห็นว่าดูแลผู้พิการ/ผู้สูงอายุ \"มีแต่รายจ่ายไม่สร้างรายได้\" ใช้เกณฑ์ความคุ้มค่าเชิงพาณิชย์ มตินี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะต้องบริหารงบประมาณอย่างคุ้มค่า","ชอบด้วยกฎหมาย หากมีหน่วยงานอื่นรับช่วงดูแล","ไม่ชอบด้วยกฎหมาย เพราะสวัสดิการสังคมเป็นภารกิจหลักภาคบังคับ หน่วยงานรัฐไม่ใช่บริษัทที่มุ่งกำไร","ไม่ชอบด้วยกฎหมาย เฉพาะกรณียุบทั้งหมด 100%"],correct:2,explanation:"การดูแลผู้พิการ/ผู้สูงอายุเป็นภารกิจภาคบังคับตาม พ.ร.บ.กระจายอำนาจฯ หน่วยงานรัฐไม่ใช่บริษัทเอกชนที่วัดด้วยกำไร การใช้เกณฑ์เชิงพาณิชย์ยุบตำแหน่งสวัสดิการเป็นการบิดเบือนวัตถุประสงค์ของกฎหมาย (Improper Purpose)"},
+{id:23,question:"ระบบฐานข้อมูลตำแหน่งอิเล็กทรอนิกส์รั่วไหล ข้อมูล Job Description/เงินเดือน/ประวัติประเมินค่างานถูกเผยแพร่สู่อินเทอร์เน็ต เพราะ HR ตั้งรหัสผ่านง่ายเกินไป หน่วยงานต้องรับผิดหรือไม่?",options:["ไม่ต้องรับผิด เพราะถูกแฮก","ต้องรับผิดชดใช้ค่าเสียหายตาม PDPA เพราะละเลยหน้าที่ Data Controller จัดมาตรการรักษาความปลอดภัย","ไม่ต้องรับผิด เพราะเป็นความผิดของเจ้าหน้าที่ IT","ต้องรับผิดเฉพาะค่าเสียหายทางจิตใจ"],correct:1,explanation:"หน่วยงานรัฐในฐานะ Data Controller ตาม PDPA มีหน้าที่จัดมาตรการรักษาความปลอดภัย การตั้งรหัสผ่านง่ายเป็นความประมาทเลินเล่อ ต้องรับผิดชดใช้ค่าเสียหายและอาจถูกปรับทางปกครอง"},
+{id:24,question:"แผนอัตรากำลังกำหนดตำแหน่ง 3 อัตราประจำสาขาต่างจังหวัด แต่ให้ WFH ถาวรไม่มีภาระงานราชการ ทำธุรกิจส่วนตัวผู้บริหารแทน ความรับผิดทางกฎหมายคืออะไร?",options:["ตักเตือนเป็นลายลักษณ์อักษร","ลงโทษวินัยไม่ร้ายแรง","ผู้บริหารและพนักงานทั้ง 3 คนต้องถูกไล่ออก ดำเนินคดีอาญา ม.157 และชดใช้เงินเดือนคืนรัฐ","พักราชการจนกว่าจะสอบสวนเสร็จ"],correct:2,explanation:"การนำกรอบอัตรากำลังและเงินงบประมาณไปใช้เพื่อธุรกิจส่วนตัวเป็นทุจริตต่อหน้าที่อย่างร้ายแรง ผิดอาญา ม.157 ทั้งผู้สั่งการและผู้ยินยอมปฏิบัติตามต้องถูกไล่ออกและชดใช้เงินเดือนคืน"},
+{id:25,question:"คณะกรรมการเพิ่มเกณฑ์ทดสอบจิตวิทยาใน Job Specification ของนายแพทย์ชำนาญการพิเศษ แล้วนำไปบังคับย้อนหลังกับนายแพทย์ธีรเดชที่ผ่านประเมินแล้วรอแต่งตั้ง ทำให้ตกเกณฑ์ ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเกณฑ์ใหม่ดีกว่า","ชอบด้วยกฎหมาย หากประกาศล่วงหน้า","ไม่ชอบด้วยกฎหมาย เพราะขัดหลักไม่มีผลย้อนหลังที่เป็นผลร้าย เกณฑ์ใหม่ใช้ได้เฉพาะอนาคต","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีที่เกณฑ์ใหม่เข้มงวดกว่า"],correct:2,explanation:"ขัดต่อหลักนิติธรรมอย่างร้ายแรง ทั้งหลักไม่มีผลย้อนหลังที่เป็นผลร้าย (Non-retroactivity) และหลักความคาดหมายอันชอบธรรม (Legitimate Expectation) เกณฑ์ใหม่ใช้ได้เฉพาะการประเมินในอนาคต"},
+{id:26,question:"คณะกรรมการแต่งตั้งนายจ้างเหมา (Outsource) มารักษาการในตำแหน่ง \"ผู้อำนวยการส่วนวิเคราะห์งานฯ\" ซึ่งเป็นตำแหน่งข้าราชการประจำ อ้างต้องการมุมมองเอกชน ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นการนำนวัตกรรมเข้ามา","ชอบด้วยกฎหมาย หากมีสัญญาจ้างที่ปรึกษา","ไม่ชอบด้วยกฎหมาย เพราะ Outsource ไม่มีสถานะเป็นข้าราชการ ไม่มีอำนาจใช้อำนาจรัฐ (Lack of Legal Authority)","ไม่ชอบด้วยกฎหมาย เฉพาะตำแหน่งระดับบริหาร"],correct:2,explanation:"ตำแหน่งข้าราชการประจำระดับอำนวยการมีหน้าที่ใช้อำนาจรัฐ (Sovereign Power) Outsource เป็นเพียงคู่สัญญาจ้างทำของ ไม่มีสถานะข้าราชการ ไม่สามารถใช้อำนาจรัฐได้ คำสั่งแต่งตั้งเสียเปล่า"},
+{id:27,question:"กรรมการประเมินค่างานมีความสัมพันธ์เป็นคู่อยู่กิน (ไม่จดทะเบียน) กับผู้ขอประเมิน ไม่ยอมถอนตัวและร่วมลงมติให้ผ่าน มติชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะไม่ได้จดทะเบียนสมรส","ชอบด้วยกฎหมาย หากเสียงส่วนใหญ่เห็นชอบ","ไม่ชอบด้วยกฎหมาย เพราะกรรมการมีส่วนได้เสีย ขัดหลักความเป็นกลาง ต้องถอนตัว มติเสียไป","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีที่กรรมการเป็นคนชี้ขาด"],correct:2,explanation:"ผู้อยู่กินฉันท์สามีภรรยาแม้ไม่จดทะเบียนก็ถือว่ามีผลประโยชน์ร่วม กรรมการต้องถอนตัวตาม พ.ร.บ.วิธีปฏิบัติราชการทางปกครอง มติที่ออกโดยกรรมการที่มีส่วนได้เสียไม่ชอบด้วยกฎหมาย ต้องประเมินใหม่"},
+{id:28,question:"แผนงานกำหนดว่าพนักงานที่วิเคราะห์งานช้ากว่าเกณฑ์เกิน 10% จะถูกส่งไปเป็น \"พนักงานทำความสะอาด\" ทันทีโดยไม่เตือน เกณฑ์นี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นมาตรการเพิ่มประสิทธิภาพ","ชอบด้วยกฎหมาย หากแจ้งให้ทราบล่วงหน้า","ไม่ชอบด้วยกฎหมาย เพราะรุนแรงเกินสมควร (Manifestly Disproportionate) ย้ายข้ามสายงานโดยไม่เตือน","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีที่ช้าไม่เกิน 20%"],correct:2,explanation:"งานช้าเกิน 10% อาจเกิดจากหลายปัจจัย การลงโทษด้วยการย้ายข้ามสายงานทันทีโดยไม่เตือนเป็นมาตรการที่รุนแรงเกินเหตุ (Manifestly Disproportionate) ขัดหลักความพอสมควรแก่เหตุ ทางออกที่ชอบคือฝึกอบรมหรือตักเตือน"},
+{id:29,question:"ผู้บริหารสูงสุดสั่งโอนงบเงินเดือนของตำแหน่งว่างในแผนอัตรากำลังทั้งหมด ไปซื้อรถยนต์หรูประจำตำแหน่ง อ้างว่างบเหลือจ่ายเพราะยังไม่มีคนทำงาน ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะงบเหลือจ่ายสามารถจัดสรรใหม่ได้","ชอบด้วยกฎหมาย หากมีอนุมัติจากกระทรวงการคลัง","ไม่ชอบด้วยกฎหมาย เพราะขัดต่อ พ.ร.บ.วิธีการงบประมาณ โอนข้ามหมวดเพื่อประโยชน์ส่วนตน (Misuse of Public Funds)","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีรถหรูเกินมาตรฐาน"],correct:2,explanation:"งบเงินเดือนมีวัตถุประสงค์เฉพาะเพื่อจ้างงาน ตำแหน่งว่างต้องเร่งสรรหาคนมาบรรจุ การโอนข้ามหมวดไปซื้อรถส่วนตัวผู้บริหาร ขัดต่อ พ.ร.บ.วิธีการงบประมาณและวินัยการเงินการคลัง อาจผิด ม.157"},
+{id:30,question:"Job Specification ของ \"นักวิชาการวัฒนธรรม\" ห้ามผู้มีความบกพร่องทางกายภาพ (ตาบอดสี/นิ้วกุด) โดยไม่พิสูจน์ว่าเป็นอุปสรรคต่องานจริง เกณฑ์นี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นเกณฑ์สุขภาพทั่วไป","ชอบด้วยกฎหมาย หากมีเหตุผลทางการแพทย์","ไม่ชอบด้วยกฎหมาย เพราะเป็นการเลือกปฏิบัติต่อผู้พิการ ตาบอดสี/นิ้วกุดไม่เป็นอุปสรรคต่องานวิชาการวัฒนธรรม","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีตาบอดสี"],correct:2,explanation:"นักวิชาการวัฒนธรรมเป็นงานวิจัย/วางแผน/ส่งเสริมวัฒนธรรม ตาบอดสี/นิ้วกุดไม่เป็นอุปสรรค การห้ามโดยไม่พิสูจน์ความจำเป็นเป็นการเลือกปฏิบัติ ขัดต่อกฎหมายส่งเสริมคุณภาพชีวิตคนพิการ"},
+{id:31,question:"นายสมศักดิ์ได้ตำแหน่งชำนาญการพิเศษจากการประเมินค่างาน ตรวจพบหลัง 5 ปีว่าเอกสารภาระงานเป็นเท็จที่กุขึ้นเอง สู้ว่าเลยอายุความเพิกถอนแล้ว ข้อต่อสู้ฟังขึ้นหรือไม่?",options:["ฟังขึ้น เพราะเลย 5 ปีแล้ว","ฟังขึ้น เพราะเลยระยะเวลาอุทธรณ์ 90 วัน","ฟังไม่ขึ้น เพราะเกิดจากการทุจริตเอกสาร ไม่ได้รับความคุ้มครองตามหลักสุจริต เพิกถอนได้ตลอดเวลา","ฟังไม่ขึ้น แต่ต้องรอคำสั่งศาล"],correct:2,explanation:"เหมือนข้อ 14 — คำสั่งที่เกิดจากเอกสารปลอม/ข้อมูลเท็จ ผู้รับคำสั่งไม่ได้รับความคุ้มครองตามหลักสุจริต เพิกถอนได้ตลอดเวลาไม่มีอายุความ ต้องเรียกเงินประจำตำแหน่งคืนและดำเนินคดีวินัยร้ายแรง"},
+{id:32,question:"คณะกรรมการปรับลดตำแหน่งนักทรัพยากรบุคคล 50% โดยไม่จัดทำประชาพิจารณ์หรือรับฟังความคิดเห็นจากบุคลากรผู้ได้รับผลกระทบเลย กระบวนการนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นอำนาจดุลพินิจของคณะกรรมการ","ชอบด้วยกฎหมาย หากมีข้อมูลวิเคราะห์งานรองรับ","ไม่ชอบด้วยกฎหมาย เพราะขาดขั้นตอนรับฟังความคิดเห็น (Procedural Improper) ขัดหลักธรรมาภิบาล","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีลดเกิน 30%"],correct:2,explanation:"การปรับลดตำแหน่ง 50% กระทบสิทธิ์บุคลากรจำนวนมาก ต้องผ่านกระบวนการรับฟังความคิดเห็น (Public Consultation) การลัดขั้นตอนเป็น Procedural Improper ขัดหลักธรรมาภิบาลและกฎหมายปกครอง"},
+{id:33,question:"โครงการวิเคราะห์งานบังคับกรอก Daily Log ทุก 15 นาที ลืมกรอกวันไหนหักเงินเดือน 1,000 บาทฐานละทิ้งหน้าที่ ข้อกำหนดนี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นเกณฑ์เดียวกันสำหรับทุกคน","ชอบด้วยกฎหมาย หากแจ้งให้ทราบล่วงหน้า","ไม่ชอบด้วยกฎหมาย เพราะลืมกรอกแบบฟอร์มไม่ใช่ละทิ้งหน้าที่ ไม่มีฐานอำนาจหักเงินเดือน ตกเป็นโมฆะ","ไม่ชอบด้วยกฎหมาย เฉพาะส่วนที่เกินวันละ 500 บาท"],correct:2,explanation:"การหักเงินเดือนทำได้เฉพาะกรณีที่กฎหมายบัญญัติชัดเจน ลืมกรอกแบบฟอร์มไม่ใช่การขาดราชการหรือละทิ้งหน้าที่ บังคับกรอกทุก 15 นาทียังทำลายสมาธิงาน ข้อกำหนดไม่มีฐานอำนาจและเกินสมควรแก่เหตุ"},
+{id:34,question:"หน่วยงานบรรจุแต่งตั้ง 5 อัตราในตำแหน่งใหม่ทันที ทั้งที่แผนอัตรากำลัง 3 ปียังไม่ได้รับอนุมัติจาก ก.พ. อ้างความจำเป็นเร่งด่วน ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นนโยบายเร่งด่วน","ชอบด้วยกฎหมาย หากมีงบประมาณเพียงพอ","ไม่ชอบด้วยกฎหมาย เพราะตำแหน่งยังไม่มีผลตามกฎหมาย (Non-existent Positions) คำสั่งแต่งตั้งเป็นโมฆะ","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีเกิน 3 อัตรา"],correct:2,explanation:"กรอบอัตรากำลังมีผลบังคับเมื่อ ก.พ. อนุมัติ ตำแหน่งที่ยังไม่ได้รับอนุมัติยังไม่มีตัวตนในทางกฎหมาย การบรรจุเข้าตำแหน่งที่ไม่มีอยู่เป็น Ultra Vires คำสั่งแต่งตั้งตกเป็นโมฆะ"},
+{id:35,question:"ประกาศ Job Specification ของ \"นักวิเทศสัมพันธ์ชำนาญการพิเศษ\" กำหนดคะแนนภาษาอังกฤษสูงกว่าเกณฑ์ ก.พ. 2 เท่า ข้าราชการภายในไม่มีใครผ่าน ร้องเรียนว่ากีดกัน เกณฑ์นี้ชอบด้วยกฎหมายหรือไม่?",options:["ไม่ชอบด้วยกฎหมาย เพราะกีดกันบุคลากรภายใน","ไม่ชอบด้วยกฎหมาย เพราะเกินเกณฑ์ ก.พ.","ชอบด้วยกฎหมาย เพราะนักวิเทศสัมพันธ์ระดับสูงต้องใช้ภาษาอังกฤษเชี่ยวชาญ เป็น Critical Job Requirement ที่สมเหตุสมผล","ชอบด้วยกฎหมาย เฉพาะกรณีที่ทำงานกับต่างประเทศโดยตรง"],correct:2,explanation:"นักวิเทศสัมพันธ์ระดับสูงมีหน้าที่เจรจาทางการทูตและประสานองค์กรสากล ทักษะภาษาอังกฤษระดับเชี่ยวชาญเป็น Critical Job Requirement หน่วยงานมีอำนาจกำหนดเกณฑ์สูงกว่า ก.พ. ได้ตามลักษณะงาน"},
+{id:36,question:"เกณฑ์ประเมินค่างานระดับเชี่ยวชาญนำพฤติกรรมเต้นรำ/ร่วมวงดนตรีงานเลี้ยง มาคิดเป็นคะแนน \"ความคิดสร้างสรรค์\" 30% เกณฑ์นี้ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะสะท้อนทักษะสังคม","ชอบด้วยกฎหมาย หากอยู่ในเกณฑ์สมรรถนะ","ไม่ชอบด้วยกฎหมาย เพราะเป็นปัจจัยที่ไม่เกี่ยวข้องกับค่างานของตำแหน่งเชี่ยวชาญ ขัดหลักระบบคุณธรรม","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีคะแนนเกิน 20%"],correct:2,explanation:"ค่างานตำแหน่งเชี่ยวชาญต้องวัดจากความยาก ซับซ้อน ผลงานวิชาการ กิจกรรมนันทนาการไม่เกี่ยวกับเนื้องานราชการ เป็น Irrelevant Consideration การนำมาคิด 30% เป็นการใช้ดุลพินิจโดยบิดเบือน"},
+{id:37,question:"คณะกรรมการยุบตำแหน่ง \"นักวิชาการเกษตร\" ในท้องถิ่น โยกไปเป็น \"นักกลยุทธ์การตลาดดิจิทัล\" ส่วนกลาง เกษตรกรขาดเจ้าหน้าที่ให้คำปรึกษาฟ้องศาล ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นการพลิกโฉมองค์กร","ชอบด้วยกฎหมาย หากมีแผนยุทธศาสตร์รองรับ","ไม่ชอบด้วยกฎหมาย เพราะทำให้บริการสาธารณะในพื้นที่หยุดชะงัก ขัดหลักความต่อเนื่องของบริการสาธารณะ","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีที่ไม่มีเจ้าหน้าที่ทดแทน"],correct:2,explanation:"ต้องรักษาสมดุลระหว่างยุทธศาสตร์องค์กรกับบริการสาธารณะขั้นพื้นฐาน การปล่อยให้พื้นที่ขาดเจ้าหน้าที่จนบริการหยุดชะงักขัดหลักความต่อเนื่องของบริการสาธารณะ (Principle of Continuity of Public Service)"},
+{id:38,question:"เจ้าหน้าที่ HR สัมภาษณ์วิเคราะห์งาน (Job Interview) โดยข่มขู่ กดดัน ซักไซ้ความเห็นทางการเมืองและพฤติกรรมการใช้เงินส่วนตัว อ้างว่าเป็นการวิเคราะห์สมรรถนะ ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นส่วนหนึ่งของการประเมินความซื่อสัตย์","ชอบด้วยกฎหมาย หากเป็นตำแหน่งที่ต้องตรวจสอบพิเศษ","ไม่ชอบด้วยกฎหมาย เพราะข่มขู่/กดดัน ซักไซ้เรื่องส่วนตัวที่ไม่เกี่ยวกับงาน ขัดสิทธิเสรีภาพและ PDPA","ไม่ชอบด้วยกฎหมาย แต่ข้อมูลที่ได้ยังนำไปใช้ได้"],correct:2,explanation:"การสัมภาษณ์วิเคราะห์งานต้องถามเกี่ยวกับขั้นตอนงาน ภาระงาน ปัญหาในหน้าที่ ความเห็นทางการเมืองและการใช้เงินส่วนตัวเป็นเรื่องสิทธิเสรีภาพที่ไม่เกี่ยวกับเนื้องาน การข่มขู่เป็นการใช้อำนาจมิชอบ ข้อมูลเสียไป"},
+{id:39,question:"คณะกรรมการยกเว้นการวิเคราะห์ภาระงาน/ค่างาน ให้บุตรชายปลัดกระทรวง ปรับจากปฏิบัติการเป็นชำนาญการพิเศษแบบ Fast Track อ้างรักษาทายาทผู้เชี่ยวชาญ ชอบด้วยกฎหมายหรือไม่?",options:["ชอบด้วยกฎหมาย เพราะเป็นกรณีพิเศษชั่วคราว","ชอบด้วยกฎหมาย หากมีมติคณะกรรมการ","ไม่ชอบด้วยกฎหมาย เพราะเป็นระบบอุปถัมภ์เครือญาติ (Nepotism) ยกเว้นเกณฑ์โดยไม่มีฐานกฎหมาย ตกเป็นโมฆะ","ไม่ชอบด้วยกฎหมาย เฉพาะกรณีข้ามมากกว่า 1 ระดับ"],correct:2,explanation:"การเลื่อนตำแหน่งต้องผ่านการประเมินค่างานตามภาระงานจริงและคัดเลือกอย่างโปร่งใส การยกเว้นเกณฑ์ให้เฉพาะบุตรชายผู้บริหารเป็น Nepotism อย่างชัดเจน ไม่มีกฎหมายให้อำนาจยกเว้น คำสั่งตกเป็นโมฆะ"},
+{id:40,question:"คณะกรรมการพบข้อผิดพลาดคำนวณคะแนนค่างาน ทำให้นางสาวสมหญิงที่ \"ผ่าน\" และแต่งตั้งไปแล้ว 3 เดือน กลายเป็น \"ไม่ผ่าน\" จึงเพิกถอนคำสั่งแต่งตั้ง คณะกรรมการมีอำนาจทำได้หรือไม่?",options:["ทำไม่ได้ เพราะแต่งตั้งไปแล้ว","ทำไม่ได้ เพราะเลยระยะเวลาอุทธรณ์","ทำได้ มีอำนาจเพิกถอนเพื่อแก้ไขข้อผิดพลาด แต่นางสาวสมหญิงไม่ต้องคืนเงินเดือนเพราะสุจริต","ทำได้ และนางสาวสมหญิงต้องคืนเงินเดือนทั้งหมด"],correct:2,explanation:"คณะกรรมการมีอำนาจเพิกถอนคำสั่งที่ไม่ชอบเพื่อรักษาระบบคุณธรรม แต่เนื่องจากข้อผิดพลาดเกิดจากระบบราชการเองและนางสาวสมหญิงสุจริต เงินเดือนที่รับไป 3 เดือนถือเป็นค่าตอบแทนการปฏิบัติงานจริง ไม่ต้องคืน"}
+];
+
+// Questions data injected
+
+let mode = 'practice';
+let currentQ = 0;
+let answers = {};
+let timerInterval = null;
+let timeLeft = 3600;
+const TOTAL = quizData.length;
+const PASS_MARK = 0.7;
+const optLabels = ['ก', 'ข', 'ค', 'ง'];
+
+function startQuiz(m) {
+  mode = m;
+  document.getElementById('mode-select').style.display = 'none';
+  document.getElementById('quiz-area').style.display = 'block';
+  document.getElementById('mode-label').textContent = mode === 'practice' ? 'PRACTICE' : 'EXAM';
+  
+  if (mode === 'exam') {
+    document.getElementById('timer-display').classList.remove('hidden');
+    document.getElementById('btn-finish').classList.remove('hidden');
+    document.getElementById('score-live').classList.add('hidden');
+    startTimer();
+  }
+  
+  buildNavigator();
+  renderQuestion();
+}
+
+function startTimer() {
+  timeLeft = 3600;
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  const el = document.getElementById('timer-display');
+  el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  if (timeLeft < 300) el.style.color = 'var(--wrong)';
+}
+
+function buildNavigator() {
+  const nav = document.getElementById('q-navigator');
+  nav.innerHTML = '';
+  for (let i = 0; i < TOTAL; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'q-nav-btn';
+    btn.textContent = i + 1;
+    btn.onclick = () => goToQuestion(i);
+    btn.id = `nav-${i}`;
+    nav.appendChild(btn);
+  }
+}
+
+function toggleNavigator() {
+  document.getElementById('q-navigator').classList.toggle('open');
+}
+
+function updateNavigator() {
+  for (let i = 0; i < TOTAL; i++) {
+    const btn = document.getElementById(`nav-${i}`);
+    btn.className = 'q-nav-btn';
+    if (i === currentQ) btn.classList.add('active');
+    else if (answers[i] !== undefined) {
+      if (mode === 'practice') {
+        btn.classList.add(answers[i] === quizData[i].correct ? 'correct-nav' : 'wrong-nav');
+      } else {
+        btn.classList.add('answered');
+      }
+    }
+  }
+}
+
+function renderQuestion() {
+  const q = quizData[currentQ];
+  document.getElementById('q-number').textContent = `Q${String(currentQ+1).padStart(2,'0')} / ${TOTAL}`;
+  document.getElementById('q-text').textContent = q.question;
+  document.getElementById('progress-text').textContent = `ข้อ ${currentQ+1} / ${TOTAL}`;
+  document.getElementById('progress-fill').style.width = `${((currentQ+1)/TOTAL)*100}%`;
+
+  const optList = document.getElementById('options-list');
+  optList.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="opt-label">${optLabels[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectOption(i);
+    
+    if (answers[currentQ] !== undefined) {
+      if (mode === 'practice') {
+        btn.classList.add('disabled');
+        if (i === q.correct) btn.classList.add('correct-opt');
+        if (i === answers[currentQ] && i !== q.correct) btn.classList.add('wrong-opt');
+      } else {
+        if (i === answers[currentQ]) btn.classList.add('selected');
+      }
+    }
+    
+    optList.appendChild(btn);
+  });
+
+  // Explanation
+  const explBox = document.getElementById('explanation-box');
+  explBox.classList.remove('show', 'correct-expl', 'wrong-expl');
+  
+  if (mode === 'practice' && answers[currentQ] !== undefined) {
+    showExplanation();
+  }
+
+  // Live score in practice
+  if (mode === 'practice') {
+    const answered = Object.keys(answers).length;
+    const correct = Object.values(answers).filter((a, idx) => {
+      const key = Object.keys(answers)[idx];
+      return a === quizData[parseInt(key)].correct;
+    }).length;
+    let correctCount = 0;
+    for (let k in answers) {
+      if (answers[k] === quizData[parseInt(k)].correct) correctCount++;
+    }
+    document.getElementById('score-live').textContent = `คะแนน: ${correctCount}/${answered}`;
+  }
+
+  // Buttons
+  document.getElementById('btn-prev').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
+  
+  if (mode === 'exam') {
+    const allAnswered = Object.keys(answers).length === TOTAL;
+    document.getElementById('btn-finish').classList.toggle('hidden', !allAnswered && currentQ < TOTAL - 1);
+    document.getElementById('btn-next').textContent = currentQ < TOTAL - 1 ? 'ข้อถัดไป →' : 
+      (allAnswered ? 'ส่งข้อสอบ' : 'ข้อถัดไป →');
+    if (currentQ === TOTAL - 1 && allAnswered) {
+      document.getElementById('btn-next').onclick = finishExam;
+    } else {
+      document.getElementById('btn-next').onclick = nextQuestion;
+    }
+  } else {
+    document.getElementById('btn-next').textContent = currentQ < TOTAL - 1 ? 'ข้อถัดไป →' : 'ดูผลคะแนน';
+    if (currentQ === TOTAL - 1) {
+      document.getElementById('btn-next').onclick = () => {
+        if (Object.keys(answers).length === TOTAL) showResults();
+        else alert('กรุณาตอบให้ครบทุกข้อก่อน');
+      };
+    } else {
+      document.getElementById('btn-next').onclick = nextQuestion;
+    }
+  }
+
+  updateNavigator();
+}
+
+function selectOption(idx) {
+  if (mode === 'practice' && answers[currentQ] !== undefined) return;
+  
+  answers[currentQ] = idx;
+  
+  if (mode === 'practice') {
+    // Immediately show result
+    const q = quizData[currentQ];
+    const btns = document.querySelectorAll('.option-btn');
+    btns.forEach((btn, i) => {
+      btn.classList.add('disabled');
+      if (i === q.correct) btn.classList.add('correct-opt');
+      if (i === idx && i !== q.correct) btn.classList.add('wrong-opt');
+    });
+    showExplanation();
+    
+    let correctCount = 0;
+    for (let k in answers) {
+      if (answers[k] === quizData[parseInt(k)].correct) correctCount++;
+    }
+    document.getElementById('score-live').textContent = `คะแนน: ${correctCount}/${Object.keys(answers).length}`;
+  } else {
+    // Exam mode - just highlight selected
+    const btns = document.querySelectorAll('.option-btn');
+    btns.forEach((btn, i) => {
+      btn.classList.remove('selected');
+      if (i === idx) btn.classList.add('selected');
+    });
+    
+    // Show finish button if all answered
+    if (Object.keys(answers).length === TOTAL) {
+      document.getElementById('btn-finish').classList.remove('hidden');
+    }
+  }
+  
+  updateNavigator();
+  
+  if (mode === 'exam' && currentQ === TOTAL - 1 && Object.keys(answers).length === TOTAL) {
+    document.getElementById('btn-next').textContent = 'ส่งข้อสอบ';
+    document.getElementById('btn-next').onclick = finishExam;
+  }
+}
+
+function showExplanation() {
+  const q = quizData[currentQ];
+  const isCorrect = answers[currentQ] === q.correct;
+  const explBox = document.getElementById('explanation-box');
+  explBox.classList.add('show', isCorrect ? 'correct-expl' : 'wrong-expl');
+  document.getElementById('expl-title').textContent = isCorrect ? '✓ ถูกต้อง!' : '✗ ไม่ถูกต้อง';
+  document.getElementById('expl-text').textContent = q.explanation;
+}
+
+function nextQuestion() {
+  if (currentQ < TOTAL - 1) {
+    currentQ++;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function goToQuestion(idx) {
+  currentQ = idx;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function finishExam() {
+  if (Object.keys(answers).length < TOTAL) {
+    const unanswered = TOTAL - Object.keys(answers).length;
+    if (!confirm(`ยังมี ${unanswered} ข้อที่ยังไม่ตอบ ต้องการส่งข้อสอบหรือไม่?`)) return;
+  }
+  if (timerInterval) clearInterval(timerInterval);
+  showResults();
+}
+
+function showResults() {
+  document.getElementById('quiz-area').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  
+  let correct = 0;
+  for (let k in answers) {
+    if (answers[k] === quizData[parseInt(k)].correct) correct++;
+  }
+  const wrong = TOTAL - correct;
+  const pct = Math.round((correct / TOTAL) * 100);
+  const passed = pct >= PASS_MARK * 100;
+  
+  document.getElementById('score-pct').textContent = `${pct}%`;
+  const circle = document.getElementById('score-circle');
+  circle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+  
+  const badge = document.getElementById('result-badge');
+  badge.className = `result-badge ${passed ? 'pass' : 'fail'}`;
+  badge.textContent = passed ? '🎉 PASS — ผ่านเกณฑ์' : '📌 FAIL — ไม่ผ่านเกณฑ์';
+  
+  document.getElementById('result-msg').textContent = passed 
+    ? `ยินดีด้วย! คุณได้ ${pct}% ผ่านเกณฑ์ 70%` 
+    : `คุณได้ ${pct}% ต้องได้ 70% ขึ้นไปจึงจะผ่าน ลองทบทวนข้อที่ผิดแล้วลองใหม่`;
+  
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent = wrong;
+  document.getElementById('stat-total').textContent = TOTAL;
+  
+  buildReviewList('all');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildReviewList(filter) {
+  const list = document.getElementById('review-list');
+  list.innerHTML = '';
+  
+  for (let i = 0; i < TOTAL; i++) {
+    const q = quizData[i];
+    const userAns = answers[i];
+    const isCorrect = userAns === q.correct;
+    
+    if (filter === 'wrong' && isCorrect) continue;
+    if (filter === 'correct' && !isCorrect) continue;
+    
+    const item = document.createElement('div');
+    item.className = 'review-item';
+    
+    const yourAnswer = userAns !== undefined ? q.options[userAns] : 'ไม่ได้ตอบ';
+    const correctAnswer = q.options[q.correct];
+    
+    item.innerHTML = `
+      <div class="ri-head">
+        <span class="q-number" style="margin:0">Q${String(i+1).padStart(2,'0')}</span>
+        <span class="ri-badge ${isCorrect ? 'ri-correct' : 'ri-wrong'}">${isCorrect ? '✓ ถูก' : '✗ ผิด'}</span>
+      </div>
+      <div class="ri-q">${q.question}</div>
+      ${!isCorrect ? `<div class="ri-answer ri-your"><strong>คำตอบของคุณ:</strong> (${optLabels[userAns !== undefined ? userAns : 0]}) ${yourAnswer}</div>` : ''}
+      <div class="ri-answer ri-right"><strong>คำตอบที่ถูก:</strong> (${optLabels[q.correct]}) ${correctAnswer}</div>
+      <div class="ri-expl">${q.explanation}</div>
+    `;
+    list.appendChild(item);
+  }
+  
+  if (list.children.length === 0) {
+    list.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:30px;">ไม่มีข้อที่ตรงกับตัวกรองนี้</div>`;
+  }
+}
+
+function filterReview(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildReviewList(filter);
+}
+</script>
+
+</body>
+</html>
