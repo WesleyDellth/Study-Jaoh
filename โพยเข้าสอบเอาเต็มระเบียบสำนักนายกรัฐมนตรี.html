@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบทดสอบระเบียบงานสารบรรณ พ.ศ. ๒๕๒๖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@400;600;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F2E4;
+  --paper-dark:#EDE6D1;
+  --ink:#22252B;
+  --ink-soft:#54544C;
+  --navy:#1B2E4B;
+  --navy-light:#2C4569;
+  --red:#A32638;
+  --red-dark:#7E1C2A;
+  --gold:#B08D57;
+  --green:#2F6B3F;
+  --line:#C9BFA3;
+  --white:#FFFDF7;
+  --shadow: 0 2px 10px rgba(27,46,75,0.08), 0 1px 3px rgba(27,46,75,0.08);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(ellipse at top left, rgba(176,141,87,0.06), transparent 60%),
+    var(--paper);
+  background-attachment:fixed;
+  color:var(--ink);
+  font-family:'Sarabun',sans-serif;
+  min-height:100vh;
+  line-height:1.6;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.012) 0px, rgba(0,0,0,0.012) 1px, transparent 1px, transparent 3px);
+  pointer-events:none;
+  z-index:0;
+}
+.wrap{
+  position:relative; z-index:1;
+  max-width:920px;
+  margin:0 auto;
+  padding:24px 18px 60px;
+}
+.masthead{
+  text-align:center;
+  padding:18px 0 20px;
+  border-bottom:3px double var(--navy);
+  margin-bottom:26px;
+}
+.masthead .eyebrow{
+  font-size:12px;
+  letter-spacing:3px;
+  color:var(--red);
+  font-weight:700;
+  text-transform:uppercase;
+}
+.masthead h1{
+  font-family:'Noto Serif Thai',serif;
+  font-weight:700;
+  font-size:clamp(22px,4vw,32px);
+  color:var(--navy);
+  margin:6px 0 4px;
+}
+.masthead .sub{
+  font-size:14px;
+  color:var(--ink-soft);
+}
+
+/* ===== Screen management ===== */
+.screen{display:none;}
+.screen.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+/* ===== Card ===== */
+.doc-card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:2px;
+  box-shadow:var(--shadow);
+  position:relative;
+}
+.doc-card::before{
+  content:"";
+  position:absolute; left:0; top:0; bottom:0;
+  width:5px;
+  background:var(--navy);
+}
+
+/* ===== Start screen ===== */
+.start-card{padding:30px 26px 26px; margin-bottom:20px;}
+.section-label{
+  font-family:'Noto Serif Thai',serif;
+  font-weight:600;
+  font-size:17px;
+  color:var(--navy);
+  margin:0 0 12px;
+  display:flex; align-items:center; gap:10px;
+}
+.section-label .num{
+  width:26px; height:26px; border-radius:50%;
+  background:var(--navy); color:var(--paper);
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px; font-weight:700; flex-shrink:0;
+}
+.option-row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:22px;}
+.option-btn{
+  flex:1 1 200px;
+  background:var(--paper);
+  border:1.5px solid var(--line);
+  border-radius:4px;
+  padding:14px 16px;
+  cursor:pointer;
+  text-align:left;
+  transition:all .15s ease;
+  font-family:'Sarabun',sans-serif;
+}
+.option-btn:hover{border-color:var(--gold); background:var(--paper-dark);}
+.option-btn.selected{
+  border-color:var(--navy);
+  background:var(--navy);
+  color:var(--white);
+}
+.option-btn .title{font-weight:700; font-size:15px; display:block;}
+.option-btn .desc{font-size:12.5px; opacity:.85; display:block; margin-top:3px;}
+
+.chip-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px;}
+.chip{
+  border:1.5px solid var(--line);
+  background:var(--paper);
+  border-radius:20px;
+  padding:8px 16px;
+  font-size:13.5px;
+  cursor:pointer;
+  transition:all .15s ease;
+  user-select:none;
+}
+.chip .count{opacity:.65; font-size:12px;}
+.chip:hover{border-color:var(--gold);}
+.chip.selected{background:var(--navy); border-color:var(--navy); color:var(--white);}
+
+.count-row{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:6px;}
+.count-btn{
+  border:1.5px solid var(--line);
+  background:var(--paper);
+  border-radius:4px;
+  padding:10px 18px;
+  font-size:14px;
+  cursor:pointer;
+  font-weight:600;
+  transition:all .15s ease;
+}
+.count-btn:hover{border-color:var(--gold);}
+.count-btn.selected{background:var(--red); border-color:var(--red); color:var(--white);}
+
+.start-footer{
+  display:flex; justify-content:space-between; align-items:center;
+  padding-top:18px; margin-top:6px; border-top:1px dashed var(--line);
+  flex-wrap:wrap; gap:12px;
+}
+.selection-summary{font-size:13px; color:var(--ink-soft);}
+.selection-summary b{color:var(--navy);}
+
+/* ===== Buttons ===== */
+.btn{
+  font-family:'Sarabun',sans-serif;
+  font-weight:700;
+  font-size:15px;
+  padding:13px 28px;
+  border-radius:4px;
+  border:none;
+  cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease, background .15s ease;
+  display:inline-flex; align-items:center; gap:8px;
+}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--red); color:var(--white); box-shadow:0 3px 0 var(--red-dark);}
+.btn-primary:hover{background:#B72E42;}
+.btn-primary:disabled{background:#c9a7ac; box-shadow:none; cursor:not-allowed;}
+.btn-outline{background:transparent; color:var(--navy); border:1.5px solid var(--navy);}
+.btn-outline:hover{background:var(--navy); color:var(--white);}
+.btn-ghost{background:transparent; color:var(--ink-soft); border:1.5px solid var(--line); font-weight:600; font-size:14px; padding:10px 18px;}
+.btn-ghost:hover{border-color:var(--navy); color:var(--navy);}
+
+/* ===== Quiz screen ===== */
+.quiz-header{
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:14px; gap:14px; flex-wrap:wrap;
+}
+.mode-badge{
+  font-size:11.5px; font-weight:700; letter-spacing:1px;
+  padding:5px 12px; border-radius:20px;
+  background:var(--navy); color:var(--paper);
+  text-transform:uppercase;
+}
+.mode-badge.exam{background:var(--red);}
+.live-score{font-size:14px; font-weight:600; color:var(--navy);}
+.live-score span{color:var(--red);}
+
+.progress-track{
+  height:8px; background:var(--paper-dark); border-radius:4px; overflow:hidden;
+  margin-bottom:6px; border:1px solid var(--line);
+}
+.progress-fill{
+  height:100%; background:linear-gradient(90deg, var(--navy), var(--navy-light));
+  width:0%; transition:width .3s ease; border-radius:4px;
+}
+.progress-text{font-size:12.5px; color:var(--ink-soft); margin-bottom:18px; text-align:right;}
+
+.navigator{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(34px,1fr));
+  gap:6px;
+  margin-bottom:20px;
+  padding:14px;
+  background:var(--paper-dark);
+  border:1px solid var(--line);
+  border-radius:4px;
+}
+.nav-btn{
+  width:34px; height:34px;
+  border-radius:3px;
+  border:1.5px solid var(--line);
+  background:var(--white);
+  font-size:12px; font-weight:600;
+  cursor:pointer;
+  color:var(--ink-soft);
+  transition:all .12s ease;
+}
+.nav-btn:hover{border-color:var(--gold);}
+.nav-btn.current{border-color:var(--navy); border-width:2px; color:var(--navy); background:var(--white); box-shadow:0 0 0 2px rgba(27,46,75,0.15);}
+.nav-btn.answered{background:var(--navy); color:var(--white); border-color:var(--navy);}
+.nav-btn.correct{background:var(--green); color:var(--white); border-color:var(--green);}
+.nav-btn.incorrect{background:var(--red); color:var(--white); border-color:var(--red);}
+
+.q-card{padding:28px 26px; margin-bottom:18px;}
+.q-meta{
+  display:flex; justify-content:space-between; align-items:baseline;
+  margin-bottom:14px; flex-wrap:wrap; gap:8px;
+}
+.q-number{
+  font-family:'Noto Serif Thai',serif;
+  font-weight:700; color:var(--red); font-size:15px;
+}
+.q-category{
+  font-size:11.5px; color:var(--ink-soft); background:var(--paper-dark);
+  padding:3px 10px; border-radius:12px; border:1px solid var(--line);
+}
+.q-text{
+  font-size:17px; font-weight:500; color:var(--ink);
+  margin-bottom:20px; line-height:1.65;
+}
+.choices{display:flex; flex-direction:column; gap:10px;}
+.choice{
+  display:flex; align-items:flex-start; gap:12px;
+  padding:14px 16px;
+  border:1.5px solid var(--line);
+  border-radius:4px;
+  background:var(--paper);
+  cursor:pointer;
+  transition:all .14s ease;
+  text-align:left;
+}
+.choice:hover{border-color:var(--gold); background:var(--paper-dark);}
+.choice .letter{
+  flex-shrink:0;
+  width:26px; height:26px; border-radius:50%;
+  border:1.5px solid var(--ink-soft);
+  display:flex; align-items:center; justify-content:center;
+  font-size:12.5px; font-weight:700; color:var(--ink-soft);
+  transition:all .14s ease;
+}
+.choice .text{font-size:14.5px; padding-top:2px;}
+.choice.selected{border-color:var(--navy); background:#EEF1F6;}
+.choice.selected .letter{background:var(--navy); color:var(--white); border-color:var(--navy);}
+
+/* Practice mode feedback states */
+.choice.reveal-correct{border-color:var(--green); background:#E9F3EB;}
+.choice.reveal-correct .letter{background:var(--green); color:var(--white); border-color:var(--green);}
+.choice.reveal-incorrect{border-color:var(--red); background:#F7E9EA;}
+.choice.reveal-incorrect .letter{background:var(--red); color:var(--white); border-color:var(--red);}
+.choice.disabled{cursor:default;}
+.choice.disabled:hover{background:var(--paper); border-color:var(--line);}
+.choice.reveal-correct:hover{background:#E9F3EB; border-color:var(--green);}
+.choice.reveal-incorrect:hover{background:#F7E9EA; border-color:var(--red);}
+
+.feedback-box{
+  margin-top:18px; padding:16px 18px;
+  border-radius:4px;
+  border-left:4px solid var(--green);
+  background:#F1F7F1;
+  font-size:14px;
+  display:none;
+}
+.feedback-box.show{display:block; animation:fadeIn .25s ease;}
+.feedback-box.wrong{border-left-color:var(--red); background:#FBF0F1;}
+.feedback-box .fb-title{
+  font-weight:700; margin-bottom:6px;
+  display:flex; align-items:center; gap:8px;
+}
+.feedback-box.wrong .fb-title{color:var(--red-dark);}
+.feedback-box:not(.wrong) .fb-title{color:var(--green);}
+.feedback-box .fb-body{color:var(--ink-soft); line-height:1.6;}
+
+.q-actions{
+  display:flex; justify-content:space-between; align-items:center;
+  gap:12px; flex-wrap:wrap;
+}
+.q-actions-left{display:flex; gap:10px;}
+
+/* ===== Stamp ===== */
+.stamp-seal{
+  width:150px; height:150px;
+  border-radius:50%;
+  border:4px solid var(--red);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  margin:0 auto 18px;
+  position:relative;
+  transform:rotate(-8deg) scale(0);
+  animation:stampDown .5s cubic-bezier(.2,1.4,.4,1) forwards;
+  animation-delay:.15s;
+  color:var(--red);
+}
+.stamp-seal::before{
+  content:"";
+  position:absolute; inset:8px;
+  border:1.5px solid var(--red);
+  border-radius:50%;
+}
+.stamp-seal.pass{border-color:var(--green); color:var(--green);}
+.stamp-seal.pass::before{border-color:var(--green);}
+@keyframes stampDown{
+  0%{transform:rotate(-8deg) scale(2.2); opacity:0;}
+  60%{opacity:1;}
+  100%{transform:rotate(-8deg) scale(1); opacity:1;}
+}
+.stamp-seal .pct{font-family:'Noto Serif Thai',serif; font-size:34px; font-weight:900; line-height:1;}
+.stamp-seal .lbl{font-size:11px; font-weight:700; letter-spacing:2px; margin-top:4px;}
+
+.results-card{padding:34px 26px; text-align:center; margin-bottom:22px;}
+.results-verdict{
+  font-family:'Noto Serif Thai',serif;
+  font-size:22px; font-weight:700; margin-bottom:6px;
+}
+.results-verdict.pass{color:var(--green);}
+.results-verdict.fail{color:var(--red);}
+.results-sub{color:var(--ink-soft); font-size:14px; margin-bottom:22px;}
+.results-stats{
+  display:flex; justify-content:center; gap:28px; flex-wrap:wrap;
+  padding-top:18px; border-top:1px dashed var(--line);
+}
+.stat{text-align:center;}
+.stat .val{font-size:22px; font-weight:700; color:var(--navy); font-family:'Noto Serif Thai',serif;}
+.stat .lbl{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+
+.cat-breakdown{padding:22px 26px; margin-bottom:20px;}
+.cat-row{
+  display:flex; align-items:center; gap:12px;
+  padding:10px 0; border-bottom:1px solid var(--paper-dark);
+  font-size:13.5px;
+}
+.cat-row:last-child{border-bottom:none;}
+.cat-row .cat-name{flex:1; color:var(--ink);}
+.cat-row .cat-bar-track{flex:1.4; height:8px; background:var(--paper-dark); border-radius:4px; overflow:hidden;}
+.cat-row .cat-bar-fill{height:100%; background:var(--navy); border-radius:4px;}
+.cat-row .cat-score{width:52px; text-align:right; font-weight:700; color:var(--navy); flex-shrink:0;}
+
+.results-actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:26px;}
+
+.review-section h2{
+  font-family:'Noto Serif Thai',serif; color:var(--navy); font-size:19px;
+  border-bottom:2px solid var(--navy); padding-bottom:10px; margin-bottom:16px;
+}
+.review-item{
+  padding:20px 22px; margin-bottom:14px;
+}
+.review-item .q-text{font-size:15.5px; margin-bottom:14px;}
+.review-answer-row{
+  display:flex; gap:10px; align-items:flex-start; padding:8px 0; font-size:13.5px;
+}
+.review-answer-row .tag{
+  flex-shrink:0; font-size:11px; font-weight:700; padding:2px 9px; border-radius:10px; margin-top:1px;
+}
+.tag.your-wrong{background:#F7E9EA; color:var(--red-dark); border:1px solid var(--red);}
+.tag.correct-tag{background:#E9F3EB; color:var(--green); border:1px solid var(--green);}
+.review-explain{
+  margin-top:10px; padding:12px 14px; background:var(--paper); border-radius:4px;
+  font-size:13px; color:var(--ink-soft); border-left:3px solid var(--gold);
+}
+
+.empty-note{text-align:center; padding:40px 20px; color:var(--ink-soft);}
+
+footer.credit{
+  text-align:center; font-size:12px; color:var(--ink-soft); margin-top:30px; opacity:.7;
+}
+
+@media (max-width:600px){
+  .wrap{padding:16px 12px 40px;}
+  .start-card, .q-card, .results-card, .cat-breakdown{padding:20px 16px;}
+  .navigator{grid-template-columns:repeat(auto-fill, minmax(30px,1fr));}
+  .nav-btn{width:30px; height:30px; font-size:11px;}
+}
+
+.hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="eyebrow">ตรวจแล้ว &middot; ถูกต้องตามระเบียบ</div>
+    <h1>แบบทดสอบระเบียบสำนักนายกรัฐมนตรี</h1>
+    <div class="sub">ว่าด้วยงานสารบรรณ พ.ศ. ๒๕๒๖ และฉบับแก้ไขเพิ่มเติม</div>
+  </div>
+
+  <!-- ============ START SCREEN ============ -->
+  <section id="screen-start" class="screen active">
+    <div class="doc-card start-card">
+      <div class="section-label"><span class="num">1</span> เลือกรูปแบบการทดสอบ</div>
+      <div class="option-row">
+        <div class="option-btn selected" data-mode="practice">
+          <span class="title">โหมดฝึกฝน (Practice)</span>
+          <span class="desc">เฉลยทันทีหลังตอบแต่ละข้อ พร้อมคำอธิบาย</span>
+        </div>
+        <div class="option-btn" data-mode="exam">
+          <span class="title">โหมดสอบจริง (Exam)</span>
+          <span class="desc">ตอบให้ครบทุกข้อ แล้วดูเฉลยพร้อมกันตอนจบ</span>
+        </div>
+      </div>
+
+      <div class="section-label"><span class="num">2</span> เลือกหมวดข้อสอบ</div>
+      <div class="chip-row" id="chipRow"></div>
+
+      <div class="section-label"><span class="num">3</span> จำนวนข้อ</div>
+      <div class="count-row" id="countRow"></div>
+
+      <div class="start-footer">
+        <div class="selection-summary">พร้อมทดสอบ <b id="summaryCount">0</b> ข้อ &middot; โหมด <b id="summaryMode">ฝึกฝน</b></div>
+        <button class="btn btn-primary" id="btnStart">เริ่มทำแบบทดสอบ &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ SCREEN ============ -->
+  <section id="screen-quiz" class="screen">
+    <div class="quiz-header">
+      <span class="mode-badge" id="quizModeBadge">โหมดฝึกฝน</span>
+      <span class="live-score" id="liveScore"></span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">ข้อ 1 / 10</div>
+
+    <div class="navigator" id="navigator"></div>
+
+    <div class="doc-card q-card">
+      <div class="q-meta">
+        <span class="q-number" id="qNumber">ข้อที่ ๑</span>
+        <span class="q-category" id="qCategory"></span>
+      </div>
+      <div class="q-text" id="qText"></div>
+      <div class="choices" id="choices"></div>
+      <div class="feedback-box" id="feedbackBox">
+        <div class="fb-title" id="fbTitle"></div>
+        <div class="fb-body" id="fbBody"></div>
+      </div>
+    </div>
+
+    <div class="q-actions">
+      <div class="q-actions-left">
+        <button class="btn btn-ghost" id="btnPrev">&larr; ข้อก่อนหน้า</button>
+      </div>
+      <button class="btn btn-primary" id="btnNext" disabled>ข้อถัดไป &rarr;</button>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS SCREEN ============ -->
+  <section id="screen-results" class="screen">
+    <div class="doc-card results-card">
+      <div class="stamp-seal" id="stampSeal">
+        <div class="pct" id="stampPct">0%</div>
+        <div class="lbl" id="stampLbl">ผ่าน</div>
+      </div>
+      <div class="results-verdict" id="resultsVerdict"></div>
+      <div class="results-sub" id="resultsSub"></div>
+      <div class="results-stats">
+        <div class="stat"><div class="val" id="statCorrect">0</div><div class="lbl">ตอบถูก</div></div>
+        <div class="stat"><div class="val" id="statWrong">0</div><div class="lbl">ตอบผิด</div></div>
+        <div class="stat"><div class="val" id="statTotal">0</div><div class="lbl">ข้อทั้งหมด</div></div>
+        <div class="stat"><div class="val" id="statPct">0%</div><div class="lbl">คะแนน</div></div>
+      </div>
+    </div>
+
+    <div class="doc-card cat-breakdown">
+      <div class="section-label" style="margin-bottom:14px;"><span class="num">✓</span> คะแนนแยกตามหมวด</div>
+      <div id="catBreakdown"></div>
+    </div>
+
+    <div class="results-actions">
+      <button class="btn btn-primary" id="btnReviewWrong">ทบทวนเฉพาะข้อที่ผิด &rarr;</button>
+      <button class="btn btn-outline" id="btnRetrySame">ทำชุดนี้ใหม่</button>
+      <button class="btn btn-ghost" id="btnBackHome">กลับหน้าแรก</button>
+    </div>
+
+    <div class="review-section">
+      <h2>ทบทวนข้อที่ตอบผิด</h2>
+      <div id="reviewList"></div>
+    </div>
+  </section>
+
+  <footer class="credit">สร้างจากระเบียบสำนักนายกรัฐมนตรี ว่าด้วยงานสารบรรณ พ.ศ. ๒๕๒๖ &middot; ใช้เพื่อการทบทวนความรู้เท่านั้น</footer>
+</div>
+
+<script>
+const QUESTIONS = [{"category": "ข้อสอบจริง (3 ก.พ. 67)", "question": "ในการเขียนหนังสือราชการ คำขึ้นต้น สรรพนาม และคำลงท้าย สำหรับ \"พระภิกษุสงฆ์ทั่วไป\" ควรใช้คำในข้อใด?", "choices": ["นมัสการ / พระคุณเจ้า / ขอนมัสการด้วยความเคารพอย่างยิ่ง", "นมัสการ / ท่าน, ผม-ดิฉัน / ขอนมัสการด้วยความเคารพ", "นมัสการ / พระคุณท่าน / ขอนมัสการด้วยความเคารพอย่างสูง", "กราบเรียน / ท่าน, ข้าพเจ้า / ขอแสดงความนับถืออย่างยิ่ง"], "answer": 1, "explanation": "ตามตารางภาคผนวก ๒ การใช้คำขึ้นต้น สรรพนาม และคำลงท้าย สำหรับ \"พระภิกษุสงฆ์ทั่วไป\" กำหนดให้ใช้คำขึ้นต้นว่า \"นมัสการ...\" สรรพนามใช้ \"ท่าน\" สำหรับผู้รับ และ \"ผม-ดิฉัน\" สำหรับผู้ส่ง และใช้คำลงท้ายว่า \"ขอนมัสการด้วยความเคารพ\"", "id": 1}, {"category": "ข้อสอบจริง (3 ก.พ. 67)", "question": "ตามระเบียบฯ อายุการเก็บรักษา \"หนังสืออิเล็กทรอนิกส์\" กำหนดไว้อย่างไร?", "choices": ["เก็บไว้ไม่น้อยกว่า 5 ปี", "เก็บไว้ไม่น้อยกว่า 10 ปี", "เก็บไว้ตลอดไป", "เก็บไว้จนกว่าระบบจะเต็ม"], "answer": 2, "explanation": "ระเบียบฯ ข้อ ๘๙/๕ ระบุไว้ชัดเจนว่า \"หนังสืออิเล็กทรอนิกส์ไม่มีอายุการเก็บหนังสือ โดยปกติให้เก็บไว้ตลอดไป\" เว้นแต่กรณีจำเป็นต้องเพิ่มพื้นที่จัดเก็บ หัวหน้าส่วนราชการจึงจะมีคำสั่งให้ทำลายหนังสืออิเล็กทรอนิกส์ที่เก็บมาเกิน 10 ปีได้", "id": 2}, {"category": "ข้อสอบจริง (3 ก.พ. 67)", "question": "กรณีที่ส่วนราชการได้รับหนังสือทางไปรษณีย์อิเล็กทรอนิกส์ (อีเมล) ในเวลา 16.45 น. เจ้าหน้าที่จะต้องตอบกลับเพื่อยืนยันการรับอีเมลอย่างช้าที่สุดเมื่อใด?", "choices": ["ภายในเวลา 16.30 น. ของวันทำการถัดไป", "ภายในเวลา 12.00 น. ของวันทำการถัดไป", "ภายในเวลา 08.30 น. ของวันทำการถัดไป", "ภายในเวลา 10.00 น. ของวันทำการถัดไป"], "answer": 3, "explanation": "ภาคผนวก ๗ ข้อ ๓.๒ ระบุว่า เมื่อได้รับอีเมลแล้วให้แจ้งยืนยันการได้รับภายในวันทำการที่ได้รับ แต่ในกรณีที่ได้รับภายหลังเวลา ๑๖.๓๐ นาฬิกา ให้ตอบกลับอย่างช้าไม่เกิน ๑๐.๐๐ นาฬิกา ของวันทำการถัดไป", "id": 3}, {"category": "ข้อสอบจริง (3 ก.พ. 67)", "question": "ในการจัดทำหนังสือราชการ การลงลายมือชื่อของ \"ผู้ร่าง ผู้พิมพ์ และผู้ตรวจ\" ในสำเนาคู่ฉบับ ต้องลงชื่อไว้ที่ตำแหน่งใด?", "choices": ["ข้างท้ายขอบล่างด้านซ้ายของหนังสือ", "ข้างท้ายขอบล่างด้านขวาของหนังสือ", "ด้านหลังของกระดาษสำเนาคู่ฉบับ", "ตรงกลางกระดาษด้านล่างสุด"], "answer": 1, "explanation": "ระเบียบฯ ข้อ ๓๐ กำหนดว่า สำเนาคู่ฉบับให้ผู้ลงชื่อลงลายมือชื่อหรือลายมือชื่อย่อ และให้ผู้ร่าง ผู้พิมพ์ และผู้ตรวจลงลายมือชื่อหรือลายมือชื่อย่อไว้ที่ข้างท้ายขอบล่างด้านขวาของหนังสือ", "id": 4}, {"category": "ข้อสอบจริง (3 ก.พ. 67)", "question": "ข้อใดต่อไปนี้ไม่ใช่อำนาจหน้าที่ของ \"คณะกรรมการทำลายหนังสือ\"?", "choices": ["พิจารณาหนังสือที่จะขอทำลายตามบัญชีหนังสือขอทำลาย", "เสนอรายงานผลการพิจารณาต่อหัวหน้าส่วนราชการระดับกรม", "อนุมัติให้ทำลายหนังสือราชการได้", "ควบคุมการทำลายหนังสือซึ่งผู้มีอำนาจอนุมัติให้ทำลายแล้ว"], "answer": 2, "explanation": "การ \"อนุมัติ\" ให้ทำลาย ไม่ใช่อำนาจหน้าที่ของคณะกรรมการฯ คณะกรรมการทำลายหนังสือมีหน้าที่เพียงพิจารณาหนังสือ เสนอรายงานผลการพิจารณา และควบคุมการทำลาย ส่วนผู้มีอำนาจอนุมัติคือ \"หัวหน้าส่วนราชการระดับกรม\"", "id": 5}, {"category": "ข้อสอบจริง (3 ก.พ. 67)", "question": "ตามหลักการพิมพ์หนังสือราชการ การพิมพ์หัวข้อ \"ส่วนราชการเจ้าของเรื่อง\" (ส่วนล่างสุดของหน้ากระดาษ) ควรกำหนดระยะห่างเท่าใด?", "choices": ["1 Enter", "2 Enter", "3 Enter", "4 Enter"], "answer": 3, "explanation": "ตามเกณฑ์การพิมพ์หนังสือราชการ การเว้นระยะจากคำลงท้ายลงมายังหัวข้อ ส่วนราชการเจ้าของเรื่อง โดยปกติใช้การเคาะ 4 Enter (เท่ากับระยะ 3 บรรทัดเปล่า) เพื่อความสวยงามและเป็นระเบียบ", "id": 6}, {"category": "ข้อสอบจริง (3 ก.พ. 67)", "question": "จากนิยามในระเบียบฯ คำว่า \"ระบบสารบรรณอิเล็กทรอนิกส์\" ครอบคลุมถึงกระบวนการใดน้อยที่สุด หรือ ไม่ครอบคลุมถึงข้อใด?", "choices": ["การรับหนังสือ", "การส่งหนังสือ", "การทำลายหนังสือ", "การเก็บรักษาข้อมูลข่าวสาร"], "answer": 2, "explanation": "ระเบียบฯ ข้อ ๖ ให้นิยาม \"ระบบสารบรรณอิเล็กทรอนิกส์\" หมายถึงการรับส่งและเก็บรักษาข้อมูลข่าวสารหรือหนังสือผ่านระบบสื่อสารทางอิเล็กทรอนิกส์ ซึ่งไม่ได้ระบุคำว่า \"การทำลาย\" ไว้ในนิยามนี้", "id": 7}, {"category": "ข้อสอบจริง (3 ก.พ. 67)", "question": "หนังสือราชการที่เป็นเรื่องธรรมดาสามัญซึ่งไม่มีความสำคัญ และเป็นเรื่องที่เกิดขึ้นเป็นประจำ เมื่อดำเนินการแล้วเสร็จให้เก็บไว้อย่างน้อยตามข้อใด?", "choices": ["ไม่น้อยกว่า 1 ปี", "ไม่น้อยกว่า 5 ปี", "ไม่น้อยกว่า 10 ปี", "ตลอดไป"], "answer": 0, "explanation": "ระเบียบฯ ข้อ ๕๗.๕ ระบุว่า \"หนังสือที่เป็นเรื่องธรรมดาสามัญซึ่งไม่มีความสำคัญ และเป็นเรื่องที่เกิดขึ้นเป็นประจำเมื่อดำเนินการแล้วเสร็จให้เก็บไว้ไม่น้อยกว่า ๑ ปี\"", "id": 8}, {"category": "ข้อสอบจริง (3 ก.พ. 67)", "question": "ในการจดรายงานการประชุม หากมีผู้เข้าร่วมประชุม \"แทน\" ผู้ที่ได้รับแต่งตั้งเป็นคณะที่ประชุม จะต้องบันทึกในช่อง \"ผู้มาประชุม\" อย่างไร?", "choices": ["ให้ลงชื่อผู้มาประชุมแทน โดยไม่ต้องระบุว่ามาแทนใคร", "ให้ลงชื่อผู้ที่ได้รับแต่งตั้งตามเดิม แล้ววงเล็บว่าลากิจ", "ให้ลงชื่อผู้มาประชุมแทน และลงว่ามาประชุมแทนผู้ใดหรือตำแหน่งใด", "ไม่ต้องลงชื่อในช่องผู้มาประชุม แต่ให้ไปลงชื่อในช่องผู้เข้าร่วมประชุมแทน"], "answer": 2, "explanation": "ระเบียบฯ ข้อ ๒๕.๕ กรณีที่มีผู้มาประชุมแทน ให้ลงชื่อผู้มาประชุมแทน และลงว่ามาประชุมแทนผู้ใดหรือตำแหน่งใด ให้ชัดเจนเป็นหลักฐาน", "id": 9}, {"category": "ข้อสอบจริง (3 ก.พ. 67)", "question": "ในการส่งหนังสือราชการทางไปรษณีย์อิเล็กทรอนิกส์ ช่อง \"สำเนาลับถึง\" (BCC) มีไว้ใช้สำหรับกรณีใด?", "choices": ["ส่งให้ผู้บังคับบัญชาระดับสูงตรวจสอบก่อนส่งจริง", "ส่งไปจัดเก็บเป็นสำเนาภายในระบบ หรือต้องการปกปิดไม่ให้ผู้รับทราบว่าได้ส่งไปยังบุคคลอื่นด้วย", "ส่งให้ผู้รับทุกคนเห็นรายชื่อผู้ที่ได้รับหนังสือฉบับนี้ทั้งหมด", "ส่งให้เฉพาะผู้ที่ต้องรับผิดชอบเรื่องนี้โดยตรงเท่านั้น"], "answer": 1, "explanation": "ภาคผนวก ๗ ข้อ ๕.๓.๗ ระบุให้ใช้ช่อง \"สำเนาลับถึง\" (BCC) สำหรับการส่งไปจัดเก็บเป็นสำเนาภายในระบบของส่วนราชการ หรือการส่งหนังสือไปยังผู้รับจำนวนเกินกว่าหนึ่งคนซึ่งเห็นว่าจำเป็นต้องปกปิดไม่ให้ผู้รับทราบว่าได้ส่งไปยังบุคคลอื่นด้วย", "id": 10}, {"category": "เก็งข้อสอบ ชุดที่ 1", "question": "การใช้คำขึ้นต้นและคำลงท้ายสำหรับ \"นายกรัฐมนตรี\" หรือ \"ประธานรัฐสภา\" ข้อใดถูกต้องที่สุด", "choices": ["เรียน / ขอแสดงความนับถือ", "กราบเรียน / ขอแสดงความนับถืออย่างยิ่ง", "ขอเรียน / ขอแสดงความเคารพ", "เรียน / ขอแสดงความนับถืออย่างสูง"], "answer": 1, "explanation": "สำหรับตำแหน่งระดับสูง เช่น ประธานองคมนตรี นายกรัฐมนตรี ประธานรัฐสภา ประธานศาลฎีกา รัฐบุรุษ ฯลฯ คำขึ้นต้นใช้ \"กราบเรียน\" สรรพนามใช้ \"ข้าพเจ้า / กระผม-ดิฉัน / ท่าน\" คำลงท้ายใช้ \"ขอแสดงความนับถืออย่างยิ่ง\"", "id": 11}, {"category": "เก็งข้อสอบ ชุดที่ 1", "question": "หนังสือหรือเอกสารเกี่ยวกับการรับเงิน จ่ายเงิน ที่ไม่เป็นหลักฐานแห่งการก่อสิทธิ และสำนักงานการตรวจเงินแผ่นดินตรวจสอบแล้วไม่มีปัญหา ให้เก็บรักษาไว้ตามข้อใด", "choices": ["ไม่น้อยกว่า 1 ปี", "ไม่น้อยกว่า 5 ปี", "ไม่น้อยกว่า 10 ปี", "ตลอดไป"], "answer": 1, "explanation": "หนังสือเกี่ยวกับการเงินที่หมดความจำเป็น ไม่ใช่หลักฐานแห่งการก่อสิทธิ และ สตง. ตรวจสอบแล้วไม่มีปัญหา ให้เก็บไว้ไม่น้อยกว่า 5 ปี", "id": 12}, {"category": "เก็งข้อสอบ ชุดที่ 1", "question": "ในการส่งหนังสือทางไปรษณีย์อิเล็กทรอนิกส์ (อีเมล) ที่มีการกำหนดชั้นความเร็ว \"ด่วนที่สุด\" เจ้าของเรื่องต้องดำเนินการอย่างไรเพิ่มเติม", "choices": ["ส่งสำเนาลับ (BCC) ให้ผู้บริหารรับทราบทุกครั้ง", "โทรศัพท์หรือติดต่อผ่านช่องทางอื่นเพื่อยืนยันว่าผู้รับได้รับแล้ว", "พิมพ์ออกเป็นกระดาษแล้วจัดส่งทางไปรษณีย์ด่วนพิเศษ (EMS) ควบคู่ไปด้วย", "ตั้งค่าระบบให้อีเมลตีกลับอัตโนมัติหากไม่มีการเปิดอ่านภายใน 1 ชั่วโมง"], "answer": 1, "explanation": "กรณีส่งอีเมลชั้นความเร็ว \"ด่วนที่สุด\" หรือมีกำหนดเวลาให้ผู้รับดำเนินการ เจ้าของเรื่องต้องโทรศัพท์หรือใช้ช่องทางอื่นติดต่อผู้รับเพื่อยืนยันว่าได้รับหนังสือแล้ว และแจ้งเจ้าหน้าที่บันทึกในหมายเหตุของทะเบียนส่งด้วย", "id": 13}, {"category": "เก็งข้อสอบ ชุดที่ 1", "question": "สำหรับ \"หนังสือประทับตรา\" ผู้ใดมีหน้าที่รับผิดชอบในการลงลายมือชื่อย่อกำกับตรา", "choices": ["หัวหน้าส่วนราชการระดับกรมขึ้นไปเท่านั้น", "ปลัดกระทรวง หรือผู้ที่ได้รับมอบหมาย", "หัวหน้าส่วนราชการระดับกอง หรือผู้ที่ได้รับมอบหมายจากหัวหน้าส่วนราชการระดับกรมขึ้นไป", "เจ้าหน้าที่สารบรรณกลางที่รับผิดชอบการส่งหนังสือ"], "answer": 2, "explanation": "หนังสือประทับตราคือหนังสือที่ใช้ประทับตราแทนการลงชื่อของหัวหน้าส่วนราชการระดับกรมขึ้นไป โดยให้หัวหน้าส่วนราชการระดับกอง หรือผู้ที่ได้รับมอบหมายจากหัวหน้าส่วนราชการระดับกรมขึ้นไป เป็นผู้รับผิดชอบลงชื่อย่อกำกับตรา", "id": 14}, {"category": "เก็งข้อสอบ ชุดที่ 1", "question": "คณะกรรมการทำลายหนังสือ ประกอบด้วยประธานและกรรมการอย่างน้อยกี่คน และโดยปกติแต่งตั้งจากข้าราชการระดับใดขึ้นไป", "choices": ["ประธาน 1 คน กรรมการอย่างน้อย 1 คน / ระดับปฏิบัติการ หรือชำนาญงานขึ้นไป", "ประธาน 1 คน กรรมการอย่างน้อย 2 คน / ระดับปฏิบัติการ หรือชำนาญงานขึ้นไป", "ประธาน 1 คน กรรมการอย่างน้อย 3 คน / ระดับชำนาญการขึ้นไป", "ประธาน 1 คน กรรมการอย่างน้อย 2 คน / ระดับชำนาญการพิเศษขึ้นไป"], "answer": 1, "explanation": "หัวหน้าส่วนราชการระดับกรมเป็นผู้แต่งตั้งคณะกรรมการทำลายหนังสือ ประกอบด้วยประธาน 1 คน และกรรมการอีกอย่างน้อย 2 คน (รวมเป็น 3 คนขึ้นไป) โดยปกติต้องเป็นข้าราชการระดับปฏิบัติการ หรือระดับชำนาญงานขึ้นไป", "id": 15}, {"category": "เก็งข้อสอบ ชุดที่ 1", "question": "ขนาดของ \"ตราครุฑ\" สำหรับแบบพิมพ์ที่ใช้ในหนังสือราชการ มี 2 ขนาด คือข้อใด", "choices": ["สูง 3 เซนติเมตร และ 1.5 เซนติเมตร", "สูง 3.5 เซนติเมตร และ 1.5 เซนติเมตร", "สูง 3 เซนติเมตร และ 2 เซนติเมตร", "สูง 4 เซนติเมตร และ 2.5 เซนติเมตร"], "answer": 0, "explanation": "ตราครุฑสำหรับแบบพิมพ์มี 2 ขนาดมาตรฐาน คือ สูง 3 เซนติเมตร (ใช้ในหนังสือภายนอก) และสูง 1.5 เซนติเมตร (ใช้ในหนังสือภายใน/บันทึกข้อความ/ซอง)", "id": 16}, {"category": "เก็งข้อสอบ ชุดที่ 1", "question": "ข้อใด ไม่ใช่ ความหมายของ \"หนังสือราชการ\" ตามระเบียบสำนักนายกรัฐมนตรี ว่าด้วยงานสารบรรณ", "choices": ["หนังสือที่มีไปมาระหว่างส่วนราชการ", "ข้อมูลข่าวสารหรือหนังสือที่ได้รับจากระบบสารบรรณอิเล็กทรอนิกส์", "จดหมายส่วนตัวของข้าราชการที่เขียนถึงประชาชนเพื่อไกล่เกลี่ยข้อพิพาทส่วนตัว", "เอกสารที่ทางราชการจัดทำขึ้นเพื่อเป็นหลักฐานในราชการ"], "answer": 2, "explanation": "\"หนังสือราชการ\" ต้องเป็นเอกสารที่เป็นหลักฐานในราชการ จดหมายส่วนตัวของข้าราชการไม่นับเป็นหนังสือราชการ", "id": 17}, {"category": "เก็งข้อสอบ ชุดที่ 1", "question": "การแปลงหนังสือและสิ่งที่ส่งไปด้วยเป็นไฟล์อิเล็กทรอนิกส์ (PDF) เพื่อส่งทางอีเมล ต้องตั้งค่าความละเอียดตามข้อใด", "choices": ["ไม่น้อยกว่า 150 dpi", "ไม่น้อยกว่า 200 dpi", "ไม่น้อยกว่า 300 dpi", "ไม่น้อยกว่า 600 dpi"], "answer": 2, "explanation": "ในการส่งหนังสือและสิ่งที่ส่งมาด้วยทางอีเมล เจ้าของเรื่องต้องแปลงไฟล์ให้เป็น PDF ไฟล์เดียว ความละเอียดไม่น้อยกว่า 300 dpi (ต่างจากการสำรอง/backup ที่กำหนดขั้นต่ำ 150 dpi)", "id": 18}, {"category": "เก็งข้อสอบ ชุดที่ 1", "question": "การจด \"รายงานการประชุม\" ในส่วนของ \"ข้อความ\" (รายละเอียดการประชุม) โดยปกติให้เริ่มต้นบันทึกด้วยสิ่งใดเป็นลำดับแรก", "choices": ["ระเบียบวาระที่ 1 เรื่องแจ้งให้ทราบ", "ประธานกล่าวเปิดประชุม", "รับรองรายงานการประชุมครั้งที่ผ่านมา", "รายงานจำนวนผู้มาประชุมและผู้ไม่มาประชุม"], "answer": 1, "explanation": "การบันทึก \"ข้อความ\" ในรายงานการประชุม โดยปกติให้เริ่มต้นด้วย \"ประธานกล่าวเปิดประชุม\" แล้วจึงตามด้วยเรื่องที่ประชุม มติ หรือข้อสรุปตามลำดับ", "id": 19}, {"category": "เก็งข้อสอบ ชุดที่ 1", "question": "ทุกปีปฏิทิน ส่วนราชการต้องจัดส่งหนังสือที่มีอายุครบกี่ปี นับแต่วันที่ได้จัดทำขึ้น ให้แก่สำนักหอจดหมายเหตุแห่งชาติ ภายในเวลาใด", "choices": ["ครบ 10 ปี / ภายใน 60 วันหลังสิ้นปีปฏิทิน", "ครบ 10 ปี / ภายใน 31 มกราคมของปีถัดไป", "ครบ 20 ปี / ภายใน 60 วันหลังสิ้นปีปฏิทิน", "ครบ 20 ปี / ภายใน 31 มกราคม ของปีถัดไป"], "answer": 3, "explanation": "หนังสือที่มีอายุครบ 20 ปี นับจากปีที่จัดทำขึ้น ส่วนราชการต้องจัดส่งให้สำนักหอจดหมายเหตุแห่งชาติ กรมศิลปากร พร้อมบัญชีส่งมอบ ภายในวันที่ 31 มกราคม ของปีถัดไป", "id": 20}, {"category": "เก็งข้อสอบ ชุดที่ 2", "question": "การประทับตรากำหนดเก็บหนังสือ หากเป็นหนังสือที่ต้อง \"เก็บไว้ตลอดไป\" ต้องใช้หมึกสีใด และมีข้อความว่าอย่างไร?", "choices": ["สีน้ำเงิน / \"เก็บตลอดไป\"", "สีแดง / \"ห้ามทำลาย\"", "สีดำ / \"ห้ามทำลาย\"", "สีน้ำเงิน / \"เก็บถึง พ.ศ....\""], "answer": 1, "explanation": "ระเบียบฯ กำหนดให้ประทับตราคำว่า \"ห้ามทำลาย\" สำหรับหนังสือที่ต้องเก็บตลอดไป โดยใช้หมึกสีแดง ส่วนหนังสือที่มีกำหนดเวลาให้ประทับตรา \"เก็บถึง พ.ศ. ....\" ด้วยหมึกสีน้ำเงิน", "id": 21}, {"category": "เก็งข้อสอบ ชุดที่ 2", "question": "ข้อใดปฏิบัติถูกต้องเกี่ยวกับการระบุ \"ชั้นความเร็ว\" ของหนังสือราชการ?", "choices": ["ใช้ตัวอักษรสีแดงขนาดไม่เล็กกว่า 32 พอยท์", "ใช้ตัวอักษรสีดำขนาดไม่เล็กกว่า 32 พอยท์", "ใช้ตัวอักษรสีแดงขนาดไม่เล็กกว่า 24 พอยท์", "ใช้ตัวอักษรสีดำขนาดไม่เล็กกว่า 24 พอยท์"], "answer": 0, "explanation": "หนังสือที่ต้องปฏิบัติให้เร็วกว่าปกติ (ด่วนที่สุด, ด่วนมาก, ด่วน) ให้ระบุชั้นความเร็วด้วยตัวอักษรสีแดงขนาดไม่เล็กกว่าตัวพิมพ์โป้ง 32 พอยท์ ให้เห็นชัดบนหนังสือและหน้าซอง", "id": 22}, {"category": "เก็งข้อสอบ ชุดที่ 2", "question": "หากส่วนราชการได้รับอีเมลที่มีหนังสือราชการชั้น \"ลับที่สุด\" (Top Secret) เจ้าหน้าที่สารบรรณกลางต้องดำเนินการอย่างไร?", "choices": ["เข้ารหัสไฟล์ (Encryption) แล้วส่งต่อให้ผู้บังคับบัญชา", "พิมพ์เป็นเอกสารกระดาษทันทีด้วยตนเองแล้วลบอีเมลทิ้ง", "ติดต่อผู้ส่งแจ้งว่าไม่สามารถรับทางอีเมลได้ ขอให้ส่งเป็นเอกสาร แล้วลบอีเมลทิ้งทันที", "ส่งต่อ (Forward) ให้เจ้าหน้าที่ระดับผู้อำนวยการกองเพื่อพิจารณา"], "answer": 2, "explanation": "หากได้รับหนังสือชั้นความลับ \"ลับที่สุด\" ทางอีเมล ให้ติดต่อผู้ส่งเพื่อแจ้งว่าไม่อาจส่งและรับด้วยวิธีอิเล็กทรอนิกส์ได้ ขอให้ส่งใหม่เป็นเอกสาร เมื่อแจ้งแล้วให้ลบอีเมลนั้นทิ้งทันที", "id": 23}, {"category": "เก็งข้อสอบ ชุดที่ 2", "question": "การตั้งชื่อไฟล์อิเล็กทรอนิกส์ (PDF) เพื่อส่งหนังสือทางอีเมล ข้อใดเรียงลำดับส่วนประกอบได้อย่างถูกต้อง?", "choices": ["เลขประจำของส่วนราชการ_ปีพุทธศักราช_เลขที่หนังสือ", "ปีพุทธศักราช_เลขประจำของส่วนราชการ_เลขที่หนังสือ", "รหัสตัวอักษรโรมัน_ปีพุทธศักราช_เลขประจำส่วนราชการ_เลขที่หนังสือ", "ปีพุทธศักราช_รหัสตัวอักษรโรมัน_เลขประจำส่วนราชการ_เลขที่หนังสือ"], "answer": 3, "explanation": "หลักเกณฑ์การตั้งชื่อไฟล์ PDF เพื่อส่งทางอีเมล เรียงลำดับ: 1) ปีพุทธศักราช 2) รหัสตัวอักษรโรมันประจำส่วนราชการ 3) เลขประจำของส่วนราชการเจ้าของเรื่อง 4) เลขที่หนังสือตามทะเบียนหนังสือส่ง คั่นด้วยขีดล่าง (_)", "id": 24}, {"category": "เก็งข้อสอบ ชุดที่ 2", "question": "หนังสืออิเล็กทรอนิกส์ปกติให้เก็บไว้ตลอดไป แต่หากส่วนราชการมีความจำเป็นต้องเพิ่มพื้นที่จัดเก็บ หัวหน้าส่วนราชการมีอำนาจสั่งทำลายหนังสืออิเล็กทรอนิกส์ทั่วไปที่เก็บมาแล้วเป็นเวลาเท่าใด?", "choices": ["เกินกว่า 5 ปี", "เกินกว่า 10 ปี", "เกินกว่า 15 ปี", "เกินกว่า 20 ปี"], "answer": 1, "explanation": "หนังสืออิเล็กทรอนิกส์ปกติให้เก็บไว้ตลอดไป เว้นแต่มีความจำเป็นต้องเพิ่มพื้นที่จัดเก็บ หัวหน้าส่วนราชการสามารถสั่งทำลายหนังสืออิเล็กทรอนิกส์ที่มิใช่เอกสารจดหมายเหตุ ที่เก็บมาเกินกว่า 10 ปีแล้วได้", "id": 25}, {"category": "เก็งข้อสอบ ชุดที่ 2", "question": "หนังสือราชการภาษาอังกฤษประเภทใด ที่ใช้สำหรับยืนยันข้อความในเรื่องที่ได้สนทนา ขอร้อง หรือประท้วงด้วยวาจา?", "choices": ["Note Verbale", "First Person Formal Note", "Aide-Memoire", "Memorandum"], "answer": 2, "explanation": "บันทึกช่วยจำ (Aide-Memoire) คือหนังสือที่ใช้สำหรับยืนยันข้อความในเรื่องที่ได้สนทนา ขอร้อง หรือประท้วงด้วยวาจา เพื่อแสดงท่าทีให้อีกฝ่ายทราบ", "id": 26}, {"category": "เก็งข้อสอบ ชุดที่ 2", "question": "การให้ \"บุคคลภายนอก\" ยืมหนังสือราชการ ข้อใดกล่าวถูกต้องที่สุด?", "choices": ["กระทำได้หากหัวหน้าแผนกอนุญาต", "กระทำมิได้เด็ดขาดในทุกกรณี", "กระทำมิได้ เว้นแต่ให้ดูหรือคัดลอกโดยได้รับอนุญาตจากหัวหน้าส่วนราชการระดับกองขึ้นไป", "กระทำได้หากมีหนังสือค้ำประกันจากหน่วยงานต้นสังกัดของผู้ยืม"], "answer": 2, "explanation": "การให้บุคคลภายนอกยืมหนังสือจะกระทำมิได้ เว้นแต่จะให้ดูหรือคัดลอกหนังสือ ทั้งนี้จะต้องได้รับอนุญาตจากหัวหน้าส่วนราชการระดับกองขึ้นไป หรือผู้ที่ได้รับมอบหมายก่อน", "id": 27}, {"category": "เก็งข้อสอบ ชุดที่ 2", "question": "ผู้ใดมีอำนาจลงลายมือชื่อรับรอง \"สำเนาถูกต้อง\" สำหรับสำเนาหนังสือประทับตราที่ต้องการส่งให้ส่วนราชการอื่นทราบ?", "choices": ["ข้าราชการประเภททั่วไป ระดับปฏิบัติงานขึ้นไป ที่เป็นเจ้าของเรื่อง", "ข้าราชการประเภทวิชาการ ระดับปฏิบัติการ หรือประเภททั่วไป ระดับชำนาญงานขึ้นไป ที่เป็นเจ้าของเรื่อง", "เจ้าหน้าที่สารบรรณกลางทุกคน", "หัวหน้าส่วนราชการระดับกองขึ้นไปเท่านั้น"], "answer": 1, "explanation": "การรับรอง \"สำเนาถูกต้อง\" ให้ข้าราชการประเภทวิชาการ ระดับปฏิบัติการ หรือประเภททั่วไป ระดับชำนาญงานขึ้นไป ซึ่งเป็นเจ้าของเรื่อง เป็นผู้ลงลายมือชื่อรับรอง", "id": 28}, {"category": "เก็งข้อสอบ ชุดที่ 2", "question": "การจัดรูปแบบเนื้อหาของอีเมลสำหรับส่งหนังสือราชการ ระเบียบกำหนดให้ใช้ตัวแบบอักษร (Font) ในลักษณะใด?", "choices": ["TH Sarabun PSK ขนาด 16 พอยท์ เท่านั้น", "Angsana New ขนาด 16 พอยท์ เท่านั้น", "Arial หรือ Verdana หรือ Times New Roman หรือ Font อื่นที่รองรับการแสดงผลภาษาไทย", "Font ใดก็ได้ตามความสะดวกของส่วนราชการผู้ส่ง"], "answer": 2, "explanation": "ภาคผนวก ๗ กำหนดว่า ในเนื้อหาอีเมล ให้จัดรูปแบบเป็น HTML เข้ารหัสแบบ UTF-8 และใช้แบบอักษร Arial หรือ Verdana หรือ Times New Roman หรือ Font อื่นที่รองรับการแสดงผลภาษาไทย", "id": 29}, {"category": "เก็งข้อสอบ ชุดที่ 2", "question": "การกำหนดเลขที่ \"หนังสือเวียน\" ให้เพิ่มตัวอักษรใดหน้าเลขทะเบียนหนังสือส่ง?", "choices": ["ด", "ว", "น", "ร"], "answer": 1, "explanation": "หนังสือเวียน คือหนังสือที่มีถึงผู้รับจำนวนมาก มีใจความเดียวกัน ให้เพิ่มรหัสตัวพยัญชนะ \"ว\" หน้าเลขทะเบียนหนังสือส่ง", "id": 30}, {"category": "เก็งข้อสอบ ชุดที่ 3", "question": "ตามระเบียบสำนักนายกรัฐมนตรี ว่าด้วยงานสารบรรณ พ.ศ. ๒๕๒๖ กำหนดให้ \"หนังสือ\" มีทั้งหมดกี่ชนิด?", "choices": ["4 ชนิด", "5 ชนิด", "6 ชนิด", "7 ชนิด"], "answer": 2, "explanation": "ระเบียบฯ ข้อ ๑๐ หนังสือมี 6 ชนิด คือ หนังสือภายนอก หนังสือภายใน หนังสือประทับตรา หนังสือสั่งการ หนังสือประชาสัมพันธ์ และหนังสือที่เจ้าหน้าที่ทำขึ้นหรือรับไว้เป็นหลักฐานในราชการ", "id": 31}, {"category": "เก็งข้อสอบ ชุดที่ 3", "question": "ในการเขียนหนังสือติดต่อราชการ หัวข้อ \"อ้างถึง\" ควรอ้างถึงหนังสือฉบับใดเป็นหลัก?", "choices": ["อ้างถึงหนังสือทุกฉบับที่มีการติดต่อกันมาเพื่อความครบถ้วน", "อ้างถึงหนังสือฉบับแรกสุดที่เริ่มติดต่อเพื่อบอกที่มา", "อ้างถึงหนังสือฉบับสุดท้ายที่ติดต่อกันเพียงฉบับเดียว", "อ้างถึงหนังสือฉบับที่มีความสำคัญที่สุดในเรื่องนั้น"], "answer": 2, "explanation": "การอ้างถึง ให้อ้างถึงหนังสือฉบับสุดท้ายที่ติดต่อกันเพียงฉบับเดียว เว้นแต่มีเรื่องอื่นที่เป็นสาระสำคัญต้องนำมาพิจารณา จึงจะอ้างถึงหนังสือฉบับอื่นเพิ่มเติม", "id": 32}, {"category": "เก็งข้อสอบ ชุดที่ 3", "question": "หนังสือสั่งการชนิดใดที่ \"ต้อง\" อาศัยอำนาจของกฎหมายที่บัญญัติให้กระทำได้เสมอ?", "choices": ["คำสั่ง", "ระเบียบ", "ข้อบังคับ", "ประกาศ"], "answer": 2, "explanation": "\"ข้อบังคับ\" คือบรรดาข้อความที่ผู้มีอำนาจหน้าที่กำหนดให้ใช้โดยอาศัยอำนาจของกฎหมายที่บัญญัติให้กระทำได้ (ส่วน \"ระเบียบ\" จะอาศัยอำนาจของกฎหมายหรือไม่ก็ได้)", "id": 33}, {"category": "เก็งข้อสอบ ชุดที่ 3", "question": "กรณีใดต่อไปนี้ไม่สามารถ ใช้ \"หนังสือประทับตรา\" ได้?", "choices": ["การเตือนเรื่องที่ค้าง", "การขอรายละเอียดเพิ่มเติม", "การส่งสำเนาหนังสือ สิ่งของ หรือเอกสาร", "การตอบรับทราบที่เกี่ยวกับการเงิน"], "answer": 3, "explanation": "หนังสือประทับตราใช้ได้ในกรณีที่ไม่ใช่เรื่องสำคัญ เช่น การขอรายละเอียด การส่งสำเนา การเตือนเรื่องค้าง แต่การตอบรับทราบต้องเป็นเรื่องที่ไม่เกี่ยวกับการเงิน จึงจะใช้หนังสือประทับตราไม่ได้ในกรณีที่เกี่ยวกับการเงิน", "id": 34}, {"category": "เก็งข้อสอบ ชุดที่ 3", "question": "หากต้องการให้หนังสือส่งถึงผู้รับภายในเวลาที่กำหนดไว้อย่างชัดเจน จะต้องระบุชั้นความเร็วบนหน้าซองและหนังสืออย่างไร?", "choices": ["ด่วนที่สุด", "ด่วนมาก", "ด่วน", "ด่วนภายใน"], "answer": 3, "explanation": "กรณีที่ต้องการให้หนังสือส่งถึงผู้รับภายในเวลาที่กำหนด ให้ระบุคำว่า \"ด่วนภายใน\" แล้วลงวัน เดือน ปี และกำหนดเวลาที่ต้องการให้หนังสือนั้นไปถึงผู้รับ", "id": 35}, {"category": "เก็งข้อสอบ ชุดที่ 3", "question": "เมื่อผู้รับได้รับ \"หนังสือเวียน\" แล้วเห็นว่าเรื่องนั้นต้องให้หน่วยงานในบังคับบัญชาทราบด้วย ผู้รับมีหน้าที่ต้องทำอย่างไรตามระเบียบ?", "choices": ["ส่งหนังสือเวียนต้นฉบับเวียนให้ครบทุกหน่วยงานตามลำดับ", "ทำหนังสือเวียนฉบับใหม่โดยใช้อักษร \"ว\" และเลขทะเบียนของหน่วยงานตนเอง", "มีหน้าที่จัดทำสำเนา หรือจัดส่งให้หน่วยงานหรือบุคคลเหล่านั้นโดยเร็ว", "ปิดประกาศหนังสือเวียนนั้นไว้ที่ป้ายประกาศของส่วนราชการ"], "answer": 2, "explanation": "ระเบียบข้อ ๓๒ เมื่อผู้รับได้รับหนังสือเวียนแล้วเห็นว่าเรื่องนั้นต้องให้หน่วยงานหรือบุคคลในบังคับบัญชาทราบด้วย ให้มีหน้าที่จัดทำสำเนา หรือจัดส่งให้หน่วยงานหรือบุคคลเหล่านั้นโดยเร็ว", "id": 36}, {"category": "เก็งข้อสอบ ชุดที่ 3", "question": "มาตรฐาน \"ซองขนาดซี 4 (C4)\" ที่ใช้สำหรับบรรจุหนังสือกระดาษตราครุฑโดยไม่ต้องพับ กำหนดให้ใช้กระดาษที่มีน้ำหนักกี่กรัมต่อตารางเมตร?", "choices": ["60 กรัมต่อตารางเมตร", "80 กรัมต่อตารางเมตร", "100 กรัมต่อตารางเมตร", "120 กรัมต่อตารางเมตร"], "answer": 3, "explanation": "มาตรฐานซองโดยปกติให้ใช้กระดาษน้ำหนัก 80 กรัมต่อตารางเมตร เว้นแต่ซองขนาดซี 4 ให้ใช้กระดาษน้ำหนัก 120 กรัมต่อตารางเมตร", "id": 37}, {"category": "เก็งข้อสอบ ชุดที่ 3", "question": "หากหนังสือราชการที่สูญหายเป็น \"เอกสารสิทธิตามกฎหมาย\" หรือหนังสือสำคัญที่เป็นการแสดงเอกสารสิทธิ เจ้าหน้าที่จะต้องดำเนินการอย่างไร?", "choices": ["ให้ดำเนินการแจ้งความต่อพนักงานสอบสวน", "รายงานผู้บังคับบัญชาทราบและหมายเหตุในทะเบียน", "คัดสำเนาจากหน่วยงานสารบรรณกลางมาทดแทน", "ตั้งคณะกรรมการสอบสวนข้อเท็จจริงทันที"], "answer": 0, "explanation": "ถ้าหนังสือที่ชำรุดหรือสูญหายเป็นเอกสารสิทธิตามกฎหมาย หรือหนังสือสำคัญที่เป็นการแสดงเอกสารสิทธิ ให้ดำเนินการแจ้งความต่อพนักงานสอบสวน", "id": 38}, {"category": "เก็งข้อสอบ ชุดที่ 3", "question": "ในกรณีที่ติดต่อราชการด้วยระบบสารบรรณอิเล็กทรอนิกส์ และผู้ส่งได้รับการ \"แจ้งตอบรับ\" จากผู้รับแล้ว ผู้ส่งต้องดำเนินการอย่างไรกับเอกสารฉบับจริง?", "choices": ["ต้องส่งหนังสือเป็นเอกสารตามไปอีกภายใน 3 วันทำการ", "ต้องส่งหนังสือเป็นเอกสารตามไปอีกเพื่อเก็บเป็นหลักฐานคู่ฉบับ", "ไม่ต้องจัดส่งหนังสือเป็นเอกสารตามไปอีก", "ส่งเฉพาะหน้าแรกของหนังสือเป็นเอกสารตามไปเพื่อยืนยันลายมือชื่อ"], "answer": 2, "explanation": "ในกรณีที่ติดต่อราชการด้วยระบบสารบรรณอิเล็กทรอนิกส์ ถ้าได้รับการแจ้งตอบรับแล้ว ส่วนราชการผู้ส่งไม่ต้องจัดส่งหนังสือเป็นเอกสารตามไปอีก", "id": 39}, {"category": "เก็งข้อสอบ ชุดที่ 3", "question": "ข้อใดต่อไปนี้ จัดอยู่ในกลุ่มของ \"หนังสือประชาสัมพันธ์\" ทั้งหมด?", "choices": ["คำสั่ง, ระเบียบ, ข้อบังคับ", "หนังสือรับรอง, รายงานการประชุม, บันทึก", "ประกาศ, แถลงการณ์, ข่าว", "หนังสือภายนอก, หนังสือภายใน, หนังสือประทับตรา"], "answer": 2, "explanation": "หนังสือประชาสัมพันธ์มี 3 ชนิด ได้แก่ ประกาศ แถลงการณ์ และข่าว ส่วนคำสั่ง/ระเบียบ/ข้อบังคับ เป็นหนังสือสั่งการ และหนังสือรับรอง/รายงานการประชุม/บันทึก เป็นหนังสือที่เจ้าหน้าที่ทำขึ้นฯ", "id": 40}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "สำนักงาน ก. มีระเบียบภายในเกี่ยวกับการรักษาความลับทางราชการที่เข้มงวดมาก โดยระบุว่าเอกสารทุกชนิดต้องลงรับเป็นกระดาษเท่านั้น วันหนึ่งได้รับหนังสือราชการอิเล็กทรอนิกส์ (ไม่ระบุชั้นความลับ) ผ่านทางอีเมลกลาง เจ้าหน้าที่สารบรรณควรปฏิบัติตามข้อใดจึงจะถูกต้องตามระเบียบสำนักนายกรัฐมนตรีฯ?", "choices": ["พิมพ์เอกสารออกมาลงทะเบียนรับ แล้วลบอีเมลทิ้งทันที", "ตีกลับอีเมลและแจ้งให้หน่วยงานผู้ส่งส่งมาเป็นเอกสารกระดาษ", "ลงทะเบียนรับในระบบสารบรรณอิเล็กทรอนิกส์ได้เลย เพราะไม่ใช่ข้อมูลข่าวสารลับชั้นลับที่สุด", "ต้องปฏิบัติตามระเบียบภายในของสำนักงาน ก. อย่างเคร่งครัด โดยให้ปฏิเสธการรับทางอีเมล"], "answer": 2, "explanation": "ข้อ 29 ระบุว่าการติดต่อราชการให้ดำเนินการด้วยระบบสารบรรณอิเล็กทรอนิกส์เป็นหลัก \"เว้นแต่\" ข้อมูลข่าวสารลับชั้นลับที่สุด หรือมีเหตุจำเป็นอื่น หากไม่ใช่ชั้นลับที่สุด ต้องลงรับในระบบ e-Saraban ได้เลย ระเบียบภายในจะขัดกับระเบียบสำนักนายกฯ ไม่ได้", "id": 41}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "ส่วนราชการแห่งหนึ่งจัดทำ \"หนังสือประทับตรา\" ส่งถึงบริษัทเอกชนแห่งหนึ่งเพื่อแจ้งเตือนให้มาชำระค่าปรับตามสัญญา ข้อใดกล่าวถูกต้องเกี่ยวกับการกระทำนี้?", "choices": ["ทำได้ เพราะเป็นการเตือนเรื่องที่ค้าง ซึ่งไม่ใช่เรื่องสำคัญ", "ทำไม่ได้ เพราะหนังสือประทับตราใช้ติดต่อระหว่างส่วนราชการด้วยกันเท่านั้น", "ทำไม่ได้ เพราะเป็นเรื่องที่เกี่ยวข้องกับการเงิน", "ทำได้ แต่ต้องให้หัวหน้าส่วนราชการระดับกรมเป็นผู้ลงชื่อย่อกำกับตรา"], "answer": 2, "explanation": "ข้อ 13 หนังสือประทับตราใช้ติดต่อกับบุคคลภายนอกได้ (เฉพาะเรื่องไม่สำคัญ) แต่ข้อ 13.3 ระบุว่า \"การตอบรับทราบที่ไม่เกี่ยวกับราชการสำคัญหรือการเงิน\" ดังนั้นเรื่องค่าปรับเป็นเรื่องการเงิน จึงใช้หนังสือประทับตราไม่ได้ ต้องใช้หนังสือภายนอก", "id": 42}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "ในเวลา 16.45 น. ของวันศุกร์ (วันทำการ) เจ้าหน้าที่สารบรรณกลางได้รับหนังสือราชการส่งมาทางอีเมลกลางของหน่วยงาน เจ้าหน้าที่จะต้องแจ้งตอบรับอีเมลฉบับนี้ช้าที่สุดเมื่อใด?", "choices": ["ภายในเวลา 17.00 น. ของวันศุกร์นั้น", "ภายในเวลา 08.30 น. ของวันจันทร์ถัดไป", "ภายในเวลา 10.00 น. ของวันจันทร์ถัดไป", "ภายในเวลา 16.30 น. ของวันจันทร์ถัดไป"], "answer": 2, "explanation": "ภาคผนวก 7 ข้อ 3.2 หากได้รับภายหลังเวลา 16.30 นาฬิกา ให้ตอบกลับอย่างช้าไม่เกิน 10.00 นาฬิกาของวันทำการถัดไป (คือวันจันทร์ 10.00 น.)", "id": 43}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "ในการสำรองข้อมูล (Backup) หนังสืออิเล็กทรอนิกส์ และการแปลงไฟล์หนังสือเพื่อส่งทางอีเมล (Send) ระเบียบกำหนดความละเอียดของไฟล์ PDF ไว้แตกต่างกันอย่างไร?", "choices": ["ส่งอีเมล ไม่น้อยกว่า 150 dpi / สำรองข้อมูล ไม่น้อยกว่า 300 dpi", "ส่งอีเมล ไม่น้อยกว่า 300 dpi / สำรองข้อมูล ไม่น้อยกว่า 150 dpi", "ส่งอีเมล ไม่น้อยกว่า 600 dpi / สำรองข้อมูล ไม่น้อยกว่า 300 dpi", "ทั้งส่งอีเมลและสำรองข้อมูล ต้องมีความละเอียดไม่น้อยกว่า 300 dpi"], "answer": 1, "explanation": "ภาคผนวก 7 ข้อ 4.3 การแปลงไฟล์เพื่อส่งอีเมลต้องมีความละเอียดไม่น้อยกว่า 300 dpi แต่ข้อ 89/4 การสำรองข้อมูล (Backup) ให้ความละเอียดไม่น้อยกว่า 150 dpi", "id": 44}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "คณะกรรมการทำลายหนังสือของกรม ข. ประชุมพิจารณาหนังสือขอทำลาย มีมติเสียงข้างมากให้ทำลายเอกสารชุดหนึ่ง แต่ประธานกรรมการไม่เห็นด้วย ประธานกรรมการต้องดำเนินการอย่างไร?", "choices": ["ใช้อำนาจประธานยับยั้งการทำลายเอกสารนั้น", "ส่งเรื่องให้สำนักหอจดหมายเหตุแห่งชาติเป็นผู้ชี้ขาด", "ทำบันทึกความเห็นแย้งไว้ แล้วเสนอรายงานผลต่อหัวหน้าส่วนราชการระดับกรม", "สั่งให้เก็บเอกสารนั้นไว้จนถึงการพิจารณาทำลายในงวดต่อไป"], "answer": 2, "explanation": "ข้อ 67 มติคณะกรรมการให้ถือเสียงข้างมาก ถ้าไม่เห็นด้วยให้ทำบันทึกความเห็นแย้งไว้ และข้อ 68.4 ให้เสนอรายงานพร้อมบันทึกความเห็นแย้งต่อหัวหน้าส่วนราชการระดับกรมเพื่อพิจารณาสั่งการ", "id": 45}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "ข้อใดคือความแตกต่างที่เป็นสาระสำคัญระหว่างหนังสือสั่งการประเภท \"ระเบียบ\" และ \"ข้อบังคับ\"?", "choices": ["ระเบียบใช้บังคับเป็นการทั่วไป แต่ข้อบังคับใช้เฉพาะกลุ่มบุคคล", "ระเบียบจะอาศัยอำนาจกฎหมายหรือไม่ก็ได้ แต่ข้อบังคับต้องอาศัยอำนาจกฎหมายที่บัญญัติให้กระทำได้", "ระเบียบออกโดยหัวหน้าส่วนราชการระดับกรม แต่ข้อบังคับต้องออกโดยระดับกระทรวง", "ระเบียบคือการแนะแนวทางปฏิบัติ แต่ข้อบังคับคือข้อความที่สั่งให้กระทำทันที"], "answer": 1, "explanation": "\"ระเบียบ\" คือข้อความที่วางไว้ประจำ จะอาศัยอำนาจของกฎหมายหรือไม่ก็ได้ แต่ \"ข้อบังคับ\" คือข้อความที่ผู้มีอำนาจกำหนดให้ใช้ โดยอาศัยอำนาจของกฎหมายที่บัญญัติให้กระทำได้", "id": 46}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "นาย ก. (นักวิเคราะห์นโยบายและแผนชำนาญการ) เป็นเจ้าของเรื่องหนังสือราชการฉบับหนึ่ง ต้องการรับรอง \"สำเนาถูกต้อง\" เพื่อส่งให้หน่วยงานอื่น นาย ก. มีอำนาจลงนามรับรองหรือไม่?", "choices": ["มีอำนาจ เพราะเป็นข้าราชการระดับชำนาญการ และเป็นเจ้าของเรื่อง", "ไม่มีอำนาจ เพราะผู้รับรองต้องเป็นหัวหน้าส่วนราชการระดับกองขึ้นไป", "ไม่มีอำนาจ เพราะอำนาจนี้เป็นของเจ้าหน้าที่สารบรรณกลางเท่านั้น", "มีอำนาจ แต่ต้องให้ผู้อำนวยการกองลงนามกำกับอีกครั้ง"], "answer": 0, "explanation": "ข้อ 31 การรับรองสำเนาถูกต้อง ให้ข้าราชการประเภทวิชาการ ระดับปฏิบัติการ หรือประเภททั่วไป ระดับชำนาญงานขึ้นไป ซึ่งเป็นเจ้าของเรื่อง เป็นผู้ลงลายมือชื่อรับรอง (นาย ก. ระดับชำนาญการ จึงมีอำนาจเซ็นได้เลย)", "id": 47}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "การตั้งชื่อไฟล์ PDF เพื่อส่งหนังสือราชการทางอีเมล ข้อใดเรียงลำดับโครงสร้างได้ถูกต้องที่สุดตามภาคผนวก 7?", "choices": ["รหัสตัวอักษรโรมัน _ ปีพุทธศักราช _ เลขประจำส่วนราชการ _ เลขที่ส่ง", "ปีพุทธศักราช _ เลขประจำส่วนราชการ _ รหัสตัวอักษรโรมัน _ เลขที่ส่ง", "เลขประจำส่วนราชการ _ รหัสตัวอักษรโรมัน _ เลขที่ส่ง _ ปีพุทธศักราช", "ปีพุทธศักราช _ รหัสตัวอักษรโรมัน _ เลขประจำส่วนราชการ _ เลขที่ของหนังสือส่ง"], "answer": 3, "explanation": "ภาคผนวก 7 ข้อ 4.3 กำหนดลำดับการตั้งชื่อไฟล์คือ ปีพุทธศักราช, รหัสตัวอักษรโรมัน, เลขประจำของส่วนราชการ, เลขที่ของหนังสือส่ง (เช่น 2564_OPM0913_56.pdf)", "id": 48}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "หากหน่วยงานได้รับอีเมลโฆษณาขายสินค้า (Spam mail) เข้ามาในระบบสารบรรณกลาง ข้อใดคือวิธีปฏิบัติที่ระเบียบห้ามไว้เด็ดขาด?", "choices": ["ลบอีเมลนั้นทิ้งทันที", "รายงานผู้บังคับบัญชา", "ตอบกลับอีเมลเพื่อแจ้งให้ยกเลิกการส่ง", "บล็อกอีเมลแอดเดรสของผู้ส่ง"], "answer": 2, "explanation": "ภาคผนวก 7 ข้อ 2 หากพบอีเมลขยะ (Spam, Junk, Hoax) \"ห้ามมิให้ตอบกลับ เปิดเอกสาร หรือคลิกลิงก์...โดยเด็ดขาด โดยให้ลบอีเมลนั้นทิ้งทันที\"", "id": 49}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "\"หนังสือที่ไม่มีอายุการเก็บหนังสือ โดยปกติให้เก็บไว้ตลอดไป เว้นแต่กรณีมีความจำเป็นต้องเพิ่มพื้นที่จัดเก็บ... จะมีคำสั่งให้ทำลาย... ที่เก็บมาเป็นเวลาเกินกว่า 10 ปีแล้วก็ได้\" นิยามนี้หมายถึงหนังสือราชการประเภทใด?", "choices": ["หนังสือที่มีคุณค่าทางประวัติศาสตร์", "หนังสืออิเล็กทรอนิกส์", "หนังสือที่เป็นหลักฐานทางอรรถคดี", "หนังสือเกี่ยวกับการรับจ่ายเงิน"], "answer": 1, "explanation": "ข้อ 89/5 นิยามนี้คือเรื่องของ 'หนังสืออิเล็กทรอนิกส์' ที่โดยปกติให้เก็บตลอดไป แต่ถ้าพื้นที่เต็ม อธิบดีสั่งทำลายเอกสารที่เก็บเกิน 10 ปีได้", "id": 50}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "ในการส่งอีเมลหนังสือราชการ หากเจ้าหน้าที่ใช้ช่อง \"สำเนาลับถึง\" (BCC) จะต้องเป็นไปเพื่อวัตถุประสงค์ใด?", "choices": ["เพื่อส่งให้ผู้บังคับบัญชาระดับสูงตรวจสอบก่อนถึงมือผู้รับจริง", "เพื่อส่งให้ผู้รับทุกคนทราบว่าหนังสือฉบับนี้ได้ส่งถึงใครบ้าง", "เพื่อส่งไปจัดเก็บเป็นสำเนาภายในระบบ หรือปกปิดไม่ให้ผู้รับทราบว่าส่งให้บุคคลอื่นด้วย", "เพื่อส่งถึงหน่วยงานภายนอกที่ไม่ได้ใช้ระบบสารบรรณอิเล็กทรอนิกส์"], "answer": 2, "explanation": "ภาคผนวก 7 ข้อ 5.3.7 ให้ใช้ช่อง \"สำเนาลับถึง\" (BCC) สำหรับส่งไปจัดเก็บเป็นสำเนาภายในระบบ หรือปกปิดไม่ให้ผู้รับทราบว่าได้ส่งไปยังบุคคลอื่นด้วย", "id": 51}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "บุคคลภายนอกมาขอ \"ยืม\" หนังสือราชการที่เป็นผลงานวิจัยของกรมเพื่อนำไปศึกษาที่บ้าน ข้อใดคือข้อปฏิบัติที่ถูกต้องที่สุด?", "choices": ["ให้ยืมได้ โดยต้องวางบัตรประชาชนไว้เป็นหลักฐาน", "ให้ยืมได้ หากผู้อำนวยการกองอนุมัติและทำสัญญาค้ำประกัน", "ห้ามยืมเด็ดขาด แต่สามารถให้ดูหรือคัดลอกได้ หากได้รับอนุญาตจากหัวหน้าส่วนราชการระดับกองขึ้นไป", "ห้ามยืม ดู หรือคัดลอกเด็ดขาด เพราะเป็นทรัพย์สินของทางราชการ"], "answer": 2, "explanation": "ข้อ 65 การให้บุคคลภายนอกยืมหนังสือจะกระทำมิได้ เว้นแต่จะให้ดูหรือคัดลอก โดยต้องได้รับอนุญาตจากหัวหน้าส่วนราชการระดับกองขึ้นไป", "id": 52}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "การพิมพ์หนังสือติดต่อราชการ หัวข้อ \"อ้างถึง\" ระเบียบกำหนดให้อ้างถึงเอกสารใด?", "choices": ["หนังสือทุกฉบับที่เคยมีการติดต่อกันในเรื่องนั้น", "หนังสือฉบับแรกสุดที่เป็นต้นเรื่อง", "หนังสือฉบับที่มีสาระสำคัญที่สุดเพียงฉบับเดียว", "หนังสือฉบับสุดท้ายที่ติดต่อกันเพียงฉบับเดียว (เว้นแต่มีเรื่องอื่นที่เป็นสาระสำคัญต้องนำมาพิจารณาด้วย)"], "answer": 3, "explanation": "ข้อ 11.6 การอ้างถึง ให้อ้างถึงหนังสือฉบับสุดท้ายที่ติดต่อกันเพียงฉบับเดียว เว้นแต่มีเรื่องอื่นที่เป็นสาระสำคัญต้องนำมาพิจารณา จึงอ้างถึงหนังสือฉบับอื่นๆ", "id": 53}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "กระดาษตราครุฑที่ใช้พิมพ์หนังสือภายนอก และกระดาษบันทึกข้อความที่ใช้ทำหนังสือภายใน มีความแตกต่างกันในเรื่อง \"ขนาดของตราครุฑ\" อย่างไร?", "choices": ["หนังสือภายนอกครุฑสูง 3.5 ซม. / หนังสือภายในครุฑสูง 1.5 ซม.", "หนังสือภายนอกครุฑสูง 3 ซม. / หนังสือภายในครุฑสูง 1.5 ซม.", "หนังสือภายนอกครุฑสูง 3 ซม. / หนังสือภายในครุฑสูง 2 ซม.", "หนังสือภายนอกครุฑสูง 4 ซม. / หนังสือภายในครุฑสูง 1.5 ซม."], "answer": 1, "explanation": "ข้อ 71 ตราครุฑมี 2 ขนาด คือ สูง 3 เซนติเมตร (กระดาษตราครุฑ/หนังสือภายนอก) และสูง 1.5 เซนติเมตร (กระดาษบันทึกข้อความ/หนังสือภายใน)", "id": 54}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "หนังสือที่มีถึงผู้รับเป็นจำนวนมาก มีใจความอย่างเดียวกัน ให้กำหนดเลขที่หนังสือโดยเพิ่มพยัญชนะใดหน้าเลขทะเบียนหนังสือส่ง?", "choices": ["ร", "น", "ว", "ด"], "answer": 2, "explanation": "ข้อ 32 หนังสือเวียน คือหนังสือที่มีถึงผู้รับจำนวนมาก ใจความเดียวกัน ให้เพิ่มรหัสตัวพยัญชนะ \"ว\" หน้าเลขทะเบียนหนังสือส่ง", "id": 55}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "หนังสือเกี่ยวกับการเบิกจ่ายเงินงบประมาณที่ดำเนินการเสร็จสิ้น สตง. ตรวจสอบแล้วไม่มีปัญหา และหมดความจำเป็นในการใช้เป็นหลักฐาน ให้เก็บรักษาไว้ตามข้อใด?", "choices": ["ไม่น้อยกว่า 1 ปี", "ไม่น้อยกว่า 5 ปี", "ไม่น้อยกว่า 10 ปี", "ตลอดไป"], "answer": 1, "explanation": "ข้อ 57.6 หนังสือเกี่ยวกับการรับจ่ายเงินที่ไม่เป็นหลักฐานแห่งการก่อสิทธิ หรือหมดความจำเป็น เมื่อ สตง. ตรวจสอบแล้วไม่มีปัญหา ให้เก็บไว้ไม่น้อยกว่า 5 ปี", "id": 56}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "ตำแหน่งใดต่อไปนี้ ต้องใช้คำขึ้นต้นในหนังสือราชการว่า \"กราบเรียน\" และใช้คำลงท้ายว่า \"ขอแสดงความนับถืออย่างยิ่ง\"?", "choices": ["ปลัดกระทรวง", "ผู้ว่าราชการกรุงเทพมหานคร", "ผู้ตรวจการแผ่นดิน", "อธิบดีศาลปกครองชั้นต้น"], "answer": 2, "explanation": "ตามภาคผนวก 2 (ฉบับแก้ไข) ตำแหน่งองค์กรอิสระตามรัฐธรรมนูญ เช่น ผู้ตรวจการแผ่นดิน ให้ใช้คำขึ้นต้น \"กราบเรียน\" และลงท้าย \"ขอแสดงความนับถืออย่างยิ่ง\"", "id": 57}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "นายแพทย์สาธารณสุขจังหวัด ได้รับคำสั่งแต่งตั้งเป็นกรรมการในคณะหนึ่ง แต่วันประชุมติดราชการสำคัญ จึงมอบหมายให้นายแพทย์เชี่ยวชาญไปประชุมแทน ในการจดรายงานการประชุม ช่อง \"ผู้มาประชุม\" จะต้องบันทึกอย่างไร?", "choices": ["ลงชื่อนายแพทย์เชี่ยวชาญ และระบุว่ามาประชุมแทนนายแพทย์สาธารณสุขจังหวัด", "ลงชื่อนายแพทย์สาธารณสุขจังหวัด และวงเล็บว่า (ผู้แทน)", "ลงชื่อนายแพทย์เชี่ยวชาญ ในช่อง \"ผู้เข้าร่วมประชุม\"", "ไม่ต้องลงชื่อในช่องใดๆ แต่ให้จดไว้ในวาระที่ 1 เรื่องแจ้งให้ทราบ"], "answer": 0, "explanation": "ข้อ 25.5 ในช่องผู้มาประชุม กรณีที่มีผู้มาประชุมแทน ให้ลงชื่อผู้มาประชุมแทน และลงว่ามาประชุมแทนผู้ใดหรือตำแหน่งใด", "id": 58}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "หากหนังสือราชการซึ่งเป็น \"โฉนดที่ดิน\" (เอกสารสิทธิตามกฎหมาย) ของส่วนราชการสูญหาย เจ้าหน้าที่จะต้องดำเนินการขั้นแรกตามระเบียบงานสารบรรณอย่างไร?", "choices": ["รายงานหัวหน้าส่วนราชการระดับกรมทันที", "ตั้งคณะกรรมการสอบสวนข้อเท็จจริง", "ดำเนินการแจ้งความต่อพนักงานสอบสวน", "ออกเอกสารใบแทนเพื่อเก็บไว้ในแฟ้ม"], "answer": 2, "explanation": "ข้อ 61 ถ้าหนังสือที่สูญหายเป็นเอกสารสิทธิตามกฎหมาย หรือหนังสือสำคัญที่เป็นการแสดงเอกสารสิทธิ ให้ดำเนินการแจ้งความต่อพนักงานสอบสวน", "id": 59}, {"category": "แบบทดสอบจำลอง (สไตล์วิเคราะห์-ดักทาง)", "question": "ส่วนราชการต้องจัดทำบัญชีส่งมอบหนังสือที่มีอายุครบกี่ปี ให้แก่สำนักหอจดหมายเหตุแห่งชาติ และต้องส่งภายในระยะเวลาใด?", "choices": ["ครบ 10 ปี / ภายใน 31 มกราคมของปีถัดไป", "ครบ 10 ปี / ภายใน 60 วันหลังสิ้นปีปฏิทิน", "ครบ 20 ปี / ภายใน 60 วันหลังสิ้นปีปฏิทิน", "ครบ 20 ปี / ภายใน 31 มกราคมของปีถัดไป"], "answer": 3, "explanation": "ข้อ 58 ทุกปีปฏิทินให้ส่วนราชการจัดส่งหนังสือที่มีอายุครบ 20 ปี ให้สำนักหอจดหมายเหตุแห่งชาติ กรมศิลปากร ภายในวันที่ 31 มกราคม ของปีถัดไป", "id": 60}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ตามระเบียบนี้ ให้เรียกชื่อระเบียบว่าอย่างไร", "choices": ["ระเบียบสำนักนายกรัฐมนตรีว่าด้วยงานสารบรรณ พ.ศ. ๒๕๒๖", "ระเบียบสำนักนายกรัฐมนตรี ว่าด้วยงานสารบรรณ พ.ศ. ๒๕๒๖", "ระเบียบสำนักนายกรัฐมนตรีว่าด้วยงานสารบรรณ พุทธศักราช ๒๕๒๖", "ระเบียบสำนักนายกรัฐมนตรี ว่าด้วยงานสารบรรณ พุทธศักราช ๒๕๒๖"], "answer": 1, "explanation": "ชื่อระเบียบที่ถูกต้องคือ ระเบียบสำนักนายกรัฐมนตรี ว่าด้วยงานสารบรรณ พ.ศ. ๒๕๒๖", "id": 61}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ระเบียบสำนักนายกรัฐมนตรี ว่าด้วยงานสารบรรณ พ.ศ. ๒๕๒๖ ให้ใช้บังคับตั้งแต่เมื่อใด", "choices": ["วันที่ ๑ พฤษภาคม ๒๕๒๖ เป็นต้นไป", "วันที่ ๑ มิถุนายน ๒๕๒๖ เป็นต้นไป", "วันที่ ๑ กรกฎาคม ๒๕๒๖ เป็นต้นไป", "วันที่ ๑ สิงหาคม ๒๕๒๖ เป็นต้นไป"], "answer": 1, "explanation": "ระเบียบนี้ให้ใช้บังคับตั้งแต่วันที่ ๑ มิถุนายน ๒๕๒๖ เป็นต้นไป", "id": 62}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ผู้ใดมีอำนาจหน้าที่รักษาการตามระเบียบนี้ และมีอำนาจตีความและวินิจฉัยปัญหา", "choices": ["รัฐมนตรีประจำสำนักนายกรัฐมนตรี", "เลขาธิการนายกรัฐมนตรี", "ปลัดสำนักนายกรัฐมนตรี", "เลขาธิการคณะรัฐมนตรี"], "answer": 2, "explanation": "ปลัดสำนักนายกรัฐมนตรีเป็นผู้รักษาการตามระเบียบนี้ และมีอำนาจตีความและวินิจฉัยปัญหาเกี่ยวกับการปฏิบัติตามระเบียบนี้", "id": 63}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "นิยามของคำว่า \"งานสารบรรณ\" ตามระเบียบนี้ หมายความว่าอย่างไร", "choices": ["งานที่เกี่ยวกับการบริหารงานเอกสาร เริ่มตั้งแต่ การจัดทำ การรับ การส่ง การตรวจสอบ การเก็บรักษา จนถึงการทำลาย", "งานที่เกี่ยวกับการบริหารงานเอกสาร เริ่มตั้งแต่ การสร้าง การรับ การส่ง การเก็บรักษา การยืม จนถึงการทำลาย", "งานที่เกี่ยวกับการบริหารงานเอกสาร เริ่มตั้งแต่ การจัดทำ การรับ การส่ง การเก็บรักษา การยืม จนถึงการจำหน่าย", "งานที่เกี่ยวกับการบริหารงานเอกสาร เริ่มตั้งแต่ การจัดทำ การรับ การส่ง การเก็บรักษา การยืม จนถึงการทำลาย"], "answer": 3, "explanation": "\"งานสารบรรณ\" หมายถึงงานที่เกี่ยวกับการบริหารงานเอกสาร เริ่มตั้งแต่การจัดทำ การรับ การส่ง การเก็บรักษา การยืม จนถึงการทำลาย", "id": 64}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "นิยามของคำว่า \"ระบบสารบรรณอิเล็กทรอนิกส์\" หมายความรวมถึงสิ่งใด", "choices": ["การรับส่งและเก็บรักษาโดยใช้ระบบคลาวด์คอมพิวติ้งของส่วนราชการหรือที่ส่วนราชการจัดให้แก่เจ้าหน้าที่", "การรับส่งและเก็บรักษาโดยใช้เครือข่ายอินทราเน็ตของส่วนราชการหรือที่ส่วนราชการจัดให้แก่เจ้าหน้าที่", "การรับส่งโดยใช้ไปรษณีย์อิเล็กทรอนิกส์ของส่วนราชการหรือที่ส่วนราชการจัดให้แก่เจ้าหน้าที่", "การรับส่งโดยใช้แอปพลิเคชันสื่อสารของส่วนราชการหรือที่ส่วนราชการจัดให้แก่เจ้าหน้าที่"], "answer": 2, "explanation": "\"ระบบสารบรรณอิเล็กทรอนิกส์\" หมายถึงการรับส่งและเก็บรักษาข้อมูลข่าวสารหรือหนังสือผ่านระบบสื่อสารด้วยวิธีการทางอิเล็กทรอนิกส์ โดยรวมถึงการรับส่งโดยใช้ไปรษณีย์อิเล็กทรอนิกส์ของส่วนราชการ", "id": 65}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือราชการ (เอกสารที่เป็นหลักฐานในราชการ) มีทั้งหมดกี่ชนิด", "choices": ["๔ ชนิด", "๕ ชนิด", "๖ ชนิด", "๗ ชนิด"], "answer": 2, "explanation": "หนังสือราชการมีทั้งหมด ๖ ชนิด", "id": 66}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ข้อใดจัดเรียงชนิดของ \"หนังสือราชการ\" ได้ถูกต้องและครบถ้วนที่สุด", "choices": ["หนังสือภายนอก หนังสือภายใน หนังสือเวียน หนังสือสั่งการ หนังสือประชาสัมพันธ์ หนังสือที่เจ้าหน้าที่ทำขึ้นหรือรับไว้เป็นหลักฐานในราชการ", "หนังสือภายนอก หนังสือภายใน หนังสือประทับตรา หนังสือสั่งการ หนังสือรับรอง หนังสือที่เจ้าหน้าที่ทำขึ้นหรือรับไว้เป็นหลักฐานในราชการ", "หนังสือภายนอก หนังสือภายใน หนังสือประทับตรา หนังสือสั่งการ หนังสือประชาสัมพันธ์ หนังสือที่เจ้าหน้าที่ทำขึ้นหรือรับไว้เป็นหลักฐานในราชการ", "หนังสือภายนอก หนังสือภายใน หนังสือประทับตรา คำสั่ง ระเบียบ ข้อบังคับ"], "answer": 2, "explanation": "6 ชนิดของหนังสือราชการ ได้แก่ หนังสือภายนอก หนังสือภายใน หนังสือประทับตรา หนังสือสั่งการ หนังสือประชาสัมพันธ์ และหนังสือที่เจ้าหน้าที่ทำขึ้นหรือรับไว้เป็นหลักฐานในราชการ", "id": 67}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ข้อใดคือความหมายของ \"หนังสือภายนอก\"", "choices": ["หนังสือติดต่อราชการที่เป็นแบบพิธีน้อยกว่า โดยใช้กระดาษตราครุฑ", "หนังสือติดต่อราชการที่เป็นแบบพิธีน้อยกว่า โดยใช้กระดาษบันทึกข้อความ", "หนังสือติดต่อราชการที่เป็นแบบพิธี โดยใช้กระดาษบันทึกข้อความ", "หนังสือติดต่อราชการที่เป็นแบบพิธี โดยใช้กระดาษตราครุฑ"], "answer": 3, "explanation": "หนังสือภายในคือหนังสือติดต่อราชการที่เป็นแบบพิธี ใช้กระดาษตราครุฑ ใช้ติดต่อภายนอกระหว่างส่วนราชการ หรือติดต่อกับบุคคลภายนอก", "id": 68}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การลงรหัสตัวพยัญชนะและเลขประจำของเจ้าของเรื่อง ในหนังสือภายนอก ให้ทับด้วยเลขใด", "choices": ["ทับเลขทะเบียนหนังสือรับ", "ทับเลขทะเบียนหนังสือส่ง", "ทับเลขทะเบียนหนังสือเก็บ", "ทับเลขทะเบียนหนังสือเวียน"], "answer": 1, "explanation": "รหัสตัวพยัญชนะและเลขประจำของเจ้าของเรื่อง ให้ทับด้วยเลขทะเบียนหนังสือส่ง", "id": 69}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การอ้างถึงในหนังสือภายนอก ให้อ้างถึงหนังสือตามหลักเกณฑ์ใด", "choices": ["ให้อ้างถึงหนังสือทุกฉบับที่เคยมีติดต่อกัน เพื่อความสมบูรณ์ของเรื่อง", "ให้อ้างถึงหนังสือฉบับแรกและฉบับสุดท้ายที่ติดต่อกัน เพื่อให้ทราบต้นเรื่อง", "ให้อ้างถึงหนังสือฉบับสุดท้ายที่ติดต่อกันเพียงฉบับเดียว เว้นแต่มีเรื่องอื่นที่เป็นสาระสำคัญ", "ให้อ้างถึงหนังสือฉบับสุดท้ายที่ติดต่อกันเพียงฉบับเดียว ห้ามอ้างถึงหนังสือฉบับอื่นเด็ดขาด"], "answer": 2, "explanation": "ให้อ้างถึงหนังสือฉบับสุดท้ายที่ติดต่อกันเพียงฉบับเดียว เว้นแต่มีเรื่องอื่นที่เป็นสาระสำคัญต้องนำมาพิจารณา", "id": 70}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "สำหรับหนังสือภายนอก ในหัวข้อ \"สิ่งที่ส่งมาด้วย\" หากไม่สามารถส่งไปในซองเดียวกันได้ ให้ดำเนินการอย่างไร", "choices": ["ให้แจ้งให้ผู้รับทราบในภายหลังเมื่อสิ่งของนั้นส่งไปถึงแล้ว", "ให้รอจนกว่าจะสามารถบรรจุในซองเดียวกันได้แล้วจึงส่งพร้อมกัน", "ให้จัดทำหนังสืออีกฉบับหนึ่งเพื่อจัดส่งสิ่งของนั้นแยกต่างหาก", "ให้แจ้งด้วยว่าส่งไปโดยทางใด"], "answer": 3, "explanation": "หากสิ่งที่ส่งมาด้วยไม่สามารถส่งไปในซองเดียวกันได้ ให้แจ้งด้วยว่าส่งไปโดยทางใด", "id": 71}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือติดต่อภายในกระทรวง ทบวง กรม หรือจังหวัดเดียวกัน จัดเป็นหนังสือชนิดใด และใช้กระดาษชนิดใด", "choices": ["หนังสือภายนอก ใช้กระดาษตราครุฑ", "หนังสือภายนอก ใช้กระดาษบันทึกข้อความ", "หนังสือภายใน ใช้กระดาษตราครุฑ", "หนังสือภายใน ใช้กระดาษบันทึกข้อความ"], "answer": 3, "explanation": "หนังสือติดต่อภายในกระทรวง ทบวง กรม หรือจังหวัดเดียวกัน จัดเป็นหนังสือภายใน ใช้กระดาษบันทึกข้อความ", "id": 72}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือประทับตรา ให้ใช้ประทับตราแทนการลงชื่อของหัวหน้าส่วนราชการระดับใดขึ้นไป", "choices": ["หัวหน้าส่วนราชการระดับแผนกขึ้นไป", "หัวหน้าส่วนราชการระดับกองขึ้นไป", "หัวหน้าส่วนราชการระดับกรมขึ้นไป", "หัวหน้าส่วนราชการระดับกระทรวงขึ้นไป"], "answer": 2, "explanation": "หนังสือประทับตรา ให้ใช้ประทับตราแทนการลงชื่อของหัวหน้าส่วนราชการระดับกรมขึ้นไป", "id": 73}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในการใช้หนังสือประทับตรา ผู้ใดเป็นผู้รับผิดชอบ \"ลงลายมือชื่อย่อกำกับตรา\"", "choices": ["หัวหน้าส่วนราชการระดับแผนก หรือผู้ที่ได้รับมอบหมายจากหัวหน้าส่วนราชการระดับกองขึ้นไป", "หัวหน้าส่วนราชการระดับกอง หรือผู้ที่ได้รับมอบหมายจากหัวหน้าส่วนราชการระดับกรมขึ้นไป", "หัวหน้าส่วนราชการระดับกรม หรือผู้ที่ได้รับมอบหมายจากหัวหน้าส่วนราชการระดับกระทรวงขึ้นไป", "หัวหน้าส่วนราชการระดับกอง หรือผู้ที่ได้รับมอบหมายจากหัวหน้าส่วนราชการระดับกระทรวงขึ้นไป"], "answer": 1, "explanation": "ผู้รับผิดชอบลงลายมือชื่อย่อกำกับตรา คือ หัวหน้าส่วนราชการระดับกอง หรือผู้ที่ได้รับมอบหมายจากหัวหน้าส่วนราชการระดับกรมขึ้นไป", "id": 74}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือประทับตราใช้กระดาษชนิดใด และประทับตราชื่อส่วนราชการด้วยหมึกสีใด", "choices": ["ใช้กระดาษบันทึกข้อความ ประทับตราด้วยหมึกสีน้ำเงิน", "ใช้กระดาษบันทึกข้อความ ประทับตราด้วยหมึกสีแดง", "ใช้กระดาษตราครุฑ ประทับตราด้วยหมึกสีน้ำเงิน", "ใช้กระดาษตราครุฑ ประทับตราด้วยหมึกสีแดง"], "answer": 3, "explanation": "หนังสือประทับตราใช้กระดาษตราครุฑ และประทับตราชื่อส่วนราชการด้วยหมึกสีแดง", "id": 75}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "กรณีใดต่อไปนี้ ที่ \"ไม่สามารถ\" ใช้หนังสือประทับตราได้", "choices": ["การขอรายละเอียดเพิ่มเติม", "การส่งสำเนาหนังสือ สิ่งของ เอกสาร", "การตอบรับทราบที่เกี่ยวกับการเงิน", "การเตือนเรื่องที่ค้าง"], "answer": 2, "explanation": "หนังสือประทับตราใช้ไม่ได้กับการตอบรับทราบที่เกี่ยวกับการเงินหรือเรื่องสำคัญ", "id": 76}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือสั่งการ มี ๓ ชนิด ได้แก่อะไรบ้าง", "choices": ["คำสั่ง ระเบียบ ประกาศ", "คำสั่ง ระเบียบ ข้อบังคับ", "ประกาศ แถลงการณ์ ข่าว", "คำสั่ง ประกาศ ข้อบังคับ"], "answer": 1, "explanation": "หนังสือสั่งการมี ๓ ชนิด ได้แก่ คำสั่ง ระเบียบ และข้อบังคับ", "id": 77}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "นิยามของคำว่า \"คำสั่ง\" คือข้อใด", "choices": ["บรรดาข้อความที่ผู้มีอำนาจหน้าที่สั่งการให้ปฏิบัติโดยชอบด้วยกฎหมาย", "บรรดาข้อความที่ผู้บังคับบัญชากำหนดให้ปฏิบัติโดยอาศัยอำนาจของกฎหมาย", "บรรดาข้อความที่ผู้บังคับบัญชาสั่งการให้ปฏิบัติโดยชอบด้วยกฎหมาย", "บรรดาข้อความที่ผู้มีอำนาจหน้าที่กำหนดให้ปฏิบัติโดยอาศัยอำนาจของกฎหมาย"], "answer": 2, "explanation": "\"คำสั่ง\" คือบรรดาข้อความที่ผู้บังคับบัญชาสั่งการให้ปฏิบัติโดยชอบด้วยกฎหมาย", "id": 78}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "นิยามของคำว่า \"ระเบียบ\" คือข้อใด", "choices": ["บรรดาข้อความที่ผู้มีอำนาจหน้าที่ได้วางไว้ โดยจะอาศัยอำนาจของกฎหมายหรือไม่ก็ได้ เพื่อถือเป็นหลักปฏิบัติงานเป็นการประจำ", "บรรดาข้อความที่ผู้บังคับบัญชาได้วางไว้ โดยจะอาศัยอำนาจของกฎหมายหรือไม่ก็ได้ เพื่อถือเป็นหลักปฏิบัติงานเป็นการประจำ", "บรรดาข้อความที่ผู้มีอำนาจหน้าที่ได้วางไว้ โดยต้องอาศัยอำนาจของกฎหมายเสมอ เพื่อถือเป็นหลักปฏิบัติงานเป็นการประจำ", "บรรดาข้อความที่ผู้บังคับบัญชาได้วางไว้ โดยต้องอาศัยอำนาจของกฎหมายเสมอ เพื่อถือเป็นหลักปฏิบัติงานเป็นการประจำ"], "answer": 0, "explanation": "\"ระเบียบ\" คือบรรดาข้อความที่ผู้มีอำนาจหน้าที่ได้วางไว้ โดยจะอาศัยอำนาจของกฎหมายหรือไม่ก็ได้ เพื่อถือเป็นหลักปฏิบัติงานเป็นการประจำ", "id": 79}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "นิยามของคำว่า \"ข้อบังคับ\" คือข้อใด", "choices": ["บรรดาข้อความที่ผู้มีอำนาจหน้าที่กำหนดให้ใช้โดยอาศัยอำนาจของกฎหมายที่บัญญัติให้กระทำได้", "บรรดาข้อความที่ผู้บังคับบัญชากำหนดให้ใช้โดยอาศัยอำนาจของกฎหมายที่บัญญัติให้กระทำได้", "บรรดาข้อความที่ผู้มีอำนาจหน้าที่กำหนดให้ใช้โดยจะอาศัยอำนาจของกฎหมายหรือไม่ก็ได้", "บรรดาข้อความที่ผู้บังคับบัญชากำหนดให้ใช้โดยจะอาศัยอำนาจของกฎหมายหรือไม่ก็ได้"], "answer": 0, "explanation": "\"ข้อบังคับ\" คือบรรดาข้อความที่ผู้มีอำนาจหน้าที่กำหนดให้ใช้โดยอาศัยอำนาจของกฎหมายที่บัญญัติให้กระทำได้", "id": 80}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือประชาสัมพันธ์ มี ๓ ชนิด ได้แก่อะไรบ้าง", "choices": ["ประกาศ แจ้งความ ข่าว", "ประกาศ แถลงการณ์ แจ้งความ", "แถลงการณ์ แจ้งความ ข่าว", "ประกาศ แถลงการณ์ ข่าว"], "answer": 3, "explanation": "หนังสือประชาสัมพันธ์มี ๓ ชนิด ได้แก่ ประกาศ แถลงการณ์ และข่าว", "id": 81}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "บรรดาข้อความที่ทางราชการประกาศหรือชี้แจงให้ทราบ หรือแนะแนวทางปฏิบัติ คือนิยามของหนังสือประชาสัมพันธ์ชนิดใด", "choices": ["ประกาศ", "แถลงการณ์", "ข่าว", "แจ้งความ"], "answer": 0, "explanation": "\"ประกาศ\" คือบรรดาข้อความที่ทางราชการประกาศหรือชี้แจงให้ทราบ หรือแนะแนวทางปฏิบัติ", "id": 82}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "บรรดาข้อความที่ทางราชการแถลงเพื่อทำความเข้าใจในกิจการของทางราชการ หรือเหตุการณ์หรือกรณีใดๆ ให้ทราบชัดเจนโดยทั่วกัน คือนิยามของหนังสือประชาสัมพันธ์ชนิดใด", "choices": ["ประกาศ", "แถลงการณ์", "ข่าว", "แจ้งความ"], "answer": 1, "explanation": "\"แถลงการณ์\" คือบรรดาข้อความที่ทางราชการแถลงเพื่อทำความเข้าใจในกิจการของทางราชการ หรือเหตุการณ์หรือกรณีใดๆ ให้ทราบชัดเจนโดยทั่วกัน", "id": 83}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในกรณีที่กฎหมายกำหนดให้ทำเป็น \"แจ้งความ\" ให้ปฏิบัติตามแบบใด", "choices": ["แบบข่าว โดยเปลี่ยนคำว่า ข่าว เป็น แจ้งความ", "แบบแถลงการณ์ โดยเปลี่ยนคำว่า แถลงการณ์ เป็น แจ้งความ", "แบบประกาศ โดยเปลี่ยนคำว่า ประกาศ เป็น แจ้งความ", "แบบคำสั่ง โดยเปลี่ยนคำว่า คำสั่ง เป็น แจ้งความ"], "answer": 2, "explanation": "กรณีที่กฎหมายกำหนดให้ทำเป็นแจ้งความ ให้ปฏิบัติตามแบบประกาศ โดยเปลี่ยนคำว่า ประกาศ เป็น แจ้งความ", "id": 84}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในการออกหนังสือรับรองให้แก่บุคคลในเรื่องสำคัญ รูปถ่ายที่ใช้ติดต้องมีขนาดและลักษณะอย่างไร", "choices": ["ขนาด ๓ x ๔ เซนติเมตร หน้าตรง ไม่สวมหมวก", "ขนาด ๓ x ๔ เซนติเมตร หน้าตรง สวมหมวกได้", "ขนาด ๔ x ๖ เซนติเมตร หน้าตรง ไม่สวมหมวก", "ขนาด ๔ x ๖ เซนติเมตร หน้าตรง สวมหมวกได้"], "answer": 2, "explanation": "รูปถ่ายที่ใช้ติดหนังสือรับรอง ต้องมีขนาด ๔ x ๖ เซนติเมตร หน้าตรง ไม่สวมหมวก", "id": 85}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในการออกหนังสือรับรองให้แก่บุคคล การประทับตราชื่อส่วนราชการบนรูปถ่าย ต้องประทับตราในลักษณะใด", "choices": ["ประทับตราบนขอบล่างด้านซ้ายของรูปถ่ายคาบต่อลงบนแผ่นกระดาษ", "ประทับตราบนขอบล่างด้านขวาของรูปถ่ายคาบต่อลงบนแผ่นกระดาษ", "ประทับตราบนขอบบนด้านซ้ายของรูปถ่ายคาบต่อลงบนแผ่นกระดาษ", "ประทับตราบนขอบบนด้านขวาของรูปถ่ายคาบต่อลงบนแผ่นกระดาษ"], "answer": 1, "explanation": "ให้ประทับตราชื่อส่วนราชการบนขอบล่างด้านขวาของรูปถ่ายคาบต่อลงบนแผ่นกระดาษ", "id": 86}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ความหมายของ \"บันทึก\" ตามระเบียบ ครอบคลุมถึงการติดต่อกันในการปฏิบัติราชการระหว่างเจ้าหน้าที่ระดับใด", "choices": ["ระดับต่ำกว่าแผนกติดต่อกัน", "ระดับต่ำกว่ากองติดต่อกัน", "ระดับต่ำกว่ากรมติดต่อกัน", "ระดับต่ำกว่ากระทรวงติดต่อกัน"], "answer": 2, "explanation": "\"บันทึก\" ครอบคลุมถึงการติดต่อกันในการปฏิบัติราชการระหว่างเจ้าหน้าที่ระดับต่ำกว่ากรมติดต่อกัน", "id": 87}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การทำบันทึกต่อเนื่อง หากผู้บันทึก \"ไม่มีความเห็นใดเพิ่มเติม\" ให้ดำเนินการอย่างไร", "choices": ["ให้เขียนคำว่า \"ทราบ\" แล้วลงชื่อและวัน เดือน ปี กำกับ", "ให้เขียนคำว่า \"ไม่มีความเห็นเพิ่มเติม\" แล้วลงชื่อกำกับ", "ให้ลงชื่อและวัน เดือน ปี กำกับเท่านั้น", "ให้ลงชื่อและตำแหน่ง กำกับเท่านั้น"], "answer": 2, "explanation": "หากไม่มีความเห็นเพิ่มเติม ให้ลงชื่อและวัน เดือน ปี กำกับเท่านั้น", "id": 88}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือที่ต้องปฏิบัติให้เร็วกว่าปกติ แบ่งเป็น ๓ ประเภท ข้อใดคือความหมายของ \"ด่วนที่สุด\"", "choices": ["ให้เจ้าหน้าที่ปฏิบัติโดยเร็ว", "ให้เจ้าหน้าที่ปฏิบัติในทันทีที่ได้รับหนังสือนั้น", "ให้เจ้าหน้าที่ปฏิบัติเร็วกว่าปกติ เท่าที่จะทำได้", "ให้เจ้าหน้าที่ปฏิบัติภายในเวลาที่กำหนด"], "answer": 1, "explanation": "\"ด่วนที่สุด\" หมายถึงให้เจ้าหน้าที่ปฏิบัติในทันทีที่ได้รับหนังสือนั้น", "id": 89}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ข้อใดคือความหมายของหนังสือที่ต้องปฏิบัติให้เร็วกว่าปกติประเภท \"ด่วนมาก\"", "choices": ["ให้เจ้าหน้าที่ปฏิบัติโดยเร็ว", "ให้เจ้าหน้าที่ปฏิบัติในทันทีที่ได้รับหนังสือนั้น", "ให้เจ้าหน้าที่ปฏิบัติเร็วกว่าปกติ เท่าที่จะทำได้", "ให้เจ้าหน้าที่ปฏิบัติภายในเวลาที่กำหนด"], "answer": 0, "explanation": "\"ด่วนมาก\" หมายถึงให้เจ้าหน้าที่ปฏิบัติโดยเร็ว", "id": 90}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การระบุชั้นความเร็วบนหนังสือและบนซอง ต้องใช้ตัวอักษรสีใดและขนาดเท่าใด", "choices": ["ตัวอักษรสีแดง ขนาดไม่เล็กกว่าตัวพิมพ์ ๓๒ พอยท์", "ตัวอักษรสีแดง ขนาดไม่เล็กกว่าตัวพิมพ์โป้ง ๓๒ พอยท์", "ตัวอักษรสีน้ำเงิน ขนาดไม่เล็กกว่าตัวพิมพ์ ๓๒ พอยท์", "ตัวอักษรสีน้ำเงิน ขนาดไม่เล็กกว่าตัวพิมพ์โป้ง ๓๒ พอยท์"], "answer": 1, "explanation": "การระบุชั้นความเร็ว ต้องใช้ตัวอักษรสีแดง ขนาดไม่เล็กกว่าตัวพิมพ์โป้ง ๓๒ พอยท์", "id": 91}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การติดต่อราชการตามระเบียบนี้ ให้ดำเนินการด้วยระบบสารบรรณอิเล็กทรอนิกส์เป็นหลัก \"เว้นแต่\" กรณีใด", "choices": ["เว้นแต่เป็นข้อมูลข่าวสารลับชั้นลับ", "เว้นแต่เป็นข้อมูลข่าวสารลับชั้นลับมาก", "เว้นแต่เป็นข้อมูลข่าวสารลับชั้นลับที่สุด", "เว้นแต่เป็นข้อมูลข่าวสารทุกชั้นความลับ"], "answer": 2, "explanation": "การติดต่อราชการให้ใช้ระบบสารบรรณอิเล็กทรอนิกส์เป็นหลัก เว้นแต่เป็นข้อมูลข่าวสารลับชั้นลับที่สุด", "id": 92}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ทะเบียนหนังสือรับในรูปแบบอิเล็กทรอนิกส์ตามระเบียบข้อ ๒๙/๑ อนุญาตให้จัดทำโดยใช้โปรแกรมใดได้บ้าง", "choices": ["ระบบสารบรรณอิเล็กทรอนิกส์, Microsoft Excel, Google Sheets, Apple Numbers หรือแอปพลิเคชันอื่นใดก็ได้", "ระบบสารบรรณอิเล็กทรอนิกส์, Microsoft Word, Google Docs, Apple Pages หรือแอปพลิเคชันอื่นใดก็ได้", "ระบบสารบรรณอิเล็กทรอนิกส์ และ Microsoft Excel เท่านั้น (ห้ามใช้ Google Sheets)", "ระบบสารบรรณอิเล็กทรอนิกส์กลางของหน่วยงานภาครัฐเท่านั้น ห้ามใช้โปรแกรมเอกชน"], "answer": 0, "explanation": "ทะเบียนหนังสือรับอิเล็กทรอนิกส์ อนุญาตให้ใช้ระบบสารบรรณอิเล็กทรอนิกส์, Excel, Google Sheets, Apple Numbers หรือแอปพลิเคชันอื่นใดก็ได้", "id": 93}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "สำเนาคู่ฉบับของหนังสือที่จัดทำขึ้น ผู้ใดบ้างที่มีหน้าที่ต้องลงลายมือชื่อ หรือลายมือชื่อย่อ ไว้ที่ข้างท้ายขอบล่างด้านขวาของหนังสือ", "choices": ["ผู้ลงชื่อ ผู้ร่าง ผู้พิมพ์ และผู้ตรวจ", "ผู้ลงชื่อ ผู้ร่าง ผู้พิมพ์ และผู้รับ", "ผู้ร่าง ผู้พิมพ์ ผู้ตรวจ และผู้ส่ง", "ผู้ร่าง ผู้ตรวจ และผู้รับ (ไม่ต้องมีผู้พิมพ์)"], "answer": 0, "explanation": "ผู้ที่ต้องลงลายมือชื่อในสำเนาคู่ฉบับคือ ผู้ลงชื่อ ผู้ร่าง ผู้พิมพ์ และผู้ตรวจ", "id": 94}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในการทำสำเนาหนังสือ ผู้รับรอง \"สำเนาถูกต้อง\" จะต้องเป็นข้าราชการประเภทและระดับใดขึ้นไป", "choices": ["ประเภทวิชาการ ระดับปฏิบัติการ หรือประเภททั่วไป ระดับปฏิบัติงาน ขึ้นไป", "ประเภทวิชาการ ระดับปฏิบัติการ หรือประเภททั่วไป ระดับชำนาญงาน ขึ้นไป", "ประเภทวิชาการ ระดับชำนาญการ หรือประเภททั่วไป ระดับชำนาญงาน ขึ้นไป", "ประเภทวิชาการ ระดับชำนาญการ หรือประเภททั่วไป ระดับปฏิบัติงาน ขึ้นไป"], "answer": 1, "explanation": "ผู้รับรองสำเนาถูกต้องต้องเป็นข้าราชการประเภทวิชาการ ระดับปฏิบัติการ หรือประเภททั่วไป ระดับชำนาญงาน ขึ้นไป", "id": 95}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การรับหนังสือที่มีชั้นความลับด้วยระบบสารบรรณอิเล็กทรอนิกส์ ให้ผู้ใช้งานที่ได้รับการแต่งตั้งให้เข้าถึงเอกสารลับแต่ละระดับ เป็นผู้รับในชั้นความลับใด", "choices": ["การรับหนังสือในชั้นลับ ด้วยระบบสารบรรณอิเล็กทรอนิกส์", "การรับหนังสือในชั้นลับหรือลับมาก ด้วยระบบสารบรรณอิเล็กทรอนิกส์", "การรับหนังสือในชั้นลับมากหรือลับที่สุด ด้วยระบบสารบรรณอิเล็กทรอนิกส์", "การรับหนังสือในชั้นลับ ลับมาก หรือลับที่สุด ด้วยระบบสารบรรณอิเล็กทรอนิกส์"], "answer": 1, "explanation": "ผู้ใช้งานที่ได้รับการแต่งตั้งให้เข้าถึงเอกสารลับ เป็นผู้รับหนังสือในชั้นลับหรือลับมาก ด้วยระบบสารบรรณอิเล็กทรอนิกส์", "id": 96}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ตรารับหนังสือ ต้องประทับที่ส่วนใดของหนังสือ และมีรายละเอียดอะไรบ้าง", "choices": ["มุมบนด้านซ้ายของหนังสือ ประกอบด้วย เลขรับ วันที่ เวลา", "มุมบนด้านขวาของหนังสือ ประกอบด้วย เลขรับ วันที่ เวลา", "มุมล่างด้านซ้ายของหนังสือ ประกอบด้วย เลขรับ วันที่ เวลา", "มุมล่างด้านขวาของหนังสือ ประกอบด้วย เลขรับ วันที่ เวลา"], "answer": 1, "explanation": "ตรารับหนังสือต้องประทับที่มุมบนด้านขวาของหนังสือ ประกอบด้วย เลขรับ วันที่ เวลา", "id": 97}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การลงทะเบียนหนังสือรับ ในช่อง \"เลขทะเบียนรับ\" ต้องเรียงลำดับในระยะเวลาตามข้อใด", "choices": ["เลขลำดับติดต่อกันไปตลอดปีงบประมาณ", "เลขลำดับติดต่อกันไปตลอดปีปฏิทิน", "เลขลำดับติดต่อกันไปตลอดเดือนงบประมาณ", "เลขลำดับติดต่อกันไปตลอดเดือนปฏิทิน"], "answer": 1, "explanation": "เลขทะเบียนรับต้องเรียงลำดับติดต่อกันไปตลอดปีปฏิทิน", "id": 98}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การลงเลขที่ และวัน เดือน ปีในหนังสือที่จะส่งออกทั้งในต้นฉบับ และสำเนาคู่ฉบับ ให้ลงตัวเลขและวันที่ให้ตรงกับข้อมูลใด", "choices": ["ให้ตรงกับเลขที่รับ และวัน เดือน ปีในทะเบียนหนังสือรับ", "ให้ตรงกับเลขที่รับ และวัน เดือน ปีในสมุดส่งหนังสือ", "ให้ตรงกับเลขทะเบียนส่ง และวัน เดือน ปีในทะเบียนหนังสือส่ง", "ให้ตรงกับเลขทะเบียนส่ง และวัน เดือน ปีในสมุดส่งหนังสือ"], "answer": 2, "explanation": "การลงเลขที่และวันเดือนปีในหนังสือส่งออก ต้องตรงกับเลขทะเบียนส่งและวันเดือนปีในทะเบียนหนังสือส่ง", "id": 99}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือที่ \"ไม่มีความสำคัญมากนัก\" อาจส่งโดยวิธีใดแทนการบรรจุของได้", "choices": ["วิธีพับยึดติดด้วยแถบกาว กาว เย็บด้วยด้าย หรือวิธีอื่นแทนการบรรจุของ", "วิธีพับยึดติดด้วยแถบกาว กาว เย็บด้วยลวด หรือวิธีอื่นแทนการบรรจุของ", "วิธีพับยึดติดด้วยเทปใส กาว เย็บด้วยด้าย หรือวิธีอื่นแทนการบรรจุของ", "วิธีพับยึดติดด้วยเทปใส กาว เย็บด้วยลวด หรือวิธีอื่นแทนการบรรจุของ"], "answer": 1, "explanation": "หนังสือที่ไม่มีความสำคัญมากนัก อาจส่งโดยวิธีพับยึดติดด้วยแถบกาว กาว เย็บด้วยลวด หรือวิธีอื่นแทนการบรรจุของ", "id": 100}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การส่งหนังสือซึ่งมิใช่การส่งโดยทางไปรษณีย์ หากมีการใช้ \"ใบรับหนังสือ\" เมื่อผู้รับลงชื่อรับแล้ว ให้นำใบรับนั้นมาดำเนินการอย่างไร", "choices": ["ให้นำใบรับนั้นมาผนึกติดไว้ที่ต้นฉบับ", "ให้นำใบรับนั้นมาผนึกติดไว้ที่สำเนาคู่ฉบับ", "ให้นำใบรับนั้นมาผนึกติดไว้ที่สมุดส่งหนังสือ", "ให้นำใบรับนั้นมาผนึกติดไว้ที่ทะเบียนหนังสือส่ง"], "answer": 1, "explanation": "เมื่อผู้รับลงชื่อในใบรับหนังสือแล้ว ให้นำใบรับนั้นมาผนึกติดไว้ที่สำเนาคู่ฉบับ", "id": 101}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในสมุดส่งหนังสือหรือใบรับหนังสือ ช่อง \"ผู้รับ\" ให้ผู้รับหนังสือลงลายมือชื่อในลักษณะใด", "choices": ["ให้ผู้รับหนังสือลงลายมือชื่อย่อ", "ให้ผู้รับหนังสือลงลายมือชื่อและพิมพ์ชื่อตัวบรรจง", "ให้ผู้รับหนังสือลงชื่อที่สามารถอ่านออกได้", "ให้ผู้รับหนังสือลงลายมือชื่อย่อกำกับพร้อมตำแหน่ง"], "answer": 2, "explanation": "ผู้รับหนังสือต้องลงชื่อในสมุดส่งหนังสือหรือใบรับหนังสือในลักษณะที่สามารถอ่านออกได้", "id": 102}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การเก็บหนังสือตามระเบียบนี้ แบ่งออกเป็น ๓ ประเภท คือข้อใด", "choices": ["การเก็บก่อนปฏิบัติ การเก็บระหว่างปฏิบัติ และการเก็บเมื่อปฏิบัติเสร็จแล้ว", "การเก็บระหว่างปฏิบัติ การเก็บเมื่อปฏิบัติเสร็จแล้ว และการเก็บไว้เพื่อส่งทำลาย", "การเก็บระหว่างปฏิบัติ การเก็บเมื่อปฏิบัติเสร็จแล้ว และการเก็บไว้เพื่อใช้ในการตรวจสอบ", "การเก็บเมื่อปฏิบัติเสร็จแล้ว การเก็บไว้เพื่อใช้ในการตรวจสอบ และการเก็บไว้เพื่อส่งทำลาย"], "answer": 2, "explanation": "การเก็บหนังสือแบ่งเป็น ๓ ประเภท คือ การเก็บระหว่างปฏิบัติ การเก็บเมื่อปฏิบัติเสร็จแล้ว และการเก็บไว้เพื่อใช้ในการตรวจสอบ", "id": 103}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "\"การเก็บระหว่างปฏิบัติ\" (การเก็บหนังสือที่ปฏิบัติยังไม่เสร็จ) ให้อยู่ในความรับผิดชอบของผู้ใด", "choices": ["ให้อยู่ในความรับผิดชอบของหัวหน้าส่วนราชการ", "ให้อยู่ในความรับผิดชอบของเจ้าหน้าที่สารบรรณกลาง", "ให้อยู่ในความรับผิดชอบของหน่วยเก็บของส่วนราชการ", "ให้อยู่ในความรับผิดชอบของเจ้าของเรื่อง"], "answer": 3, "explanation": "การเก็บระหว่างปฏิบัติ ให้อยู่ในความรับผิดชอบของเจ้าของเรื่อง", "id": 104}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในบัญชีหนังสือส่งเก็บ ช่อง \"อายุการเก็บหนังสือ\" หากเป็นหนังสือที่ให้เก็บไว้ตลอดไป ให้ลงคำว่าอะไร", "choices": ["ให้ลงคำว่า เก็บตลอดไป", "ให้ลงคำว่า ห้ามทำลาย", "ให้ลงคำว่า เก็บรักษาถาวร", "ให้ลงคำว่า ห้ามส่งทำลาย"], "answer": 1, "explanation": "หนังสือที่ให้เก็บไว้ตลอดไป ในช่องอายุการเก็บหนังสือให้ลงคำว่า \"ห้ามทำลาย\"", "id": 105}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "\"ตรากำหนดเก็บหนังสือ\" จะต้องประทับไว้ที่ส่วนใดของหนังสือ", "choices": ["มุมบนด้านซ้ายของกระดาษแผ่นแรกของหนังสือฉบับนั้น", "มุมบนด้านขวาของกระดาษแผ่นแรกของหนังสือฉบับนั้น", "มุมล่างด้านซ้ายของกระดาษแผ่นแรกของหนังสือฉบับนั้น", "มุมล่างด้านขวาของกระดาษแผ่นแรกของหนังสือฉบับนั้น"], "answer": 3, "explanation": "ตรากำหนดเก็บหนังสือต้องประทับไว้ที่มุมล่างด้านขวาของกระดาษแผ่นแรกของหนังสือฉบับนั้น", "id": 106}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การประทับตรากำหนดเก็บหนังสือสำหรับคำว่า \"ห้ามทำลาย\" และคำว่า \"เก็บถึง พ.ศ. ...\" ต้องใช้หมึกสีใดตามลำดับ", "choices": ["ห้ามทำลาย ใช้หมึกสีแดง / เก็บถึง พ.ศ. ... ใช้หมึกสีน้ำเงิน", "ห้ามทำลาย ใช้หมึกสีน้ำเงิน / เก็บถึง พ.ศ. ... ใช้หมึกสีแดง", "ห้ามทำลาย ใช้หมึกสีดำ / เก็บถึง พ.ศ. ... ใช้หมึกสีน้ำเงิน", "ห้ามทำลาย ใช้หมึกสีแดง / เก็บถึง พ.ศ. ... ใช้หมึกสีดำ"], "answer": 0, "explanation": "\"ห้ามทำลาย\" ใช้หมึกสีแดง ส่วน \"เก็บถึง พ.ศ. ...\" ใช้หมึกสีน้ำเงิน", "id": 107}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "อายุการเก็บหนังสือ โดยปกติทั่วไป (หากไม่เข้าข้อยกเว้น) ให้เก็บไว้เป็นระยะเวลาเท่าใด", "choices": ["ให้เก็บไว้ไม่น้อยกว่า ๑ ปี", "ให้เก็บไว้ไม่น้อยกว่า ๕ ปี", "ให้เก็บไว้ไม่น้อยกว่า ๑๐ ปี", "ให้เก็บไว้ไม่น้อยกว่า ๒๐ ปี"], "answer": 2, "explanation": "อายุการเก็บหนังสือโดยปกติทั่วไป ให้เก็บไว้ไม่น้อยกว่า ๑๐ ปี", "id": 108}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือที่ได้ปฏิบัติงานเสร็จสิ้นแล้ว และเป็น \"คู่สำเนาที่มีต้นเรื่องจะค้นได้จากที่อื่น\" ให้เก็บไว้ไม่น้อยกว่าระยะเวลาเท่าใด", "choices": ["ให้เก็บไว้ไม่น้อยกว่า ๑ ปี", "ให้เก็บไว้ไม่น้อยกว่า ๓ ปี", "ให้เก็บไว้ไม่น้อยกว่า ๕ ปี", "ให้เก็บไว้ไม่น้อยกว่า ๑๐ ปี"], "answer": 2, "explanation": "คู่สำเนาที่มีต้นเรื่องจะค้นได้จากที่อื่น ให้เก็บไว้ไม่น้อยกว่า ๕ ปี", "id": 109}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือที่เป็นเรื่องธรรมดาสามัญซึ่งไม่มีความสำคัญ และเป็นเรื่องที่เกิดขึ้นเป็นประจำ เมื่อดำเนินการแล้วเสร็จให้เก็บไว้ไม่น้อยกว่าระยะเวลาเท่าใด", "choices": ["ให้เก็บไว้ไม่น้อยกว่า ๑ ปี", "ให้เก็บไว้ไม่น้อยกว่า ๓ ปี", "ให้เก็บไว้ไม่น้อยกว่า ๕ ปี", "ให้เก็บไว้ไม่น้อยกว่า ๑๐ ปี"], "answer": 0, "explanation": "หนังสือที่เป็นเรื่องธรรมดาสามัญไม่มีความสำคัญ เกิดขึ้นเป็นประจำ เมื่อเสร็จแล้วให้เก็บไว้ไม่น้อยกว่า ๑ ปี", "id": 110}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือเกี่ยวกับการเงิน ซึ่งเห็นว่าไม่มีความจำเป็นต้องเก็บไว้ถึง ๑๐ ปี หรือ ๕ ปี แล้วแต่กรณี ให้ทำความตกลงกับหน่วยงานใดเพื่อขอลดเวลาการเก็บ", "choices": ["กระทรวงมหาดไทย", "กระทรวงพาณิชย์", "กระทรวงการคลัง", "สำนักงานการตรวจเงินแผ่นดิน"], "answer": 2, "explanation": "หนังสือเกี่ยวกับการเงินที่ไม่จำเป็นต้องเก็บนาน ให้ทำความตกลงกับกระทรวงการคลังเพื่อขอลดเวลาการเก็บ", "id": 111}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ทุกปีปฏิทิน ให้ส่วนราชการจัดส่งหนังสือที่มีอายุครบกี่ปี และจัดส่งภายในวันที่เท่าใด ให้สำนักหอจดหมายเหตุแห่งชาติ กรมศิลปากร", "choices": ["อายุครบ ๑๐ ปี ภายในวันที่ ๓๑ มกราคม ของปีถัดไป", "อายุครบ ๑๐ ปี ภายในวันที่ ๓๑ ธันวาคม ของปีปฏิทินนั้น", "อายุครบ ๒๐ ปี ภายในวันที่ ๓๑ มกราคม ของปีถัดไป", "อายุครบ ๒๐ ปี ภายในวันที่ ๓๑ ธันวาคม ของปีปฏิทินนั้น"], "answer": 2, "explanation": "ให้ส่งหนังสือที่มีอายุครบ ๒๐ ปี ให้สำนักหอจดหมายเหตุแห่งชาติ ภายในวันที่ ๓๑ มกราคม ของปีถัดไป", "id": 112}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือที่มีอายุครบกำหนดส่งให้สำนักหอจดหมายเหตุแห่งชาติ แต่ส่วนราชการ \"มีความจำเป็นต้องเก็บไว้เอง\" ต้องจัดทำบัญชีใดส่งมอบให้", "choices": ["บัญชีหนังสือฝากเก็บ", "บัญชีหนังสือครบ ๒๐ ปีที่ขอเก็บเอง", "บัญชีส่งมอบหนังสือครบ ๒๐ ปี", "บัญชีรายการขอขยายเวลาการเก็บ"], "answer": 1, "explanation": "หากส่วนราชการมีความจำเป็นต้องเก็บหนังสือครบ ๒๐ ปีไว้เอง ต้องจัดทำบัญชีหนังสือครบ ๒๐ ปีที่ขอเก็บเอง ส่งมอบให้", "id": 113}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือที่ยังไม่ถึงกำหนดทำลาย ซึ่งส่วนราชการเห็นว่าเป็นหนังสือที่มีความสำคัญ และประสงค์จะ \"ฝาก\" ไว้ ให้จัดทำบัญชีฝากหนังสือส่งให้แก่หน่วยงานใด", "choices": ["กองจดหมายเหตุแห่งชาติ กรมศิลปากร", "สำนักหอจดหมายเหตุแห่งชาติ กรมศิลปากร", "สำนักวรรณกรรมและประวัติศาสตร์ กรมศิลปากร", "สำนักหอสมุดแห่งชาติ กรมศิลปากร"], "answer": 0, "explanation": "หนังสือที่ยังไม่ถึงกำหนดทำลายแต่ประสงค์จะฝากไว้ ให้จัดทำบัญชีฝากหนังสือส่งให้กองจดหมายเหตุแห่งชาติ กรมศิลปากร", "id": 114}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การรักษาหนังสือ หากหนังสือชำรุดเสียหายจนไม่สามารถซ่อมแซมให้คงสภาพเดิมได้ ต้องดำเนินการอย่างไร", "choices": ["ให้ฉีกทำลายทิ้งและให้หมายเหตุไว้ในทะเบียนเก็บด้วย", "ให้รายงานผู้บังคับบัญชาทราบและให้หมายเหตุไว้ในทะเบียนรับด้วย", "ให้รายงานผู้บังคับบัญชาทราบและให้หมายเหตุไว้ในทะเบียนเก็บด้วย", "ให้จัดทำสำเนาขึ้นใหม่แทนและให้หมายเหตุไว้ในบัญชีส่งมอบด้วย"], "answer": 2, "explanation": "หนังสือที่ชำรุดเสียหายจนซ่อมแซมไม่ได้ ให้รายงานผู้บังคับบัญชาทราบและหมายเหตุไว้ในทะเบียนเก็บด้วย", "id": 115}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ถ้าหนังสือที่สูญหายเป็น \"เอกสารสิทธิตามกฎหมาย\" หรือหนังสือสำคัญที่เป็นการแสดงเอกสารสิทธิ ให้ส่วนราชการดำเนินการอย่างไร", "choices": ["ให้รายงานหัวหน้าส่วนราชการระดับกรม", "ให้ทำความตกลงกับกระทรวงการคลัง", "ให้แจ้งความต่อพนักงานสอบสวน", "ให้ตั้งคณะกรรมการสอบสวนหาผู้รับผิดชอบ"], "answer": 2, "explanation": "หนังสือที่สูญหายซึ่งเป็นเอกสารสิทธิตามกฎหมาย ให้แจ้งความต่อพนักงานสอบสวน", "id": 116}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในการยืมหนังสือที่ส่งเก็บแล้ว ให้เจ้าหน้าที่นำ \"บัตรยืมหนังสือ\" ไปเก็บรักษาไว้ที่ใด", "choices": ["ให้เก็บไว้แทนที่หนังสือที่ถูกยืมไป", "ให้เก็บไว้ที่หน่วยงานสารบรรณกลาง", "ให้เก็บไว้ในแฟ้มทะเบียนการยืมของส่วนราชการ", "ให้เก็บไว้ที่ผู้บังคับบัญชาตามลำดับชั้น"], "answer": 0, "explanation": "บัตรยืมหนังสือให้เก็บไว้แทนที่หนังสือที่ถูกยืมไป", "id": 117}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การยืมหนังสือ \"ระหว่างส่วนราชการ\" ผู้ยืมและผู้อนุญาตให้ยืมต้องเป็นหัวหน้าส่วนราชการระดับใดขึ้นไป", "choices": ["หัวหน้าส่วนราชการระดับแผนกขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "หัวหน้าส่วนราชการระดับกองขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "หัวหน้าส่วนราชการระดับกรมขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "หัวหน้าส่วนราชการระดับกระทรวงขึ้นไป หรือผู้ที่ได้รับมอบหมาย"], "answer": 1, "explanation": "การยืมหนังสือระหว่างส่วนราชการ ผู้ยืมและผู้อนุญาตต้องเป็นหัวหน้าส่วนราชการระดับกองขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "id": 118}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การยืมหนังสือ \"ภายในส่วนราชการเดียวกัน\" ผู้ยืมและผู้อนุญาตให้ยืมต้องเป็นหัวหน้าส่วนราชการระดับใดขึ้นไป", "choices": ["หัวหน้าส่วนราชการระดับแผนกขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "หัวหน้าส่วนราชการระดับกองขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "หัวหน้าส่วนราชการระดับกรมขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "หัวหน้าส่วนราชการระดับกระทรวงขึ้นไป หรือผู้ที่ได้รับมอบหมาย"], "answer": 0, "explanation": "การยืมหนังสือภายในส่วนราชการเดียวกัน ผู้ยืมและผู้อนุญาตต้องเป็นหัวหน้าส่วนราชการระดับแผนกขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "id": 119}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การให้บุคคลภายนอกยืมหนังสือ จะกระทำมิได้ เว้นแต่จะให้ดูหรือคัดลอก ซึ่งจะต้องได้รับอนุญาตจากบุคคลใดก่อน", "choices": ["หัวหน้าส่วนราชการระดับแผนกขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "หัวหน้าส่วนราชการระดับกองขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "หัวหน้าส่วนราชการระดับกรมขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "ปลัดกระทรวง หรือผู้ที่ได้รับมอบหมาย"], "answer": 1, "explanation": "การให้บุคคลภายนอกยืมหนังสือ (ดูหรือคัดลอก) ต้องได้รับอนุญาตจากหัวหน้าส่วนราชการระดับกองขึ้นไป หรือผู้ที่ได้รับมอบหมาย", "id": 120}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ให้เจ้าหน้าที่ผู้รับผิดชอบในการเก็บหนังสือสำรวจหนังสือที่ครบกำหนดอายุการเก็บในปีนั้น ภายในระยะเวลาเท่าใด", "choices": ["ภายใน ๓๐ วันหลังจากวันสิ้นปีปฏิทิน", "ภายใน ๖๐ วันหลังจากวันสิ้นปีปฏิทิน", "ภายใน ๙๐ วันหลังจากวันสิ้นปีปฏิทิน", "ภายใน ๑๒๐ วันหลังจากวันสิ้นปีปฏิทิน"], "answer": 1, "explanation": "เจ้าหน้าที่ต้องสำรวจหนังสือที่ครบกำหนดอายุการเก็บภายใน ๖๐ วันหลังจากวันสิ้นปีปฏิทิน", "id": 121}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "บัญชีหนังสือขอทำลายที่จัดทำขึ้น จะต้องเสนอต่อบุคคลใดเพื่อพิจารณาแต่งตั้งคณะกรรมการทำลายหนังสือ", "choices": ["หัวหน้าส่วนราชการระดับแผนก", "หัวหน้าส่วนราชการระดับกอง", "หัวหน้าส่วนราชการระดับกรม", "หัวหน้าส่วนราชการระดับกระทรวง"], "answer": 2, "explanation": "บัญชีหนังสือขอทำลายต้องเสนอต่อหัวหน้าส่วนราชการระดับกรมเพื่อพิจารณาแต่งตั้งคณะกรรมการทำลายหนังสือ", "id": 122}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "คณะกรรมการทำลายหนังสือ ต้องประกอบด้วยประธานกรรมการและกรรมการในจำนวนตามข้อใด", "choices": ["ประธานกรรมการและกรรมการอีกอย่างน้อยหนึ่งคน", "ประธานกรรมการและกรรมการอีกอย่างน้อยสองคน", "ประธานกรรมการและกรรมการอีกอย่างน้อยสามคน", "ประธานกรรมการและกรรมการอีกอย่างน้อยสี่คน"], "answer": 1, "explanation": "คณะกรรมการทำลายหนังสือ ต้องประกอบด้วยประธานกรรมการและกรรมการอีกอย่างน้อยสองคน", "id": 123}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ข้าราชการที่จะได้รับการแต่งตั้งเป็นคณะกรรมการทำลายหนังสือ โดยปกติให้แต่งตั้งจากข้าราชการประเภทและระดับใดขึ้นไป", "choices": ["ประเภทวิชาการ ระดับปฏิบัติการ หรือประเภททั่วไป ระดับปฏิบัติงาน ขึ้นไป", "ประเภทวิชาการ ระดับปฏิบัติการ หรือประเภททั่วไป ระดับชำนาญงาน ขึ้นไป", "ประเภทวิชาการ ระดับชำนาญการ หรือประเภททั่วไป ระดับปฏิบัติงาน ขึ้นไป", "ประเภทวิชาการ ระดับชำนาญการ หรือประเภททั่วไป ระดับชำนาญงาน ขึ้นไป"], "answer": 1, "explanation": "คณะกรรมการทำลายหนังสือ โดยปกติแต่งตั้งจากข้าราชการประเภทวิชาการ ระดับปฏิบัติการ หรือประเภททั่วไป ระดับชำนาญงาน ขึ้นไป", "id": 124}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในกรณีที่ประธานกรรมการทำลายหนังสือไม่สามารถปฏิบัติหน้าที่ได้ ให้ดำเนินการตามข้อใด", "choices": ["ให้หัวหน้าส่วนราชการระดับกรมแต่งตั้งประธานคนใหม่", "ให้คณะกรรมการยุติการพิจารณาและรายงานผู้แต่งตั้ง", "ให้กรรมการที่มีอาวุโสสูงสุดทำหน้าที่ประธาน", "ให้กรรมการที่มาประชุมเลือกกรรมการคนหนึ่งทำหน้าที่ประธาน"], "answer": 3, "explanation": "หากประธานกรรมการทำลายหนังสือไม่สามารถปฏิบัติหน้าที่ได้ ให้กรรมการที่มาประชุมเลือกกรรมการคนหนึ่งทำหน้าที่ประธาน", "id": 125}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "มติของคณะกรรมการทำลายหนังสือให้ถือเสียงข้างมาก หากกรรมการผู้ใด \"ไม่เห็นด้วย\" ต้องปฏิบัติอย่างไร", "choices": ["ให้งดออกเสียงในการพิจารณาหนังสือนั้น", "ให้ทำบันทึกชี้แจงเหตุผลส่งผู้แต่งตั้ง", "ให้ทำบันทึกความเห็นแย้งไว้", "ให้ถือตามมติเสียงข้างมากโดยไม่มีเงื่อนไข"], "answer": 2, "explanation": "มติคณะกรรมการให้ถือเสียงข้างมาก หากกรรมการผู้ใดไม่เห็นด้วย ให้ทำบันทึกความเห็นแย้งไว้", "id": 126}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หากคณะกรรมการทำลายหนังสือเห็นว่า \"ไม่ควรทำลายและควรจะขยายเวลาการเก็บไว้\" ใครเป็นผู้ลงลายมือชื่อกำกับการแก้ไขอายุการเก็บในตรากำหนดเก็บหนังสือ", "choices": ["เจ้าหน้าที่ผู้รับผิดชอบในการเก็บหนังสือ", "หัวหน้าส่วนราชการระดับกอง", "หัวหน้าส่วนราชการระดับกรม", "ประธานกรรมการทำลายหนังสือ"], "answer": 3, "explanation": "หากไม่ควรทำลายและควรขยายเวลาเก็บ ให้ประธานกรรมการทำลายหนังสือลงลายมือชื่อกำกับการแก้ไขอายุการเก็บในตรากำหนดเก็บหนังสือ", "id": 127}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หากคณะกรรมการทำลายหนังสือมีความเห็นว่าหนังสือเรื่องใด \"ควรให้ทำลาย\" ให้ดำเนินการในบัญชีหนังสือขอทำลายอย่างไร", "choices": ["ให้กรอกเครื่องหมายถูก (✓) ลงในช่อง การพิจารณา", "ให้กรอกเครื่องหมายกากบาท (x) ลงในช่อง การพิจารณา", "ให้ระบุคำว่า ทำลาย ลงในช่อง การพิจารณา", "ให้ระบุคำว่า อนุมัติ ลงในช่อง การพิจารณา"], "answer": 1, "explanation": "หากเห็นว่าควรทำลาย ให้กรอกเครื่องหมายกากบาท (x) ลงในช่อง การพิจารณา ของบัญชีหนังสือขอทำลาย", "id": 128}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การควบคุมการทำลายหนังสือซึ่งผู้มีอำนาจอนุมัติให้ทำลายได้แล้ว ต้องทำลายโดยวิธีการใด", "choices": ["โดยการฉีก หรือวิธีอื่นใดที่จะไม่ให้หนังสือนั้นประกอบเป็นหน้าได้", "โดยการย่อย หรือวิธีอื่นใดที่จะไม่ให้หนังสือนั้นประกอบเป็นหน้าได้", "โดยการเผา หรือวิธีอื่นใดที่จะไม่ให้หนังสือนั้นอ่านเป็นเรื่องได้", "โดยการฝัง หรือวิธีอื่นใดที่จะไม่ให้หนังสือนั้นอ่านเป็นเรื่องได้"], "answer": 2, "explanation": "การทำลายหนังสือที่ได้รับอนุมัติแล้ว ให้ทำลายโดยการเผา หรือวิธีอื่นใดที่จะไม่ให้หนังสือนั้นอ่านเป็นเรื่องได้", "id": 129}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "เมื่อส่งบัญชีหนังสือขอทำลายไปให้กองจดหมายเหตุแห่งชาติ กรมศิลปากรพิจารณา หากไม่มีการแจ้งกลับภายในกี่วัน ให้ถือว่าให้ความเห็นชอบและส่วนราชการทำลายหนังสือได้", "choices": ["ภายในกำหนดเวลา ๓๐ วัน นับแต่วันที่ส่วนราชการนั้นได้ส่งเรื่อง", "ภายในกำหนดเวลา ๔๕ วัน นับแต่วันที่ส่วนราชการนั้นได้ส่งเรื่อง", "ภายในกำหนดเวลา ๖๐ วัน นับแต่วันที่ส่วนราชการนั้นได้ส่งเรื่อง", "ภายในกำหนดเวลา ๙๐ วัน นับแต่วันที่ส่วนราชการนั้นได้ส่งเรื่อง"], "answer": 2, "explanation": "หากกองจดหมายเหตุแห่งชาติไม่แจ้งกลับภายใน ๖๐ วัน นับแต่วันที่ส่งเรื่อง ให้ถือว่าให้ความเห็นชอบ", "id": 130}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ตราครุฑสำหรับแบบพิมพ์ที่กำหนดไว้ในระเบียบนี้ มี ๒ ขนาด คือข้อใด", "choices": ["ขนาดตัวครุฑสูง ๓.๐ เซนติเมตร และขนาดตัวครุฑสูง ๑.๕ เซนติเมตร", "ขนาดตัวครุฑสูง ๓.๕ เซนติเมตร และขนาดตัวครุฑสูง ๑.๕ เซนติเมตร", "ขนาดตัวครุฑสูง ๓.๐ เซนติเมตร และขนาดตัวครุฑสูง ๒.๕ เซนติเมตร", "ขนาดตัวครุฑสูง ๓.๕ เซนติเมตร และขนาดตัวครุฑสูง ๒.๕ เซนติเมตร"], "answer": 0, "explanation": "ตราครุฑสำหรับแบบพิมพ์มี ๒ ขนาด คือ สูง ๓.๐ เซนติเมตร และสูง ๑.๕ เซนติเมตร", "id": 131}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ตราชื่อส่วนราชการให้มีลักษณะเป็นรูปวงกลมสองวงซ้อนกัน มีเส้นผ่าศูนย์กลางวงนอก วงใน และล้อมครุฑขนาดใด", "choices": ["วงนอก ๔.๐ เซนติเมตร วงใน ๓.๐ เซนติเมตร ล้อมครุฑสูง ๑.๕ เซนติเมตร", "วงนอก ๔.๐ เซนติเมตร วงใน ๓.๐ เซนติเมตร ล้อมครุฑสูง ๓.๐ เซนติเมตร", "วงนอก ๔.๕ เซนติเมตร วงใน ๓.๕ เซนติเมตร ล้อมครุฑสูง ๑.๕ เซนติเมตร", "วงนอก ๔.๕ เซนติเมตร วงใน ๓.๕ เซนติเมตร ล้อมครุฑสูง ๓.๐ เซนติเมตร"], "answer": 3, "explanation": "ตราชื่อส่วนราชการเป็นรูปวงกลมสองวงซ้อนกัน วงนอก ๔.๕ ซม. วงใน ๓.๕ ซม. ล้อมครุฑสูง ๓.๐ เซนติเมตร", "id": 132}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ตรากำหนดเก็บหนังสือ ซึ่งมีคำว่า \"เก็บถึง พ.ศ. ...\" หรือ \"ห้ามทำลาย\" ต้องมีขนาดตัวพิมพ์ไม่เล็กกว่าเท่าใด", "choices": ["ขนาดไม่เล็กกว่าตัวพิมพ์ ๑๖ พอยท์", "ขนาดไม่เล็กกว่าตัวพิมพ์ ๒๐ พอยท์", "ขนาดไม่เล็กกว่าตัวพิมพ์ ๒๔ พอยท์", "ขนาดไม่เล็กกว่าตัวพิมพ์ ๓๒ พอยท์"], "answer": 2, "explanation": "ตรากำหนดเก็บหนังสือต้องมีขนาดตัวพิมพ์ไม่เล็กกว่า ๒๔ พอยท์", "id": 133}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "มาตรฐานกระดาษโดยปกติให้ใช้กระดาษปอนด์ขาว มีน้ำหนักและขนาดตามข้อใด", "choices": ["น้ำหนัก ๖๐ กรัมต่อตารางเมตร มี ๓ ขนาด คือ เอ ๔, เอ ๕, เอ ๖", "น้ำหนัก ๖๐ กรัมต่อตารางเมตร มี ๓ ขนาด คือ เอ ๔, เอ ๕, เอ ๘", "น้ำหนัก ๘๐ กรัมต่อตารางเมตร มี ๓ ขนาด คือ เอ ๔, เอ ๕, เอ ๖", "น้ำหนัก ๘๐ กรัมต่อตารางเมตร มี ๓ ขนาด คือ เอ ๔, เอ ๕, เอ ๘"], "answer": 1, "explanation": "มาตรฐานกระดาษปอนด์ขาว น้ำหนัก ๖๐ กรัมต่อตารางเมตร มี ๓ ขนาด คือ เอ ๔, เอ ๕, เอ ๘", "id": 134}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "มาตรฐานซองโดยปกติให้ใช้กระดาษสีขาวหรือสีน้ำตาล น้ำหนัก ๘๐ กรัมต่อตารางเมตร \"เว้นแต่\" ซองขนาดใดที่ต้องใช้น้ำหนัก ๑๒๐ กรัมต่อตารางเมตร", "choices": ["ซองขนาดซี ๔ (C4)", "ซองขนาดซี ๕ (C5)", "ซองขนาดซี ๖ (C6)", "ซองขนาดดีแอล (DL)"], "answer": 0, "explanation": "ซองปกติใช้น้ำหนัก ๘๐ กรัมต่อตารางเมตร เว้นแต่ซองขนาดซี ๔ (C4) ต้องใช้น้ำหนัก ๑๒๐ กรัมต่อตารางเมตร", "id": 135}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การจัดทำ \"กระดาษบันทึกข้อความ\" ต้องใช้กระดาษขนาดใด และพิมพ์ครุฑในลักษณะใด", "choices": ["ขนาดเอ ๔ หรือ เอ ๕ พิมพ์ครุฑสูง ๑.๕ เซนติเมตร ด้วยหมึกสีดำ ที่กึ่งกลางส่วนบน", "ขนาดเอ ๔ หรือ เอ ๕ พิมพ์ครุฑสูง ๑.๕ เซนติเมตร ด้วยหมึกสีดำ ที่มุมบนด้านซ้าย", "ขนาดเอ ๔ หรือ เอ ๕ พิมพ์ครุฑสูง ๓.๐ เซนติเมตร ด้วยหมึกสีดำ ที่กึ่งกลางส่วนบน", "ขนาดเอ ๔ หรือ เอ ๕ พิมพ์ครุฑสูง ๓.๐ เซนติเมตร ด้วยหมึกสีดำ ที่มุมบนด้านซ้าย"], "answer": 1, "explanation": "กระดาษบันทึกข้อความ ใช้กระดาษขนาดเอ ๔ หรือ เอ ๕ พิมพ์ครุฑสูง ๑.๕ เซนติเมตร ด้วยหมึกสีดำ ที่มุมบนด้านซ้าย", "id": 136}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ซองหนังสือขนาด \"ดีแอล (DL)\" ใช้สำหรับบรรจุหนังสือกระดาษตราครุฑในลักษณะใด", "choices": ["บรรจุหนังสือกระดาษตราครุฑโดยไม่ต้องพับ", "บรรจุหนังสือกระดาษตราครุฑพับ ๒", "บรรจุหนังสือกระดาษตราครุฑพับ ๓", "บรรจุหนังสือกระดาษตราครุฑพับ ๔"], "answer": 2, "explanation": "ซองขนาดดีแอล (DL) ใช้สำหรับบรรจุหนังสือกระดาษตราครุฑพับ ๓", "id": 137}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ตรารับหนังสือ (ที่ใช้ประทับบนหนังสือเพื่อลงเลขทะเบียนรับ) มีลักษณะและขนาดตามข้อใด", "choices": ["รูปสี่เหลี่ยมผืนผ้า ขนาด ๒.๐ เซนติเมตร x ๔.๕ เซนติเมตร มีชื่อส่วนราชการอยู่ตอนล่าง", "รูปสี่เหลี่ยมผืนผ้า ขนาด ๒.๐ เซนติเมตร x ๔.๕ เซนติเมตร มีชื่อส่วนราชการอยู่ตอนบน", "รูปสี่เหลี่ยมผืนผ้า ขนาด ๒.๕ เซนติเมตร x ๕.๐ เซนติเมตร มีชื่อส่วนราชการอยู่ตอนล่าง", "รูปสี่เหลี่ยมผืนผ้า ขนาด ๒.๕ เซนติเมตร x ๕.๐ เซนติเมตร มีชื่อส่วนราชการอยู่ตอนบน"], "answer": 3, "explanation": "ตรารับหนังสือมีลักษณะรูปสี่เหลี่ยมผืนผ้า ขนาด ๒.๕ x ๕.๐ เซนติเมตร มีชื่อส่วนราชการอยู่ตอนบน", "id": 138}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ให้ส่วนราชการจัดให้มีระบบสารบรรณอิเล็กทรอนิกส์ หรืออย่างน้อยต้องมีสิ่งใดสำหรับการรับและการส่งหนังสืออิเล็กทรอนิกส์", "choices": ["ที่อยู่ไปรษณีย์อิเล็กทรอนิกส์กลาง", "ระบบคลาวด์จัดเก็บข้อมูลกลาง", "แอปพลิเคชันส่งข้อความกลาง", "เว็บไซต์ประกาศข้อมูลกลาง"], "answer": 0, "explanation": "ส่วนราชการต้องจัดให้มีระบบสารบรรณอิเล็กทรอนิกส์ หรืออย่างน้อยต้องมีที่อยู่ไปรษณีย์อิเล็กทรอนิกส์กลาง", "id": 139}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การประกาศเผยแพร่ที่อยู่ไปรษณีย์อิเล็กทรอนิกส์กลาง ต้องแจ้งไปยังหน่วยงานใดเพื่อรวบรวมเผยแพร่พร้อมกับหมายเลขโทรศัพท์", "choices": ["สำนักงานพัฒนาธุรกรรมทางอิเล็กทรอนิกส์ (องค์การมหาชน)", "สำนักงานพัฒนารัฐบาลดิจิทัล (องค์การมหาชน)", "กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม", "สำนักงานปลัดสำนักนายกรัฐมนตรี"], "answer": 1, "explanation": "ต้องแจ้งที่อยู่ไปรษณีย์อิเล็กทรอนิกส์กลางไปยังสำนักงานพัฒนารัฐบาลดิจิทัล (องค์การมหาชน) เพื่อรวบรวมเผยแพร่", "id": 140}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "กรณีจัดส่งหนังสืออิเล็กทรอนิกส์ไปยังที่อยู่ไปรษณีย์อิเล็กทรอนิกส์ที่ได้รับแจ้งไว้ \"แต่ไม่สำเร็จ\" ให้ลงวันและเวลาใดเป็นหลักฐานทางราชการ", "choices": ["ลงวันและเวลาที่ระบบแจ้งเตือนว่าการจัดส่งล้มเหลว", "ลงวันและเวลาที่เจ้าหน้าที่ทำการจัดส่งครั้งสุดท้าย", "ลงวันและเวลาที่ปรากฏในระบบว่าได้จัดส่งครั้งแรก", "ลงวันและเวลาที่เจ้าหน้าที่ทำการพิมพ์เอกสารเพื่อส่งทางไปรษณีย์"], "answer": 2, "explanation": "กรณีจัดส่งไม่สำเร็จ ให้ลงวันและเวลาที่ปรากฏในระบบว่าได้จัดส่งครั้งแรก เป็นหลักฐานทางราชการ", "id": 141}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การสำรองข้อมูล (Backup) หนังสืออิเล็กทรอนิกส์ และที่ส่งให้สำนักหอจดหมายเหตุแห่งชาติ ต้องอยู่ในรูปแบบและมีความละเอียดตามข้อใด", "choices": ["รูปแบบ PDF ความละเอียดไม่น้อยกว่า ๑๐๐ dpi", "รูปแบบ PDF ความละเอียดไม่น้อยกว่า ๑๕๐ dpi", "รูปแบบ PDF ความละเอียดไม่น้อยกว่า ๒๐๐ dpi", "รูปแบบ PDF ความละเอียดไม่น้อยกว่า ๓๐๐ dpi"], "answer": 1, "explanation": "การสำรองข้อมูลหนังสืออิเล็กทรอนิกส์ ต้องอยู่ในรูปแบบ PDF ความละเอียดไม่น้อยกว่า ๑๕๐ dpi", "id": 142}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสืออิเล็กทรอนิกส์ในระบบสารบรรณอิเล็กทรอนิกส์ของส่วนราชการ มีอายุการเก็บหนังสือตามข้อใด", "choices": ["เก็บรักษาไว้ไม่น้อยกว่า ๑๐ ปี", "เก็บรักษาไว้ไม่น้อยกว่า ๒๐ ปี", "ไม่มีอายุการเก็บหนังสือ โดยปกติให้เก็บไว้ตลอดไป", "ไม่มีอายุการเก็บหนังสือ โดยปกติให้เก็บไว้จนกว่าจะส่งมอบให้กรมศิลปากร"], "answer": 2, "explanation": "หนังสืออิเล็กทรอนิกส์ ไม่มีอายุการเก็บหนังสือ โดยปกติให้เก็บไว้ตลอดไป", "id": 143}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หากมีความจำเป็นต้องเพิ่มพื้นที่จัดเก็บ หัวหน้าส่วนราชการมีคำสั่งทำลายหนังสืออิเล็กทรอนิกส์ (ที่มิใช่เอกสารจดหมายเหตุ) ได้เมื่อเก็บมาเกินกี่ปี และใช้วิธีลบอย่างไร", "choices": ["เกิน ๕ ปี ใช้วิธีลบหนังสือที่เก็บไว้เป็นเวลาล่าสุดย้อนลงไป", "เกิน ๕ ปี ใช้วิธีลบหนังสือที่เก็บไว้เป็นเวลานานที่สุดย้อนขึ้นมา", "เกิน ๑๐ ปี ใช้วิธีลบหนังสือที่เก็บไว้เป็นเวลาล่าสุดย้อนลงไป", "เกิน ๑๐ ปี ใช้วิธีลบหนังสือที่เก็บไว้เป็นเวลานานที่สุดย้อนขึ้นมา"], "answer": 3, "explanation": "หัวหน้าส่วนราชการสามารถสั่งทำลายหนังสืออิเล็กทรอนิกส์ที่เก็บเกิน ๑๐ ปี โดยใช้วิธีลบหนังสือที่เก็บไว้นานที่สุดย้อนขึ้นมา", "id": 144}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การกำหนดรหัสตัวเลขประจำของ \"รัฐวิสาหกิจ\" หรือหน่วยงานอื่นที่มิได้เป็นส่วนราชการ ในสังกัดกระทรวง ทบวง ให้เริ่มต้นจากตัวเลขใด", "choices": ["เริ่มจาก ๑๑ เรียงไปตามลำดับ", "เริ่มจาก ๓๑ เรียงไปตามลำดับ", "เริ่มจาก ๕๑ เรียงไปตามลำดับ", "เริ่มจาก ๙๑ เรียงไปตามลำดับ"], "answer": 2, "explanation": "รหัสตัวเลขประจำของรัฐวิสาหกิจหรือหน่วยงานอื่นที่มิใช่ส่วนราชการ ให้เริ่มจาก ๕๑ เรียงไปตามลำดับ", "id": 145}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การปรับปรุงเลขประจำของเจ้าของเรื่อง (เลขหนังสือออก) ให้กระทำทุกๆ กี่ปี และถือเอาปีพุทธศักราชใดเป็นหลัก", "choices": ["ทุกๆ ๓ ปี ถือเอาปีพุทธศักราชที่ลงท้ายด้วยเลข ๓ และเลข ๘ เป็นหลัก", "ทุกๆ ๔ ปี ถือเอาปีพุทธศักราชที่ลงท้ายด้วยเลข ๔ และเลข ๘ เป็นหลัก", "ทุกๆ ๕ ปี ถือเอาปีพุทธศักราชที่ลงท้ายด้วยเลข ๕ และเลข ๐ เป็นหลัก", "ทุกๆ ๑๐ ปี ถือเอาปีพุทธศักราชที่ลงท้ายด้วยเลข ๐ เป็นหลัก"], "answer": 2, "explanation": "การปรับปรุงเลขประจำของเจ้าของเรื่อง ให้กระทำทุกๆ ๕ ปี ถือเอาปีพุทธศักราชที่ลงท้ายด้วยเลข ๕ และเลข ๐ เป็นหลัก", "id": 146}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ตามภาคผนวก ๒ การเขียนหนังสือราชการถึง \"ประธานรัฐสภา\" \"ประธานศาลฎีกา\" หรือ \"อัยการสูงสุด\" ต้องใช้คำขึ้นต้นและคำลงท้ายตามข้อใด", "choices": ["คำขึ้นต้น: เรียน / คำลงท้าย: ขอแสดงความนับถือ", "คำขึ้นต้น: เรียน / คำลงท้าย: ขอแสดงความนับถืออย่างยิ่ง", "คำขึ้นต้น: กราบเรียน / คำลงท้าย: ขอแสดงความนับถือ", "คำขึ้นต้น: กราบเรียน / คำลงท้าย: ขอแสดงความนับถืออย่างยิ่ง"], "answer": 3, "explanation": "หนังสือถึงประธานรัฐสภา ประธานศาลฎีกา หรืออัยการสูงสุด ใช้คำขึ้นต้น กราบเรียน และคำลงท้าย ขอแสดงความนับถืออย่างยิ่ง", "id": 147}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "คำลงท้ายในหนังสือราชการ สำหรับผู้รับที่เป็น \"บุคคลธรรมดาทั่วไป\" ให้ใช้คำว่าอะไร", "choices": ["ขอแสดงความเคารพ", "ขอแสดงความเคารพอย่างสูง", "ขอแสดงความนับถือ", "ขอแสดงความนับถืออย่างยิ่ง"], "answer": 2, "explanation": "สำหรับผู้รับที่เป็นบุคคลธรรมดาทั่วไป ให้ใช้คำลงท้ายว่า \"ขอแสดงความนับถือ\"", "id": 148}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในการลงชื่อ สตรีซึ่งมีสามีที่ได้รับพระราชทานเครื่องราชอิสริยาภรณ์ \"ตั้งแต่ชั้นทุติยจุลจอมเกล้าวิเศษขึ้นไป\" ให้ใช้คำนำหน้านามว่าอะไรพิมพ์ไว้ใต้ลายมือชื่อ", "choices": ["ท่านหญิง", "คุณหญิง", "ท่านผู้หญิง", "หม่อม"], "answer": 2, "explanation": "สตรีที่สามีได้รับพระราชทานเครื่องราชอิสริยาภรณ์ตั้งแต่ชั้นทุติยจุลจอมเกล้าวิเศษขึ้นไป ให้ใช้คำนำหน้านามว่า ท่านผู้หญิง", "id": 149}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "กรณีที่ไม่มีผู้ดำรงตำแหน่งอธิบดี หรือมีแต่ไม่อาจปฏิบัติราชการได้ และให้รองอธิบดีทำหน้าที่แทน กฎหมายว่าด้วยระเบียบบริหารราชการแผ่นดินกำหนดให้ใช้คำลงตำแหน่งว่าอย่างไร", "choices": ["ปฏิบัติหน้าที่แทน", "รักษาราชการแทน", "ปฏิบัติราชการแทน", "ทำการแทน"], "answer": 1, "explanation": "กรณีไม่มีผู้ดำรงตำแหน่งหรือมีแต่ไม่อาจปฏิบัติราชการได้ ให้ผู้รักษาราชการแทนใช้คำว่า \"รักษาราชการแทน\"", "id": 150}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "กรณีที่รัฐมนตรีว่าการกระทรวง \"มอบอำนาจ\" โดยทำเป็นหนังสือให้ปลัดกระทรวงสั่งการหรือดำเนินการแทนตน ในการลงชื่อและตำแหน่งต้องใช้คำใด", "choices": ["ปฏิบัติหน้าที่แทน", "รักษาราชการแทน", "ปฏิบัติราชการแทน", "ทำการแทน"], "answer": 2, "explanation": "กรณีมอบอำนาจให้สั่งการหรือดำเนินการแทน ให้ใช้คำว่า \"ปฏิบัติราชการแทน\"", "id": 151}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หนังสือราชการภาษาอังกฤษประเภท \"หนังสือกลาง (Third Person Note หรือ Note Verbale)\" มีลักษณะการเขียนและลงชื่อตามข้อใด", "choices": ["ใช้สรรพนามบุรุษที่ ๑ ประทับตราชื่อส่วนราชการ และลงลายมือชื่อเต็ม", "ใช้สรรพนามบุรุษที่ ๑ ประทับตราชื่อส่วนราชการ และลงลายมือชื่อย่อกำกับตรา", "ใช้สรรพนามบุรุษที่ ๓ ประทับตราชื่อส่วนราชการ และลงลายมือชื่อเต็ม", "ใช้สรรพนามบุรุษที่ ๓ ประทับตราชื่อส่วนราชการ และลงลายมือชื่อย่อกำกับตรา"], "answer": 3, "explanation": "หนังสือกลาง (Note Verbale) ใช้สรรพนามบุรุษที่ ๓ ประทับตราชื่อส่วนราชการ และลงลายมือชื่อย่อกำกับตรา", "id": 152}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ที่อยู่ไปรษณีย์อิเล็กทรอนิกส์กลาง (อีเมลกลาง) ของส่วนราชการ ตามหลักเกณฑ์ในภาคผนวก ๗ ให้ใช้รูปแบบการตั้งชื่อตามข้อใด", "choices": ["admin ตามด้วยชื่อโดเมน (domain name)", "central ตามด้วยชื่อโดเมน (domain name)", "saraban ตามด้วยชื่อโดเมน (domain name)", "contact ตามด้วยชื่อโดเมน (domain name)"], "answer": 2, "explanation": "อีเมลกลางของส่วนราชการ ให้ใช้รูปแบบ \"saraban\" ตามด้วยชื่อโดเมน (domain name)", "id": 153}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "เจ้าหน้าที่สารบรรณกลางต้องตรวจสอบข้อมูลข่าวสารและหนังสือในระบบอีเมลกลางของส่วนราชการเป็นประจำ ด้วยความถี่ตามข้อใด", "choices": ["ไม่น้อยกว่าวันละ ๑ ครั้งในเวลาราชการ (ในช่วงเช้า)", "ไม่น้อยกว่าวันละ ๒ ครั้งในเวลาราชการ (อย่างน้อยหนึ่งครั้งช่วงเช้าและหนึ่งครั้งช่วงบ่าย)", "ไม่น้อยกว่าวันละ ๓ ครั้งในเวลาราชการ (อย่างน้อยช่วงเช้า กลางวัน และบ่าย)", "ให้ตรวจสอบทันทีที่มีการแจ้งเตือน (Real-time) ตลอดเวลาราชการ"], "answer": 1, "explanation": "เจ้าหน้าที่ต้องตรวจสอบอีเมลกลางไม่น้อยกว่าวันละ ๒ ครั้งในเวลาราชการ อย่างน้อยหนึ่งครั้งช่วงเช้าและหนึ่งครั้งช่วงบ่าย", "id": 154}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในกรณีที่ส่วนราชการได้รับหนังสือทางอีเมล \"ภายหลังเวลา ๑๖.๓๐ นาฬิกา\" จะต้องแจ้งยืนยันการได้รับอีเมล (reply) ภายในกำหนดเวลาใด", "choices": ["อย่างช้าไม่เกิน ๐๘.๓๐ นาฬิกา ของวันทำการถัดไป", "อย่างช้าไม่เกิน ๐๙.๐๐ นาฬิกา ของวันทำการถัดไป", "อย่างช้าไม่เกิน ๑๐.๐๐ นาฬิกา ของวันทำการถัดไป", "อย่างช้าไม่เกิน ๑๒.๐๐ นาฬิกา ของวันทำการถัดไป"], "answer": 2, "explanation": "หากได้รับหนังสือทางอีเมลหลังเวลา ๑๖.๓๐ นาฬิกา ต้องแจ้งยืนยันการรับอย่างช้าไม่เกิน ๑๐.๐๐ นาฬิกา ของวันทำการถัดไป", "id": 155}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ข้อความในอีเมลที่ตอบกลับ (reply) เพื่อยืนยันว่าได้รับอีเมลแล้ว อย่างน้อยต้องระบุข้อความยืนยันพร้อมข้อมูลใด (ทั้งภาษาไทยและภาษาอังกฤษ)", "choices": ["หมายเลขโทรศัพท์ของส่วนราชการ", "หมายเลขโทรสารของส่วนราชการ", "ที่ตั้งที่ทำการของส่วนราชการ", "ชื่อเจ้าหน้าที่ผู้รับผิดชอบ"], "answer": 0, "explanation": "อีเมลตอบยืนยันการรับ อย่างน้อยต้องระบุข้อความยืนยันพร้อมหมายเลขโทรศัพท์ของส่วนราชการ ทั้งภาษาไทยและภาษาอังกฤษ", "id": 156}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หากส่วนราชการได้รับหนังสือราชการที่มีชั้นความลับ ในชั้น \"ลับที่สุด (Top Secret)\" ทางอีเมล ให้ดำเนินการอย่างไร", "choices": ["ให้ส่งต่อ (forward) ไปยังอีเมลเฉพาะของผู้มีอำนาจเข้าถึง แล้วลบอีเมลนั้นทิ้งทันที", "ให้นำเข้าระบบสารบรรณอิเล็กทรอนิกส์เฉพาะเครือข่ายภายในที่เข้ารหัสความปลอดภัยระดับสูงสุด", "ให้ติดต่อผู้ส่งแจ้งว่าไม่อาจส่งและรับได้ ขอให้ส่งใหม่เป็นเอกสาร เมื่อแจ้งแล้วให้ลบอีเมลนั้นทิ้งทันที", "ให้พิมพ์ออกเป็นเอกสารโดยนายทะเบียนข้อมูลข่าวสารลับ แล้วนำเก็บเข้าตู้เซฟทันที"], "answer": 2, "explanation": "หากได้รับหนังสือชั้น ลับที่สุด ทางอีเมล ให้ติดต่อผู้ส่งแจ้งว่าไม่อาจส่งและรับได้ ขอให้ส่งใหม่เป็นเอกสาร เมื่อแจ้งแล้วให้ลบอีเมลนั้นทิ้งทันที", "id": 157}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การแปลงหนังสือและสิ่งที่จะส่งไปด้วยให้เป็นไฟล์อิเล็กทรอนิกส์เพื่อ \"แนบส่งทางอีเมล\" (ส่งไปภายนอก) ให้ดำเนินการตามข้อใด", "choices": ["แปลงเป็นไฟล์ PDF ความละเอียดไม่น้อยกว่า ๑๕๐ dpi", "แปลงเป็นไฟล์ PDF ความละเอียดไม่น้อยกว่า ๓๐๐ dpi", "แปลงเป็นไฟล์ JPG ความละเอียดไม่น้อยกว่า ๑๕๐ dpi", "แปลงเป็นไฟล์ JPG ความละเอียดไม่น้อยกว่า ๓๐๐ dpi"], "answer": 1, "explanation": "การแปลงหนังสือเพื่อแนบส่งทางอีเมล ให้แปลงเป็นไฟล์ PDF ความละเอียดไม่น้อยกว่า ๓๐๐ dpi", "id": 158}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "หลักเกณฑ์การตั้งชื่อไฟล์เอกสาร (PDF) ที่จะแนบส่งทางอีเมล (เช่น 2564_OPM0913_56.pdf) ข้อใดเรียงลำดับได้อย่างถูกต้อง", "choices": ["รหัสตัวอักษรโรมัน _ ปีพุทธศักราช _ เลขประจำของส่วนราชการ _ เลขที่หนังสือส่ง", "รหัสตัวอักษรโรมัน _ เลขประจำของส่วนราชการ _ ปีพุทธศักราช _ เลขที่หนังสือส่ง", "ปีพุทธศักราช _ รหัสตัวอักษรโรมัน _ เลขประจำของส่วนราชการ _ เลขที่หนังสือส่ง", "ปีพุทธศักราช _ เลขประจำของส่วนราชการ _ รหัสตัวอักษรโรมัน _ เลขที่หนังสือส่ง"], "answer": 2, "explanation": "การตั้งชื่อไฟล์เรียงลำดับคือ ปีพุทธศักราช _ รหัสตัวอักษรโรมัน _ เลขประจำของส่วนราชการ _ เลขที่หนังสือส่ง", "id": 159}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ตามหลักเกณฑ์การตั้งชื่อไฟล์สำหรับการส่งอีเมล ให้ใช้เครื่องหมายหรือสัญลักษณ์ใด \"แทนการเว้นวรรค\"", "choices": ["เครื่องหมายจุด (.)", "เครื่องหมายยัติภังค์ (-)", "เครื่องหมายทวิภาค (:)", "เครื่องหมายขีดล่าง (_)"], "answer": 3, "explanation": "การตั้งชื่อไฟล์สำหรับส่งอีเมล ให้ใช้เครื่องหมายขีดล่าง (_) แทนการเว้นวรรค", "id": 160}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "ในการระบุชื่อเรื่องของอีเมล (Subject) กรณีที่มีการกำหนด \"ชั้นความเร็ว\" ให้ระบุรูปแบบตามข้อใด", "choices": ["ระบุชั้นความเร็วในชื่อเรื่องของอีเมล ตามด้วยเครื่องหมายวงเล็บ () แล้วระบุชื่อเรื่อง", "ระบุชั้นความเร็วในชื่อเรื่องของอีเมล ตามด้วยเครื่องหมายอัฒภาค (;) แล้วระบุชื่อเรื่อง", "ระบุชั้นความเร็วในชื่อเรื่องของอีเมล ตามด้วยเครื่องหมายทวิภาค (:) แล้วระบุชื่อเรื่อง", "ระบุชั้นความเร็วในชื่อเรื่องของอีเมล ตามด้วยเครื่องหมายขีดล่าง (_) แล้วระบุชื่อเรื่อง"], "answer": 2, "explanation": "ชื่อเรื่องอีเมลที่มีชั้นความเร็ว ให้ระบุชั้นความเร็ว ตามด้วยเครื่องหมายทวิภาค (:) แล้วระบุชื่อเรื่อง", "id": 161}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การจัดรูปแบบเนื้อหาอีเมล (Body) ต้องใช้การเข้ารหัสข้อความ (text encoding) ตามข้อใด", "choices": ["การเข้ารหัสข้อความแบบ ASCII", "การเข้ารหัสข้อความแบบ TIS-620", "การเข้ารหัสข้อความแบบ UTF-8", "การเข้ารหัสข้อความแบบ Windows-874"], "answer": 2, "explanation": "เนื้อหาอีเมลต้องใช้การเข้ารหัสข้อความแบบ UTF-8", "id": 162}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "การใช้ช่อง \"สำเนาลับถึง\" (BCC) ในการส่งอีเมลราชการ ให้ใช้สำหรับกรณีใด", "choices": ["การส่งไปจัดเก็บเป็นสำเนาภายในระบบ และ การส่งไปยังผู้รับที่ต้องการปกปิดไม่ให้ผู้รับทราบว่าได้ส่งไปยังบุคคลอื่นด้วย", "การส่งไปจัดเก็บเป็นสำเนาภายในระบบ และ การส่งไปยังผู้บังคับบัญชาเพื่อรายงานผลการดำเนินงาน", "การส่งสถิติการรับส่งไปยังศูนย์ข้อมูลกลาง และ การส่งไปยังผู้รับที่ต้องการปกปิดไม่ให้ผู้รับทราบว่าได้ส่งไปยังบุคคลอื่นด้วย", "การส่งสถิติการรับส่งไปยังศูนย์ข้อมูลกลาง และ การส่งไปยังผู้บังคับบัญชาเพื่อรายงานผลการดำเนินงาน"], "answer": 0, "explanation": "ใช้ BCC สำหรับส่งไปจัดเก็บเป็นสำเนาภายในระบบ และส่งไปยังผู้รับที่ต้องการปกปิดไม่ให้ผู้รับทราบว่าได้ส่งไปยังบุคคลอื่นด้วย", "id": 163}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "\"ข้อความจำกัดความรับผิดมาตรฐาน\" (Disclaimer) ที่ต้องพิมพ์ต่อท้ายเนื้อหาอีเมล ต้องใช้ภาษาใด", "choices": ["ภาษาไทยเท่านั้น", "ภาษาอังกฤษเท่านั้น", "ทั้งภาษาไทยและภาษาอังกฤษ", "ภาษาไทยหรือภาษาของประเทศปลายทาง"], "answer": 2, "explanation": "ข้อความจำกัดความรับผิดมาตรฐาน (Disclaimer) ต้องพิมพ์ต่อท้ายเนื้อหาอีเมลทั้งภาษาไทยและภาษาอังกฤษ", "id": 164}, {"category": "ข้อสอบระเบียบสำนักนายกรัฐมนตรีฯ (105 ข้อ)", "question": "กรณีไฟล์อิเล็กทรอนิกส์ที่จะแนบไปกับอีเมล \"มีขนาดใหญ่เกินกว่าที่จะสามารถแนบไปได้\" เจ้าหน้าที่จะต้องดำเนินการอย่างไร", "choices": ["ให้ทำการบีบอัดไฟล์ (Zip) เพื่อลดขนาดไฟล์ แล้วส่งไปในอีเมลเดียว", "ให้ทำการแบ่งไฟล์ (Split) ออกเป็นหลายไฟล์ แล้วส่งแยกไปในหลายอีเมล", "ให้นำไฟล์ไปจัดเก็บไว้ในที่ที่ผู้รับเข้าถึงได้ แล้วคัดลอกที่อยู่ของไฟล์ (Link) ไประบุในส่วนเนื้อหาของอีเมลแทน", "ให้จัดพิมพ์เป็นเอกสารกระดาษแล้วจัดส่งทางไปรษณีย์ด่วนพิเศษ (EMS) แทน"], "answer": 2, "explanation": "หากไฟล์ใหญ่เกินกว่าจะแนบได้ ให้นำไฟล์ไปจัดเก็บไว้ในที่ที่ผู้รับเข้าถึงได้ แล้วคัดลอกที่อยู่ของไฟล์ (Link) ไประบุในเนื้อหาอีเมลแทน", "id": 165}];
+</script>
+<script>
+(function(){
+  "use strict";
+
+  // ---------- State ----------
+  let state = {
+    mode: 'practice',        // 'practice' | 'exam'
+    selectedCats: new Set(), // empty = all
+    countChoice: 'all',      // number or 'all'
+    quizQuestions: [],       // active question set (array of question objects, shuffled)
+    current: 0,
+    answers: {},             // qId -> chosenIndex
+    answered: {},            // qId -> bool (has interacted / locked)
+    reviewMode: false,       // when reviewing only-wrong subset
+  };
+
+  const LETTERS = ['ก','ข','ค','ง'];
+
+  // ---------- Build category list ----------
+  const categories = [...new Set(QUESTIONS.map(q => q.category))];
+  const catCounts = {};
+  categories.forEach(c => catCounts[c] = QUESTIONS.filter(q => q.category === c).length);
+
+  // ---------- DOM refs ----------
+  const $ = id => document.getElementById(id);
+  const screens = {
+    start: $('screen-start'),
+    quiz: $('screen-quiz'),
+    results: $('screen-results'),
+  };
+
+  function showScreen(name){
+    Object.values(screens).forEach(s => s.classList.remove('active'));
+    screens[name].classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  // ---------- Start screen setup ----------
+  const chipRow = $('chipRow');
+  categories.forEach(cat => {
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.dataset.cat = cat;
+    chip.innerHTML = `${cat} <span class="count">(${catCounts[cat]})</span>`;
+    chip.addEventListener('click', () => {
+      if(state.selectedCats.has(cat)){
+        state.selectedCats.delete(cat);
+        chip.classList.remove('selected');
+      } else {
+        state.selectedCats.add(cat);
+        chip.classList.add('selected');
+      }
+      updateSummary();
+    });
+    chipRow.appendChild(chip);
+  });
+
+  const countRow = $('countRow');
+  const countOptions = [10, 20, 30, 50, 'all'];
+  countOptions.forEach(opt => {
+    const btn = document.createElement('div');
+    btn.className = 'count-btn' + (opt === 'all' ? ' selected' : '');
+    btn.textContent = opt === 'all' ? 'ทั้งหมด' : opt + ' ข้อ';
+    btn.dataset.val = opt;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      state.countChoice = opt;
+      updateSummary();
+    });
+    countRow.appendChild(btn);
+  });
+
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      state.mode = btn.dataset.mode;
+      updateSummary();
+    });
+  });
+
+  function getPoolSize(){
+    const cats = state.selectedCats.size ? state.selectedCats : new Set(categories);
+    return QUESTIONS.filter(q => cats.has(q.category)).length;
+  }
+
+  function updateSummary(){
+    const pool = getPoolSize();
+    const n = state.countChoice === 'all' ? pool : Math.min(state.countChoice, pool);
+    $('summaryCount').textContent = n;
+    $('summaryMode').textContent = state.mode === 'practice' ? 'ฝึกฝน' : 'สอบจริง';
+  }
+  updateSummary();
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  $('btnStart').addEventListener('click', () => {
+    const cats = state.selectedCats.size ? state.selectedCats : new Set(categories);
+    let pool = QUESTIONS.filter(q => cats.has(q.category));
+    pool = shuffle(pool);
+    if(state.countChoice !== 'all'){
+      pool = pool.slice(0, Math.min(state.countChoice, pool.length));
+    }
+    if(pool.length === 0){
+      alert('กรุณาเลือกหมวดข้อสอบอย่างน้อย 1 หมวด');
+      return;
+    }
+    state.quizQuestions = pool;
+    state.current = 0;
+    state.answers = {};
+    state.answered = {};
+    state.reviewMode = false;
+    startQuiz();
+  });
+
+  // ---------- Quiz screen ----------
+  function startQuiz(){
+    $('quizModeBadge').textContent = state.mode === 'practice' ? 'โหมดฝึกฝน' : 'โหมดสอบจริง';
+    $('quizModeBadge').classList.toggle('exam', state.mode === 'exam');
+    buildNavigator();
+    renderQuestion();
+    showScreen('quiz');
+  }
+
+  function buildNavigator(){
+    const nav = $('navigator');
+    nav.innerHTML = '';
+    state.quizQuestions.forEach((q, idx) => {
+      const b = document.createElement('button');
+      b.className = 'nav-btn';
+      b.textContent = idx + 1;
+      b.addEventListener('click', () => {
+        state.current = idx;
+        renderQuestion();
+      });
+      nav.appendChild(b);
+    });
+    updateNavigatorStyles();
+  }
+
+  function updateNavigatorStyles(){
+    const btns = document.querySelectorAll('#navigator .nav-btn');
+    btns.forEach((b, idx) => {
+      const q = state.quizQuestions[idx];
+      b.classList.remove('current','answered','correct','incorrect');
+      const hasAnswer = state.answers.hasOwnProperty(q.id);
+      if(idx === state.current) b.classList.add('current');
+      if(hasAnswer){
+        if(state.mode === 'practice'){
+          const correct = state.answers[q.id] === q.answer;
+          b.classList.add(correct ? 'correct' : 'incorrect');
+        } else {
+          b.classList.add('answered');
+        }
+      }
+    });
+  }
+
+  function updateProgress(){
+    const total = state.quizQuestions.length;
+    const answeredCount = Object.keys(state.answers).filter(id =>
+      state.quizQuestions.some(q => q.id == id)
+    ).length;
+    const pct = Math.round(((state.current+1) / total) * 100);
+    $('progressFill').style.width = pct + '%';
+    $('progressText').textContent = `ข้อ ${state.current+1} / ${total} — ตอบแล้ว ${answeredCount} ข้อ`;
+  }
+
+  function updateLiveScore(){
+    if(state.mode !== 'practice'){ $('liveScore').textContent=''; return; }
+    let correct = 0, answered = 0;
+    state.quizQuestions.forEach(q => {
+      if(state.answers.hasOwnProperty(q.id)){
+        answered++;
+        if(state.answers[q.id] === q.answer) correct++;
+      }
+    });
+    $('liveScore').innerHTML = `คะแนน: <span>${correct}</span> / ${answered}`;
+  }
+
+  function renderQuestion(){
+    const q = state.quizQuestions[state.current];
+    $('qNumber').textContent = `ข้อที่ ${toThaiNum(state.current+1)}`;
+    $('qCategory').textContent = q.category;
+    $('qText').textContent = q.question;
+
+    const choicesEl = $('choices');
+    choicesEl.innerHTML = '';
+    const hasAnswered = state.answers.hasOwnProperty(q.id);
+    const isPractice = state.mode === 'practice';
+    const showFeedback = isPractice && hasAnswered;
+
+    q.choices.forEach((choiceText, idx) => {
+      const div = document.createElement('div');
+      div.className = 'choice';
+      const isSelected = state.answers[q.id] === idx;
+      if(isSelected) div.classList.add('selected');
+
+      if(showFeedback){
+        div.classList.add('disabled');
+        if(idx === q.answer) div.classList.add('reveal-correct');
+        else if(isSelected && idx !== q.answer) div.classList.add('reveal-incorrect');
+      }
+
+      div.innerHTML = `<span class="letter">${LETTERS[idx]}</span><span class="text">${escapeHtml(choiceText)}</span>`;
+
+      if(!showFeedback){
+        div.addEventListener('click', () => selectAnswer(q, idx));
+      }
+      choicesEl.appendChild(div);
+    });
+
+    // Feedback box
+    const fb = $('feedbackBox');
+    if(showFeedback){
+      const correct = state.answers[q.id] === q.answer;
+      fb.classList.add('show');
+      fb.classList.toggle('wrong', !correct);
+      $('fbTitle').innerHTML = correct
+        ? '&#10003; ถูกต้อง'
+        : `&#10007; ไม่ถูกต้อง — คำตอบที่ถูกคือ ${LETTERS[q.answer]}`;
+      $('fbBody').textContent = q.explanation;
+    } else {
+      fb.classList.remove('show','wrong');
+    }
+
+    // Next / Prev buttons
+    $('btnPrev').style.visibility = state.current === 0 ? 'hidden' : 'visible';
+    const isLast = state.current === state.quizQuestions.length - 1;
+    $('btnNext').textContent = isLast
+      ? (state.mode === 'exam' ? 'ส่งคำตอบ ✓' : 'ดูผลคะแนน ✓')
+      : 'ข้อถัดไป →';
+
+    if(state.mode === 'exam'){
+      $('btnNext').disabled = false; // exam mode: can navigate freely, skip allowed
+    } else {
+      $('btnNext').disabled = !hasAnswered;
+    }
+
+    updateProgress();
+    updateLiveScore();
+    updateNavigatorStyles();
+  }
+
+  function selectAnswer(q, idx){
+    state.answers[q.id] = idx;
+    state.answered[q.id] = true;
+    renderQuestion();
+  }
+
+  $('btnPrev').addEventListener('click', () => {
+    if(state.current > 0){
+      state.current--;
+      renderQuestion();
+    }
+  });
+
+  $('btnNext').addEventListener('click', () => {
+    const isLast = state.current === state.quizQuestions.length - 1;
+    if(isLast){
+      finishQuiz();
+    } else {
+      state.current++;
+      renderQuestion();
+    }
+  });
+
+  // ---------- Results ----------
+  function finishQuiz(){
+    if(state.mode === 'exam'){
+      const unanswered = state.quizQuestions.filter(q => !state.answers.hasOwnProperty(q.id));
+      if(unanswered.length > 0){
+        const ok = confirm(`คุณยังไม่ได้ตอบ ${unanswered.length} ข้อ ต้องการส่งคำตอบเลยหรือไม่?`);
+        if(!ok) return;
+      }
+    }
+    renderResults();
+    showScreen('results');
+  }
+
+  function computeScore(){
+    let correct = 0;
+    state.quizQuestions.forEach(q => {
+      if(state.answers[q.id] === q.answer) correct++;
+    });
+    const total = state.quizQuestions.length;
+    const pct = total ? Math.round((correct/total)*100) : 0;
+    return {correct, total, pct, wrong: total - correct};
+  }
+
+  function renderResults(){
+    const {correct, total, pct, wrong} = computeScore();
+    const passed = pct >= 70;
+
+    const stamp = $('stampSeal');
+    stamp.classList.toggle('pass', passed);
+    // restart stamp animation
+    stamp.style.animation = 'none';
+    void stamp.offsetWidth;
+    stamp.style.animation = '';
+
+    $('stampPct').textContent = pct + '%';
+    $('stampLbl').textContent = passed ? 'ผ่านเกณฑ์' : 'ไม่ผ่าน';
+
+    $('resultsVerdict').textContent = passed
+      ? 'ยินดีด้วย คุณสอบผ่านเกณฑ์ 70%'
+      : 'ยังไม่ผ่านเกณฑ์ 70% ลองทบทวนแล้วทำใหม่อีกครั้ง';
+    $('resultsVerdict').classList.toggle('pass', passed);
+    $('resultsVerdict').classList.toggle('fail', !passed);
+    $('resultsSub').textContent = `ตอบถูก ${correct} จาก ${total} ข้อ (เกณฑ์ผ่าน 70%)`;
+
+    $('statCorrect').textContent = correct;
+    $('statWrong').textContent = wrong;
+    $('statTotal').textContent = total;
+    $('statPct').textContent = pct + '%';
+
+    renderCategoryBreakdown();
+    renderReviewList();
+  }
+
+  function renderCategoryBreakdown(){
+    const byCat = {};
+    state.quizQuestions.forEach(q => {
+      if(!byCat[q.category]) byCat[q.category] = {correct:0, total:0};
+      byCat[q.category].total++;
+      if(state.answers[q.id] === q.answer) byCat[q.category].correct++;
+    });
+    const container = $('catBreakdown');
+    container.innerHTML = '';
+    Object.entries(byCat).forEach(([cat, s]) => {
+      const pct = Math.round((s.correct/s.total)*100);
+      const row = document.createElement('div');
+      row.className = 'cat-row';
+      row.innerHTML = `
+        <div class="cat-name">${cat}</div>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:${pct}%"></div></div>
+        <div class="cat-score">${s.correct}/${s.total}</div>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  let lastWrongQuestions = [];
+
+  function renderReviewList(){
+    const wrongQs = state.quizQuestions.filter(q => state.answers[q.id] !== q.answer);
+    lastWrongQuestions = wrongQs;
+    const list = $('reviewList');
+    list.innerHTML = '';
+    if(wrongQs.length === 0){
+      list.innerHTML = '<div class="empty-note">ยอดเยี่ยม! คุณตอบถูกทุกข้อ ไม่มีข้อที่ต้องทบทวน</div>';
+      $('btnReviewWrong').disabled = true;
+      $('btnReviewWrong').style.opacity = '.5';
+      $('btnReviewWrong').style.cursor = 'not-allowed';
+      return;
+    }
+    $('btnReviewWrong').disabled = false;
+    $('btnReviewWrong').style.opacity = '1';
+    $('btnReviewWrong').style.cursor = 'pointer';
+
+    wrongQs.forEach((q) => {
+      const chosen = state.answers[q.id];
+      const item = document.createElement('div');
+      item.className = 'doc-card review-item';
+      item.innerHTML = `
+        <div class="q-category" style="margin-bottom:10px; display:inline-block;">${q.category}</div>
+        <div class="q-text">${escapeHtml(q.question)}</div>
+        <div class="review-answer-row">
+          <span class="tag your-wrong">คำตอบของคุณ</span>
+          <span>${chosen !== undefined ? LETTERS[chosen] + '. ' + escapeHtml(q.choices[chosen]) : '(ไม่ได้ตอบ)'}</span>
+        </div>
+        <div class="review-answer-row">
+          <span class="tag correct-tag">คำตอบที่ถูก</span>
+          <span>${LETTERS[q.answer]}. ${escapeHtml(q.choices[q.answer])}</span>
+        </div>
+        <div class="review-explain">${escapeHtml(q.explanation)}</div>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  $('btnReviewWrong').addEventListener('click', () => {
+    if(lastWrongQuestions.length === 0) return;
+    state.quizQuestions = shuffle(lastWrongQuestions);
+    state.current = 0;
+    state.answers = {};
+    state.answered = {};
+    state.mode = 'practice';
+    startQuiz();
+  });
+
+  $('btnRetrySame').addEventListener('click', () => {
+    state.quizQuestions = shuffle(state.quizQuestions);
+    state.current = 0;
+    state.answers = {};
+    state.answered = {};
+    startQuiz();
+  });
+
+  $('btnBackHome').addEventListener('click', () => {
+    showScreen('start');
+  });
+
+  // ---------- Utils ----------
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  const THAI_DIGITS = ['๐','๑','๒','๓','๔','๕','๖','๗','๘','๙'];
+  function toThaiNum(n){
+    return String(n).split('').map(d => THAI_DIGITS[+d] ?? d).join('');
+  }
+
+})();
+
+</script>
+</body>
+</html>
