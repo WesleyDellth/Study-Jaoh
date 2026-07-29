@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คลังข้อสอบ วิธีปฏิบัติราชการทางปกครอง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@400;600;700;900&family=Noto+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#152238;
+    --navy-2:#1f3252;
+    --paper:#F6F1E4;
+    --paper-2:#EFE7D3;
+    --gold:#B08D57;
+    --gold-light:#D9BE8D;
+    --ink:#2B2620;
+    --ink-soft:#6b5f4d;
+    --stamp-green:#3F6B4C;
+    --stamp-green-bg:#E4EEE3;
+    --stamp-red:#9C3B36;
+    --stamp-red-bg:#F5E4E1;
+    --line:#D8CBAA;
+    --radius:10px;
+    --shadow: 0 14px 40px rgba(21,34,56,0.16);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Noto Sans Thai', sans-serif;
+    background:
+      radial-gradient(circle at 10% 0%, rgba(176,141,87,0.08), transparent 40%),
+      var(--paper);
+    color:var(--ink);
+    min-height:100vh;
+    padding:28px 16px 60px;
+    line-height:1.65;
+  }
+  .app{ max-width:880px; margin:0 auto; }
+
+  /* ===== Header / masthead ===== */
+  .masthead{
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: var(--paper);
+    border-radius: var(--radius);
+    padding: 28px 30px 24px;
+    position:relative;
+    overflow:hidden;
+    box-shadow: var(--shadow);
+    border:1px solid rgba(217,190,141,0.25);
+  }
+  .masthead::before{
+    content:"";
+    position:absolute; inset:6px;
+    border:1px solid rgba(217,190,141,0.35);
+    border-radius:6px;
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:.14em;
+    font-size:11px;
+    color: var(--gold-light);
+    text-transform:uppercase;
+    margin:0 0 8px;
+  }
+  .masthead h1{
+    font-family:'Noto Serif Thai', serif;
+    font-weight:700;
+    font-size: clamp(22px, 4vw, 30px);
+    margin:0 0 6px;
+    line-height:1.3;
+  }
+  .masthead p.sub{
+    margin:0;
+    color: rgba(246,241,228,0.72);
+    font-size:14px;
+  }
+  .case-no{
+    position:absolute; top:22px; right:26px;
+    text-align:right;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color: rgba(246,241,228,0.55);
+  }
+
+  /* ===== Mode select screen ===== */
+  .panel{
+    background: var(--paper);
+    border:1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 26px;
+    margin-top:18px;
+    box-shadow: var(--shadow);
+  }
+  .panel h2{
+    font-family:'Noto Serif Thai', serif;
+    font-size:19px;
+    margin:0 0 4px;
+    color:var(--navy);
+  }
+  .panel .desc{ color:var(--ink-soft); font-size:14px; margin:0 0 20px; }
+
+  .mode-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:600px){ .mode-grid{ grid-template-columns:1fr; } }
+  .mode-card{
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    padding:20px 18px;
+    background:#fff;
+    cursor:pointer;
+    text-align:left;
+    transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+    font-family:inherit;
+    color:var(--ink);
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .mode-card:hover{ border-color:var(--gold); transform:translateY(-2px); box-shadow:0 10px 22px rgba(21,34,56,0.12); }
+  .mode-card .tag{
+    align-self:flex-start;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.08em;
+    padding:3px 9px;
+    border-radius:100px;
+    background:var(--stamp-green-bg);
+    color:var(--stamp-green);
+    text-transform:uppercase;
+  }
+  .mode-card.exam .tag{ background:var(--stamp-red-bg); color:var(--stamp-red); }
+  .mode-card h3{ margin:0; font-family:'Noto Serif Thai',serif; font-size:17px; color:var(--navy); }
+  .mode-card p{ margin:0; font-size:13.3px; color:var(--ink-soft); }
+
+  .start-row{ margin-top:20px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .btn{
+    font-family:'Noto Sans Thai',sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    padding:12px 24px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    transition: filter .15s ease, transform .15s ease;
+  }
+  .btn:active{ transform:translateY(1px); }
+  .btn-primary{ background:var(--navy); color:var(--paper); }
+  .btn-primary:hover{ filter:brightness(1.15); }
+  .btn-primary:disabled{ background:#a8a294; cursor:not-allowed; }
+  .btn-outline{ background:transparent; border:1.5px solid var(--navy); color:var(--navy); }
+  .btn-outline:hover{ background:rgba(21,34,56,0.06); }
+  .btn-gold{ background:var(--gold); color:#fff; }
+  .btn-gold:hover{ filter:brightness(1.08); }
+
+  /* ===== Quiz screen ===== */
+  .quiz-header{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:16px;
+    margin-top:18px; flex-wrap:wrap;
+  }
+  .progress-wrap{ flex:1; min-width:220px; }
+  .progress-label{
+    display:flex; justify-content:space-between;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px; color:var(--ink-soft); margin-bottom:6px;
+  }
+  .progress-track{
+    height:8px; background:var(--paper-2); border-radius:100px; overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .progress-fill{
+    height:100%; background:linear-gradient(90deg,var(--gold),var(--navy));
+    width:0%; transition:width .35s ease;
+  }
+  .score-pill{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    background:var(--navy); color:var(--paper);
+    padding:8px 14px; border-radius:100px;
+    white-space:nowrap;
+  }
+
+  .navigator{
+    display:flex; flex-wrap:wrap; gap:6px;
+    margin:16px 0 0;
+    padding:14px;
+    background:#fff; border:1px solid var(--line); border-radius:8px;
+  }
+  .nav-dot{
+    width:30px; height:30px;
+    border-radius:5px;
+    border:1.3px solid var(--line);
+    background:#fff;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition: all .12s ease;
+  }
+  .nav-dot:hover{ border-color:var(--gold); }
+  .nav-dot.current{ border-color:var(--navy); border-width:2px; font-weight:700; color:var(--navy); }
+  .nav-dot.answered-correct{ background:var(--stamp-green-bg); color:var(--stamp-green); border-color:var(--stamp-green); }
+  .nav-dot.answered-wrong{ background:var(--stamp-red-bg); color:var(--stamp-red); border-color:var(--stamp-red); }
+  .nav-dot.answered-exam{ background:var(--paper-2); color:var(--navy); border-color:var(--gold); }
+
+  .question-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius: var(--radius);
+    margin-top:16px;
+    box-shadow: var(--shadow);
+    overflow:hidden;
+  }
+  .qc-head{
+    padding:18px 24px 14px;
+    border-bottom:1px dashed var(--line);
+    display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  .qc-index{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; color:var(--ink-soft);
+  }
+  .qc-section{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px; letter-spacing:.05em;
+    color:var(--gold);
+    background:rgba(176,141,87,0.12);
+    padding:4px 10px; border-radius:100px;
+  }
+  .qc-body{ padding:20px 24px 6px; }
+  .qc-question{
+    font-family:'Noto Serif Thai',serif;
+    font-weight:600;
+    font-size:18px;
+    color:var(--navy);
+    margin:0 0 18px;
+    line-height:1.6;
+  }
+  .choices{ display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+  .choice{
+    display:flex; align-items:flex-start; gap:12px;
+    padding:13px 16px;
+    border:1.5px solid var(--line);
+    border-radius:7px;
+    background:var(--paper);
+    cursor:pointer;
+    text-align:left;
+    font-family:'Noto Sans Thai',sans-serif;
+    font-size:14.5px;
+    color:var(--ink);
+    transition: border-color .12s ease, background .12s ease;
+  }
+  .choice:hover:not(.locked){ border-color:var(--gold); background:#fff; }
+  .choice .letter{
+    flex:none;
+    width:26px; height:26px;
+    border-radius:50%;
+    border:1.3px solid var(--ink-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .choice.selected{ border-color:var(--navy); background:#fff; box-shadow:inset 0 0 0 1px var(--navy); }
+  .choice.selected .letter{ border-color:var(--navy); color:var(--navy); background:rgba(21,34,56,0.06); }
+  .choice.correct{ border-color:var(--stamp-green); background:var(--stamp-green-bg); }
+  .choice.correct .letter{ border-color:var(--stamp-green); background:var(--stamp-green); color:#fff; }
+  .choice.wrong{ border-color:var(--stamp-red); background:var(--stamp-red-bg); }
+  .choice.wrong .letter{ border-color:var(--stamp-red); background:var(--stamp-red); color:#fff; }
+  .choice.locked{ cursor:default; }
+
+  .feedback{
+    margin:14px 24px 0;
+    padding:16px 18px;
+    border-radius:8px;
+    position:relative;
+    display:none;
+  }
+  .feedback.show{ display:block; }
+  .feedback.correct{ background:var(--stamp-green-bg); border:1px solid var(--stamp-green); }
+  .feedback.wrong{ background:var(--stamp-red-bg); border:1px solid var(--stamp-red); }
+  .stamp{
+    position:absolute; top:12px; right:14px;
+    font-family:'Noto Serif Thai',serif;
+    font-weight:900;
+    font-size:13px;
+    letter-spacing:.06em;
+    padding:5px 12px;
+    border:2.5px solid currentColor;
+    border-radius:4px;
+    transform: rotate(-6deg);
+    text-transform:uppercase;
+  }
+  .feedback.correct .stamp{ color:var(--stamp-green); }
+  .feedback.wrong .stamp{ color:var(--stamp-red); }
+  .feedback .law-ref{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin:0 0 6px;
+  }
+  .feedback .explain{ margin:0; font-size:13.8px; color:var(--ink); padding-right:70px; }
+
+  .qc-foot{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 24px 22px;
+    gap:10px; flex-wrap:wrap;
+  }
+
+  /* ===== Results screen ===== */
+  .results-hero{
+    text-align:center;
+    padding:38px 24px 30px;
+  }
+  .results-hero .seal{
+    width:120px; height:120px;
+    margin:0 auto 18px;
+    border-radius:50%;
+    border:4px solid currentColor;
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+    font-family:'Noto Serif Thai',serif;
+    transform: rotate(-4deg);
+  }
+  .results-hero.pass .seal{ color:var(--stamp-green); background:var(--stamp-green-bg); }
+  .results-hero.fail .seal{ color:var(--stamp-red); background:var(--stamp-red-bg); }
+  .seal .big{ font-size:30px; font-weight:900; line-height:1; }
+  .seal .small{ font-size:11px; letter-spacing:.08em; margin-top:2px; }
+  .results-hero h2{
+    font-family:'Noto Serif Thai',serif;
+    font-size:24px; margin:0 0 6px; color:var(--navy);
+  }
+  .results-hero p{ margin:0; color:var(--ink-soft); font-size:14.5px; }
+
+  .stat-row{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:12px;
+    margin:22px 0 0;
+  }
+  .stat{
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:14px 10px; text-align:center;
+  }
+  .stat .num{ font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:600; color:var(--navy); }
+  .stat .lbl{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
+
+  .review-list{ margin-top:22px; display:flex; flex-direction:column; gap:12px; }
+  .review-item{
+    border:1px solid var(--line); border-radius:8px; padding:16px 18px; background:#fff;
+  }
+  .review-item .rq{ font-family:'Noto Serif Thai',serif; font-weight:600; font-size:15px; color:var(--navy); margin:0 0 10px; }
+  .review-item .ryour, .review-item .rcorrect{ font-size:13.3px; margin:4px 0; }
+  .review-item .ryour{ color:var(--stamp-red); }
+  .review-item .rcorrect{ color:var(--stamp-green); }
+  .review-item .rexplain{ font-size:13px; color:var(--ink-soft); margin-top:8px; border-top:1px dashed var(--line); padding-top:8px; }
+
+  .hidden{ display:none !important; }
+
+  footer.credit{
+    text-align:center; margin-top:26px; font-size:11.5px; color:var(--ink-soft);
+    font-family:'IBM Plex Mono',monospace;
+  }
+
+  @media (max-width:600px){
+    .qc-head, .qc-body, .qc-foot{ padding-left:16px; padding-right:16px; }
+    .feedback{ margin-left:16px; margin-right:16px; }
+    .case-no{ display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="masthead">
+    <div class="case-no">คลังข้อสอบ ฉบับที่ ๐๑<br>วิ.ปฏิบัติราชการทางปกครอง</div>
+    <p class="eyebrow">แบบทดสอบเตรียมสอบ · กฎหมายปกครอง</p>
+    <h1>วิธีปฏิบัติราชการทางปกครอง</h1>
+    <p class="sub">ย้อนประวัติศาสตร์ข้อสอบจริง เรียนรู้บทเรียนสู่อนาคต — รวม 30 ข้อพร้อมเฉลยและมาตราอ้างอิง</p>
+  </div>
+
+  <!-- ===== SCREEN 1: Mode select ===== -->
+  <section id="screen-select" class="panel">
+    <h2>เลือกโหมดการทำแบบทดสอบ</h2>
+    <p class="desc">มีข้อสอบทั้งหมด <strong id="qCountLabel">0</strong> ข้อ เกณฑ์ผ่าน 70%</p>
+    <div class="mode-grid">
+      <button class="mode-card practice" data-mode="practice">
+        <span class="tag">Practice</span>
+        <h3>โหมดฝึกฝน</h3>
+        <p>เฉลยทันทีหลังตอบแต่ละข้อ พร้อมคำอธิบายมาตราอ้างอิง เหมาะสำหรับทบทวนทีละประเด็น</p>
+      </button>
+      <button class="mode-card exam" data-mode="exam">
+        <span class="tag">Exam</span>
+        <h3>โหมดจำลองสอบ</h3>
+        <p>ตอบให้ครบทุกข้อก่อน แล้วดูผลคะแนนและเฉลยพร้อมกันในหน้าสรุปผลตอนจบ</p>
+      </button>
+    </div>
+    <div class="start-row">
+      <button id="btnStart" class="btn btn-primary">เริ่มทำแบบทดสอบ</button>
+      <span id="selectedModeLabel" style="font-size:13px;color:var(--ink-soft);"></span>
+    </div>
+  </section>
+
+  <!-- ===== SCREEN 2: Quiz ===== -->
+  <section id="screen-quiz" class="hidden">
+    <div class="quiz-header">
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="progressText">ข้อ 1 / 30</span>
+          <span id="modeText">โหมดฝึกฝน</span>
+        </div>
+        <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+      </div>
+      <div class="score-pill" id="scorePill">คะแนน 0 / 30</div>
+    </div>
+
+    <div class="navigator" id="navigator"></div>
+
+    <div class="question-card">
+      <div class="qc-head">
+        <span class="qc-index" id="qIndexLabel">ข้อที่ 1</span>
+        <span class="qc-section" id="qSectionLabel">หมวด</span>
+      </div>
+      <div class="qc-body">
+        <p class="qc-question" id="qQuestionText">คำถาม</p>
+        <div class="choices" id="choicesWrap"></div>
+      </div>
+      <div class="feedback" id="feedbackBox">
+        <span class="stamp" id="stampLabel">ถูกต้อง</span>
+        <p class="law-ref" id="feedbackLawRef"></p>
+        <p class="explain" id="feedbackExplain"></p>
+      </div>
+      <div class="qc-foot">
+        <button class="btn btn-outline" id="btnPrev">← ข้อก่อนหน้า</button>
+        <button class="btn btn-primary" id="btnNext">ข้อถัดไป →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCREEN 3: Results ===== -->
+  <section id="screen-results" class="hidden panel">
+    <div id="resultsHero" class="results-hero">
+      <div class="seal">
+        <span class="big" id="resultPercent">0%</span>
+        <span class="small" id="resultVerdict">ผล</span>
+      </div>
+      <h2 id="resultHeadline">สรุปผลการทดสอบ</h2>
+      <p id="resultSub">คุณตอบถูก 0 จาก 30 ข้อ</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="num" id="statCorrect">0</div><div class="lbl">ตอบถูก</div></div>
+      <div class="stat"><div class="num" id="statWrong">0</div><div class="lbl">ตอบผิด</div></div>
+      <div class="stat"><div class="num" id="statPercent">0%</div><div class="lbl">คะแนนรวม</div></div>
+    </div>
+
+    <div class="start-row" style="margin-top:24px;">
+      <button class="btn btn-gold" id="btnReview">ทบทวนข้อที่ตอบผิด</button>
+      <button class="btn btn-outline" id="btnRetry">ทำแบบทดสอบใหม่</button>
+    </div>
+
+    <div id="reviewList" class="review-list hidden"></div>
+  </section>
+
+  <footer class="credit">สร้างจากคลังข้อสอบต้นฉบับ · ใช้เพื่อการทบทวนส่วนบุคคล</footer>
+</div>
+
+<script>
+// ข้อมูลข้อสอบ: วิธีปฏิบัติราชการทางปกครอง
+// ที่มา: ย้อนประวัติศาสตร์ข้อสอบจริงเรียนรู้บทเรียนสู่อนาคต
+const QUESTIONS = [
+  {
+    id: 1,
+    section: "การแจ้งคำสั่งทางปกครอง",
+    question: "การแจ้งโดยวิธีส่งทางไปรษณีย์ตอบรับ ให้ถือว่าได้รับแจ้งเมื่อครบกำหนดระยะเวลาใด",
+    choices: [
+      "แจ้งไปรษณีย์ภายในประเทศ 7 วัน ต่างประเทศ 30 วัน",
+      "แจ้งไปรษณีย์ภายในประเทศ 15 วัน ต่างประเทศ 30 วัน",
+      "แจ้งไปรษณีย์ภายในประเทศ 30 วัน ต่างประเทศ 30 วัน",
+      "แจ้งไปรษณีย์ภายในประเทศ 7 วัน ต่างประเทศ 15 วัน"
+    ],
+    correctIndex: 3,
+    lawRef: "มาตรา 71",
+    explanation: "มาตรา 71 การแจ้งโดยวิธีส่งทางไปรษณีย์ตอบรับ ให้ถือว่าได้รับแจ้งเมื่อครบกำหนดเจ็ดวันนับแต่วันส่งสำหรับกรณีภายในประเทศ หรือเมื่อครบกำหนดสิบห้าวันนับแต่วันส่งสำหรับกรณีส่งไปยังต่างประเทศ เว้นแต่จะพิสูจน์ได้ว่าไม่มีการได้รับหรือได้รับก่อนหรือหลังจากวันนั้น"
+  },
+  {
+    id: 2,
+    section: "นิยามคำสั่งทางปกครอง",
+    question: "ข้อใดไม่ใช่คำสั่งทางปกครอง ตามคำนิยามคำสั่งทางปกครอง",
+    choices: [
+      "คำสั่งลงโทษทางวินัย",
+      "คำสั่งอนุญาตตั้งโรงงาน",
+      "คำสั่งแต่งตั้งคณะกรรมการสอบวินัย",
+      "การออกโฉนดที่ดิน"
+    ],
+    correctIndex: 2,
+    lawRef: "นิยาม คำสั่งทางปกครอง",
+    explanation: "คำสั่งแต่งตั้งคณะกรรมการสอบวินัยเป็นเพียงขั้นตอนเตรียมการภายในฝ่ายปกครอง ยังไม่ก่อ เปลี่ยนแปลง โอน สงวน ระงับ หรือมีผลกระทบต่อสถานภาพสิทธิของบุคคลใดโดยตรง จึงไม่ใช่คำสั่งทางปกครอง ต่างจากคำสั่งลงโทษทางวินัย คำสั่งอนุญาตตั้งโรงงาน และการออกโฉนดที่ดิน ซึ่งล้วนมีผลกระทบสิทธิของคู่กรณีโดยตรง"
+  },
+  {
+    id: 3,
+    section: "ผลของคำสั่งทางปกครอง",
+    question: "ตามมาตรา 42 แห่งวิธีปฏิบัติราชการทางปกครอง คำสั่งทางปกครองมีผลใช้ยันบุคคลเมื่อใด",
+    choices: [
+      "ตามที่ระเบียบกฎหมายกำหนด",
+      "นับแต่วันที่แจ้ง",
+      "นับถัดจากวันที่สั่ง",
+      "นับแต่ที่ได้รับแจ้ง"
+    ],
+    correctIndex: 3,
+    lawRef: "มาตรา 42",
+    explanation: "มาตรา 42 คำสั่งทางปกครองให้มีผลใช้ยันต่อบุคคลตั้งแต่ขณะที่ผู้นั้นได้รับแจ้งเป็นต้นไป และมีผลตราบเท่าที่ยังไม่มีการเพิกถอนหรือสิ้นผลลงโดยเงื่อนเวลาหรือโดยเหตุอื่น"
+  },
+  {
+    id: 4,
+    section: "ระยะเวลาพิจารณาคำสั่งทางปกครอง",
+    question: "ระยะเวลาการพิจารณาคำสั่งทางปกครองตามมาตรา 39/1 ให้ถือตามระยะเวลาใด",
+    choices: [
+      "ภายใน 30 วันนับแต่ผู้ยื่นได้ยื่นคำขอและเอกสารครบถ้วน",
+      "ภายใน 30 วันนับแต่เจ้าหน้าที่ได้รับคำขอและเอกสารครบถ้วน",
+      "ภายใน 15 วันนับแต่ผู้ยื่นได้ยื่นคำขอและเอกสารครบถ้วน",
+      "ภายใน 15 วันนับแต่เจ้าหน้าที่ได้รับคำขอและเอกสารครบถ้วน"
+    ],
+    correctIndex: 1,
+    lawRef: "มาตรา 39/1",
+    explanation: "มาตรา 39/1 การออกคำสั่งทางปกครองเป็นหนังสือ หากมิได้มีกฎหมายหรือกฎกำหนดระยะเวลาไว้เป็นประการอื่น ให้เจ้าหน้าที่ออกคำสั่งทางปกครองนั้นให้แล้วเสร็จภายในสามสิบวันนับแต่วันที่เจ้าหน้าที่ได้รับคำขอและเอกสารถูกต้องครบถ้วน"
+  },
+  {
+    id: 5,
+    section: "การอุทธรณ์คำสั่งทางปกครอง",
+    question: "กระติกได้รับแจ้งคำสั่งทางปกครอง 11 มกราคม 62 จากนั้นได้ทำหนังสือลงวันที่ 24 มกราคม 62 และนำส่งไปรษณีย์ เจ้าหน้าที่ได้รับหนังสืออุทธรณ์ของกระติกวันที่ 28 มกราคม 62 ท่านเป็นเจ้าหน้าที่ ดำเนินการอย่างไร",
+    choices: [
+      "ไม่รับอุทธรณ์ เพราะได้รับวันที่ 28 มกราคม 62 เลยระยะเวลาอุทธรณ์",
+      "รับอุทธรณ์ เพราะหนังสือลงวันที่ 24 มกราคม 62 อยู่ในระยะเวลาอุทธรณ์",
+      "รับอุทธรณ์ เพราะได้ส่งไปรษณีย์ลงวันที่ 25 มกราคม 62 อยู่ในระยะเวลาอุทธรณ์",
+      "ไม่มีข้อใดถูก"
+    ],
+    correctIndex: 1,
+    lawRef: "มาตรา 44",
+    explanation: "มาตรา 44 ให้คู่กรณีอุทธรณ์คำสั่งทางปกครองภายในสิบห้าวันนับแต่วันที่ได้รับแจ้งคำสั่ง เริ่มนับจากวันที่ 11 ม.ค. 62 ครบ 15 วันในวันที่ 25 ม.ค. 62 ตามแนวความเห็นคณะกรรมการกฤษฎีกา ให้ถือวันที่ลงหนังสือ/ส่งไปรษณีย์เป็นสำคัญ ซึ่งหนังสือลงวันที่ 24 มกราคม 62 จึงยังอยู่ในระยะเวลาอุทธรณ์"
+  },
+  {
+    id: 6,
+    section: "นิยามคำสั่งทางปกครอง",
+    question: "ข้อใดเป็นคำสั่งทางปกครอง",
+    choices: [
+      "คำสั่งตั้งคณะกรรมการสอบสวนเพื่อเพิกถอนโฉนดตามมาตรา 61 แห่งประมวลกฎหมายที่ดิน",
+      "คำสั่งเพิกถอน น.ส. 3",
+      "คำสั่งเปรียบเทียบตามมาตรา 60 แห่งประมวลกฎหมายที่ดิน",
+      "ถูกทั้งข้อ 2 และข้อ 3"
+    ],
+    correctIndex: 3,
+    lawRef: "มาตรา 5",
+    explanation: "คำสั่งเพิกถอน น.ส. 3 และคำสั่งเปรียบเทียบตามมาตรา 60 แห่งประมวลกฎหมายที่ดิน ล้วนเป็นการใช้อำนาจตามกฎหมายที่มีผลกระทบต่อสิทธิของคู่กรณีโดยตรง จึงเป็นคำสั่งทางปกครองตามมาตรา 5 ส่วนคำสั่งตั้งคณะกรรมการสอบสวนเป็นเพียงขั้นตอนเตรียมการภายใน ยังไม่ใช่คำสั่งทางปกครอง"
+  },
+  {
+    id: 7,
+    section: "นิยามคำสั่งทางปกครอง",
+    question: "คำสั่งไม่เลื่อนขั้นเงินเดือน เป็นคำสั่งทางปกครองหรือไม่ และฟ้องศาลปกครองได้หรือไม่",
+    choices: [
+      "ไม่เป็นคำสั่งทางปกครอง ฟ้องศาลปกครองได้",
+      "ไม่เป็นคำสั่งทางปกครอง ฟ้องศาลปกครองไม่ได้",
+      "เป็นคำสั่งทางปกครอง ฟ้องศาลปกครองได้",
+      "เป็นคำสั่งทางปกครอง ฟ้องศาลปกครองไม่ได้"
+    ],
+    correctIndex: 2,
+    lawRef: "หลักคำสั่งทางปกครอง",
+    explanation: "ผลการประเมินคะแนนเพื่อพิจารณาเลื่อนขั้นเงินเดือนยังไม่เป็นคำสั่งทางปกครอง แต่ถ้าประเมินแล้วมีคำสั่ง 'ไม่เลื่อนขั้นเงินเดือน' ถือเป็นคำสั่งทางปกครองที่กระทบสิทธิโดยตรง จึงฟ้องต่อศาลปกครองได้"
+  },
+  {
+    id: 8,
+    section: "นิยามคำสั่งทางปกครอง",
+    question: "ข้อใดเป็นคำสั่งทางปกครอง",
+    choices: [
+      "เจ้าพนักงานที่ดินไม่รับคำขอออกโฉนด",
+      "พนักงานเจ้าหน้าที่ปฏิเสธคำขออายัดที่ดิน",
+      "เจ้าพนักงานที่ดินจดทะเบียนจำนองที่ดินพร้อมสิ่งปลูกสร้าง",
+      "ถูกทุกข้อ"
+    ],
+    correctIndex: 3,
+    lawRef: "มาตรา 5",
+    explanation: "คำสั่งทางปกครองครอบคลุมทั้งการปฏิเสธคำขอ (เช่น ไม่รับคำขอออกโฉนด ปฏิเสธคำขออายัด) และการรับจดทะเบียนสิทธิและนิติกรรมเกี่ยวกับอสังหาริมทรัพย์ (เช่น จดทะเบียนจำนอง) จึงถูกทุกข้อ"
+  },
+  {
+    id: 9,
+    section: "ความหมายของ 'กฎ'",
+    question: "ข้อใดไม่ใช่กฎ",
+    choices: [
+      "พระราชบัญญัติให้ใช้ประมวลกฎหมายที่ดิน",
+      "ประมวลกฎหมายที่ดิน",
+      "พระราชกฤษฎีกาเปิดประชุมรัฐสภา",
+      "ถูกทุกข้อ"
+    ],
+    correctIndex: 3,
+    lawRef: "นิยาม 'กฎ'",
+    explanation: "'กฎ' หมายถึง พระราชกฤษฎีกา กฎกระทรวง ประกาศกระทรวง ข้อบัญญัติท้องถิ่น ระเบียบ ข้อบังคับ หรือบทบัญญัติอื่นที่มีผลบังคับเป็นการทั่วไป โดยไม่มุ่งใช้บังคับแก่กรณีใดหรือบุคคลใดเป็นการเฉพาะ พระราชบัญญัติและประมวลกฎหมายเป็น 'กฎหมาย' ไม่ใช่ 'กฎ' ส่วนพระราชกฤษฎีกาเปิดประชุมรัฐสภาเป็นการใช้บังคับเฉพาะกรณี ไม่ใช่การทั่วไป จึงไม่เป็นกฎเช่นกัน ตอบถูกทุกข้อ"
+  },
+  {
+    id: 10,
+    section: "ความเป็นกลางของเจ้าหน้าที่",
+    question: "กรณีเจ้าหน้าที่มีส่วนได้เสียในการพิจารณาทางปกครอง แล้วมีผู้คัดค้าน เจ้าหน้าที่ต้องดำเนินการอย่างไร",
+    choices: [
+      "พิจารณาเรื่องต่อไปก็ได้ แต่ต้องแจ้งผู้บังคับบัญชาเหนือตนขึ้นไปชั้นหนึ่งทราบ",
+      "ดำเนินการอย่างใดอย่างหนึ่งก็ได้",
+      "หยุดการพิจารณาเรื่องไว้ก่อน และแจ้งให้ผู้บังคับบัญชาทราบ",
+      "หยุดการพิจารณาเรื่องไว้ก่อน และแจ้งให้ผู้บังคับบัญชาเหนือตนขึ้นไปชั้นหนึ่งทราบ"
+    ],
+    correctIndex: 3,
+    lawRef: "มาตรา 14",
+    explanation: "มาตรา 14 เมื่อมีกรณีตามมาตรา 13 หรือคู่กรณีคัดค้านว่าเจ้าหน้าที่ผู้ใดเป็นบุคคลตามมาตรา 13 ให้เจ้าหน้าที่ผู้นั้นหยุดการพิจารณาเรื่องไว้ก่อน และแจ้งให้ผู้บังคับบัญชาเหนือตนขึ้นไปชั้นหนึ่งทราบ เพื่อให้มีคำสั่งต่อไป"
+  },
+  {
+    id: 11,
+    section: "ขอบเขตการใช้กฎหมาย",
+    question: "พระราชบัญญัติวิธีปฏิบัติราชการทางปกครอง พ.ศ. 2539 ห้ามใช้กับกรณีใด",
+    choices: [
+      "สำนักงานคณะกรรมการกฤษฎีกา (เรื่องร้องทุกข์)",
+      "สำนักงานตำรวจแห่งชาติ",
+      "สำนักงานอัยการสูงสุด",
+      "คณะกรรมการตรวจเงินแผ่นดิน"
+    ],
+    correctIndex: 0,
+    lawRef: "มาตรา 4",
+    explanation: "มาตรา 4(5) ยกเว้นการพิจารณาวินิจฉัยเรื่องร้องทุกข์และการสั่งการตามกฎหมายว่าด้วยคณะกรรมการกฤษฎีกา ซึ่งอยู่ในความรับผิดชอบของสำนักงานคณะกรรมการกฤษฎีกา จึงไม่อยู่ในบังคับของพระราชบัญญัตินี้"
+  },
+  {
+    id: 12,
+    section: "ผลของคำสั่งทางปกครอง",
+    question: "โดยทั่วไปคำสั่งทางปกครองจะมีผลสิ้นสุดลงเมื่อใด",
+    choices: [
+      "สิ้นผลลงโดยเงื่อนเวลา",
+      "เมื่อครบองค์ประกอบตามที่ได้ทำบันทึกกันไว้",
+      "เมื่อมีการร้องขอต่อศาลให้เพิกถอน",
+      "เมื่อไม่มีการบังคับตามคำสั่งทางปกครอง"
+    ],
+    correctIndex: 0,
+    lawRef: "มาตรา 42",
+    explanation: "มาตรา 42 วรรคสอง คำสั่งทางปกครองย่อมมีผลตราบเท่าที่ยังไม่มีการเพิกถอนหรือสิ้นผลลงโดยเงื่อนเวลาหรือโดยเหตุอื่น"
+  },
+  {
+    id: 13,
+    section: "ความหมายของ 'กฎ'",
+    question: "ข้อใดไม่ใช่กฎ",
+    choices: [
+      "พระราชบัญญัติ",
+      "พระราชกฤษฎีกา",
+      "ประกาศกระทรวง",
+      "ข้อบัญญัติท้องถิ่น"
+    ],
+    correctIndex: 0,
+    lawRef: "นิยาม 'กฎ'",
+    explanation: "'กฎ' หมายถึง พระราชกฤษฎีกา กฎกระทรวง ประกาศกระทรวง ข้อบัญญัติท้องถิ่น ระเบียบ ข้อบังคับ หรือบทบัญญัติอื่นที่มีผลบังคับเป็นการทั่วไป พระราชบัญญัติเป็น 'กฎหมาย' ระดับพระราชบัญญัติ ไม่จัดอยู่ในนิยามของ 'กฎ' ตามพระราชบัญญัตินี้"
+  },
+  {
+    id: 14,
+    section: "ความเป็นกลางของเจ้าหน้าที่",
+    question: "ข้อใดสามารถพิจารณาทางปกครองได้",
+    choices: [
+      "เจ้าหนี้ของคู่กรณี",
+      "ลูกหนี้ของคู่กรณี",
+      "เพื่อนของคู่กรณี",
+      "ญาติของคู่กรณี"
+    ],
+    correctIndex: 2,
+    lawRef: "มาตรา 13",
+    explanation: "มาตรา 13 ห้ามเจ้าหน้าที่ที่เป็นคู่กรณีเอง คู่หมั้น/คู่สมรส ญาติ ผู้แทนโดยชอบธรรม เจ้าหนี้/ลูกหนี้/นายจ้างของคู่กรณี พิจารณาทางปกครอง แต่ไม่ได้ห้ามกรณีเป็น 'เพื่อน' ของคู่กรณี จึงยังพิจารณาได้"
+  },
+  {
+    id: 15,
+    section: "ความสามารถของคู่กรณี",
+    question: "ผู้เยาว์สามารถเข้าสู่กระบวนการพิจารณาทางปกครองได้หรือไม่",
+    choices: [
+      "ไม่ได้ เพราะยังไม่บรรลุนิติภาวะ",
+      "ไม่ได้ เพราะอายุไม่ถึง 20 ปี",
+      "ได้ ถ้าได้รับความยินยอมจากผู้แทนโดยชอบธรรม",
+      "ได้ แม้กฎหมายไม่ได้กำหนด"
+    ],
+    correctIndex: 0,
+    lawRef: "มาตรา 22",
+    explanation: "มาตรา 22 ผู้มีความสามารถกระทำการในกระบวนการพิจารณาทางปกครองต้องเป็นผู้บรรลุนิติภาวะ เว้นแต่มีบทกฎหมายเฉพาะกำหนดไว้เป็นอย่างอื่น เมื่อไม่มีข้อเท็จจริงเข้าข้อยกเว้นเฉพาะ จึงต้องตอบตามหลักทั่วไปว่าไม่ได้ เพราะยังไม่บรรลุนิติภาวะ"
+  },
+  {
+    id: 16,
+    section: "การบังคับทางปกครอง",
+    question: "กรณีคำสั่งทางปกครองกำหนดให้ชำระเงิน เมื่อครบกำหนดแล้วยังไม่ชำระให้ถูกต้องครบถ้วน เจ้าหน้าที่ต้องมีหนังสือเตือนให้ชำระภายในระยะเวลาเท่าไร",
+    choices: [
+      "ไม่เกิน 15 วัน",
+      "ไม่น้อยกว่า 15 วัน",
+      "ไม่เกิน 7 วัน",
+      "ไม่น้อยกว่า 7 วัน"
+    ],
+    correctIndex: 3,
+    lawRef: "มาตรา 63/7",
+    explanation: "มาตรา 63/7 ให้เจ้าหน้าที่ผู้ทำคำสั่งทางปกครองมีหนังสือเตือนให้ผู้นั้นชำระภายในระยะเวลาที่กำหนด แต่ต้องไม่น้อยกว่าเจ็ดวัน หากไม่ปฏิบัติตามคำเตือน เจ้าหน้าที่จึงมีอำนาจยึดหรืออายัดทรัพย์สินและขายทอดตลาด"
+  },
+  {
+    id: 17,
+    section: "การบังคับทางปกครอง",
+    question: "ข้อใดไม่ใช่มาตรการบังคับในทางปกครอง",
+    choices: [
+      "การบังคับตามคำสั่งทางปกครองที่ให้ชำระเงิน",
+      "การบังคับตามคำสั่งทางปกครองที่ให้ชำระดอกเบี้ย",
+      "การบังคับตามคำสั่งทางปกครองที่กำหนดให้กระทำ",
+      "การบังคับตามคำสั่งทางปกครองที่กำหนดให้ละเว้นการกระทำ"
+    ],
+    correctIndex: 1,
+    lawRef: "หมวดการบังคับทางปกครอง",
+    explanation: "มาตรการบังคับทางปกครองแบ่งเป็น 3 ประเภทหลัก คือ (1) การบังคับให้ชำระเงิน (2) การบังคับให้กระทำการ และ (3) การบังคับให้ละเว้นกระทำการ ส่วน 'การชำระดอกเบี้ย' เป็นส่วนประกอบของหนี้เงิน ไม่ใช่มาตรการบังคับที่แยกต่างหาก"
+  },
+  {
+    id: 18,
+    section: "การขอพิจารณาใหม่",
+    question: "การขอพิจารณาใหม่กรณีคำสั่งทางปกครองที่พ้นกำหนดอุทธรณ์แล้ว เมื่อได้รับทราบเหตุที่อาจขอให้พิจารณาใหม่ ต้องดำเนินการภายในระยะเวลากี่วัน",
+    choices: ["30 วัน", "45 วัน", "60 วัน", "90 วัน"],
+    correctIndex: 3,
+    lawRef: "มาตรา 54",
+    explanation: "มาตรา 54 การยื่นคำขอให้พิจารณาใหม่ต้องกระทำภายในเก้าสิบวันนับแต่ผู้นั้นได้รู้ถึงเหตุซึ่งอาจขอให้พิจารณาใหม่ได้"
+  },
+  {
+    id: 19,
+    section: "การอุทธรณ์คำสั่งทางปกครอง",
+    question: "กรณีคำสั่งทางปกครองที่ไม่ได้ออกโดยรัฐมนตรี และไม่มีกฎหมายกำหนดขั้นตอนอุทธรณ์ไว้เป็นการเฉพาะ คู่กรณีต้องอุทธรณ์คำสั่งนั้นภายในกี่วัน",
+    choices: [
+      "15 วันนับแต่ได้รับแจ้งคำสั่ง",
+      "30 วันนับแต่ได้รับแจ้งคำสั่ง",
+      "15 วันนับแต่ได้รับทราบคำสั่ง",
+      "30 วันนับแต่ได้รับทราบคำสั่ง"
+    ],
+    correctIndex: 0,
+    lawRef: "มาตรา 44",
+    explanation: "มาตรา 44 ให้คู่กรณีอุทธรณ์คำสั่งทางปกครองโดยยื่นต่อเจ้าหน้าที่ผู้ทำคำสั่งทางปกครองภายในสิบห้าวันนับแต่วันที่ตนได้รับแจ้งคำสั่งดังกล่าว (เน้นคำว่า 'ได้รับแจ้ง' ไม่ใช่ 'ได้รับทราบ')"
+  },
+  {
+    id: 20,
+    section: "การเพิกถอนคำสั่งทางปกครอง",
+    question: "ตามมาตรา 51 การเพิกถอนคำสั่งทางปกครองที่ไม่ชอบด้วยกฎหมายซึ่งเป็นการให้เงินหรือให้ทรัพย์สิน ผู้รับคำสั่งจะอ้างความเชื่อโดยสุจริตเพื่อขอความคุ้มครองไม่ได้ ยกเว้นข้อใด (ข้อใดไม่ใช่เหตุตัดสิทธิความคุ้มครอง)",
+    choices: [
+      "ผู้นั้นแสดงข้อความไม่มีพยานยืนยัน",
+      "ผู้นั้นแสดงข้อความอันเป็นเท็จหรือปกปิดข้อความจริงซึ่งควรบอกให้แจ้ง",
+      "ผู้นั้นได้ให้ข้อความไม่ถูกต้องหรือไม่ครบถ้วนในสาระสำคัญ",
+      "ผู้นั้นได้รู้ถึงความไม่ชอบด้วยกฎหมายของคำสั่งทางปกครองในขณะได้รับคำสั่ง หรือการไม่รู้นั้นเป็นไปโดยประมาทเลินเล่ออย่างร้ายแรง"
+    ],
+    correctIndex: 0,
+    lawRef: "มาตรา 51",
+    explanation: "มาตรา 51 กำหนดเหตุตัดสิทธิความเชื่อโดยสุจริตไว้ 3 กรณีเท่านั้น คือ (1) แสดงข้อความเท็จ/ปกปิดข้อความจริง (2) ให้ข้อความไม่ถูกต้อง/ไม่ครบถ้วนในสาระสำคัญ (3) รู้หรือประมาทเลินเล่ออย่างร้ายแรงจนไม่รู้ความไม่ชอบด้วยกฎหมาย ส่วน 'แสดงข้อความไม่มีพยานยืนยัน' ไม่ใช่เหตุที่กฎหมายกำหนดไว้"
+  },
+  {
+    id: 21,
+    section: "รูปแบบคำสั่งทางปกครอง",
+    question: "ข้อใดกล่าวถูกต้อง",
+    choices: [
+      "คำสั่งทางปกครองด้วยวาจา ถ้าผู้รับร้องขอโดยมีเหตุอันสมควรภายในสามวันนับแต่วันที่ออกคำสั่ง เจ้าหน้าที่ต้องยืนยันเป็นหนังสือ",
+      "คำสั่งทางปกครองใช้ยันผู้รับคำสั่งตั้งแต่วันที่ออกคำสั่ง",
+      "คำสั่งทางปกครองที่ผิดพลาดเล็กน้อย ต้องแจ้งหัวหน้างานให้ความเห็นชอบก่อนแก้ไข",
+      "คำสั่งทางปกครองที่ทำเป็นหนังสืออย่างน้อยต้องระบุ วัน เดือน ปีที่ทำคำสั่ง ชื่อและตำแหน่งเจ้าหน้าที่ผู้ทำคำสั่ง พร้อมทั้งมีลายมือชื่อของเจ้าหน้าที่ผู้ทำคำสั่งนั้น"
+    ],
+    correctIndex: 3,
+    lawRef: "มาตรา 36",
+    explanation: "มาตรา 36 คำสั่งทางปกครองที่ทำเป็นหนังสืออย่างน้อยต้องระบุ วัน เดือน และปีที่ทำคำสั่ง ชื่อและตำแหน่งของเจ้าหน้าที่ผู้ทำคำสั่ง พร้อมทั้งมีลายมือชื่อของเจ้าหน้าที่ผู้ทำคำสั่งนั้น (ข้ออื่นคลาดเคลื่อน เช่น มาตรา 35 กำหนดระยะเวลาร้องขอยืนยันเป็นหนังสือไว้ที่เจ็ดวัน ไม่ใช่สามวัน)"
+  },
+  {
+    id: 22,
+    section: "นิยามคำสั่งทางปกครอง",
+    question: "ข้อใดไม่เป็นคำสั่งทางปกครอง",
+    choices: [
+      "คำสั่งพักใบอนุญาตผู้ประกอบวิชาชีพเวชกรรมของแพทย์",
+      "คำสั่งปลดออกข้าราชการกรมการปกครอง",
+      "คำสั่งแต่งตั้งกรรมการสอบวินัยข้าราชการสำนักงานจังหวัด",
+      "คำสั่งไม่อนุญาตการขอตั้งโรงงานอุตสาหกรรมจังหวัด"
+    ],
+    correctIndex: 2,
+    lawRef: "มาตรา 5",
+    explanation: "คำสั่งแต่งตั้งกรรมการสอบวินัยเป็นเพียงขั้นตอนเตรียมการภายในฝ่ายปกครอง ยังไม่กระทบสิทธิของผู้ใดโดยตรง จึงไม่เป็นคำสั่งทางปกครอง ต่างจากคำสั่งพักใบอนุญาต คำสั่งปลดออก และคำสั่งไม่อนุญาตตั้งโรงงาน ซึ่งกระทบสิทธิคู่กรณีโดยตรง"
+  },
+  {
+    id: 23,
+    section: "ขอบเขตการใช้กฎหมาย",
+    question: "ข้อใดอยู่ในบังคับของกฎหมายวิธีปฏิบัติราชการทางปกครอง",
+    choices: [
+      "ลงโทษทางวินัยข้าราชการพลเรือน",
+      "ยึดอายัดทรัพย์ลูกหนี้ตามคำพิพากษา",
+      "ลงมติเลื่อนสมณศักดิ์",
+      "ลงมติรับรองสนธิสัญญาระหว่างประเทศ"
+    ],
+    correctIndex: 0,
+    lawRef: "มาตรา 4",
+    explanation: "การลงโทษทางวินัยข้าราชการพลเรือนเป็นการใช้อำนาจตามกฎหมายปกติที่กระทบสิทธิคู่กรณี จึงอยู่ในบังคับของกฎหมายนี้ ส่วนการบังคับคดี (มาตรา 4(4)) กิจการองค์การทางศาสนา (มาตรา 4(9)) และนโยบายต่างประเทศ (มาตรา 4(6)) ถูกยกเว้นไม่ให้ใช้บังคับ"
+  },
+  {
+    id: 24,
+    section: "อำนาจของเจ้าหน้าที่",
+    question: "นายอำเภอเกิดอุบัติเหตุ จึงให้ภริยาที่ชอบด้วยกฎหมายลงลายมือชื่อแทนในหนังสืออนุญาตให้มีและใช้อาวุธปืน กรณีนี้เป็นอย่างไร",
+    choices: [
+      "ชอบด้วยกฎหมาย เพราะการลงลายมือชื่อไม่ใช่แบบตามที่กฎหมายกำหนด",
+      "ไม่ชอบด้วยกฎหมาย เพราะทำโดยภริยานายอำเภอที่ไม่ใช่เจ้าหน้าที่",
+      "ชอบด้วยกฎหมาย เพราะภริยาเป็นตัวแทนของสามีได้",
+      "ไม่ชอบด้วยกฎหมาย เพราะทำโดยไม่ใช่เจ้าหน้าที่ผู้มีอำนาจตามกฎหมาย"
+    ],
+    correctIndex: 3,
+    lawRef: "มาตรา 12",
+    explanation: "มาตรา 12 คำสั่งทางปกครองจะต้องกระทำโดยเจ้าหน้าที่ซึ่งมีอำนาจหน้าที่ในเรื่องนั้น ภริยานายอำเภอไม่ใช่เจ้าหน้าที่ผู้มีอำนาจตามกฎหมายในเรื่องนี้ การลงลายมือชื่อแทนจึงไม่ชอบด้วยกฎหมาย"
+  },
+  {
+    id: 25,
+    section: "ความหมายของคู่กรณี",
+    question: "ข้อใดไม่ใช่ความหมายของ 'คู่กรณี'",
+    choices: [
+      "ผู้ยื่นคำขอ",
+      "ผู้คัดค้านคำขอ",
+      "ผู้ที่อยู่ในบังคับหรือจะอยู่ในบังคับของคำสั่งทางปกครอง",
+      "เจ้าหน้าที่ผู้ทำคำสั่ง"
+    ],
+    correctIndex: 3,
+    lawRef: "นิยาม 'คู่กรณี'",
+    explanation: "'คู่กรณี' หมายความว่า ผู้ยื่นคำขอหรือผู้คัดค้านคำขอ ผู้อยู่ในบังคับหรือจะอยู่ในบังคับของคำสั่งทางปกครอง และผู้ซึ่งได้เข้ามาในกระบวนการพิจารณาทางปกครองเนื่องจากสิทธิของผู้นั้นจะถูกกระทบกระเทือนจากผลของคำสั่งทางปกครอง เจ้าหน้าที่ผู้ทำคำสั่งไม่ใช่คู่กรณี แต่เป็นผู้ใช้อำนาจ"
+  },
+  {
+    id: 26,
+    section: "ขอบเขตการใช้กฎหมาย",
+    question: "ข้อใดไม่อยู่ในบังคับของ พ.ร.บ.วิธีปฏิบัติราชการทางปกครอง พ.ศ. 2539",
+    choices: [
+      "การดำเนินกิจการขององค์การทางศาสนา",
+      "มติของรัฐสภา",
+      "การลงนามสนธิสัญญาระหว่างประเทศ",
+      "ถูกทุกข้อ"
+    ],
+    correctIndex: 3,
+    lawRef: "มาตรา 4",
+    explanation: "มาตรา 4 ยกเว้นไม่ใช้บังคับกับรัฐสภาและคณะรัฐมนตรี (1) การดำเนินงานเกี่ยวกับนโยบายการต่างประเทศ (6) และการดำเนินกิจการขององค์การทางศาสนา (9) จึงทั้งสามข้อไม่อยู่ในบังคับของกฎหมายนี้"
+  },
+  {
+    id: 27,
+    section: "รูปแบบคำสั่งทางปกครอง",
+    question: "รายละเอียดใดที่ไม่ต้องมีในคำสั่งทางปกครองที่ทำเป็นหนังสือ",
+    choices: [
+      "วัน เดือน ปี ที่มีคำสั่ง",
+      "ลายมือชื่อของเจ้าหน้าที่ผู้ทำคำสั่ง",
+      "ที่อยู่ของเจ้าหน้าที่ผู้ทำคำสั่ง",
+      "ชื่อและตำแหน่งของเจ้าหน้าที่ผู้ทำคำสั่ง"
+    ],
+    correctIndex: 2,
+    lawRef: "มาตรา 36",
+    explanation: "มาตรา 36 กำหนดให้คำสั่งทางปกครองที่ทำเป็นหนังสืออย่างน้อยต้องระบุ วัน เดือน ปีที่ทำคำสั่ง ชื่อและตำแหน่งของเจ้าหน้าที่ผู้ทำคำสั่ง พร้อมลายมือชื่อ แต่ไม่ได้กำหนดให้ต้องระบุ 'ที่อยู่' ของเจ้าหน้าที่แต่อย่างใด"
+  },
+  {
+    id: 28,
+    section: "การตรวจสอบคำขอ",
+    question: "กรณีผู้ยื่นคำขอมีเอกสารไม่ครบถ้วน ให้เจ้าหน้าที่ดำเนินการอย่างไร",
+    choices: [
+      "ปฏิเสธไม่ดำเนินการตามคำขอ",
+      "แจ้งให้ผู้ยื่นคำขอดำเนินการภายใน 3 วันนับแต่วันที่ได้รับคำขอ",
+      "แจ้งให้ผู้ยื่นคำขอดำเนินการภายใน 15 วันนับแต่วันที่ได้รับคำขอ",
+      "แจ้งให้ผู้ยื่นคำขอทราบทันที หรือภายในไม่เกินเจ็ดวันนับแต่วันที่ได้รับคำขอ"
+    ],
+    correctIndex: 3,
+    lawRef: "มาตรา 27",
+    explanation: "มาตรา 27 หากมีเอกสารใดไม่ครบถ้วน ให้เจ้าหน้าที่แจ้งให้ผู้ยื่นคำขอทราบทันทีหรือภายในไม่เกินเจ็ดวันนับแต่วันที่ได้รับคำขอ โดยทำเป็นหนังสือลงลายมือชื่อผู้รับคำขอและระบุรายการเอกสารที่ไม่ถูกต้องหรือไม่ครบถ้วน"
+  },
+  {
+    id: 29,
+    section: "การเพิกถอนคำสั่งทางปกครอง",
+    question: "นายโรเบิร์ตปลอมเอกสารเพื่อขอออกโฉนดที่ดิน ต่อมาเจ้าหน้าที่ตรวจพบว่ามีการแสดงข้อความอันเป็นเท็จ เจ้าหน้าที่จะเพิกถอนโฉนดได้หรือไม่",
+    choices: [
+      "เพิกถอนได้ แต่ต้องกระทำภายใน 90 วันนับแต่ได้รู้ถึงเหตุแห่งการเพิกถอน",
+      "เพิกถอนได้ แม้จะเกิน 90 วันนับแต่ได้รู้ถึงเหตุแห่งการเพิกถอน",
+      "ไม่สามารถเพิกถอนได้ ต้องฟ้องศาลปกครองภายใน 90 วันนับแต่ได้รู้ถึงเหตุ",
+      "ไม่สามารถเพิกถอนได้ เพราะเกิน 90 วันนับแต่ได้รู้ถึงเหตุ"
+    ],
+    correctIndex: 1,
+    lawRef: "มาตรา 49",
+    explanation: "มาตรา 49 กำหนดให้การเพิกถอนคำสั่งทางปกครองที่ให้ประโยชน์ต้องทำภายใน 90 วัน เว้นแต่คำสั่งนั้นเกิดจากการแสดงข้อความอันเป็นเท็จหรือปกปิดข้อความจริง กรณีนี้เป็นการทุจริตปลอมเอกสารตั้งแต่ต้น จึงเข้าข้อยกเว้น สามารถเพิกถอนได้แม้จะเกิน 90 วัน"
+  },
+  {
+    id: 30,
+    section: "การแจ้งคำสั่งทางปกครอง",
+    question: "การแจ้งคำสั่งทางปกครองโดยวิธีประกาศทางหนังสือพิมพ์ ให้ถือว่าได้รับแจ้งเมื่อพ้นระยะเวลาใด",
+    choices: ["10 วัน", "15 วัน", "30 วัน", "60 วัน"],
+    correctIndex: 1,
+    lawRef: "มาตรา 73",
+    explanation: "มาตรา 73 กรณีไม่รู้ตัวผู้รับ หรือรู้ตัวแต่ไม่รู้ภูมิลำเนา หรือมีผู้รับเกินหนึ่งร้อยคน การแจ้งอาจกระทำโดยประกาศในหนังสือพิมพ์ที่แพร่หลายในท้องถิ่น และให้ถือว่าได้รับแจ้งเมื่อล่วงพ้นระยะเวลาสิบห้าวันนับแต่วันที่ได้แจ้งโดยวิธีดังกล่าว"
+  }
+];
+
+
+/* ================= APP STATE ================= */
+let mode = 'practice';
+let currentIndex = 0;
+let userAnswers = []; // { selected: idx|null, locked: bool }
+
+function initState(){
+  userAnswers = QUESTIONS.map(()=>({ selected:null, locked:false }));
+  currentIndex = 0;
+}
+
+/* ================= SCREEN 1: mode select ================= */
+document.getElementById('qCountLabel').textContent = QUESTIONS.length;
+
+document.querySelectorAll('.mode-card').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    document.querySelectorAll('.mode-card').forEach(c=>c.style.outline='none');
+    card.style.outline = '2.5px solid var(--gold)';
+    mode = card.dataset.mode;
+    document.getElementById('selectedModeLabel').textContent =
+      'เลือกแล้ว: ' + (mode==='practice' ? 'โหมดฝึกฝน' : 'โหมดจำลองสอบ');
+  });
+});
+// default select practice visually
+document.querySelector('.mode-card[data-mode="practice"]').style.outline = '2.5px solid var(--gold)';
+document.getElementById('selectedModeLabel').textContent = 'เลือกแล้ว: โหมดฝึกฝน';
+
+document.getElementById('btnStart').addEventListener('click', ()=>{
+  initState();
+  showScreen('quiz');
+  renderNavigator();
+  renderQuestion();
+});
+
+/* ================= SCREEN switching ================= */
+function showScreen(name){
+  document.getElementById('screen-select').classList.toggle('hidden', name!=='select');
+  document.getElementById('screen-quiz').classList.toggle('hidden', name!=='quiz');
+  document.getElementById('screen-results').classList.toggle('hidden', name!=='results');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ================= NAVIGATOR ================= */
+function renderNavigator(){
+  const nav = document.getElementById('navigator');
+  nav.innerHTML = '';
+  QUESTIONS.forEach((q, i)=>{
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot';
+    dot.textContent = i+1;
+    dot.title = 'ไปข้อที่ ' + (i+1);
+    const ans = userAnswers[i];
+    if(i === currentIndex) dot.classList.add('current');
+    if(ans.locked){
+      if(mode === 'practice'){
+        dot.classList.add(ans.selected === QUESTIONS[i].correctIndex ? 'answered-correct' : 'answered-wrong');
+      } else {
+        dot.classList.add('answered-exam');
+      }
+    }
+    dot.addEventListener('click', ()=>{ currentIndex = i; renderNavigator(); renderQuestion(); });
+    nav.appendChild(dot);
+  });
+}
+
+/* ================= QUESTION RENDER ================= */
+function renderQuestion(){
+  const q = QUESTIONS[currentIndex];
+  const state = userAnswers[currentIndex];
+
+  document.getElementById('modeText').textContent = mode==='practice' ? 'โหมดฝึกฝน' : 'โหมดจำลองสอบ';
+  document.getElementById('progressText').textContent = `ข้อ ${currentIndex+1} / ${QUESTIONS.length}`;
+  document.getElementById('progressFill').style.width = ((currentIndex) / (QUESTIONS.length-1) * 100) + '%';
+
+  const correctSoFar = userAnswers.filter((a,i)=> a.locked && a.selected===QUESTIONS[i].correctIndex).length;
+  document.getElementById('scorePill').textContent = `คะแนน ${correctSoFar} / ${QUESTIONS.length}`;
+
+  document.getElementById('qIndexLabel').textContent = 'ข้อที่ ' + (currentIndex+1);
+  document.getElementById('qSectionLabel').textContent = q.section;
+  document.getElementById('qQuestionText').textContent = q.question;
+
+  const letters = ['ก','ข','ค','ง'];
+  const wrap = document.getElementById('choicesWrap');
+  wrap.innerHTML = '';
+  q.choices.forEach((choiceText, idx)=>{
+    const btn = document.createElement('button');
+    btn.className = 'choice';
+    btn.innerHTML = `<span class="letter">${letters[idx]}</span><span>${choiceText}</span>`;
+
+    const showAnswerState = state.locked && mode === 'practice';
+    if(showAnswerState){
+      btn.classList.add('locked');
+      if(idx === q.correctIndex) btn.classList.add('correct');
+      if(idx === state.selected && state.selected !== q.correctIndex) btn.classList.add('wrong');
+    } else if(state.locked && mode === 'exam'){
+      btn.classList.add('locked');
+      if(idx === state.selected) btn.classList.add('selected');
+    } else {
+      if(idx === state.selected) btn.classList.add('selected');
+    }
+
+    btn.addEventListener('click', ()=> selectChoice(idx));
+    wrap.appendChild(btn);
+  });
+
+  // feedback box (practice mode only, after locked)
+  const fb = document.getElementById('feedbackBox');
+  if(mode === 'practice' && state.locked){
+    const isCorrect = state.selected === q.correctIndex;
+    fb.classList.add('show');
+    fb.classList.toggle('correct', isCorrect);
+    fb.classList.toggle('wrong', !isCorrect);
+    document.getElementById('stampLabel').textContent = isCorrect ? 'ถูกต้อง' : 'ไม่ถูกต้อง';
+    document.getElementById('feedbackLawRef').textContent = q.lawRef;
+    document.getElementById('feedbackExplain').textContent = q.explanation;
+  } else {
+    fb.classList.remove('show');
+  }
+
+  document.getElementById('btnPrev').disabled = currentIndex === 0;
+  document.getElementById('btnPrev').style.opacity = currentIndex === 0 ? .45 : 1;
+
+  const isLast = currentIndex === QUESTIONS.length - 1;
+  document.getElementById('btnNext').textContent = isLast ? 'ดูผลคะแนน →' : 'ข้อถัดไป →';
+}
+
+function selectChoice(idx){
+  const state = userAnswers[currentIndex];
+  if(state.locked && mode === 'practice') return; // already revealed in practice mode
+  state.selected = idx;
+  if(mode === 'practice'){
+    state.locked = true; // lock immediately, reveal answer
+  } else {
+    state.locked = true; // exam mode: mark as answered, but no reveal
+  }
+  renderNavigator();
+  renderQuestion();
+}
+
+document.getElementById('btnPrev').addEventListener('click', ()=>{
+  if(currentIndex > 0){ currentIndex--; renderNavigator(); renderQuestion(); }
+});
+document.getElementById('btnNext').addEventListener('click', ()=>{
+  if(currentIndex < QUESTIONS.length - 1){
+    currentIndex++; renderNavigator(); renderQuestion();
+  } else {
+    finishQuiz();
+  }
+});
+
+/* ================= RESULTS ================= */
+function finishQuiz(){
+  const total = QUESTIONS.length;
+  const correct = userAnswers.filter((a,i)=> a.selected === QUESTIONS[i].correctIndex).length;
+  const wrong = userAnswers.filter(a=> a.selected !== null).length - correct;
+  const unanswered = total - userAnswers.filter(a=>a.selected!==null).length;
+  const pct = Math.round((correct/total)*100);
+  const passed = pct >= 70;
+
+  document.getElementById('resultsHero').classList.toggle('pass', passed);
+  document.getElementById('resultsHero').classList.toggle('fail', !passed);
+  document.getElementById('resultPercent').textContent = pct + '%';
+  document.getElementById('resultVerdict').textContent = passed ? 'สอบผ่าน' : 'ไม่ผ่าน';
+  document.getElementById('resultHeadline').textContent = passed ? 'ยินดีด้วย คุณสอบผ่าน' : 'ยังไม่ผ่านเกณฑ์ ลองใหม่อีกครั้ง';
+  document.getElementById('resultSub').textContent =
+    `คุณตอบถูก ${correct} จาก ${total} ข้อ (เกณฑ์ผ่าน 70%)` + (unanswered>0 ? ` · ไม่ได้ตอบ ${unanswered} ข้อ` : '');
+
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statWrong').textContent = wrong + unanswered;
+  document.getElementById('statPercent').textContent = pct + '%';
+
+  buildReviewList();
+  document.getElementById('reviewList').classList.add('hidden');
+  document.getElementById('btnReview').textContent = 'ทบทวนข้อที่ตอบผิด';
+
+  showScreen('results');
+}
+
+function buildReviewList(){
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  const letters = ['ก','ข','ค','ง'];
+  QUESTIONS.forEach((q, i)=>{
+    const state = userAnswers[i];
+    const isWrong = state.selected !== q.correctIndex;
+    if(!isWrong) return;
+    const item = document.createElement('div');
+    item.className = 'review-item';
+    const yourAnswerText = state.selected === null ? 'ไม่ได้ตอบ' : `${letters[state.selected]}. ${q.choices[state.selected]}`;
+    item.innerHTML = `
+      <p class="rq">ข้อ ${i+1}. ${q.question}</p>
+      <p class="ryour">คำตอบของคุณ: ${yourAnswerText}</p>
+      <p class="rcorrect">คำตอบที่ถูกต้อง: ${letters[q.correctIndex]}. ${q.choices[q.correctIndex]}</p>
+      <p class="rexplain"><strong>${q.lawRef}:</strong> ${q.explanation}</p>
+    `;
+    list.appendChild(item);
+  });
+  if(list.children.length === 0){
+    list.innerHTML = '<p style="text-align:center;color:var(--ink-soft);padding:20px;">ยอดเยี่ยม คุณตอบถูกทุกข้อ ไม่มีข้อที่ต้องทบทวน</p>';
+  }
+}
+
+document.getElementById('btnReview').addEventListener('click', ()=>{
+  const list = document.getElementById('reviewList');
+  const nowHidden = list.classList.contains('hidden');
+  list.classList.toggle('hidden');
+  document.getElementById('btnReview').textContent = nowHidden ? 'ซ่อนการทบทวน' : 'ทบทวนข้อที่ตอบผิด';
+});
+
+document.getElementById('btnRetry').addEventListener('click', ()=>{
+  showScreen('select');
+});
+</script>
+</body>
+</html>
