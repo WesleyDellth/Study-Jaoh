@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แนวข้อสอบ พ.ร.บ. ข้อมูลข่าวสารของราชการ พ.ศ. 2540</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16181D;
+  --ink-soft:#4A4F5A;
+  --ink-faint:#858B96;
+  --paper:#E7EAEF;
+  --card:#FBFBFA;
+  --line:#C9CFD8;
+  --seal:#1F4B99;
+  --seal-dim:#E3E9F5;
+  --stamp:#B3123B;
+  --stamp-dim:#FAE4EA;
+  --grant:#12705A;
+  --grant-dim:#DFF0EA;
+  --shadow:0 1px 0 rgba(22,24,29,.06), 0 10px 30px -18px rgba(22,24,29,.5);
+  --r:3px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);
+  background-image:
+    linear-gradient(rgba(31,75,153,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31,75,153,.035) 1px, transparent 1px);
+  background-size:26px 26px;
+  color:var(--ink);
+  font-family:'Sarabun',-apple-system,'Segoe UI',sans-serif;
+  font-size:16px;line-height:1.6;
+  min-height:100vh;
+  padding:0 0 80px;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 18px}
+.mono{font-family:'IBM Plex Mono','Sarabun',monospace;font-variant-numeric:tabular-nums}
+.disp{font-family:'Chakra Petch','Sarabun',sans-serif;letter-spacing:.01em}
+
+/* ---------- masthead ---------- */
+.mast{
+  border-bottom:2px solid var(--ink);
+  background:linear-gradient(180deg,#F6F7F9,#EDEFF3);
+  padding:26px 0 18px;margin-bottom:26px;
+}
+.mast .eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--seal);display:flex;gap:10px;align-items:center;
+}
+.mast .eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+.mast h1{
+  font-family:'Chakra Petch',sans-serif;font-weight:700;
+  font-size:clamp(22px,4.6vw,34px);line-height:1.25;margin:10px 0 4px;
+}
+.mast .sub{color:var(--ink-soft);font-size:14px}
+.mast .meta{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;
+}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;
+  border:1px solid var(--line);background:#fff;padding:4px 9px;border-radius:var(--r);
+  color:var(--ink-soft);
+}
+.chip b{color:var(--ink);font-weight:600}
+
+/* ---------- generic ---------- */
+.panel{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);
+}
+.panel-hd{
+  border-bottom:1px solid var(--line);padding:14px 18px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  background:#F4F5F7;
+}
+.panel-hd h2{font-family:'Chakra Petch',sans-serif;font-size:16px;font-weight:600}
+.panel-bd{padding:18px}
+.tag{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--seal);
+}
+.hint{font-size:13.5px;color:var(--ink-faint)}
+
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button:focus-visible,.opt:focus-visible,.navcell:focus-visible{
+  outline:2.5px solid var(--seal);outline-offset:2px;
+}
+.btn{
+  border:1px solid var(--ink);background:var(--ink);color:#fff;
+  padding:11px 20px;border-radius:var(--r);font-weight:600;font-size:15px;
+  font-family:'Chakra Petch',sans-serif;letter-spacing:.02em;
+  transition:transform .1s ease, background .15s ease;
+}
+.btn:hover{background:#000}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{background:#EFF1F4;border-color:var(--ink-faint)}
+.btn.seal{background:var(--seal);border-color:var(--seal)}
+.btn.seal:hover{background:#173A78}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.sm{padding:7px 13px;font-size:13px}
+
+/* ---------- setup ---------- */
+.field{margin-bottom:20px}
+.field > label.lbl{
+  display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:9px;
+}
+.seg{display:grid;gap:10px}
+.seg.two{grid-template-columns:1fr 1fr}
+.seg.four{grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
+.pick{
+  border:1px solid var(--line);background:#fff;border-radius:var(--r);
+  padding:13px 14px;text-align:left;transition:.15s;position:relative;
+}
+.pick:hover{border-color:var(--ink-faint)}
+.pick[aria-pressed="true"]{
+  border-color:var(--seal);background:var(--seal-dim);
+  box-shadow:inset 3px 0 0 var(--seal);
+}
+.pick .t{font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:15px;display:block}
+.pick .d{font-size:12.5px;color:var(--ink-faint);display:block;margin-top:2px;line-height:1.4}
+.switch{
+  display:flex;align-items:center;gap:11px;border:1px solid var(--line);
+  background:#fff;border-radius:var(--r);padding:12px 14px;width:100%;text-align:left;
+}
+.switch .box{
+  width:20px;height:20px;border:1.5px solid var(--ink-faint);border-radius:2px;
+  flex:0 0 auto;display:grid;place-items:center;font-size:13px;color:#fff;
+}
+.switch[aria-pressed="true"] .box{background:var(--seal);border-color:var(--seal)}
+.switch[aria-pressed="true"]{border-color:var(--seal)}
+.catgrid{display:grid;gap:7px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.catbtn{
+  border:1px solid var(--line);background:#fff;border-radius:var(--r);
+  padding:9px 11px;font-size:13.5px;display:flex;justify-content:space-between;
+  align-items:center;gap:8px;text-align:left;
+}
+.catbtn[aria-pressed="true"]{border-color:var(--seal);background:var(--seal-dim)}
+.catbtn span.c{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-faint)}
+
+/* ---------- quiz bar ---------- */
+.bar{
+  position:sticky;top:0;z-index:30;background:rgba(237,239,243,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-bottom:20px;
+}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:12px}
+.bar .idx{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;white-space:nowrap}
+.bar .idx b{font-size:16px}
+.track{flex:1;height:8px;background:#D3D8E0;border-radius:2px;overflow:hidden;position:relative}
+.track i{
+  display:block;height:100%;background:var(--seal);width:0;
+  transition:width .3s cubic-bezier(.4,0,.2,1);
+}
+.track i.ok{background:linear-gradient(90deg,var(--seal),var(--grant))}
+.tally{font-family:'IBM Plex Mono',monospace;font-size:12.5px;white-space:nowrap}
+.tally .r{color:var(--grant);font-weight:600}
+.tally .w{color:var(--stamp);font-weight:600}
+
+/* ---------- question ---------- */
+.qhead{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+  padding:13px 18px;border-bottom:1px dashed var(--line);background:#F4F5F7;flex-wrap:wrap;
+}
+.qno{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;color:var(--seal);font-weight:600}
+.qcat{font-size:12px;color:var(--ink-faint);border:1px solid var(--line);background:#fff;padding:2px 8px;border-radius:99px}
+.qtext{padding:20px 18px 6px;font-size:17.5px;line-height:1.62;font-weight:500}
+.opts{padding:12px 18px 18px;display:grid;gap:9px}
+.opt{
+  display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;
+  border:1px solid var(--line);background:#fff;border-radius:var(--r);
+  padding:12px 14px;text-align:left;font-size:15.5px;line-height:1.55;
+  transition:border-color .12s, background .12s;width:100%;
+}
+.opt:hover:not(:disabled){border-color:var(--seal);background:#F7F9FD}
+.opt .k{
+  font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:14px;
+  width:26px;height:26px;border:1.5px solid var(--line);border-radius:50%;
+  display:grid;place-items:center;color:var(--ink-soft);flex:0 0 auto;
+}
+.opt[aria-pressed="true"]{border-color:var(--seal);background:var(--seal-dim)}
+.opt[aria-pressed="true"] .k{background:var(--seal);border-color:var(--seal);color:#fff}
+.opt.right{border-color:var(--grant);background:var(--grant-dim)}
+.opt.right .k{background:var(--grant);border-color:var(--grant);color:#fff}
+.opt.wrong{border-color:var(--stamp);background:var(--stamp-dim)}
+.opt.wrong .k{background:var(--stamp);border-color:var(--stamp);color:#fff}
+.opt:disabled{cursor:default}
+.opt .mark{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;
+  display:block;margin-top:5px;font-weight:600;
+}
+.opt.right .mark{color:var(--grant)}
+.opt.wrong .mark{color:var(--stamp)}
+
+/* signature: redaction reveal */
+.reveal{margin:0 18px 18px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.reveal-hd{
+  display:flex;align-items:center;gap:9px;padding:9px 13px;background:#F4F5F7;
+  border-bottom:1px solid var(--line);
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+}
+.reveal-hd .dot{width:7px;height:7px;border-radius:50%;background:var(--grant)}
+.reveal.miss .reveal-hd .dot{background:var(--stamp)}
+.reveal-bd{padding:13px;font-size:15px;position:relative;background:#fff}
+.reveal-bd .ans{font-weight:600}
+.reveal-bd .why{color:var(--ink-soft);font-size:14.5px;margin-top:6px}
+.redact{
+  position:absolute;inset:0;background:var(--ink);
+  transform-origin:left;animation:lift .5s cubic-bezier(.7,0,.2,1) forwards;
+}
+@keyframes lift{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+
+.qfoot{display:flex;gap:10px;padding:0 18px 18px;flex-wrap:wrap;align-items:center}
+.qfoot .spacer{flex:1}
+.flagbtn{border:1px solid var(--line);background:#fff;border-radius:var(--r);padding:8px 12px;font-size:13px}
+.flagbtn[aria-pressed="true"]{background:#FFF4D6;border-color:#D9A400;color:#8A6600;font-weight:600}
+
+/* ---------- navigator ---------- */
+.navwrap{margin-top:18px}
+.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px}
+.navcell{
+  aspect-ratio:1;border:1px solid var(--line);background:#fff;border-radius:2px;
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;display:grid;place-items:center;
+  position:relative;
+}
+.navcell:hover{border-color:var(--ink-faint)}
+.navcell.done{background:#DDE3EC;border-color:#AEB8C6}
+.navcell.right{background:var(--grant-dim);border-color:var(--grant);color:var(--grant);font-weight:600}
+.navcell.wrong{background:var(--stamp-dim);border-color:var(--stamp);color:var(--stamp);font-weight:600}
+.navcell.cur{outline:2px solid var(--ink);outline-offset:1px}
+.navcell.flag::after{
+  content:"";position:absolute;top:2px;right:2px;width:6px;height:6px;
+  background:#D9A400;border-radius:50%;
+}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--ink-faint)}
+.legend i{display:inline-block;width:11px;height:11px;border:1px solid var(--line);border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+/* ---------- results ---------- */
+.verdict{position:relative;text-align:center;padding:34px 18px 28px;border-bottom:1px solid var(--line)}
+.scorenum{
+  font-family:'Chakra Petch',sans-serif;font-weight:700;line-height:1;
+  font-size:clamp(56px,15vw,92px);letter-spacing:-.02em;
+}
+.scorenum sup{font-size:.32em;font-weight:600;margin-left:4px;letter-spacing:0}
+.scoresub{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-soft);margin-top:6px}
+.stamp{
+  display:inline-block;margin-top:18px;border:3px solid currentColor;border-radius:4px;
+  padding:7px 22px;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:20px;
+  letter-spacing:.12em;transform:rotate(-4deg);
+  animation:press .45s cubic-bezier(.2,1.4,.4,1) both;
+}
+.stamp.pass{color:var(--grant)}
+.stamp.fail{color:var(--stamp)}
+@keyframes press{from{opacity:0;transform:rotate(-14deg) scale(1.5)}to{opacity:1;transform:rotate(-4deg) scale(1)}}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));border-bottom:1px solid var(--line)}
+.rcell{padding:15px 14px;text-align:center;border-right:1px solid var(--line)}
+.rcell:last-child{border-right:none}
+.rcell .n{font-family:'Chakra Petch',sans-serif;font-size:26px;font-weight:700;line-height:1.1}
+.rcell .l{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-top:3px}
+.bars{padding:16px 18px;display:grid;gap:11px}
+.brow{display:grid;grid-template-columns:1fr 62px;gap:10px;align-items:center;font-size:13.5px}
+.brow .bt{display:block;margin-bottom:4px}
+.bmeter{height:7px;background:#DDE1E8;border-radius:2px;overflow:hidden}
+.bmeter i{display:block;height:100%;background:var(--seal)}
+.bmeter i.low{background:var(--stamp)}
+.bmeter i.mid{background:#D9A400}
+.bmeter i.high{background:var(--grant)}
+.brow .bn{font-family:'IBM Plex Mono',monospace;font-size:12px;text-align:right;color:var(--ink-soft)}
+
+.review{margin-top:20px}
+.ritem{border:1px solid var(--line);border-radius:var(--r);background:var(--card);margin-bottom:11px;overflow:hidden}
+.ritem .rh{padding:12px 14px;border-bottom:1px dashed var(--line);background:#F4F5F7}
+.ritem .rq{padding:13px 14px 8px;font-weight:500;font-size:16px}
+.ritem .rb{padding:0 14px 14px;display:grid;gap:6px}
+.rline{font-size:14.5px;padding:9px 12px;border-radius:var(--r);border:1px solid var(--line);background:#fff}
+.rline.you{border-color:var(--stamp);background:var(--stamp-dim)}
+.rline.key{border-color:var(--grant);background:var(--grant-dim)}
+.rline .lb{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;display:block;color:var(--ink-faint);margin-bottom:2px}
+.rline.you .lb{color:var(--stamp)}
+.rline.key .lb{color:var(--grant)}
+.rwhy{font-size:14px;color:var(--ink-soft);padding:0 14px 14px}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.hide{display:none !important}
+.foot{text-align:center;font-size:12px;color:var(--ink-faint);margin-top:34px;line-height:1.7}
+
+@media (max-width:560px){
+  .qtext{font-size:16.5px}
+  .opt{font-size:15px;grid-template-columns:30px 1fr;gap:10px;padding:11px 12px}
+  .seg.two{grid-template-columns:1fr}
+  .bar-in{gap:9px;padding:9px 14px}
+  .rcell{border-right:none;border-bottom:1px solid var(--line)}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="eyebrow">แนวข้อสอบ · ชุดที่ 7 · 100 ข้อ</div>
+    <h1>พระราชบัญญัติข้อมูลข่าวสารของราชการ<br>พ.ศ. 2540</h1>
+    <p class="sub">สิทธิได้รู้ของประชาชน — เปิดเผยเป็นหลัก ปกปิดเป็นข้อยกเว้น</p>
+    <div class="meta">
+      <span class="chip">เกณฑ์ผ่าน <b>70%</b></span>
+      <span class="chip">ทั้งหมด <b>100 ข้อ</b></span>
+      <span class="chip">4 ตัวเลือก</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ SETUP ============ -->
+<main id="setup" class="wrap">
+  <section class="panel">
+    <div class="panel-hd"><h2>ตั้งค่าก่อนเริ่มทำข้อสอบ</h2></div>
+    <div class="panel-bd">
+
+      <div class="field">
+        <label class="lbl">รูปแบบการทำข้อสอบ</label>
+        <div class="seg two">
+          <button class="pick" data-mode="practice" aria-pressed="true">
+            <span class="t">Practice Mode</span>
+            <span class="d">เฉลยทันทีทุกข้อ พร้อมคำอธิบายอ้างอิงมาตรา</span>
+          </button>
+          <button class="pick" data-mode="exam" aria-pressed="false">
+            <span class="t">Exam Mode</span>
+            <span class="d">ปิดเฉลยไว้จนกว่าจะส่งคำตอบ เหมือนสอบจริง</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="lbl">จำนวนข้อ</label>
+        <div class="seg four" id="countSeg">
+          <button class="pick" data-count="20"><span class="t">20 ข้อ</span><span class="d">ซ้อมสั้น</span></button>
+          <button class="pick" data-count="50"><span class="t">50 ข้อ</span><span class="d">ครึ่งชุด</span></button>
+          <button class="pick" data-count="0" aria-pressed="true"><span class="t">ทั้งหมด</span><span class="d">100 ข้อ</span></button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="lbl">ตัวเลือกเพิ่มเติม</label>
+        <div class="seg two">
+          <button class="switch" id="shufQ" aria-pressed="true"><span class="box">✓</span><span>สลับลำดับข้อ</span></button>
+          <button class="switch" id="shufO" aria-pressed="false"><span class="box">✓</span><span>สลับตัวเลือก ก–ง</span></button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="lbl">เลือกหมวดเนื้อหา <span style="text-transform:none;letter-spacing:0">(ไม่เลือก = ทุกหมวด)</span></label>
+        <div class="catgrid" id="catGrid"></div>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <button class="btn seal" id="startBtn">เริ่มทำข้อสอบ</button>
+        <span class="hint" id="poolInfo"></span>
+      </div>
+    </div>
+  </section>
+  <p class="foot">คีย์ลัด: กด <b>1–4</b> เพื่อเลือกคำตอบ · <b>←/→</b> เปลี่ยนข้อ · <b>Enter</b> ข้อถัดไป</p>
+</main>
+
+<!-- ============ QUIZ ============ -->
+<div id="quiz" class="hide">
+  <div class="bar">
+    <div class="bar-in">
+      <span class="idx">ข้อ <b id="curNo">1</b> / <span id="totNo">100</span></span>
+      <span class="track"><i id="prog"></i></span>
+      <span class="tally" id="tally"></span>
+    </div>
+  </div>
+  <main class="wrap">
+    <section class="panel">
+      <div class="qhead">
+        <span class="qno" id="qno">ข้อ 01</span>
+        <span class="qcat" id="qcat"></span>
+      </div>
+      <p class="qtext" id="qtext"></p>
+      <div class="opts" id="opts"></div>
+      <div id="revealBox" class="hide"></div>
+      <div class="qfoot">
+        <button class="btn ghost sm" id="prevBtn">← ก่อนหน้า</button>
+        <button class="flagbtn" id="flagBtn" aria-pressed="false">⚑ ทำเครื่องหมาย</button>
+        <span class="spacer"></span>
+        <button class="btn sm" id="nextBtn">ถัดไป →</button>
+        <button class="btn seal sm hide" id="submitBtn">ส่งคำตอบ</button>
+      </div>
+    </section>
+
+    <section class="panel navwrap">
+      <div class="panel-hd">
+        <h2>ผังข้อสอบ</h2>
+        <span class="spacer" style="flex:1"></span>
+        <button class="btn ghost sm" id="endBtn">จบและดูผล</button>
+      </div>
+      <div class="panel-bd">
+        <div class="navgrid" id="navGrid"></div>
+        <div class="legend">
+          <span><i style="background:#DDE3EC;border-color:#AEB8C6"></i>ตอบแล้ว</span>
+          <span><i style="background:var(--grant-dim);border-color:var(--grant)"></i>ถูก</span>
+          <span><i style="background:var(--stamp-dim);border-color:var(--stamp)"></i>ผิด</span>
+          <span><i style="background:#fff"></i>ยังไม่ตอบ</span>
+          <span><i style="background:#D9A400;border-color:#D9A400;border-radius:50%"></i>ทำเครื่องหมายไว้</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ============ RESULTS ============ -->
+<div id="results" class="hide">
+  <main class="wrap">
+    <section class="panel">
+      <div class="verdict">
+        <div class="scorenum" id="pct">0<sup>%</sup></div>
+        <div class="scoresub" id="scoreLine"></div>
+        <div id="stampBox"></div>
+      </div>
+      <div class="rgrid">
+        <div class="rcell"><div class="n" id="rRight">0</div><div class="l">ตอบถูก</div></div>
+        <div class="rcell"><div class="n" id="rWrong">0</div><div class="l">ตอบผิด</div></div>
+        <div class="rcell"><div class="n" id="rSkip">0</div><div class="l">ไม่ได้ตอบ</div></div>
+        <div class="rcell"><div class="n" id="rTime">0:00</div><div class="l">เวลาที่ใช้</div></div>
+      </div>
+      <div class="bars" id="catBars"></div>
+    </section>
+
+    <div class="actions">
+      <button class="btn seal" id="againBtn">ทำชุดนี้ใหม่</button>
+      <button class="btn ghost" id="wrongOnlyBtn">ฝึกเฉพาะข้อที่ผิด</button>
+      <button class="btn ghost" id="homeBtn">กลับหน้าตั้งค่า</button>
+    </div>
+
+    <section class="review">
+      <div class="panel">
+        <div class="panel-hd">
+          <h2>ทบทวนคำตอบ</h2>
+          <span style="flex:1"></span>
+          <button class="btn ghost sm" id="filterBtn" aria-pressed="true">แสดงทุกข้อ</button>
+        </div>
+        <div class="panel-bd" id="reviewList"></div>
+      </div>
+    </section>
+    <p class="foot">แนวข้อสอบชุดนี้จัดทำเพื่อการฝึกทบทวน · อ้างอิงพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540</p>
+  </main>
+</div>
+
+<script>
+const QUESTIONS = [
+{n:1,c:"ขอบเขตการบังคับใช้",q:"หน่วยงานใดไม่อยู่ในบังคับของพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540",o:["เทศบาล","จังหวัดเชียงใหม่","กรมการปกครอง","เกี่ยวกับการพิจารณาคดีของศาล"],a:3,e:""},
+{n:2,c:"ขอบเขตการบังคับใช้",q:"ข้อมูลข่าวสารราชการที่อาจมีดุลพินิจไม่ต้องเปิดเผยก็ได้ ไม่จำเป็นต้องคำนึงถึงเรื่องใดเป็นสำคัญ",o:["ประโยชน์เอกชน","ประโยชน์ส่วนรวม","ความโปร่งใสในการบริหารราชการ","การปฏิบัติหน้าที่ตามกฎหมายของเจ้าหน้าที่"],a:2,e:""},
+{n:3,c:"คณะกรรมการ",q:"สำนักงานคณะกรรมการข้อมูลข่าวสารของราชการเป็นหน่วยงานอยู่ในส่วนราชการใด",o:["สำนักงานคณะรัฐมนตรี","สำนักงานเลขาธิการนายกรัฐมนตรี","สำนักงานปลัดสำนักนายกรัฐมนตรี","สำนักนายกรัฐมนตรี"],a:2,e:""},
+{n:4,c:"การเปิดเผยข้อมูลข่าวสาร",q:"ในกรณีหน่วยงานของรัฐไม่เปิดเผยข้อมูลข่าวสาร ประชาชนผู้ได้รับผลกระทบต่อการกระทำดังกล่าวมีสิทธิดำเนินการตามข้อใด",o:["อุทธรณ์ต่อคณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสารของราชการ","ร้องเรียนต่อคณะกรรมการข้อมูลข่าวสารของราชการ","ไม่มีข้อใดถูก","ถูกเฉพาะข้อ ก. และข้อ ข."],a:3,e:""},
+{n:5,c:"การเปิดเผยข้อมูลข่าวสาร",q:"หน่วยงานของรัฐต้องส่งข้อมูลข่าวสารประเภทใดลงพิมพ์ในราชกิจจานุเบกษา",o:["โครงสร้างและการจัดองค์การในการดำเนินงานของหน่วยงานรัฐ","รายชื่อข้าราชการ พนักงาน ลูกจ้างในหน่วยงาน","คำสั่งที่ปฏิบัติงานภายในส่วนราชการ","งบประมาณรายรับรายจ่ายที่กำลังดำเนินการของหน่วยงานรัฐ"],a:0,e:""},
+{n:6,c:"การเปิดเผยข้อมูลข่าวสาร",q:"ข้อมูลข่าวสารของราชการในข้อใดที่ประชาชนสามารถเข้าตรวจดูได้",o:["โครงการและงบประมาณรายจ่ายของรัฐบาล","สัญญาร่วมทุนของรัฐบาลกับเอกชนในการจัดบริการสาธารณะ","นโยบายและแผนงานของรัฐบาล","ถูกทุกข้อ"],a:3,e:""},
+{n:7,c:"ขอบเขตการบังคับใช้",q:"กรณีกฎหมายข้อมูลข่าวสารของราชการขัดแย้งกับระเบียบว่าด้วยการรักษาความปลอดภัยแห่งชาติ จะต้องทำอย่างไร",o:["ให้ใช้บังคับตามระเบียบว่าด้วยการรักษาความปลอดภัยแห่งชาติ","ให้ใช้บังคับตามพระราชบัญญัติข้อมูลข่าวสารของทางราชการ","เสนอนายกรัฐมนตรีพิจารณา","ให้ปลัดสำนักนายกรัฐมนตรีเป็นผู้ชี้ขาด"],a:1,e:""},
+{n:8,c:"การเปิดเผยข้อมูลข่าวสาร",q:"ข้อใดไม่ใช่ข่าวสารประเภทที่หน่วยงานของรัฐต้องจัดไว้ให้ประชาชนเข้าตรวจดูได้",o:["คู่มือการปฏิบัติงานของราชการ","ผลของการพิจารณาหน่วยงานรัฐที่มีผลต่อเอกชน","มติคณะรัฐมนตรีหรือการพิจารณาของคณะกรรมการที่แต่งตั้งตามกฎหมาย","แผนงาน โครงการ และงบประมาณรายจ่ายประจำปี"],a:0,e:""},
+{n:9,c:"บททั่วไป",q:"พระราชบัญญัติฉบับนี้มีผลใช้บังคับตั้งแต่วันใด",o:["ตั้งแต่วันถัดจากวันประกาศในราชกิจจานุเบกษาเป็นต้นไป","พ้นกำหนด 90 วันนับแต่วันที่ประกาศในราชกิจจานุเบกษา","พ้นกำหนด 90 วันนับแต่วันที่ประกาศในราชกิจจานุเบกษา","เมื่อเวลาผ่านไป 120 วันนับแต่วันถัดจากวันประกาศในราชกิจจานุเบกษา"],a:2,e:"พ้นกำหนดเก้าสิบวันนับแต่วันประกาศในราชกิจจานุเบกษา"},
+{n:10,c:"บททั่วไป",q:"ใครเป็นผู้รักษาการตามพระราชบัญญัติฉบับนี้",o:["นายกรัฐมนตรี","รัฐมนตรีว่าการกระทรวงมหาดไทย","รัฐมนตรีประจำสำนักนายกรัฐมนตรี","รัฐมนตรีว่าการกระทรวงวิทยาศาสตร์เทคโนโลยีและสารสนเทศ"],a:0,e:""},
+{n:11,c:"บททั่วไป",q:"วัตถุประสงค์ของพระราชบัญญัติข้อมูลข่าวสาร พ.ศ. 2540 นี้มีขึ้นเพื่อรับรองสิทธิใดของประชาชนต่อรัฐ",o:["สิทธิที่จะชุมนุมโดยปราศจากอาวุธ","สิทธิได้รู้","สิทธิเลือกตั้ง","สิทธิในการประกอบอาชีพ"],a:1,e:"สิทธิได้รู้ของประชาชน (right to know) ซึ่งเป็นแก่นสำคัญของสังคมประชาธิปไตย"},
+{n:12,c:"บททั่วไป",q:"พระราชบัญญัติข้อมูลข่าวสารของทางราชการ พ.ศ. 2540 มีความสัมพันธ์ใกล้ชิดกับกฎหมายมหาชนฉบับใด",o:["พระราชบัญญัติวิธีปฏิบัติราชการทางปกครอง พ.ศ. 2539","พระราชบัญญัติความรับผิดทางละเมิดของเจ้าหน้าที่ พ.ศ. 2539","พระราชบัญญัติคณะกรรมการกฤษฎีกา พ.ศ. 2522","ถูกทุกข้อ"],a:3,e:""},
+{n:13,c:"ขอบเขตการบังคับใช้",q:"ขอบเขตเนื้อหาของพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540 นี้ครอบคลุมในเรื่องตามข้อใด",o:["ข้อมูลข่าวสารของราชการทั่วไป","ข้อมูลข่าวสารของราชการที่เป็นข้อมูลส่วนบุคคล","ข้อมูลข่าวสารของราชการที่เป็นเอกสารประวัติศาสตร์","ถูกทุกข้อ"],a:3,e:""},
+{n:14,c:"ขอบเขตการบังคับใช้",q:"หากกฎหมาย กฎ ระเบียบหรือข้อบังคับใดขัดหรือแย้งกับพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540 ท่านจะบังคับใช้อย่างไร",o:["บังคับตามกฎหมาย กฎ ระเบียบหรือข้อบังคับนั้น เพราะเป็นกรณีที่ได้กล่าวไว้เป็นเรื่องเฉพาะแล้ว","บังคับตามกฎหมาย กฎ ระเบียบหรือข้อบังคับ เพื่อประสิทธิภาพในการรักษาความลับของทางราชการ","บังคับตามพระราชบัญญัติข้อมูลข่าวสารของราชการ เป็นไปตามที่กฎหมายได้บัญญัติเอาไว้","ไม่มีข้อถูก"],a:2,e:""},
+{n:15,c:"ขอบเขตการบังคับใช้",q:"หน่วยงานใดไม่ใช่หน่วยงานที่อยู่ภายใต้บังคับของพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540",o:["ราชการส่วนกลาง ราชการส่วนภูมิภาค ราชการส่วนท้องถิ่น ส่วนราชการสังกัดรัฐสภา","รัฐวิสาหกิจ ศาลเฉพาะในส่วนที่ไม่เกี่ยวกับการพิจารณาพิพากษาคดี","องค์กรควบคุมการประกอบอาชีพ หน่วยงานอิสระของรัฐ และหน่วยงานอื่นที่กำหนดในกฎกระทรวง","ไม่มีข้อใดกล่าวถูก"],a:3,e:""},
+{n:16,c:"การเปิดเผยข้อมูลข่าวสาร",q:"ข้อใดไม่ใช่ข้อมูลข่าวสารของราชการที่อย่างน้อยหน่วยงานของรัฐต้องจัดให้ประชาชนเข้าตรวจดูได้",o:["รายงานการแพทย์ซึ่งการเปิดเผยเป็นการรุกล้ำสิทธิส่วนบุคคลโดยไม่สมควร","สัญญาสัมปทานที่มีลักษณะผูกขาดหรือสัญญาร่วมลงทุนกับเอกชนในการจัดทำบริการสาธารณะ","ผลการพิจารณาหรือคำวินิจฉัยที่มีผลโดยตรงต่อเอกชน","แผนงาน โครงการ และงบประมาณรายจ่ายประจำปีของปีที่กำลังดำเนินการ"],a:0,e:""},
+{n:17,c:"การเปิดเผยข้อมูลข่าวสาร",q:"ข้อมูลข่าวสารที่จัดให้ประชาชนเข้าถึงได้ตามมาตรา 9 ถ้ามีส่วนที่ต้องห้ามมิให้เปิดเผยตามมาตรา 14 หรือมาตรา 15 จะสามารถเปิดเผยได้หรือไม่ อย่างไร",o:["ไม่สามารถเปิดเผยได้ทุกกรณี","ข้อมูลตามมาตรา 15 ไม่สามารถเปิดเผยได้ ส่วนมาตรา 14 เปิดเผยให้แก่ผู้ที่เกี่ยวข้องเท่านั้น","สามารถเปิดเผยได้โดยให้ลบหรือตัดทอนหรือประการอื่นใดที่ไม่เป็นการเปิดเผยข้อมูลข่าวสารส่วนนั้น","สามารถเปิดเผยได้โดยอาศัยดุลยพินิจของเจ้าหน้าที่ผู้รับผิดชอบในหน่วยงานนั้น"],a:2,e:"ตามมาตรา 9 วรรคสอง"},
+{n:18,c:"การเปิดเผยข้อมูลข่าวสาร",q:"บุคคลใดไม่มีสิทธิเข้าถึงข้อมูลข่าวสารของราชการโดยการตรวจดูตามมาตรา 9",o:["คนต่างด้าว","ประชาชนทั่วไป","บุคคลผู้ไม่มีส่วนได้เสียเกี่ยวข้องกับเรื่องนั้น","ไม่มีข้อใดถูก"],a:3,e:"มาตรา 9 วรรคสามและวรรคสี่ ให้สิทธิแก่บุคคลทั่วไปไม่ว่าจะเป็นผู้มีส่วนได้เสียหรือไม่ รวมถึงคนต่างด้าวด้วย ทั้งนี้เท่าที่กำหนดในกฎกระทรวง"},
+{n:19,c:"การเปิดเผยข้อมูลข่าวสาร",q:"สิทธิการเข้าถึงข้อมูลข่าวสารของราชการโดยการตรวจดูนั้น ผู้ขอข้อมูลสามารถใช้สิทธิได้เพียงใด",o:["ขอสำเนา","ขอสำเนาที่มีคำรับรองความถูกต้อง","ตรวจดูข้อมูล","ถูกทุกข้อ"],a:3,e:"ดูมาตรา 9 วรรคสามประกอบ"},
+{n:20,c:"การเปิดเผยข้อมูลข่าวสาร",q:"ค่าธรรมเนียมการขอสำเนาหรือขอสำเนาที่มีคำรับรองความถูกต้อง สำหรับการถ่ายเอกสารขนาด A4 เรียกเก็บได้หน้าละเท่าใด",o:["ไม่เกิน 1 บาท","ไม่เกิน 50 สตางค์","ไม่เกิน 2 บาท","ไม่เกิน 75 สตางค์"],a:1,e:"ตามประกาศคณะกรรมการข้อมูลข่าวสารของราชการ เรื่องการเรียกเก็บค่าธรรมเนียมการขอสำเนา"},
+{n:21,c:"การเปิดเผยข้อมูลข่าวสาร",q:"เวลาในการจัดหาข้อมูลข่าวสารตามพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540 ให้มีกำหนดเท่าใด",o:["ภายในระยะเวลาอันสมควร","ภายใน 30 วัน","ภายใน 90 วัน","ภายใน 45 วัน"],a:0,e:"มาตรา 11 มิได้กำหนดระยะเวลาไว้ชัดเจน เพียงบัญญัติว่าภายในระยะเวลาอันสมควร"},
+{n:22,c:"การเปิดเผยข้อมูลข่าวสาร",q:"กรณีข้อมูลข่าวสารอยู่ในความควบคุมดูแลของหน่วยงานส่วนกลาง ส่วนสาขา หรือหน่วยงานของรัฐแห่งอื่น หน่วยงานที่รับคำขอต้องดำเนินการอย่างไร",o:["รับคำขอและดำเนินการตามคำขอ","ปฏิเสธไม่รับคำขอ","จัดส่งคำขอให้หน่วยงานที่รับผิดชอบ","ให้คำแนะนำเพื่อไปยื่นคำขอต่อหน่วยงานของรัฐที่ดูแลข้อมูลข่าวสารนั้น"],a:3,e:"ตามมาตรา 12 วรรคหนึ่ง"},
+{n:23,c:"การเปิดเผยข้อมูลข่าวสาร",q:"ในกรณีที่เจ้าหน้าที่ของรัฐปฏิเสธสิทธิเข้าถึงข้อมูลข่าวสารโดยไม่จัดหาข้อมูลให้ ผู้ขอข้อมูลมีสิทธิดำเนินการอย่างไร",o:["ร้องเรียนต่อหัวหน้าส่วนราชการนั้น","ร้องเรียนต่อคณะกรรมการตรวจเงินแผ่นดิน","ร้องเรียนต่อคณะกรรมการข้อมูลข่าวสารของราชการ","ฟ้องศาลทันที"],a:2,e:""},
+{n:24,c:"การเปิดเผยข้อมูลข่าวสาร",q:"คณะกรรมการข้อมูลข่าวสารของราชการเมื่อได้รับเรื่องร้องเรียนแล้ว ต้องพิจารณาให้แล้วเสร็จภายในกี่วัน",o:["45 วัน","90 วัน","30 วัน","15 วัน"],a:2,e:"มาตรา 13 วรรคสอง ต้องพิจารณาให้แล้วเสร็จภายใน 30 วันนับแต่วันที่ได้รับเรื่องร้องเรียน"},
+{n:25,c:"การเปิดเผยข้อมูลข่าวสาร",q:"หากคณะกรรมการข้อมูลข่าวสารของราชการพิจารณาเรื่องร้องเรียนไม่แล้วเสร็จ จะขยายระยะเวลาได้รวมทั้งหมดไม่เกินกี่วัน",o:["60 วัน","90 วัน","120 วัน","50 วัน"],a:0,e:"มาตรา 13 วรรคสอง กรณีมีเหตุจำเป็นให้ขยายระยะเวลา รวมแล้วต้องไม่เกิน 60 วัน"},
+{n:26,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"ข้อมูลข่าวสารประเภทใดที่ไม่อาจเปิดเผยได้",o:["ข้อมูลข่าวสารที่มีกฎหมายคุ้มครองมิให้เปิดเผย","ข้อมูลข่าวสารที่หากเปิดเผยจะก่อให้เกิดอันตรายต่อชีวิตหรือความปลอดภัยของบุคคล","ข้อมูลข่าวสารที่หากเปิดเผยจะก่อให้เกิดความเสียหายต่อความมั่นคงของประเทศ","ข้อมูลข่าวสารที่อาจก่อให้เกิดความเสียหายต่อสถาบันพระมหากษัตริย์"],a:3,e:"ตามมาตรา 14 เป็นข้อห้ามโดยเด็ดขาด"},
+{n:27,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"การเปิดเผยข้อมูลข่าวสารของราชการใดอาจกระทบถึงประโยชน์ได้เสียของผู้ใด เจ้าหน้าที่รัฐต้องให้เวลาแก่ผู้นั้นคัดค้านนับแต่วันที่ได้รับแจ้งอย่างน้อยกี่วัน",o:["20 วัน","15 วัน","30 วัน","60 วัน"],a:1,e:"ตามมาตรา 17"},
+{n:28,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"กรณีที่ผู้มีส่วนได้เสียในการเปิดเผยข้อมูลข่าวสารไม่ประสงค์จะให้มีการเปิดเผยข้อมูล จะมีสิทธิดำเนินการตามข้อใด",o:["อุทธรณ์ต่อคณะกรรมการข้อมูลข่าวสารของราชการ","ทำหนังสือคัดค้านต่อคณะกรรมการข้อมูลข่าวสารของราชการ","คัดค้านการเปิดเผยต่อเจ้าหน้าที่ผู้รับผิดชอบ","ร้องเรียนด้วยวาจาต่อเจ้าหน้าที่ผู้รับผิดชอบ"],a:2,e:"ตามมาตรา 17 วรรคสอง"},
+{n:29,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"ถ้าเจ้าหน้าที่ของรัฐไม่รับฟังคำคัดค้านของผู้มีส่วนได้เสีย จะสามารถเปิดเผยข้อมูลได้เมื่อใด",o:["เมื่อล่วงพ้นระยะกำหนดเวลาอุทธรณ์แล้ว","จนกว่าคณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสารได้มีคำวินิจฉัยให้เปิดเผย","เปิดเผยได้ทันทีตามความสะดวก","ถูกทั้งข้อ ก. และข้อ ข."],a:3,e:"ตามมาตรา 17 วรรคท้าย"},
+{n:30,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"กรณีที่เจ้าหน้าที่ของรัฐมีคำสั่งไม่เปิดเผยข้อมูลข่าวสาร ผู้ขอข้อมูลข่าวสารต้องอุทธรณ์คัดค้านภายในกี่วัน",o:["60 วัน","30 วัน","15 วัน","45 วัน"],a:2,e:"ตามมาตรา 18"},
+{n:31,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"กรณีเจ้าหน้าที่ไม่รับฟังคำคัดค้านของผู้มีส่วนได้เสีย ให้ผู้มีส่วนได้เสียใช้สิทธิอุทธรณ์ต่อหน่วยงานใด",o:["ต้นสังกัดของหน่วยงานเจ้าหน้าที่ผู้ออกคำสั่งเปิดเผย","อุทธรณ์ต่อคณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสาร","อุทธรณ์ต่อคณะกรรมการข้อมูลข่าวสารของราชการ","ถูกทุกข้อ"],a:1,e:""},
+{n:32,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"ในกรณีเจ้าหน้าที่ของรัฐมีคำสั่งให้เปิดเผยข้อมูลข่าวสาร หากผู้มีส่วนได้เสียไม่เห็นด้วยต้องอุทธรณ์ภายในกี่วัน",o:["30 วัน","45 วัน","15 วัน","60 วัน"],a:2,e:"ตามมาตรา 18"},
+{n:33,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"ถ้าเจ้าหน้าที่ของรัฐมีคำสั่งไม่เปิดเผยข้อมูลข่าวสาร กฎหมายกำหนดให้ผู้ขอข้อมูลข่าวสารต้องอุทธรณ์คัดค้านภายในกี่วัน",o:["45 วัน","30 วัน","60 วัน","15 วัน"],a:3,e:"ตามมาตรา 17"},
+{n:34,c:"คณะกรรมการ",q:"ข้อใดไม่ใช่อำนาจหน้าที่ของคณะกรรมการข้อมูลข่าวสารของราชการ",o:["พิจารณาและให้ความเห็นเรื่องร้องเรียน","กำหนดหลักเกณฑ์การเปิดเผยข้อมูลข่าวสารของราชการ","สอดส่องดูแลการดำเนินงานของหน่วยงานของรัฐในการปฏิบัติตามพระราชบัญญัติ","ให้คำแนะนำเกี่ยวกับการดำเนินงานของหน่วยงานของรัฐในการปฏิบัติตามพระราชบัญญัติ"],a:1,e:""},
+{n:35,c:"เอกสารประวัติศาสตร์",q:"หน่วยงานที่มีหน้าที่รักษาเอกสารประวัติศาสตร์ตามพระราชบัญญัตินี้ คือหน่วยงานตามข้อใด",o:["หอจดหมายเหตุแห่งชาติ","พิพิธภัณฑ์","กรมสารสนเทศ","คณะกรรมการข้อมูลข่าวสารของราชการ"],a:0,e:""},
+{n:36,c:"คณะกรรมการ",q:"ผู้ใดเป็นประธานคณะกรรมการข้อมูลข่าวสารของราชการ",o:["นายกรัฐมนตรี","รองนายกรัฐมนตรี","รัฐมนตรีซึ่งนายกรัฐมนตรีมอบหมาย","เลขาธิการนายกรัฐมนตรี"],a:2,e:""},
+{n:37,c:"คณะกรรมการ",q:"กรรมการผู้ทรงคุณวุฒิในคณะกรรมการข้อมูลข่าวสารของราชการมีวาระดำรงตำแหน่งคราวละกี่ปี",o:["2 ปี","3 ปี","4 ปี","ไม่มีกำหนดระยะเวลา"],a:1,e:""},
+{n:38,c:"คณะกรรมการ",q:"ใครแต่งตั้งผู้ทรงคุณวุฒิในคณะกรรมการข้อมูลข่าวสารของราชการ",o:["ประธานคณะกรรมการข้อมูลข่าวสาร","นายกรัฐมนตรี","รองนายกรัฐมนตรี","คณะรัฐมนตรี"],a:3,e:""},
+{n:39,c:"คณะกรรมการ",q:"กรรมการในคณะกรรมการข้อมูลข่าวสารของราชการมีทั้งหมดกี่คน",o:["17 คน","22 คน","23 คน","25 คน"],a:2,e:"คณะกรรมการข้อมูลข่าวสารของราชการมีจำนวน 23 คน ตามมาตรา 27 วรรคหนึ่ง"},
+{n:40,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"คำสั่งขยายเวลาไม่เปิดเผยข้อมูลข่าวสารของราชการ หน่วยงานของรัฐมีกำหนดคราวละเกินกี่ปีไม่ได้",o:["5 ปี","4 ปี","3 ปี","6 ปี"],a:0,e:""},
+{n:41,c:"คณะกรรมการ",q:"การแต่งตั้งคณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสารของราชการต้องดำเนินการอย่างไร",o:["เลือกตั้งกันเองในคณะกรรมการข้อมูลข่าวสารของราชการ","นายกรัฐมนตรีเป็นผู้ใช้อำนาจในการแต่งตั้ง","คณะกรรมการข้อมูลข่าวสารของราชการมีอำนาจแต่งตั้ง","คณะรัฐมนตรีแต่งตั้งตามข้อเสนอของคณะกรรมการข้อมูลข่าวสารของราชการ"],a:3,e:""},
+{n:42,c:"คณะกรรมการ",q:"ข้อใดเป็นอำนาจหน้าที่ของคณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสาร",o:["วินิจฉัยอุทธรณ์คำสั่งไม่ให้แก้ไขเปลี่ยนแปลงหรือลบข้อมูลข่าวสารส่วนบุคคล","วินิจฉัยอุทธรณ์คำสั่งไม่รับฟังคำคัดค้านการเปิดเผยข้อมูลข่าวสาร","วินิจฉัยอุทธรณ์คำสั่งมิให้เปิดเผยข้อมูลข่าวสาร","ถูกทุกข้อ"],a:3,e:""},
+{n:43,c:"คณะกรรมการ",q:"คณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสารของราชการแต่ละคณะจะต้องมีกรรมการไม่น้อยกว่ากี่คน",o:["3 คน","4 คน","5 คน","2 คน"],a:0,e:""},
+{n:44,c:"คณะกรรมการ",q:"การส่งคำอุทธรณ์จากคณะกรรมการข้อมูลข่าวสารของราชการไปยังคณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสารเพื่อพิจารณา ต้องทำภายในกี่วันนับแต่วันที่รับอุทธรณ์",o:["8 วัน","5 วัน","6 วัน","7 วัน"],a:3,e:""},
+{n:45,c:"บทกำหนดโทษ",q:"หากไม่ปฏิบัติตามคำสั่งของคณะกรรมการข้อมูลข่าวสารของราชการที่สั่งเรียกบุคคลมาให้ถ้อยคำหรือให้ส่งพยานหลักฐาน ต้องระวางโทษตามข้อใด",o:["โทษปรับสถานเดียว","โทษปรับสถานเดียวไม่มีจำคุก","ไม่มีโทษทางอาญา","มีโทษทั้งปรับและ/หรือจำคุก"],a:3,e:""},
+{n:46,c:"บททั่วไป",q:"บุคคลใดเป็นผู้รักษาการตามพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540 (ตามเอกสารต้นฉบับ)",o:["นายสมคิด จาตุศรีพิทักษ์","พลเอกประยุทธ์ จันทร์โอชา","พลเอกประวิตร วงษ์สุวรรณ","นายวิษณุ เครืองาม"],a:1,e:"ผู้รักษาการคือนายกรัฐมนตรี ตามเอกสารต้นฉบับระบุชื่อนายกรัฐมนตรีในขณะนั้น"},
+{n:47,c:"บททั่วไป",q:"พระราชบัญญัติข้อมูลข่าวสารนี้มีผลบังคับใช้ตามข้อใด",o:["เมื่อเวลาผ่านไป 120 วันนับจากวันที่ประกาศในราชกิจจานุเบกษา","เมื่อพ้นกำหนดเก้าสิบวันนับแต่วันที่ประกาศในราชกิจจานุเบกษา","เมื่อพ้นกำหนด 60 วันนับแต่วันที่ประกาศในราชกิจจานุเบกษา","นับตั้งแต่วันถัดจากวันประกาศในราชกิจจานุเบกษา"],a:1,e:""},
+{n:48,c:"ขอบเขตการบังคับใช้",q:"ตามขอบเขตเนื้อหาของพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540 มีเนื้อหาครอบคลุมตามข้อใด",o:["ข้อมูลข่าวสารของราชการที่เป็นเอกสารประวัติศาสตร์","ข้อมูลข่าวสารของราชการที่เป็นส่วนบุคคล","ข้อมูลข่าวสารของราชการทั่วไป","ถูกทุกข้อ"],a:3,e:"ตามมาตรา 3"},
+{n:49,c:"บทนิยาม (มาตรา 4)",q:'คำว่า "คณะกรรมการ" ตามพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540 คือความหมายตามข้อใด',o:["คณะกรรมการข้อมูลข่าวสารของราชการ","คณะกรรมการตรวจสอบข่าวสารของราชการ","คณะกรรมการกฤษฎีกา","คณะกรรมการข้อมูลที่ปลัดสำนักนายกรัฐมนตรีแต่งตั้ง"],a:0,e:"ตามมาตรา 4"},
+{n:50,c:"ข้อมูลข่าวสารส่วนบุคคล",q:'ข้อใดกล่าวไม่ถูกต้องเกี่ยวกับคำว่า "ข้อมูลข่าวสารส่วนบุคคล"',o:["ประวัติการทำงานของบุคคล","ประวัติการตายของบุคคล","ประวัติการมีสามีภรรยาของบุคคล","เลขทะเบียนบ้านของบุคคล"],a:2,e:""},
+{n:51,c:"บททั่วไป",q:"พระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540 พระมหากษัตริย์ทรงตราขึ้นไว้โดยคำแนะนำและยินยอมของหน่วยงานในข้อใด",o:["รัฐสภา","สภานิติบัญญัติ","สภาผู้แทนราษฎร","คณะรัฐมนตรี"],a:0,e:""},
+{n:52,c:"บทนิยาม (มาตรา 4)",q:'คำว่า "ข้อมูลข่าวสาร" มีความหมายตามข้อใด',o:["ข้อมูลข่าวสารที่อยู่ในความครอบครองหรือควบคุมดูแลของหน่วยงานรัฐ","ข้อมูลข่าวสารที่เกี่ยวกับการดำเนินงานของรัฐหรือข้อมูลข่าวสารเกี่ยวกับเอกชน","การบันทึกภาพและเสียงโดยคอมพิวเตอร์หรือที่ทำให้การบันทึกปรากฏได้ในหน่วยงานรัฐ","สิ่งที่สื่อความหมายให้รู้เรื่องราวข้อเท็จจริง ข้อมูลหรือสิ่งใด ๆ ไม่ว่าการสื่อความหมายนั้นจะทำได้โดยสภาพของสิ่งนั้นเองหรือโดยผ่านวิธีการใด ๆ"],a:3,e:"ตามมาตรา 4"},
+{n:53,c:"บทนิยาม (มาตรา 4)",q:'ข้อใดคือความหมายของ "ข้อมูลข่าวสารของราชการ"',o:["ข้อมูลข่าวสารที่อยู่ในความครอบครองหรือควบคุมดูแลของหน่วยงานรัฐ ไม่ว่าจะเป็นข้อมูลข่าวสารเกี่ยวกับการดำเนินงานของรัฐหรือข้อมูลข่าวสารเกี่ยวกับเอกชน","ข้อมูลข่าวสารที่เกี่ยวกับการดำเนินงานของรัฐหรือข้อมูลข่าวสารเกี่ยวกับเอกชนโดยการบันทึกภาพ เสียง","การบันทึกภาพและเสียงโดยคอมพิวเตอร์หรือที่ทำให้การบันทึกปรากฏได้ในหน่วยงานรัฐ","สิ่งที่สื่อความหมายให้รู้เรื่องราวข้อเท็จจริง ข้อมูลหรือสิ่งใด ๆ ไม่ว่าการสื่อความหมายนั้นจะทำได้โดยสภาพของสิ่งนั้นเองหรือโดยผ่านวิธีการใด ๆ"],a:0,e:""},
+{n:54,c:"คณะกรรมการ",q:"พระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540 กำหนดให้มีการจัดตั้งสำนักงานคณะกรรมการข้อมูลข่าวสารของราชการขึ้นในหน่วยงานใด",o:["สำนักเลขาธิการนายกรัฐมนตรี","สำนักงานคณะกรรมการกฤษฎีกา","สำนักงานปลัดสำนักนายกรัฐมนตรี","สำนักงานคณะกรรมการข้าราชการพลเรือน"],a:2,e:""},
+{n:55,c:"ข้อมูลข่าวสารส่วนบุคคล",q:'ข้อใดคือ "ข้อมูลข่าวสารส่วนบุคคล" ตามพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540',o:["การศึกษา ฐานะทางการเงิน","ประวัติสุขภาพ ประวัติอาชญากรรม","ประวัติการทำงาน แผ่นบันทึกเสียง รูปถ่าย","ถูกทุกข้อ"],a:3,e:""},
+{n:56,c:"บทนิยาม (มาตรา 4)",q:'"หน่วยงานของรัฐ" ตามพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540 คือข้อใด',o:["ราชการส่วนภูมิภาค","ราชการส่วนท้องถิ่น","รัฐวิสาหกิจ","ราชการส่วนกลาง ราชการส่วนภูมิภาค ราชการส่วนท้องถิ่น รัฐวิสาหกิจ ส่วนราชการสังกัดรัฐสภา"],a:3,e:"ตามมาตรา 4"},
+{n:57,c:"บทนิยาม (มาตรา 4)",q:'"เจ้าหน้าที่ของรัฐ" ตามพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540 หมายความว่าอย่างไร',o:["บุคคลที่ปฏิบัติงานในภาครัฐ","ผู้ซึ่งปฏิบัติงานให้แก่หน่วยงานของรัฐ","บุคคลหนึ่งบุคคลใดที่ทำงานให้รัฐ","ไม่มีข้อใดถูก"],a:1,e:"ดูมาตรา 4 ประกอบ"},
+{n:58,c:"บทนิยาม (มาตรา 4)",q:'ข้อใดคือความหมายของคำว่า "คนต่างด้าว" ในพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540',o:["บุคคลธรรมดาที่ไม่มีสัญชาติไทยและไม่มีถิ่นที่อยู่ในประเทศไทย และนิติบุคคล","บุคคลธรรมดาที่ไม่มีสัญชาติไทยและมีถิ่นที่อยู่ในประเทศไทย และนิติบุคคล","บุคคลธรรมดาที่ไม่มีสัญชาติไทยและมีถิ่นที่อยู่ในประเทศไทย","บุคคลธรรมดาที่ไม่มีสัญชาติไทยและนิติบุคคล"],a:0,e:"ดูมาตรา 4 ประกอบ"},
+{n:59,c:"การเปิดเผยข้อมูลข่าวสาร",q:"หน่วยงานของรัฐต้องจัดให้มีข้อมูลข่าวสารของราชการอย่างน้อยดังต่อไปนี้ไว้ให้ประชาชนเข้าตรวจดูได้ ข้อใดกล่าวถูกต้อง",o:["ผลการพิจารณาหรือคำวินิจฉัยที่มีผลโดยตรงต่อเอกชน","นโยบายหรือการตีความที่ไม่เข้าข่ายต้องลงพิมพ์ในราชกิจจานุเบกษา","แผนงาน โครงการ และงบประมาณรายจ่ายประจำปีของปีที่กำลังดำเนินการ","ถูกทุกข้อ"],a:3,e:"ดูมาตรา 9 ประกอบ"},
+{n:60,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"ข้อใดคือข้อมูลข่าวสารที่จะเปิดเผยมิได้",o:["ความเสียหายต่อสถาบันพระมหากษัตริย์","ความเสียหายต่อความมั่นคงของประเทศ","จะทำให้การบังคับใช้กฎหมายเสื่อมประสิทธิภาพ","จะก่อให้เกิดอันตรายต่อชีวิตหรือความปลอดภัยของบุคคลหนึ่งบุคคลใด"],a:0,e:"ดูมาตรา 14 ประกอบ"},
+{n:61,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"ข้อมูลข่าวสารของราชการที่มีลักษณะอย่างหนึ่งอย่างใดดังต่อไปนี้ เจ้าหน้าที่ของรัฐอาจมีคำสั่งมิให้เปิดเผยก็ได้ ข้อใดกล่าวถูกต้อง",o:["ความเสียหายต่อความมั่นคงของประเทศ","จะทำให้การบังคับใช้กฎหมายเสื่อมประสิทธิภาพ","จะก่อให้เกิดอันตรายต่อชีวิตหรือความปลอดภัยของบุคคลหนึ่งบุคคลใด","ถูกทุกข้อ"],a:3,e:"ดูมาตรา 15 ประกอบ"},
+{n:62,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"การเปิดเผยข้อมูลข่าวสารใดแม้จะเข้าข่ายต้องมีความผิดตามกฎหมายใด ให้ถือว่าเจ้าหน้าที่ของรัฐต้องรับผิดหรือไม่ อย่างไร",o:["รับผิดเพราะเป็นการละเมิดสิทธิส่วนบุคคล","ไม่ต้องรับผิดหากเป็นการกระทำโดยสุจริต","ไม่ต้องรับผิดเพราะเจ้าหน้าที่ของรัฐย่อมมีอำนาจเสมอ","ต้องรับผิด"],a:1,e:"ดูมาตรา 20 วรรคหนึ่งประกอบ"},
+{n:63,c:"ข้อมูลข่าวสารส่วนบุคคล",q:'ข้อใดถูกต้องที่สุดในความหมายคำว่า "บุคคล" ตามพระราชบัญญัติข้อมูลข่าวสารของราชการ พ.ศ. 2540',o:["บุคคลธรรมดาที่มีสัญชาติไทยและบุคคลธรรมดาที่ไม่มีสัญชาติไทยแต่มีถิ่นที่อยู่ในประเทศไทย","บุคคลธรรมดาที่มีสัญชาติไทยและบุคคลธรรมดาที่ไม่มีสัญชาติไทย","บุคคลธรรมดาที่ไม่มีสัญชาติไทยแต่มีถิ่นที่อยู่ในประเทศไทย","บุคคลธรรมดาที่เป็นนิติบุคคลและมีถิ่นที่อยู่ในประเทศไทย"],a:0,e:"ดูมาตรา 21 ประกอบ"},
+{n:64,c:"ข้อมูลข่าวสารส่วนบุคคล",q:"ตามกฎหมายข้อมูลข่าวสาร การจัดให้มีการพิมพ์ในราชกิจจานุเบกษาและตรวจสอบแก้ไขให้ถูกต้องอยู่เสมอเกี่ยวกับสิ่งใด ข้อใดกล่าวถูกต้อง",o:["ประเภทของบุคคลที่มีการเก็บข้อมูลไว้","ประเภทของระบบข้อมูลข่าวสารส่วนบุคคล","ลักษณะการใช้ข้อมูลตามปกติ","ถูกทุกข้อ"],a:3,e:"ดูมาตรา 23 วรรคหนึ่ง (3) ประกอบ"},
+{n:65,c:"ข้อมูลข่าวสารส่วนบุคคล",q:"หน่วยงานของรัฐจะเปิดเผยข้อมูลข่าวสารส่วนบุคคลต่อหน่วยงานของรัฐแห่งอื่นหรือผู้อื่นโดยปราศจากความยินยอมเป็นหนังสือของเจ้าของข้อมูลมิได้ เว้นแต่เป็นการเปิดเผยในข้อใด",o:["ต่อเจ้าหน้าที่ของรัฐในหน่วยงานของตนเพื่อใช้ตามอำนาจหน้าที่ของหน่วยงานรัฐแห่งนั้น","เป็นการใช้ข้อมูลตามปกติภายในวัตถุประสงค์ของการจัดให้มีระบบข้อมูลข่าวสารส่วนบุคคลนั้น","ต่อหน่วยงานของรัฐที่ทำงานด้านการวางแผนหรือสถิติหรือสำมะโนต่าง ๆ","ถูกทุกข้อ"],a:3,e:"ดูมาตรา 24 วรรคหนึ่งประกอบ"},
+{n:66,c:"การเปิดเผยข้อมูลข่าวสาร",q:"คนต่างด้าวจะมีสิทธิตามพระราชบัญญัติข้อมูลข่าวสารของราชการเพียงใด ให้เป็นไปตามที่กำหนดในกฎหมายใด",o:["ประกาศของคณะกรรมการข้อมูลข่าวสารของราชการ","พระราชกฤษฎีกา","พระราชบัญญัติ","กฎกระทรวง"],a:3,e:"ดูมาตรา 9 วรรคสามประกอบ"},
+{n:67,c:"คณะกรรมการ",q:"คณะกรรมการข้อมูลข่าวสารของราชการมีทั้งหมดกี่คน",o:["23 คน","22 คน","19 คน","24 คน"],a:0,e:"ดูมาตรา 27 วรรคหนึ่งประกอบ"},
+{n:68,c:"คณะกรรมการ",q:"ผู้ใดมีสิทธิเป็นเลขานุการและผู้ช่วยเลขานุการของคณะกรรมการข้อมูลข่าวสารของราชการ",o:["ข้าราชการของสำนักงานปลัดสำนักนายกรัฐมนตรี","ปลัดสำนักนายกรัฐมนตรีและรองปลัดสำนักนายกรัฐมนตรี","เลขาธิการนายกรัฐมนตรี","รองนายกรัฐมนตรี"],a:0,e:"ดูมาตรา 27 วรรคสองประกอบ"},
+{n:69,c:"คณะกรรมการ",q:"คณะกรรมการข้อมูลข่าวสารของราชการมีอำนาจหน้าที่ตามข้อใด",o:["สอดส่องดูแลและให้คำแนะนำเกี่ยวกับการดำเนินงานของเจ้าหน้าที่ของรัฐและหน่วยงานของรัฐ","ให้คำปรึกษาแก่เจ้าหน้าที่ของรัฐหรือหน่วยงานของรัฐเกี่ยวกับการปฏิบัติตามกฎหมายนี้","เสนอแนะในการตราพระราชกฤษฎีกาและการออกกฎกระทรวงหรือระเบียบของคณะรัฐมนตรี","ถูกทุกข้อ"],a:3,e:"ดูมาตรา 28 ประกอบ"},
+{n:70,c:"คณะกรรมการ",q:"กรรมการผู้ทรงคุณวุฒิในคณะกรรมการข้อมูลข่าวสารของราชการพ้นจากตำแหน่งตามข้อใด",o:["ตาย","ลาออก","เป็นบุคคลล้มละลาย","ถูกทุกข้อ"],a:3,e:"ดูมาตรา 30 ประกอบ"},
+{n:71,c:"ข้อมูลข่าวสารส่วนบุคคล",q:"ถ้ากรณีมีเหตุอันควร เจ้าหน้าที่ของรัฐจะต้องเปิดเผยข้อมูลข่าวสารรายงานทางการแพทย์ที่เกี่ยวกับบุคคลให้ทำตามข้อใด",o:["เปิดเผยต่อเฉพาะแพทย์ที่บุคคลนั้นมอบหมายก็ได้","ต้องขออนุญาตจากเจ้าของข้อมูลเท่านั้น","สามารถเปิดเผยได้ทันที","ขออนุญาตผู้บังคับบัญชาหน่วยงานของรัฐที่มีข้อมูลบุคคลนั้น"],a:0,e:"ดูมาตรา 25 วรรคสองประกอบ"},
+{n:72,c:"ข้อมูลข่าวสารส่วนบุคคล",q:"บุคคลที่กำหนดไว้ในกฎหมายใดมีสิทธิดำเนินการในข้อมูลข่าวสารแทนผู้เยาว์ คนไร้ความสามารถ คนเสมือนไร้ความสามารถ หรือเจ้าของข้อมูลที่ถึงแก่กรรมแล้ว",o:["ประกาศสำนักนายกรัฐมนตรี","กฎกระทรวง","พระราชกฤษฎีกา","พระราชบัญญัติ"],a:1,e:"ดูมาตรา 25 วรรคห้าประกอบ"},
+{n:73,c:"เอกสารประวัติศาสตร์",q:"ข้อมูลข่าวสารของราชการที่หน่วยงานของรัฐไม่ประสงค์จะเก็บรักษาหรือมีอายุครบกำหนดแล้ว ให้ส่งมอบแก่หน่วยงานใด",o:["หอจดหมายเหตุแห่งชาติ กรมวัฒนธรรม","หอจดหมายเหตุแห่งชาติ สำนักนายกรัฐมนตรี","หอจดหมายเหตุแห่งชาติ สังกัดกรมสารสนเทศ","หอจดหมายเหตุแห่งชาติ กรมศิลปากร"],a:3,e:"ดูมาตรา 26 วรรคหนึ่งประกอบ"},
+{n:74,c:"เอกสารประวัติศาสตร์",q:"ข้อมูลข่าวสารของราชการที่ต้องส่งให้หอจดหมายเหตุแห่งชาติเมื่อมีอายุครบเจ็ดสิบห้าปี ข้อใดกล่าวถูกต้อง",o:["ความเสียหายต่อสถาบันพระมหากษัตริย์","ความมั่นคงของประเทศ","ความสัมพันธ์ระหว่างประเทศ","ข้อมูลเกี่ยวกับบุคคลใดบุคคลหนึ่ง"],a:0,e:"ดูมาตรา 26 วรรคสอง (1) ประกอบ"},
+{n:75,c:"เอกสารประวัติศาสตร์",q:"ข้อใดกล่าวถูกต้องเกี่ยวกับข้อมูลข่าวสารของราชการที่ต้องส่งให้หอจดหมายเหตุแห่งชาติเมื่อมีอายุครบยี่สิบปี",o:["ความเสียหายต่อสถาบันพระมหากษัตริย์","ความมั่นคงของประเทศ","ความสัมพันธ์ระหว่างประเทศ","ถูกเฉพาะข้อ ก. และข้อ ข."],a:3,e:"ดูมาตรา 26 วรรคสอง (2) ประกอบ"},
+{n:76,c:"เอกสารประวัติศาสตร์",q:"ถ้าหน่วยงานของรัฐยังจำเป็นต้องเก็บรักษาข้อมูลข่าวสารของราชการไว้เองเพื่อประโยชน์ใช้สอย เพื่อให้ประชาชนได้ศึกษาค้นคว้า ต้องตกลงกับหน่วยงานในข้อใด",o:["หอจดหมายเหตุแห่งชาติ กรมศิลปากร","หอจดหมายเหตุแห่งชาติ สำนักนายกรัฐมนตรี","หอจดหมายเหตุแห่งชาติ สังกัดกรมสารสนเทศ","หอจดหมายเหตุแห่งชาติ กรมวัฒนธรรม"],a:0,e:"ดูมาตรา 26 วรรคสาม (1) ประกอบ"},
+{n:77,c:"เอกสารประวัติศาสตร์",q:"การตรวจสอบหรือทบทวนข้อมูลข่าวสารมิให้มีการขยายระยะเวลาไม่เปิดเผยจนเกินความจำเป็น ให้เป็นไปตามหลักเกณฑ์และวิธีการที่กำหนดในกฎหมายใด",o:["พระราชบัญญัติ","พระราชกฤษฎีกา","ประกาศกระทรวง","กฎกระทรวง"],a:3,e:"ดูมาตรา 26 วรรคสี่ประกอบ"},
+{n:78,c:"คณะกรรมการ",q:"การประชุมของคณะกรรมการข้อมูลข่าวสารของราชการต้องมีกรรมการมาประชุมจำนวนเท่าใด",o:["กึ่งหนึ่งเท่านั้น","ไม่น้อยกว่ากึ่งหนึ่ง","มากกว่ากึ่งหนึ่ง","ไม่เกินกึ่งหนึ่ง"],a:1,e:"ดูมาตรา 31 วรรคหนึ่งประกอบ"},
+{n:79,c:"คณะกรรมการ",q:"ในที่ประชุมคณะกรรมการข้อมูลข่าวสารของราชการ ถ้าประธานในที่ประชุมไม่มาหรือไม่อาจปฏิบัติหน้าที่ได้ จะต้องทำตามข้อใด",o:["ให้ผู้ที่ประธานมอบหมายทำหน้าที่แทน","ให้กรรมการที่มาประชุมเลือกกรรมการคนหนึ่งเป็นประธานในที่ประชุม","ให้รองประธานทำหน้าที่แทน","เลขานุการคณะกรรมการทำหน้าที่แทนชั่วคราวได้"],a:1,e:"ดูมาตรา 31 วรรคสองประกอบ"},
+{n:80,c:"คณะกรรมการ",q:"การวินิจฉัยชี้ขาดของที่ประชุมให้ถือเสียงข้างมาก กรรมการหนึ่งคนมีหนึ่งเสียง ถ้าคะแนนเสียงเท่ากันต้องทำตามข้อใด",o:["ให้ประธานในที่ประชุมออกเสียงเพิ่มขึ้นอีกหนึ่งเสียงเป็นเสียงชี้ขาด","ให้ดำเนินการลงคะแนนเสียงใหม่","ให้ตั้งคณะกรรมการวินิจฉัยการลงคะแนนเสียงใหม่","ให้ประธานตั้งกรรมการพิจารณาการออกเสียงใหม่"],a:0,e:"ดูมาตรา 31 วรรคสามประกอบ"},
+{n:81,c:"คณะกรรมการ",q:"คณะกรรมการข้อมูลข่าวสารของราชการจะแต่งตั้งคณะอนุกรรมการเพื่อพิจารณาหรือปฏิบัติงานอย่างหนึ่งอย่างใดได้หรือไม่",o:["ไม่ได้","ได้","ตามที่คณะกรรมการมอบหมายก็ได้","ตามที่นายกรัฐมนตรีกำหนด"],a:2,e:"ดูมาตรา 34 ประกอบ"},
+{n:82,c:"คณะกรรมการ",q:"ใครแต่งตั้งคณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสาร",o:["นายกรัฐมนตรี","คณะรัฐมนตรี","กรรมการข้อมูลข่าวสารคัดเลือกกันเอง","ไม่มีข้อใดถูก"],a:1,e:"ดูมาตรา 35 วรรคหนึ่งประกอบ"},
+{n:83,c:"คณะกรรมการ",q:"ผู้ใดมีอำนาจเสนอรายชื่อคณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสารต่อคณะรัฐมนตรี",o:["คณะกรรมการข้อมูลข่าวสารของราชการ","คณะอนุกรรมการ","คณะกรรมการกฤษฎีกา","รัฐมนตรีประจำสำนักนายกรัฐมนตรี"],a:0,e:"ดูมาตรา 35 วรรคหนึ่งประกอบ"},
+{n:84,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"เจ้าหน้าที่ของรัฐตั้งแต่ระดับใดที่สามารถมีคำสั่งให้เปิดเผยข้อมูลข่าวสารของราชการที่จัดอยู่ในประเภทที่อาจมีคำสั่งให้เปิดเผยเป็นการทั่วไปหรือเฉพาะแก่บุคคลหนึ่งบุคคลใดได้",o:["ตั้งแต่ระดับ 5 ขึ้นไป","ตั้งแต่ระดับ 6 ขึ้นไป","ตั้งแต่ระดับ 7 ขึ้นไป","ตั้งแต่ระดับ 8 ขึ้นไป"],a:1,e:""},
+{n:85,c:"การเปิดเผยข้อมูลข่าวสาร",q:"หน่วยงานของรัฐจะจัดหาข้อมูลข่าวสารนั้นให้ก็ได้ ถ้าหากเห็นว่าผู้ขอนั้น",o:["มิใช่แสวงหาผลประโยชน์ทางการค้า","เป็นเรื่องจำเป็นเพื่อปกป้องสิทธิเสรีภาพสำหรับผู้นั้น","เป็นเรื่องที่จะเป็นประโยชน์แก่สาธารณะ","ถูกทุกข้อ"],a:3,e:""},
+{n:86,c:"ข้อมูลข่าวสารส่วนบุคคล",q:"สิ่งใดมิใช่สิ่งที่หน่วยงานของรัฐในการจัดการระบบข้อมูลข่าวสารส่วนบุคคลต้องจัดพิมพ์ในราชกิจจานุเบกษาและตรวจสอบความถูกต้อง",o:["วิธีการขอตรวจดูข้อมูลข่าวสารของเจ้าของข้อมูล","วิธีการขอให้แก้ไขเปลี่ยนแปลงข้อมูล","ระบบรักษาความปลอดภัยของข้อมูล","แหล่งที่มาของข้อมูล"],a:2,e:""},
+{n:87,c:"ข้อมูลข่าวสารส่วนบุคคล",q:"ข้อใดกล่าวถูกต้องเกี่ยวกับการเปิดเผยข้อมูลข่าวสารส่วนบุคคล",o:["หน่วยงานของรัฐสามารถเปิดเผยข้อมูลข่าวสารส่วนบุคคลได้ด้วยหลักเดียวกับการเปิดเผยข้อมูลข่าวสารของราชการ","ห้ามมิให้หน่วยงานของรัฐเปิดเผยข้อมูลส่วนบุคคลเฉพาะต่อผู้อื่นเท่านั้น ไม่รวมการเปิดเผยต่อหน่วยงานของรัฐด้วยกันทุกกรณี","หน่วยงานของรัฐสามารถเปิดเผยข้อมูลข่าวสารส่วนบุคคลได้เมื่อได้รับความยินยอมจากเจ้าของข้อมูลเป็นหนังสือล่วงหน้าหรือในขณะนั้น หรือเป็นกรณีที่ได้รับยกเว้นที่ไม่ต้องได้รับความยินยอม","หน่วยงานของรัฐจะเปิดเผยข้อมูลข่าวสารส่วนบุคคลได้ต้องได้รับความยินยอมจากเจ้าของข้อมูลเท่านั้น"],a:2,e:""},
+{n:88,c:"ข้อมูลข่าวสารส่วนบุคคล",q:"หากหน่วยงานของรัฐต้องจัดส่งข้อมูลข่าวสารส่วนบุคคลไปยังที่ใด ซึ่งจะเป็นผลให้บุคคลทั่วไปทราบข้อมูลข่าวสารนั้นได้ จะต้องดำเนินการอย่างไร",o:["แจ้งให้เจ้าของข้อมูลทราบ","แจ้งให้คณะกรรมการข้อมูลข่าวสารทราบ","ขอความยินยอมจากเจ้าของข้อมูล","ขออนุญาตจากคณะกรรมการข้อมูลข่าวสาร"],a:0,e:""},
+{n:89,c:"ข้อมูลข่าวสารส่วนบุคคล",q:"การเปิดเผยข้อมูลข่าวสารส่วนบุคคลในกรณีใดไม่ต้องมีการจัดทำบัญชีแสดงการเปิดเผยกำกับข้อมูลข่าวสารนั้นด้วย",o:["เปิดเผยต่อเจ้าหน้าที่ของรัฐในหน่วยงานของตนเพื่อการนำไปใช้ตามอำนาจหน้าที่ของหน่วยงานของรัฐเท่านั้น","การเปิดเผยเพื่อประโยชน์ในการศึกษาวิจัยโดยไม่ระบุชื่อหรือส่วนที่ทำให้รู้ว่าเป็นข้อมูลข่าวสารส่วนบุคคลที่เกี่ยวกับบุคคลใด","การเปิดเผยเพื่อการป้องกันหรือระงับอันตรายต่อชีวิตหรือสุขภาพของบุคคล","การเปิดเผยต่อศาลและเจ้าหน้าที่ของรัฐ หรือหน่วยงานของรัฐ หรือบุคคลที่มีอำนาจตามกฎหมายที่จะขอข้อเท็จจริงดังกล่าว"],a:0,e:""},
+{n:90,c:"ข้อมูลข่าวสารส่วนบุคคล",q:"ถ้าบุคคลใดเห็นว่าข้อมูลข่าวสารส่วนบุคคลที่เกี่ยวข้องกับตนมีความไม่ถูกต้อง จะต้องดำเนินการอย่างไร",o:["ร้องขอด้วยวาจาหรือเป็นหนังสือให้หน่วยงานของรัฐนั้นแก้ไขเปลี่ยนแปลง","ร้องขอด้วยวาจาหรือเป็นหนังสือให้คณะกรรมการข้อมูลข่าวสารแก้ไขเปลี่ยนแปลง","ยื่นคำขอเป็นหนังสือให้หน่วยงานของรัฐที่ควบคุมดูแลแก้ไขเปลี่ยนแปลง","ยื่นคำขอเป็นหนังสือให้คณะกรรมการข้อมูลข่าวสารของราชการ"],a:2,e:""},
+{n:91,c:"ข้อมูลข่าวสารส่วนบุคคล",q:"หากหน่วยงานของรัฐพิจารณาแล้วไม่เห็นควรให้แก้ไขเปลี่ยนแปลงข้อมูลตามคำขอ ผู้ขอมีสิทธิอุทธรณ์ต่อคณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสารภายในกี่วันนับแต่วันได้รับแจ้งคำสั่ง",o:["15 วัน","20 วัน","30 วัน","อุทธรณ์โดยไม่ชักช้า"],a:2,e:""},
+{n:92,c:"การเปิดเผยข้อมูลข่าวสาร",q:"การประกาศสอบราคาของหน่วยงานของรัฐที่หัวหน้าส่วนราชการลงนามแล้ว เป็นข้อมูลข่าวสารที่รัฐต้องจัดไว้ให้ประชาชนเข้าตรวจดูได้เป็นระยะเวลาเท่าใด",o:["3 เดือน","6 เดือน","1 ปี","2 ปี"],a:2,e:""},
+{n:93,c:"เอกสารประวัติศาสตร์",q:"เอกสารประวัติศาสตร์ตามพระราชบัญญัตินี้ หมายถึงข้อใด",o:["ข้อมูลข่าวสารของทางราชการที่หน่วยงานของรัฐไม่ประสงค์จะเก็บรักษาไว้","ข้อมูลที่เกี่ยวกับความเป็นจริงทางประวัติศาสตร์ของประเทศที่เกิดขึ้นในอดีต และมีการคัดเลือกและเก็บรักษาไว้ในรูปเอกสาร","ข้อมูลข่าวสารของทางราชการที่เมื่อมีอายุครบกำหนด หน่วยงานของรัฐต้องส่งให้หน่วยงานอื่นของรัฐคัดเลือกและเก็บรักษาเพื่อให้ประชาชนได้ศึกษาค้นคว้า","ถูกต้องทั้ง ก. และ ค."],a:3,e:""},
+{n:94,c:"เอกสารประวัติศาสตร์",q:"ข้อมูลข่าวสารของทางราชการที่การเปิดเผยจะก่อให้เกิดอันตรายต่อชีวิตหรือความปลอดภัยของบุคคลหนึ่งบุคคลใด มีกำหนดเวลาต้องส่งเพื่อเก็บรักษากี่ปี",o:["10 ปี","15 ปี","20 ปี","25 ปี"],a:2,e:""},
+{n:95,c:"การเปิดเผยข้อมูลข่าวสาร",q:"บุคคลใดเห็นว่าหน่วยงานรัฐไม่จัดพิมพ์ข้อมูลข่าวสารหรือปฏิบัติหน้าที่ล่าช้า หรือเห็นว่าตนไม่ได้รับความสะดวกโดยไม่มีเหตุอันสมควร ผู้นั้นมีสิทธิร้องเรียนต่อบุคคลตามข้อใด",o:["นายกรัฐมนตรี","คณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสาร","หัวหน้าหน่วยงานนั้น","คณะกรรมการข้อมูลข่าวสารของราชการ"],a:3,e:""},
+{n:96,c:"ข้อมูลข่าวสารที่ไม่ต้องเปิดเผย",q:"การพิจารณาเกี่ยวกับข้อมูลข่าวสารที่มีคำสั่งมิให้เปิดเผย ไม่ว่าจะเป็นการพิจารณาของคณะกรรมการข้อมูลข่าวสารของราชการ คณะกรรมการวินิจฉัยการเปิดเผยข้อมูลข่าวสาร หรือศาลก็ตาม ข้อใดกล่าวไม่ถูกต้อง",o:["ต้องดำเนินการพิจารณาโดยมิให้ข้อมูลข่าวสารนั้นเปิดเผยต่อบุคคลอื่น","มิให้ข้อมูลข่าวสารนั้นเปิดเผยต่อบุคคลอื่นที่ไม่จำเป็นแก่การพิจารณา","ในกรณีจำเป็นจะพิจารณาลับหลังคู่กรณีหรือคู่ความฝ่ายใดก็ได้","ต้องพิจารณาอย่างเปิดเผยโดยให้คู่ความทั้งสองฝ่ายรับทราบด้วย"],a:3,e:""},
+{n:97,c:"คณะกรรมการ",q:"ตามพระราชบัญญัติฉบับนี้ ให้มีคณะกรรมการข้อมูลข่าวสารของราชการ ประกอบด้วยรัฐมนตรีซึ่งบุคคลใดมอบหมายให้เป็นประธาน",o:["นายกรัฐมนตรี","รัฐมนตรีว่าการกระทรวงมหาดไทย","ประธานรัฐสภา","รองนายกรัฐมนตรีฝ่ายความมั่นคง"],a:0,e:""},
+{n:98,c:"คณะกรรมการ",q:"กรรมการผู้ทรงคุณวุฒิซึ่งได้รับแต่งตั้งตามพระราชบัญญัติฉบับนี้ มีวาระอยู่ในตำแหน่งคราวละกี่ปีนับแต่วันที่ได้รับแต่งตั้ง และผู้ที่พ้นจากตำแหน่งแล้วอาจได้รับแต่งตั้งใหม่ได้",o:["1 ปี","2 ปี","3 ปี","4 ปี"],a:2,e:""},
+{n:99,c:"คณะกรรมการ",q:"กฎหมายฉบับนี้ให้คณะกรรมการมีอำนาจตามข้อใดในการที่จะประกอบการพิจารณา",o:["เรียกให้บุคคลใดมาให้ถ้อยคำ","เรียกให้ส่งวัตถุ เอกสาร","เรียกให้ส่งพยานหลักฐาน","ถูกทุกข้อ"],a:3,e:""},
+{n:100,c:"บทกำหนดโทษ",q:"ผู้ใดไม่ปฏิบัติตามคำสั่งของคณะกรรมการที่สั่ง ต้องระวางโทษตามข้อใด",o:["จำคุกไม่เกินสามเดือน หรือปรับไม่เกินห้าพันบาท หรือทั้งจำทั้งปรับ","จำคุกไม่เกินสี่เดือน หรือปรับไม่เกินห้าพันบาท หรือทั้งจำทั้งปรับ","จำคุกไม่เกินห้าเดือน หรือปรับไม่เกินห้าพันบาท หรือทั้งจำทั้งปรับ","จำคุกไม่เกินหกเดือน หรือปรับไม่เกินห้าพันบาท หรือทั้งจำทั้งปรับ"],a:0,e:""}
+];
+
+const KEYS = ['ก','ข','ค','ง'];
+const PASS = 70;
+const $ = s => document.querySelector(s);
+
+const cfg = { mode:'practice', count:0, shufQ:true, shufO:false, cats:new Set() };
+let S = null; // session
+
+/* ---------- setup screen ---------- */
+const allCats = [...new Set(QUESTIONS.map(q=>q.c))];
+
+function buildCats(){
+  $('#catGrid').innerHTML = allCats.map(c=>{
+    const n = QUESTIONS.filter(q=>q.c===c).length;
+    return `<button class="catbtn" data-cat="${c}" aria-pressed="false"><span>${c}</span><span class="c">${n}</span></button>`;
+  }).join('');
+  $('#catGrid').querySelectorAll('.catbtn').forEach(b=>{
+    b.onclick = ()=>{
+      const c = b.dataset.cat, on = b.getAttribute('aria-pressed')==='true';
+      b.setAttribute('aria-pressed', String(!on));
+      on ? cfg.cats.delete(c) : cfg.cats.add(c);
+      updatePool();
+    };
+  });
+}
+function pool(){
+  return cfg.cats.size ? QUESTIONS.filter(q=>cfg.cats.has(q.c)) : QUESTIONS.slice();
+}
+function updatePool(){
+  const p = pool().length;
+  const n = cfg.count === 0 ? p : Math.min(cfg.count, p);
+  $('#poolInfo').textContent = `จะทำ ${n} ข้อ จากคลัง ${p} ข้อ · ผ่านต้องได้ ${Math.ceil(n*PASS/100)} ข้อขึ้นไป`;
+  $('#startBtn').disabled = n === 0;
+}
+document.querySelectorAll('[data-mode]').forEach(b=>{
+  b.onclick = ()=>{
+    document.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true'); cfg.mode = b.dataset.mode;
+  };
+});
+document.querySelectorAll('[data-count]').forEach(b=>{
+  b.onclick = ()=>{
+    document.querySelectorAll('[data-count]').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true'); cfg.count = +b.dataset.count; updatePool();
+  };
+});
+[['#shufQ','shufQ'],['#shufO','shufO']].forEach(([sel,key])=>{
+  $(sel).onclick = ()=>{
+    const on = $(sel).getAttribute('aria-pressed')==='true';
+    $(sel).setAttribute('aria-pressed', String(!on)); cfg[key] = !on;
+  };
+});
+
+function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function prepare(list){
+  return list.map(q=>{
+    let order = [0,1,2,3];
+    if(cfg.shufO) order = shuffle(order.slice());
+    return { src:q, order, answer:order.indexOf(q.a) };
+  });
+}
+
+function start(list){
+  S = {
+    items: list, i: 0,
+    picks: new Array(list.length).fill(null),
+    flags: new Array(list.length).fill(false),
+    graded: new Array(list.length).fill(false),
+    mode: cfg.mode, t0: Date.now(), t1: null
+  };
+  $('#setup').classList.add('hide');
+  $('#results').classList.add('hide');
+  $('#quiz').classList.remove('hide');
+  $('#totNo').textContent = list.length;
+  $('#submitBtn').classList.toggle('hide', cfg.mode !== 'exam');
+  buildNav();
+  render();
+  window.scrollTo(0,0);
+}
+
+$('#startBtn').onclick = ()=>{
+  let p = pool();
+  if(cfg.shufQ) shuffle(p);
+  if(cfg.count > 0) p = p.slice(0, cfg.count);
+  else if(!cfg.shufQ) p.sort((a,b)=>a.n-b.n);
+  start(prepare(p));
+};
+
+/* ---------- quiz ---------- */
+function buildNav(){
+  $('#navGrid').innerHTML = S.items.map((_,i)=>
+    `<button class="navcell" data-i="${i}">${i+1}</button>`).join('');
+  $('#navGrid').querySelectorAll('.navcell').forEach(b=>{
+    b.onclick = ()=>{ S.i = +b.dataset.i; render(); document.querySelector('.panel').scrollIntoView({block:'start',behavior:'smooth'}); };
+  });
+}
+function paintNav(){
+  $('#navGrid').querySelectorAll('.navcell').forEach((b,i)=>{
+    b.className = 'navcell';
+    const p = S.picks[i];
+    if(p !== null){
+      if(S.mode === 'practice') b.classList.add(p === S.items[i].answer ? 'right' : 'wrong');
+      else b.classList.add('done');
+    }
+    if(S.flags[i]) b.classList.add('flag');
+    if(i === S.i) b.classList.add('cur');
+  });
+}
+function stats(){
+  let r=0,w=0,s=0;
+  S.items.forEach((it,i)=>{
+    const p = S.picks[i];
+    if(p === null) s++; else if(p === it.answer) r++; else w++;
+  });
+  return {r,w,s};
+}
+function render(){
+  const it = S.items[S.i], q = it.src, pick = S.picks[S.i];
+  const revealed = S.mode === 'practice' && pick !== null;
+
+  $('#curNo').textContent = S.i + 1;
+  $('#prog').style.width = ((S.i+1)/S.items.length*100) + '%';
+  $('#prog').classList.toggle('ok', S.mode==='practice');
+  $('#qno').textContent = 'ข้อ ' + String(S.i+1).padStart(2,'0') + ' · ต้นฉบับข้อ ' + q.n;
+  $('#qcat').textContent = q.c;
+  $('#qtext').textContent = q.q;
+
+  const st = stats();
+  $('#tally').innerHTML = S.mode === 'practice'
+    ? `<span class="r">ถูก ${st.r}</span> · <span class="w">ผิด ${st.w}</span>`
+    : `ตอบแล้ว ${S.items.length - st.s}/${S.items.length}`;
+
+  $('#opts').innerHTML = it.order.map((oi,k)=>{
+    let cls = 'opt', mark = '';
+    if(revealed){
+      if(k === it.answer){ cls += ' right'; mark = '<span class="mark">✓ คำตอบที่ถูกต้อง</span>'; }
+      else if(k === pick){ cls += ' wrong'; mark = '<span class="mark">✕ คำตอบของคุณ</span>'; }
+    }
+    const sel = (!revealed && pick === k) ? 'true' : 'false';
+    return `<button class="${cls}" data-k="${k}" aria-pressed="${sel}" ${revealed?'disabled':''}>
+      <span class="k">${KEYS[k]}</span><span>${esc(q.o[oi])}${mark}</span></button>`;
+  }).join('');
+  $('#opts').querySelectorAll('.opt').forEach(b=>{ b.onclick = ()=>choose(+b.dataset.k); });
+
+  const rb = $('#revealBox');
+  if(revealed){
+    const ok = pick === it.answer;
+    rb.className = 'reveal' + (ok ? '' : ' miss');
+    rb.classList.remove('hide');
+    rb.innerHTML = `
+      <div class="reveal-hd"><span class="dot"></span>${ok ? 'ตอบถูก' : 'ตอบผิด — เฉลย'}</div>
+      <div class="reveal-bd">
+        <div class="ans">ตอบ ${KEYS[it.answer]}. ${esc(q.o[q.a])}</div>
+        ${q.e ? `<div class="why">${esc(q.e)}</div>` : ''}
+        <span class="redact"></span>
+      </div>`;
+  } else {
+    rb.className = 'hide'; rb.innerHTML = '';
+  }
+
+  $('#flagBtn').setAttribute('aria-pressed', String(S.flags[S.i]));
+  $('#prevBtn').disabled = S.i === 0;
+  $('#nextBtn').textContent = S.i === S.items.length-1 ? 'ข้อสุดท้าย' : 'ถัดไป →';
+  $('#nextBtn').disabled = S.i === S.items.length-1;
+  paintNav();
+}
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function choose(k){
+  if(S.mode === 'practice' && S.picks[S.i] !== null) return;
+  S.picks[S.i] = k;
+  render();
+}
+$('#prevBtn').onclick = ()=>{ if(S.i>0){S.i--;render();} };
+$('#nextBtn').onclick = ()=>{ if(S.i<S.items.length-1){S.i++;render();} };
+$('#flagBtn').onclick = ()=>{ S.flags[S.i] = !S.flags[S.i]; render(); };
+$('#submitBtn').onclick = ()=>finish(true);
+$('#endBtn').onclick = ()=>finish(true);
+
+document.addEventListener('keydown', e=>{
+  if($('#quiz').classList.contains('hide')) return;
+  if(e.key >= '1' && e.key <= '4'){ choose(+e.key - 1); e.preventDefault(); }
+  else if(e.key === 'ArrowRight'){ if(S.i<S.items.length-1){S.i++;render();} }
+  else if(e.key === 'ArrowLeft'){ if(S.i>0){S.i--;render();} }
+  else if(e.key === 'Enter'){ if(S.i<S.items.length-1){S.i++;render();} else finish(true); }
+});
+
+/* ---------- results ---------- */
+function finish(confirmIfIncomplete){
+  const st = stats();
+  if(confirmIfIncomplete && st.s > 0){
+    if(!confirm(`ยังเหลืออีก ${st.s} ข้อที่ยังไม่ได้ตอบ ต้องการดูผลคะแนนเลยหรือไม่?`)) return;
+  }
+  S.t1 = Date.now();
+  const total = S.items.length;
+  const pct = Math.round(st.r / total * 100);
+  const pass = pct >= PASS;
+
+  $('#pct').innerHTML = pct + '<sup>%</sup>';
+  $('#pct').style.color = pass ? 'var(--grant)' : 'var(--stamp)';
+  $('#scoreLine').textContent = `ตอบถูก ${st.r} จาก ${total} ข้อ · เกณฑ์ผ่าน ${PASS}% (${Math.ceil(total*PASS/100)} ข้อ)`;
+  $('#stampBox').innerHTML = `<span class="stamp ${pass?'pass':'fail'}">${pass?'ผ่านเกณฑ์':'ไม่ผ่านเกณฑ์'}</span>`;
+  $('#rRight').textContent = st.r;
+  $('#rWrong').textContent = st.w;
+  $('#rSkip').textContent = st.s;
+  const sec = Math.round((S.t1 - S.t0)/1000);
+  $('#rTime').textContent = Math.floor(sec/60) + ':' + String(sec%60).padStart(2,'0');
+
+  // category breakdown
+  const agg = {};
+  S.items.forEach((it,i)=>{
+    const c = it.src.c;
+    agg[c] = agg[c] || {t:0,r:0};
+    agg[c].t++;
+    if(S.picks[i] === it.answer) agg[c].r++;
+  });
+  $('#catBars').innerHTML = Object.entries(agg)
+    .sort((a,b)=> (a[1].r/a[1].t) - (b[1].r/b[1].t))
+    .map(([c,v])=>{
+      const p = Math.round(v.r/v.t*100);
+      const lvl = p >= 80 ? 'high' : p >= 50 ? 'mid' : 'low';
+      return `<div class="brow"><div><span class="bt">${esc(c)}</span>
+        <span class="bmeter"><i class="${lvl}" style="width:${p}%"></i></span></div>
+        <span class="bn">${v.r}/${v.t}</span></div>`;
+    }).join('');
+
+  renderReview();
+  $('#quiz').classList.add('hide');
+  $('#results').classList.remove('hide');
+  window.scrollTo(0,0);
+}
+
+let onlyWrong = true;
+$('#filterBtn').onclick = ()=>{
+  onlyWrong = !onlyWrong;
+  $('#filterBtn').setAttribute('aria-pressed', String(onlyWrong));
+  $('#filterBtn').textContent = onlyWrong ? 'แสดงทุกข้อ' : 'แสดงเฉพาะข้อที่ผิด';
+  renderReview();
+};
+function renderReview(){
+  const rows = S.items.map((it,i)=>({it,i})).filter(({it,i}) =>
+    !onlyWrong || S.picks[i] !== it.answer);
+  if(!rows.length){
+    $('#reviewList').innerHTML = `<p class="hint">ไม่มีข้อที่ตอบผิดในรอบนี้ — ทำได้ครบทุกข้อ</p>`;
+    return;
+  }
+  $('#reviewList').innerHTML = rows.map(({it,i})=>{
+    const q = it.src, pick = S.picks[i], ok = pick === it.answer;
+    const yours = pick === null ? 'ไม่ได้ตอบ' : `${KEYS[pick]}. ${esc(q.o[it.order[pick]])}`;
+    return `<div class="ritem">
+      <div class="rh"><span class="qno">ข้อ ${i+1} · ต้นฉบับข้อ ${q.n}</span>
+        <span class="qcat" style="margin-left:8px">${esc(q.c)}</span></div>
+      <div class="rq">${esc(q.q)}</div>
+      <div class="rb">
+        ${ok ? '' : `<div class="rline you"><span class="lb">คำตอบของคุณ</span>${yours}</div>`}
+        <div class="rline key"><span class="lb">เฉลย</span>${KEYS[it.answer]}. ${esc(q.o[q.a])}</div>
+      </div>
+      ${q.e ? `<div class="rwhy">${esc(q.e)}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+$('#againBtn').onclick = ()=>{
+  const list = S.items.map(it=>it.src);
+  if(cfg.shufQ) shuffle(list);
+  start(prepare(list));
+};
+$('#wrongOnlyBtn').onclick = ()=>{
+  const list = S.items.filter((it,i)=>S.picks[i] !== it.answer).map(it=>it.src);
+  if(!list.length){ alert('ไม่มีข้อที่ตอบผิด — ลองทำชุดใหม่ได้เลย'); return; }
+  start(prepare(list));
+};
+$('#homeBtn').onclick = ()=>{
+  $('#results').classList.add('hide');
+  $('#quiz').classList.add('hide');
+  $('#setup').classList.remove('hide');
+  window.scrollTo(0,0);
+};
+
+buildCats();
+updatePool();
+</script>
+</body>
+</html>

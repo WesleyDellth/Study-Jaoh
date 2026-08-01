@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แนวข้อสอบ เศรษฐกิจ สังคม การเมือง วัฒนธรรม และสถานการณ์สิทธิมนุษยชนในประเทศไทย</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EAEFF3;
+  --surface:#FFFFFF;
+  --ink:#16202B;
+  --muted:#5C6B7A;
+  --line:#D6DEE6;
+  --accent:#1F6F6B;
+  --accent-soft:#E4F0EF;
+  --ok:#15803D;
+  --ok-soft:#E6F4EA;
+  --bad:#B3261E;
+  --bad-soft:#FBE9E7;
+  --warn:#9A5B00;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(22,32,43,.06),0 8px 24px rgba(22,32,43,.07);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"IBM Plex Sans Thai","Sarabun",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:17px;line-height:1.65;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:940px;margin:0 auto;padding:20px 16px 64px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hidden{display:none !important}
+
+/* ---------- header ---------- */
+header.masthead{padding:26px 22px 22px;margin-bottom:18px}
+.eyebrow{font-size:13px;letter-spacing:.14em;color:var(--accent);font-weight:600;text-transform:uppercase;margin:0 0 8px}
+h1{font-size:25px;line-height:1.35;margin:0 0 8px;font-weight:700;letter-spacing:-.01em}
+.sub{margin:0;color:var(--muted);font-size:15px}
+
+/* ---------- home ---------- */
+.section-title{font-size:14px;font-weight:600;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin:0 0 10px}
+.panel{padding:22px;margin-bottom:16px}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mode{
+  text-align:right;padding:16px;border:1.5px solid var(--line);border-radius:12px;
+  background:#fff;color:var(--ink);display:block;width:100%;text-align:start;transition:.15s;
+}
+.mode:hover{border-color:var(--accent)}
+.mode[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.mode b{display:block;font-size:18px;margin-bottom:4px}
+.mode span{color:var(--muted);font-size:14px;line-height:1.5;display:block}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{
+  padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--ink);font-size:15px;
+}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:#fff}
+.row-label{font-weight:600;margin:18px 0 2px;font-size:16px}
+.hint{color:var(--muted);font-size:14px;margin:2px 0 0}
+.start{
+  margin-top:22px;width:100%;padding:15px;border:none;border-radius:12px;background:var(--accent);color:#fff;
+  font-weight:600;font-size:18px;
+}
+.start:hover{background:#175854}
+.stats{display:flex;gap:22px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:20px;padding-top:16px}
+.stat b{display:block;font-size:22px;font-weight:700;line-height:1.2}
+.stat span{color:var(--muted);font-size:13px}
+
+/* ---------- quiz bar ---------- */
+.bar{position:sticky;top:0;z-index:20;background:var(--bg);padding:10px 0 8px;margin-bottom:14px}
+.bar-inner{padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bar-inner .meta{font-size:14px;color:var(--muted);flex:1;min-width:150px}
+.bar-inner .meta b{color:var(--ink);font-size:16px}
+.pill{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+.pill.exam{background:#F1E9F7;color:#6B3FA0}
+.progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:10px}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s ease}
+.ghost{padding:8px 12px;border-radius:9px;border:1.5px solid var(--line);background:#fff;color:var(--muted);font-size:14px}
+.ghost:hover{color:var(--ink);border-color:var(--muted)}
+
+/* ---------- question ---------- */
+.qcard{padding:24px 22px}
+.qcat{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.06em;margin-bottom:8px}
+.qtext{font-size:19px;font-weight:600;line-height:1.6;margin:0 0 18px}
+.qtext .num{color:var(--muted);font-weight:700;margin-inline-end:8px}
+.choices{display:flex;flex-direction:column;gap:10px}
+.choice{
+  display:flex;gap:12px;align-items:flex-start;text-align:start;width:100%;
+  padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);
+  line-height:1.55;transition:.12s;
+}
+.choice:hover:not(:disabled){border-color:var(--accent);background:#F6FAFA}
+.choice .k{
+  flex:0 0 28px;height:28px;border-radius:8px;background:#F1F5F8;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;
+}
+.choice.sel{border-color:var(--accent);background:var(--accent-soft)}
+.choice.sel .k{background:var(--accent);color:#fff}
+.choice.correct{border-color:var(--ok);background:var(--ok-soft)}
+.choice.correct .k{background:var(--ok);color:#fff}
+.choice.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.choice.wrong .k{background:var(--bad);color:#fff}
+.choice:disabled{cursor:default}
+.feedback{margin-top:16px;padding:13px 15px;border-radius:12px;font-size:16px;line-height:1.6}
+.feedback.good{background:var(--ok-soft);color:#12602F;border:1px solid #BFE3C9}
+.feedback.bad{background:var(--bad-soft);color:#8C1D18;border:1px solid #F2C4C0}
+.feedback .note{display:block;margin-top:8px;font-size:14px;color:var(--warn)}
+.nav{display:flex;gap:10px;margin-top:20px;align-items:center}
+.nav button{padding:12px 18px;border-radius:11px;border:1.5px solid var(--line);background:#fff;font-weight:600}
+.nav .next{margin-inline-start:auto;background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav .next:hover{background:#175854}
+.nav button:disabled{opacity:.45;cursor:default}
+
+/* ---------- navigator ---------- */
+.navigator{padding:18px 20px;margin-top:16px}
+.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:7px;margin-top:12px}
+.navgrid button{
+  aspect-ratio:1;border-radius:9px;border:1.5px solid var(--line);background:#fff;color:var(--muted);
+  font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0;
+}
+.navgrid button.answered{background:#E7EDF2;color:var(--ink);border-color:#C3D0DB}
+.navgrid button.ok{background:var(--ok-soft);border-color:#9CD3AE;color:#12602F}
+.navgrid button.no{background:var(--bad-soft);border-color:#EDAFAA;color:#8C1D18}
+.navgrid button.here{outline:2.5px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:12px}
+.legend i{width:12px;height:12px;border-radius:4px;display:inline-block;margin-inline-end:5px;vertical-align:-1px;border:1px solid var(--line)}
+
+/* ---------- results ---------- */
+.verdict{padding:30px 24px;text-align:center}
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;width:132px;height:132px;border-radius:50%;
+  font-size:36px;font-weight:700;margin-bottom:14px;letter-spacing:-.02em;
+}
+.badge.pass{background:var(--ok-soft);color:var(--ok);border:3px solid #9CD3AE}
+.badge.fail{background:var(--bad-soft);color:var(--bad);border:3px solid #EDAFAA}
+.verdict h2{margin:0 0 6px;font-size:24px}
+.verdict p{margin:0;color:var(--muted)}
+.scoreline{display:flex;justify-content:center;gap:26px;margin-top:20px;flex-wrap:wrap}
+.scoreline div{text-align:center}
+.scoreline b{display:block;font-size:24px;font-weight:700}
+.scoreline span{font-size:13px;color:var(--muted)}
+.bycat{padding:20px 22px;margin-top:16px}
+.catrow{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.catrow:last-child{border-bottom:none}
+.catrow .nm{flex:1}
+.catrow .track{flex:0 0 110px;height:7px;background:var(--line);border-radius:99px;overflow:hidden}
+.catrow .track i{display:block;height:100%;background:var(--accent)}
+.catrow .val{flex:0 0 62px;text-align:end;color:var(--muted);font-variant-numeric:tabular-nums}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.actions button{flex:1;min-width:150px;padding:14px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-weight:600}
+.actions button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.review{padding:20px 22px;margin-top:16px}
+.rev-item{border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:12px}
+.rev-item .qtext{font-size:17px;margin-bottom:12px}
+.rev-line{padding:9px 12px;border-radius:9px;margin-top:7px;font-size:15px;line-height:1.55}
+.rev-line.you{background:var(--bad-soft);color:#8C1D18}
+.rev-line.ans{background:var(--ok-soft);color:#12602F}
+.rev-line b{font-weight:700}
+.rev-note{margin-top:9px;font-size:14px;color:var(--warn)}
+.empty{text-align:center;color:var(--muted);padding:24px}
+footer{text-align:center;color:var(--muted);font-size:13px;margin-top:26px;line-height:1.7}
+
+@media (max-width:560px){
+  body{font-size:16px}
+  h1{font-size:21px}
+  .qtext{font-size:18px}
+  .modes{grid-template-columns:1fr}
+  .wrap{padding:14px 12px 48px}
+  .qcard{padding:18px 16px}
+  .navgrid{grid-template-columns:repeat(auto-fill,minmax(38px,1fr))}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead card">
+    <p class="eyebrow">แนวข้อสอบ · ชุดที่ 5</p>
+    <h1>ความรู้เกี่ยวกับสภาพเศรษฐกิจ สังคม การเมือง วัฒนธรรม<br>และสถานการณ์สิทธิมนุษยชนในประเทศไทย</h1>
+    <p class="sub">ฝึกทำข้อสอบปรนัย 100 ข้อ · เกณฑ์ผ่าน 70%</p>
+  </header>
+
+  <!-- ================= HOME ================= -->
+  <main id="home">
+    <section class="panel card">
+      <p class="section-title">เลือกโหมดการทำข้อสอบ</p>
+      <div class="modes">
+        <button class="mode" id="m-practice" aria-pressed="true" onclick="setMode('practice')">
+          <b>โหมดฝึกทำ</b>
+          <span>เฉลยทันทีหลังเลือกคำตอบ พร้อมบอกว่าข้อไหนถูก/ผิด เหมาะกับการทบทวนเนื้อหา</span>
+        </button>
+        <button class="mode" id="m-exam" aria-pressed="false" onclick="setMode('exam')">
+          <b>โหมดสอบจริง</b>
+          <span>ไม่เฉลยระหว่างทำ ดูผลทั้งหมดเมื่อส่งข้อสอบ เหมาะกับการจับเวลาซ้อมสอบ</span>
+        </button>
+      </div>
+
+      <p class="row-label">จำนวนข้อ</p>
+      <p class="hint">เลือกจำนวนข้อที่ต้องการทำในรอบนี้</p>
+      <div class="opts" id="count-opts"></div>
+
+      <p class="row-label">ลำดับข้อ</p>
+      <p class="hint">สลับข้อเพื่อไม่ให้จำตำแหน่งคำตอบ</p>
+      <div class="opts">
+        <button class="chip" id="ord-seq" aria-pressed="true" onclick="setOrder('seq')">ตามลำดับในเอกสาร</button>
+        <button class="chip" id="ord-rand" aria-pressed="false" onclick="setOrder('rand')">สุ่มข้อ</button>
+      </div>
+
+      <p class="row-label">หมวดเนื้อหา</p>
+      <p class="hint">เลือกเฉพาะหมวดที่ต้องการฝึก หรือเลือกทั้งหมด</p>
+      <div class="opts" id="cat-opts"></div>
+
+      <button class="start" onclick="startQuiz()">เริ่มทำข้อสอบ</button>
+
+      <div class="stats">
+        <div class="stat"><b id="s-total">0</b><span>ข้อทั้งหมด</span></div>
+        <div class="stat"><b id="s-cats">0</b><span>หมวดเนื้อหา</span></div>
+        <div class="stat"><b>70%</b><span>เกณฑ์ผ่าน</span></div>
+      </div>
+    </section>
+    <footer>
+      เนื้อหาข้อสอบจากไฟล์ “แนวข้อสอบความรู้เกี่ยวกับสภาพเศรษฐกิจ สังคม การเมือง วัฒนธรรม และสถานการณ์สิทธิมนุษยชนในประเทศไทย” (ติวเตอร์ เพียงดิน)<br>
+      ใช้เพื่อการทบทวนส่วนบุคคล · ทำงานได้แบบออฟไลน์ ไม่มีการส่งข้อมูลออกจากเครื่อง
+    </footer>
+  </main>
+
+  <!-- ================= QUIZ ================= -->
+  <main id="quiz" class="hidden">
+    <div class="bar">
+      <div class="bar-inner card">
+        <div class="meta">
+          ข้อ <b><span id="q-now">1</span> / <span id="q-all">0</span></b>
+          <span id="mode-pill" class="pill">โหมดฝึกทำ</span>
+        </div>
+        <div id="live-score" class="meta" style="flex:0 0 auto"></div>
+        <button class="ghost" onclick="quitQuiz()">ออก</button>
+        <div class="progress" style="flex:1 0 100%"><i id="bar-fill"></i></div>
+      </div>
+    </div>
+
+    <section class="qcard card">
+      <div class="qcat" id="q-cat"></div>
+      <p class="qtext"><span class="num" id="q-num"></span><span id="q-text"></span></p>
+      <div class="choices" id="choices"></div>
+      <div id="feedback"></div>
+      <div class="nav">
+        <button id="btn-prev" onclick="go(-1)">ย้อนกลับ</button>
+        <button id="btn-next" class="next" onclick="go(1)">ข้อถัดไป</button>
+      </div>
+    </section>
+
+    <section class="navigator card">
+      <p class="section-title">แผงข้อสอบ</p>
+      <div class="navgrid" id="navgrid"></div>
+      <div class="legend">
+        <span><i style="background:#fff"></i>ยังไม่ตอบ</span>
+        <span id="lg-answered"><i style="background:#E7EDF2"></i>ตอบแล้ว</span>
+        <span id="lg-ok" class="hidden"><i style="background:#E6F4EA;border-color:#9CD3AE"></i>ถูก</span>
+        <span id="lg-no" class="hidden"><i style="background:#FBE9E7;border-color:#EDAFAA"></i>ผิด</span>
+      </div>
+      <button class="start" id="btn-submit" onclick="submitQuiz()">ส่งข้อสอบและดูผลคะแนน</button>
+    </section>
+  </main>
+
+  <!-- ================= RESULTS ================= -->
+  <main id="results" class="hidden">
+    <section class="verdict card">
+      <div class="badge" id="r-badge">0%</div>
+      <h2 id="r-title">ผลการทำข้อสอบ</h2>
+      <p id="r-sub"></p>
+      <div class="scoreline">
+        <div><b id="r-right">0</b><span>ตอบถูก</span></div>
+        <div><b id="r-wrong">0</b><span>ตอบผิด</span></div>
+        <div><b id="r-blank">0</b><span>ไม่ได้ตอบ</span></div>
+        <div><b id="r-need">70%</b><span>เกณฑ์ผ่าน</span></div>
+      </div>
+      <div class="actions">
+        <button class="primary" onclick="retrySame()">ทำชุดเดิมอีกครั้ง</button>
+        <button onclick="retryWrong()" id="btn-retry-wrong">ฝึกเฉพาะข้อที่ผิด</button>
+        <button onclick="backHome()">กลับหน้าแรก</button>
+      </div>
+    </section>
+
+    <section class="bycat card">
+      <p class="section-title">คะแนนแยกตามหมวด</p>
+      <div id="catbreak"></div>
+    </section>
+
+    <section class="review card">
+      <p class="section-title">ทบทวนข้อที่ตอบผิด</p>
+      <div id="reviewlist"></div>
+    </section>
+    <footer>ทบทวนซ้ำจนได้ 100% แล้วค่อยเปลี่ยนไปโหมดสอบจริงเพื่อจับเวลา</footer>
+  </main>
+
+</div>
+
+<script>
+/* ====== question bank ====== */
+const QUESTIONS_PART1 = [
+{n:1,cat:"เศรษฐกิจ",q:"ข้อใดสะท้อนลักษณะเศรษฐกิจของประเทศไทยได้ถูกต้องที่สุด",c:["เป็นประเทศที่พึ่งพาอุตสาหกรรมหนักเพียงอย่างเดียว","เป็นประเทศกำลังพัฒนาที่มีระบบเศรษฐกิจแบบเสรีและเปิดกว้าง","เป็นประเทศที่ปิดกั้นการค้าระหว่างประเทศ","เป็นประเทศที่รายได้หลักมาจากการประมงเป็นส่วนใหญ่"],a:1},
+{n:2,cat:"เศรษฐกิจ",q:"ภาคเศรษฐกิจใดเป็นฐานสำคัญของการพัฒนาเศรษฐกิจไทย",c:["ภาคบริการ ภาคอุตสาหกรรม และภาคเกษตรกรรม","ภาคเหมืองแร่ ภาคทหาร และภาคศาสนา","ภาคการศึกษา ภาคสื่อสาร และภาคกีฬา","ภาคทรัพยากรธรรมชาติอย่างเดียว"],a:0},
+{n:3,cat:"เศรษฐกิจ",q:"รายได้หลักของประเทศไทยมักมาจากข้อใดมากที่สุด",c:["การนำเข้าพลังงานเพียงอย่างเดียว","การส่งออกสินค้า การท่องเที่ยว และการลงทุนจากต่างประเทศ","การเก็บภาษีจากประชาชนอย่างเดียว","การขายทรัพยากรธรรมชาติทั้งหมดให้ต่างชาติ"],a:1},
+{n:4,cat:"เศรษฐกิจ",q:"ปัญหาใดเป็นความท้าทายสำคัญของเศรษฐกิจไทยในช่วงหลายปีที่ผ่านมา",c:["เศรษฐกิจโลกชะลอตัวและสังคมผู้สูงอายุ","การมีประชากรวัยเด็กเพิ่มขึ้นอย่างรวดเร็ว","ราคาข้าวโลกสูงขึ้นทุกปีอย่างต่อเนื่อง","การไม่มีการค้าระหว่างประเทศ"],a:0},
+{n:5,cat:"เศรษฐกิจ",q:"ข้อใดไม่ใช่ความท้าทายทางเศรษฐกิจของประเทศไทยตามบทความ",c:["ภาวะเงินเฟ้อ","ความผันผวนของราคาพลังงาน","การเปลี่ยนแปลงทางเทคโนโลยี","การมีประชากรเพิ่มขึ้นแบบไม่มีที่สิ้นสุด"],a:3},
+{n:6,cat:"เศรษฐกิจ",q:"แนวทางใดสอดคล้องกับการพัฒนาเศรษฐกิจไทยอย่างยั่งยืน",c:["ส่งเสริมเศรษฐกิจดิจิทัล นวัตกรรม และพัฒนาแรงงาน","ลดบทบาทของผู้ประกอบการรายย่อย","ยกเลิกการพัฒนาโครงสร้างพื้นฐาน","มุ่งพึ่งพาภาคเกษตรกรรมเพียงอย่างเดียว"],a:0},
+{n:7,cat:"เศรษฐกิจ",q:"ผู้ประกอบการรายย่อยที่ได้รับการสนับสนุนจากภาครัฐเรียกว่าอะไร",c:["NGO","SMEs","IPO","GDP"],a:1},
+{n:8,cat:"เศรษฐกิจ",q:"การลดความยากจนและความเหลื่อมล้ำทางเศรษฐกิจเป็นเป้าหมายที่สอดคล้องกับเรื่องใดมากที่สุด",c:["การพัฒนาเศรษฐกิจแบบยั่งยืน","การลดเสรีภาพทางการค้า","การจำกัดโอกาสของประชาชน","การยกเลิกภาคบริการ"],a:0},
+{n:9,cat:"สังคม",q:"ข้อใดเป็นลักษณะสำคัญของสังคมไทย",c:["เป็นสังคมที่มีวัฒนธรรมเดียวและภาษาเดียว","เป็นสังคมพหุวัฒนธรรม","เป็นสังคมที่ไม่มีความหลากหลาย","เป็นสังคมที่ห้ามนับถือศาสนา"],a:1},
+{n:10,cat:"สังคม",q:"แม้คนไทยส่วนใหญ่นับถือศาสนาพุทธ แต่รัฐธรรมนูญไทยรับรองสิ่งใด",c:["การบังคับให้นับถือศาสนาเดียว","เสรีภาพในการนับถือศาสนาและการปฏิบัติศาสนกิจ","การห้ามประกอบศาสนพิธี","การจำกัดศาสนาเฉพาะในวัดเท่านั้น"],a:1},
+{n:11,cat:"สังคม",q:"ประเทศไทยกำลังก้าวเข้าสู่สังคมแบบใด",c:["สังคมเด็ก","สังคมสูงวัยอย่างสมบูรณ์","สังคมไร้ผู้สูงอายุ","สังคมที่ไม่มีประชากรเพิ่มขึ้น"],a:1},
+{n:12,cat:"สังคม",q:"ข้อใดเป็นผลจากสังคมสูงวัยที่ภาครัฐต้องเตรียมรับมือ",c:["ลดการดูแลผู้สูงอายุ","เพิ่มการคุ้มครองแรงงานเด็ก","พัฒนาสวัสดิการ การรักษาพยาบาล และการดูแลผู้สูงอายุ","ยกเลิกระบบประกันสุขภาพ"],a:2},
+{n:13,cat:"สังคม",q:"ปัญหาใดเป็นปัญหาสังคมร่วมสมัยของประเทศไทย",c:["ไม่มีปัญหาหนี้สินครัวเรือน","ไม่มีปัญหาอาชญากรรมทางเทคโนโลยี","ปัญหาข่าวปลอมและความรุนแรงในครอบครัว","ไม่มีปัญหาสุขภาพจิตในสังคม"],a:2},
+{n:14,cat:"สังคม",q:"กลุ่มใดที่รัฐให้ความสำคัญในการคุ้มครองเป็นพิเศษ",c:["เด็ก ผู้สูงอายุ คนพิการ ผู้หญิง และแรงงานข้ามชาติ","เฉพาะข้าราชการประจำ","เฉพาะผู้ประกอบการขนาดใหญ่","เฉพาะนักท่องเที่ยวต่างชาติ"],a:0},
+{n:15,cat:"สังคม",q:"ข้อใดไม่ใช่ปัญหาสังคมที่กล่าวถึงในบทความ",c:["การใช้สารเสพติด","การค้ามนุษย์","ความเหลื่อมล้ำทางการศึกษา","การขาดแคลนดาวเทียมสื่อสาร"],a:3},
+{n:16,cat:"สังคม",q:"แนวทางใดสอดคล้องกับการแก้ปัญหาสังคมไทย",c:["ลดโอกาสทางการศึกษา","พัฒนาระบบสวัสดิการสังคมและยกระดับคุณภาพชีวิต","ลดการคุ้มครองกลุ่มเปราะบาง","ปิดกั้นการเข้าถึงข้อมูลข่าวสาร"],a:1},
+{n:17,cat:"การเมือง",q:"ประเทศไทยปกครองด้วยระบอบใด",c:["เผด็จการทหาร","ประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข","คอมมิวนิสต์","สมบูรณาญาสิทธิราชย์"],a:1},
+{n:18,cat:"การเมือง",q:"พระมหากษัตริย์ทรงมีสถานะทางการเมืองอย่างไร",c:["ทรงเป็นผู้นำพรรคการเมือง","ทรงดำรงอยู่เหนือการเมือง","ทรงเป็นหัวหน้าฝ่ายบริหาร","ทรงเป็นผู้ร่างกฎหมายโดยตรง"],a:1},
+{n:19,cat:"การเมือง",q:"การบริหารราชการแผ่นดินแบ่งเป็นกี่อำนาจ",c:["2 อำนาจ","3 อำนาจ","4 อำนาจ","5 อำนาจ"],a:1},
+{n:20,cat:"การเมือง",q:"หน้าที่ของอำนาจนิติบัญญัติคือข้อใด",c:["พิจารณาพิพากษาคดี","ตรากฎหมาย","บริหารราชการแผ่นดิน","คุ้มครองสิ่งแวดล้อมเท่านั้น"],a:1},
+{n:21,cat:"การเมือง",q:"หน้าที่ของอำนาจบริหารคือข้อใด",c:["ออกกฎหมาย","บริหารราชการแผ่นดิน","ตัดสินคดี","ตรวจสอบภาคเอกชนเท่านั้น"],a:1},
+{n:22,cat:"การเมือง",q:"หน้าที่ของอำนาจตุลาการคือข้อใด",c:["ตรากฎหมาย","บริหารงบประมาณ","พิจารณาพิพากษาคดี","จัดการเลือกตั้ง"],a:2},
+{n:23,cat:"การเมือง",q:"องค์กรใดมีหน้าที่ตรวจสอบการใช้อำนาจรัฐและส่งเสริมธรรมาภิบาล",c:["คณะกรรมการการเลือกตั้ง","คณะกรรมการกีฬาแห่งชาติ","กรมบัญชีกลาง","ธนาคารออมสิน"],a:0},
+{n:24,cat:"การเมือง",q:"องค์กรใดมีบทบาทสำคัญในการป้องกันและปราบปรามการทุจริต",c:["คณะกรรมการป้องกันและปราบปรามการทุจริตแห่งชาติ","กรมศิลปากร","สำนักงานสถิติแห่งชาติ","กรมอุตุนิยมวิทยา"],a:0},
+{n:25,cat:"การเมือง",q:"ผู้ตรวจการแผ่นดินมีบทบาทเกี่ยวกับเรื่องใด",c:["ตรวจสอบการใช้อำนาจรัฐและแก้ไขความเดือดร้อนของประชาชน","จัดกิจกรรมกีฬา","ควบคุมอัตราแลกเปลี่ยน","ออกหนังสือเดินทาง"],a:0},
+{n:26,cat:"การเมือง",q:"ข้อใดเป็นความท้าทายทางการเมืองของไทยในปัจจุบัน",c:["ไม่มีความเห็นต่างทางการเมือง","การสร้างความเชื่อมั่นต่อกระบวนการประชาธิปไตย","ไม่มีการทุจริตเกิดขึ้นเลย","ไม่มีความจำเป็นต้องมีส่วนร่วมของประชาชน"],a:1},
+{n:27,cat:"การเมือง",q:"การมีส่วนร่วมของประชาชนมีความสำคัญต่อเรื่องใดมากที่สุด",c:["ทำให้รัฐโปร่งใสและตรวจสอบได้","ทำให้กฎหมายไม่จำเป็น","ทำให้ไม่มีการเลือกตั้ง","ทำให้ทุกคนต้องคิดเหมือนกัน"],a:0},
+{n:28,cat:"วัฒนธรรม",q:"สถาบันใดเป็นศูนย์รวมจิตใจของคนไทยตามบทความ",c:["ชาติ ศาสนา และพระมหากษัตริย์","การค้า การลงทุน และเทคโนโลยี","รัฐบาล พรรคการเมือง และองค์กรเอกชน","โรงเรียน โรงพยาบาล และธนาคาร"],a:0},
+{n:29,cat:"วัฒนธรรม",q:"ข้อใดเป็นลักษณะเด่นของวัฒนธรรมไทย",c:["ความอ่อนน้อมถ่อมตน","ความหยาบคายต่อผู้ใหญ่","การไม่ให้เกียรติผู้อื่น","การละทิ้งประเพณีทั้งหมด"],a:0},
+{n:30,cat:"วัฒนธรรม",q:"การเคารพผู้ใหญ่และความกตัญญูสะท้อนคุณค่าใดในสังคมไทย",c:["ความรุนแรง","ความอ่อนโยนและความสัมพันธ์ที่เคารพกัน","การขาดระเบียบ","การแยกตัวจากสังคม"],a:1},
+{n:31,cat:"วัฒนธรรม",q:"ประเพณีใดเป็นประเพณีสำคัญของไทย",c:["เทศกาลฮาโลวีน","สงกรานต์","คริสต์มาส","วันขอบคุณพระเจ้า"],a:1},
+{n:32,cat:"วัฒนธรรม",q:"ข้อใดเป็นอีกหนึ่งประเพณีสำคัญของไทย",c:["ลอยกระทง","วาเลนไทน์","เมอร์รี่คริสต์มาส","ปีใหม่สากลเท่านั้น"],a:0},
+{n:33,cat:"วัฒนธรรม",q:"ประเพณีแห่เทียนเข้าพรรษาสะท้อนสิ่งใด",c:["การยกย่องการบริโภคนิยม","ความเชื่อมโยงระหว่างศาสนา วัฒนธรรม และชุมชน","การแข่งขันทางเศรษฐกิจ","การปิดกั้นความหลากหลาย"],a:1},
+{n:34,cat:"วัฒนธรรม",q:"โลกาภิวัตน์ส่งผลต่อวัฒนธรรมไทยอย่างไร",c:["วัฒนธรรมไทยไม่เปลี่ยนแปลงเลย","ได้รับอิทธิพลจากสื่อดิจิทัลและวัฒนธรรมต่างประเทศมากขึ้น","ทำให้ทุกประเพณีหายไปทันที","ทำให้ภาษาไทยเลิกใช้"],a:1},
+{n:35,cat:"วัฒนธรรม",q:"แนวทางที่เหมาะสมต่อวัฒนธรรมไทยในยุคปัจจุบันคือข้อใด",c:["ละทิ้งภูมิปัญญาท้องถิ่นทั้งหมด","อนุรักษ์ภูมิปัญญาท้องถิ่นควบคู่กับการเปิดรับนวัตกรรม","ปฏิเสธทุกวัฒนธรรมจากภายนอกโดยสิ้นเชิง","ใช้วัฒนธรรมต่างประเทศแทนวัฒนธรรมไทยทั้งหมด"],a:1},
+{n:36,cat:"สิทธิมนุษยชนในไทย",q:"สิทธิมนุษยชนหมายถึงอะไร",c:["สิทธิที่ประชาชนบางกลุ่มเท่านั้นได้รับ","สิทธิขั้นพื้นฐานที่มนุษย์ทุกคนพึงได้รับอย่างเสมอภาค","สิทธิที่รัฐมอบให้เฉพาะผู้มีฐานะ","สิทธิที่ใช้ได้เฉพาะในเมือง"],a:1},
+{n:37,cat:"สิทธิมนุษยชนในไทย",q:"หลักสำคัญของสิทธิมนุษยชนคือข้อใด",c:["การเลือกปฏิบัติ","ความเสมอภาคและไม่เลือกปฏิบัติ","การจำกัดสิทธิคนอื่น","การให้อำนาจแก่คนบางกลุ่มเท่านั้น"],a:1},
+{n:38,cat:"สิทธิมนุษยชนในไทย",q:"สิทธิมนุษยชนได้รับการรับรองไว้ในข้อใดบ้าง",c:["เฉพาะในกฎหมายต่างประเทศ","รัฐธรรมนูญ กฎหมายภายในประเทศ และพันธกรณีระหว่างประเทศ","เฉพาะในคำสั่งของหน่วยงานเอกชน","เฉพาะในประกาศเทศบาล"],a:1},
+{n:39,cat:"สิทธิมนุษยชนในไทย",q:"สิทธิในกระบวนการยุติธรรมหมายถึงข้อใด",c:["การเข้าถึงกระบวนการยุติธรรมอย่างเท่าเทียม","การปิดกั้นการร้องทุกข์","การให้เฉพาะคนรวยเข้าศาล","การยกเว้นผู้ต้องหาไม่ให้ได้รับความคุ้มครอง"],a:0},
+{n:40,cat:"สิทธิมนุษยชนในไทย",q:"กลุ่มใดที่ควรได้รับความคุ้มครองในกระบวนการยุติธรรม",c:["ผู้เสียหาย ผู้ต้องหา และจำเลย","เฉพาะผู้มีอำนาจ","เฉพาะหน่วยงานของรัฐ","เฉพาะผู้ประกอบการ"],a:0},
+{n:41,cat:"สิทธิมนุษยชนในไทย",q:"การให้ความช่วยเหลือทางกฎหมายมีความสำคัญต่อใคร",c:["ผู้ขาดแคลนทุนทรัพย์","เฉพาะนักธุรกิจรายใหญ่","เฉพาะนักท่องเที่ยว","เฉพาะผู้มีตำแหน่งสูง"],a:0},
+{n:42,cat:"สิทธิมนุษยชนในไทย",q:"สิทธิเด็กในประเทศไทยครอบคลุมเรื่องใด",c:["การใช้แรงงานเด็ก","การแสวงหาประโยชน์จากเด็ก","การค้ามนุษย์และความรุนแรงต่อเด็ก","ทุกข้อที่กล่าวมา"],a:3},
+{n:43,cat:"สิทธิมนุษยชนในไทย",q:"สิทธิของเด็กยังรวมถึงเรื่องใดด้วย",c:["สิทธิในการศึกษา การพัฒนา และการมีส่วนร่วม","สิทธิในการถูกละเลย","สิทธิในการถูกปิดกั้นความเห็น","สิทธิในการถูกบังคับทำงาน"],a:0},
+{n:44,cat:"สิทธิมนุษยชนในไทย",q:"สิทธิสตรีและความเสมอภาคระหว่างเพศหมายถึงข้อใด",c:["การให้โอกาสเฉพาะเพศชาย","การส่งเสริมความเท่าเทียมระหว่างหญิงและชาย","การลดบทบาทสตรีในสังคม","การปิดโอกาสทางการเมืองแก่ผู้หญิง"],a:1},
+{n:45,cat:"สิทธิมนุษยชนในไทย",q:"การป้องกันความรุนแรงในครอบครัวเกี่ยวข้องกับสิทธิเรื่องใด",c:["สิทธิสตรีและความปลอดภัยในครอบครัว","สิทธิในการทำธุรกิจ","สิทธิในการเดินทางต่างประเทศ","สิทธิในการประกอบอาชีพเพียงอย่างเดียว"],a:0},
+{n:46,cat:"สิทธิมนุษยชนในไทย",q:"ประเทศไทยมีแนวทางเกี่ยวกับสิทธิของผู้สูงอายุและคนพิการอย่างไร",c:["ไม่จำเป็นต้องมีระบบรองรับ","มีระบบสวัสดิการและกฎหมายรองรับ","ปล่อยให้แต่ละคนดูแลตัวเองทั้งหมด","จำกัดการเข้าถึงบริการของรัฐ"],a:1,note:"หมายเหตุ: ต้นฉบับ PDF พิมพ์เฉลยคลาดเคลื่อน (ระบุตัวเลือก ข. แต่ใส่ข้อความของตัวเลือก ง.) คำตอบที่ถูกต้องตามเนื้อหาคือ ข. มีระบบสวัสดิการและกฎหมายรองรับ"},
+{n:47,cat:"สิทธิมนุษยชนในไทย",q:"จุดมุ่งหมายสำคัญของการคุ้มครองผู้สูงอายุและคนพิการคืออะไร",c:["ให้มีโอกาสในการประกอบอาชีพและใช้ชีวิตอย่างมีศักดิ์ศรี","จำกัดการมีส่วนร่วมในสังคม","ตัดสิทธิในการเข้าถึงบริการ","แยกออกจากระบบของรัฐ"],a:0},
+{n:48,cat:"สิทธิมนุษยชนในไทย",q:"สิทธิของแรงงานครอบคลุมเรื่องใด",c:["ค่าจ้าง สวัสดิการ และความปลอดภัยในการทำงาน","เฉพาะวันหยุดยาว","เฉพาะสิทธิของนายจ้าง","เฉพาะแรงงานในเมืองเท่านั้น"],a:0},
+{n:49,cat:"สิทธิมนุษยชนในไทย",q:"ประเทศไทยคุ้มครองแรงงานข้ามชาติในด้านใดบ้าง",c:["ด้านค่าจ้างและความปลอดภัยในการทำงาน","ด้านการคุ้มครองจากการใช้แรงงานบังคับ","ด้านการคุ้มครองจากการค้ามนุษย์","ถูกทุกข้อ"],a:3},
+{n:50,cat:"สิทธิมนุษยชนในไทย",q:"เสรีภาพในการแสดงความคิดเห็นเกี่ยวข้องกับสิ่งใด",c:["การสื่อสารและการรับรู้ข้อมูลข่าวสาร","การห้ามพูดทุกกรณี","การกำหนดให้คิดเหมือนกันทั้งหมด","การปิดกั้นสื่อทุกชนิด"],a:0}
+];
+
+const QUESTIONS_PART2 = [
+{n:51,cat:"สิทธิมนุษยชนในไทย",q:"การใช้เสรีภาพในการแสดงความคิดเห็นควรอยู่ภายใต้เงื่อนไขใด",c:["สามารถละเมิดสิทธิผู้อื่นได้","ต้องอยู่ภายใต้กฎหมายและไม่กระทบความสงบเรียบร้อย","ต้องทำลายความมั่นคงของรัฐ","ไม่ต้องรับผิดชอบใด ๆ"],a:1},
+{n:52,cat:"สิทธิมนุษยชนในไทย",q:"สิทธิในสิ่งแวดล้อมหมายถึงอะไร",c:["สิทธิในการทำลายทรัพยากรธรรมชาติ","สิทธิได้รับสิ่งแวดล้อมที่ดีและมีส่วนร่วมในการอนุรักษ์","สิทธิในการไม่ต้องรับผิดชอบต่อธรรมชาติ","สิทธิในการปิดป่าทุกพื้นที่"],a:1},
+{n:53,cat:"สิทธิมนุษยชนในไทย",q:"ประชาชนควรมีบทบาทในโครงการพัฒนาอย่างไร",c:["ไม่มีสิทธิรับรู้ข้อมูล","มีส่วนร่วมในการตัดสินใจเมื่อโครงการกระทบชุมชน","ห้ามแสดงความเห็น","ต้องยอมรับทุกโครงการเสมอ"],a:1},
+{n:54,cat:"สิทธิมนุษยชนในไทย",q:"หลักการไม่เลือกปฏิบัติหมายถึงอะไร",c:["แยกปฏิบัติต่อคนตามเชื้อชาติหรือเพศ","คุ้มครองสิทธิของทุกคนอย่างเท่าเทียม","ให้สิทธิแก่คนบางกลุ่มเท่านั้น","ปิดโอกาสของชนกลุ่มน้อย"],a:1},
+{n:55,cat:"สิทธิมนุษยชนในไทย",q:"กลุ่มใดอยู่ในขอบเขตของการคุ้มครองไม่ให้ถูกเลือกปฏิบัติ",c:["เด็ก สตรี ผู้สูงอายุ คนพิการ ชนกลุ่มน้อย และบุคคลที่มีความหลากหลายทางเพศ","เฉพาะคนเมือง","เฉพาะผู้มีรายได้สูง","เฉพาะข้าราชการ"],a:0},
+{n:56,cat:"สิทธิมนุษยชนในไทย",q:"ประเทศไทยมุ่งพัฒนาระบบสิทธิมนุษยชนให้สอดคล้องกับอะไร",c:["มาตรฐานสากล","เฉพาะนโยบายของบริษัทเอกชน","เฉพาะความนิยมทางการเมือง","เฉพาะสื่อโซเชียล"],a:0},
+{n:57,cat:"สิทธิมนุษยชนในไทย",q:"ข้อใดเป็นแนวทางพัฒนาด้านสิทธิมนุษยชนของไทย",c:["สร้างวัฒนธรรมเคารพสิทธิมนุษยชน","ลดการศึกษาเรื่องสิทธิมนุษยชน","ปิดกั้นการร้องเรียน","ลดการมีส่วนร่วมของภาคประชาสังคม"],a:0},
+{n:58,cat:"สิทธิมนุษยชนในไทย",q:"การศึกษาและความรู้ด้านสิทธิมนุษยชนมีความสำคัญอย่างไร",c:["ทำให้ประชาชนเข้าใจสิทธิของตนและเคารพสิทธิผู้อื่น","ทำให้ประชาชนไม่ต้องใช้กฎหมาย","ทำให้เกิดการละเมิดสิทธิได้ง่ายขึ้น","ไม่มีความสำคัญ"],a:0},
+{n:59,cat:"สิทธิมนุษยชนในไทย",q:"การเพิ่มประสิทธิภาพของกระบวนการยุติธรรมมีเป้าหมายเพื่ออะไร",c:["ทำให้คดีล่าช้ายิ่งขึ้น","ให้ประชาชนได้รับความเป็นธรรมมากขึ้น","เพิ่มความซับซ้อนของระบบ","ลดการเข้าถึงสิทธิ"],a:1},
+{n:60,cat:"สิทธิมนุษยชนในไทย",q:"กลไกการร้องเรียนและการเยียวยาผู้เสียหายสำคัญอย่างไร",c:["เป็นช่องทางให้ผู้เสียหายได้รับความช่วยเหลือและคืนความเป็นธรรม","เป็นเครื่องมือปิดเรื่องร้องเรียน","เป็นการเพิ่มภาระโดยไม่เกิดประโยชน์","ไม่มีความเกี่ยวข้องกับสิทธิมนุษยชน"],a:0},
+{n:61,cat:"สิทธิมนุษยชนในไทย",q:"ความร่วมมือระหว่างภาคส่วนใดมีความสำคัญต่อการคุ้มครองสิทธิมนุษยชน",c:["ภาครัฐ ภาคเอกชน ภาคประชาสังคม และประชาชน","เฉพาะรัฐบาลกลาง","เฉพาะตำรวจ","เฉพาะศาล"],a:0},
+{n:62,cat:"สิทธิมนุษยชนในไทย",q:"การคุ้มครองสิทธิมนุษยชนอย่างมีประสิทธิภาพจะช่วยเรื่องใด",c:["เพิ่มความเหลื่อมล้ำ","สร้างความเป็นธรรมและส่งเสริมการพัฒนาที่ยั่งยืน","ลดความเชื่อมั่นของประชาชน","ทำให้สังคมไร้กติกา"],a:1},
+{n:63,cat:"สิทธิมนุษยชนในไทย",q:"สิทธิมนุษยชนสัมพันธ์กับความเชื่อมั่นต่อการบริหารราชการแผ่นดินอย่างไร",c:["ไม่มีความสัมพันธ์","ช่วยเสริมสร้างความเชื่อมั่นของประชาชน","ทำให้ประชาชนไม่สนใจรัฐ","ทำให้การบริหารราชการแย่ลงเสมอ"],a:1},
+{n:64,cat:"ภาพรวมการพัฒนาประเทศ",q:"ข้อใดเป็นลักษณะสำคัญของการพัฒนาประเทศในทุกมิติ",c:["การละเลยเศรษฐกิจ สังคม การเมือง และวัฒนธรรม","การพัฒนาเศรษฐกิจ สังคม การเมือง และวัฒนธรรมควบคู่กัน","การพัฒนาเฉพาะเมืองหลวง","การพัฒนาเฉพาะภาคอุตสาหกรรม"],a:1},
+{n:65,cat:"ภาพรวมการพัฒนาประเทศ",q:"ความรู้เกี่ยวกับสถานการณ์สิทธิมนุษยชนในประเทศไทยมีความสำคัญอย่างไร",c:["ทำให้ประชาชนเข้าใจปัญหาและแนวทางพัฒนาได้ดีขึ้น","ทำให้ประชาชนไม่ต้องสนใจกฎหมาย","ทำให้ละเลยกลุ่มเปราะบาง","ไม่มีประโยชน์ต่อสังคม"],a:0},
+{n:66,cat:"ภาพรวมการพัฒนาประเทศ",q:"ข้อใดสะท้อนความสัมพันธ์ระหว่างเศรษฐกิจและสิทธิมนุษยชนได้ดีที่สุด",c:["เศรษฐกิจไม่เกี่ยวกับคุณภาพชีวิตประชาชน","การพัฒนาเศรษฐกิจที่ดีควบคู่การคุ้มครองสิทธิช่วยลดความเหลื่อมล้ำ","สิทธิมนุษยชนทำให้เศรษฐกิจหยุดชะงักเสมอ","เศรษฐกิจเติบโตได้โดยไม่ต้องคำนึงถึงคน"],a:1},
+{n:67,cat:"ภาพรวมการพัฒนาประเทศ",q:"ข้อใดเป็นแนวทางที่เหมาะสมต่อการพัฒนาสังคมไทย",c:["เพิ่มการแบ่งแยกคนในสังคม","สร้างโอกาสทางการศึกษาและคุ้มครองกลุ่มเปราะบาง","ลดบทบาทของประชาชน","ไม่ต้องมีนโยบายสาธารณะใดๆ"],a:1},
+{n:68,cat:"ภาพรวมการพัฒนาประเทศ",q:"ข้อใดเป็นสาระสำคัญของบทความนี้โดยรวม",c:["ประเทศไทยไม่มีปัญหาใดๆ","ประเทศไทยต้องพัฒนาเศรษฐกิจ สังคม การเมือง วัฒนธรรม และสิทธิมนุษยชนควบคู่กัน","ประเทศไทยควรพัฒนาเฉพาะด้านเศรษฐกิจ","ประเทศไทยไม่จำเป็นต้องรักษาวัฒนธรรม"],a:1},
+{n:69,cat:"ภาพรวมการพัฒนาประเทศ",q:"ประเด็นใดสอดคล้องกับแนวคิดการพัฒนาที่ยั่งยืนมากที่สุด",c:["เน้นผลประโยชน์ระยะสั้นโดยไม่สนใจผลกระทบ","คำนึงถึงเศรษฐกิจ สังคม สิ่งแวดล้อม และสิทธิมนุษยชน","มุ่งใช้ทรัพยากรให้หมดเร็วที่สุด","ไม่ต้องให้ประชาชนมีส่วนร่วม"],a:1},
+{n:70,cat:"ภาพรวมการพัฒนาประเทศ",q:"ข้อใดเป็นภาพรวมที่ถูกต้องของสถานการณ์ประเทศไทยตามบทความ",c:["ประเทศไทยไม่มีความท้าทายใดๆ","ประเทศไทยมีความหลากหลายและต้องพัฒนาอย่างสมดุลทั้งด้านเศรษฐกิจ สังคม การเมือง วัฒนธรรม และสิทธิมนุษยชน","ประเทศไทยควรละเลยปัญหาสังคม","ประเทศไทยควรเน้นเพียงความมั่นคงทางการเมืองเท่านั้น"],a:1},
+{n:71,cat:"ปฏิญญาสากล UDHR",q:"สมัชชาใหญ่แห่งสหประชาชาติซึ่งประกอบด้วยสมาชิกประเทศต่างๆ ได้ลงมติรับรองและประกาศใช้ปฏิญญาสากลว่าด้วยสิทธิมนุษยชน เพื่อเป็นหลักการสำคัญในการคุ้มครองสิทธิมนุษยชนของประชาคมโลกเมื่อวันที่เท่าไหร่",c:["9 ธันวาคม พ.ศ. 2491 ณ กรุงปารีส ประเทศฝรั่งเศส","10 ธันวาคม พ.ศ. 2491 ณ กรุงปารีส ประเทศฝรั่งเศส","9 ธันวาคม พ.ศ. 2491 ณ เมืองเจนีวา ประเทศสวิสเซอร์แลนด์","10 ธันวาคม พ.ศ. 2491 ณ เมืองเจนีวา ประเทศสวิสเซอร์แลนด์"],a:1},
+{n:72,cat:"ปฏิญญาสากล UDHR",q:"ปฏิญญาสากลว่าด้วยสิทธิมนุษยชน มีกี่ข้อ",c:["20 ข้อ","25 ข้อ","30 ข้อ","40 ข้อ"],a:2},
+{n:73,cat:"ปฏิญญาสากล UDHR",q:"ปฏิญญาสากลว่าด้วยสิทธิมนุษยชนแห่งสหประชาชาติมีวัตถุประสงค์และหลักการทั่วไปเกี่ยวกับมาตรการด้านสิทธิมนุษยชนซึ่งสามารถนำมาจัดกลุ่มได้เป็นกี่กลุ่ม",c:["3 กลุ่ม","4 กลุ่ม","5 กลุ่ม","6 กลุ่ม"],a:1},
+{n:74,cat:"ปฏิญญาสากล UDHR",q:"มนุษย์ทุกคนมีสิทธิในการมีชีวิต เสรีภาพและความมั่นคงแห่งบุคคล จัดอยู่ในกลุ่มใด",c:["สิทธิพลเมืองและสิทธิทางการเมือง","สิทธิทางเศรษฐกิจ สังคม และวัฒนธรรม","หน้าที่ความรับผิดชอบของทุกคนต่อระเบียบสังคม และการรับรองสิทธิมนุษยชนและเสรีภาพพื้นฐาน","สิทธิมนุษยชนเบื้องต้น"],a:0},
+{n:75,cat:"ปฏิญญาสากล UDHR",q:"บุคคลจะตกอยู่ในความเป็นทาสหรือสภาวะจำยอมไม่ได้ ทั้งนี้ห้ามค้าทาสทุกรูปแบบ จัดอยู่ในกลุ่มใด",c:["สิทธิพลเมืองและสิทธิทางการเมือง","สิทธิทางเศรษฐกิจ สังคม และวัฒนธรรม","หน้าที่ความรับผิดชอบของทุกคนต่อระเบียบสังคม และการรับรองสิทธิมนุษยชนและเสรีภาพพื้นฐาน","สิทธิมนุษยชนเบื้องต้น"],a:0},
+{n:76,cat:"ปฏิญญาสากล UDHR",q:"ทุกคนมีสิทธิในการชุมนุมและการสมาคมโดยสันติ จัดอยู่ในกลุ่มใด",c:["สิทธิพลเมืองและสิทธิทางการเมือง","สิทธิทางเศรษฐกิจ สังคม และวัฒนธรรม","หน้าที่ความรับผิดชอบของทุกคนต่อระเบียบสังคมและการรับรองสิทธิมนุษยชนและเสรีภาพพื้นฐาน","สิทธิมนุษยชนเบื้องต้น"],a:0},
+{n:77,cat:"ปฏิญญาสากล UDHR",q:"ทุกคนมีสิทธิในมาตรฐานการครองชีพ เช่น อาหาร เครื่องนุ่งห่ม ที่อยู่อาศัย การดูแลรักษาทางการแพทย์ จัดอยู่ในกลุ่มใด",c:["สิทธิพลเมืองและสิทธิทางการเมือง","สิทธิทางเศรษฐกิจ สังคม และวัฒนธรรม","หน้าที่ความรับผิดชอบของทุกคนต่อระเบียบสังคม และการรับรองสิทธิมนุษยชนและเสรีภาพพื้นฐาน","สิทธิมนุษยชนเบื้องต้น"],a:1},
+{n:78,cat:"ปฏิญญาสากล UDHR",q:"ทุกคนมีสิทธิในการพักผ่อนและผ่อนคลายยามว่าง โดยการพักผ่อนดังกล่าวจะต้องได้รับค่าจ้าง จัดอยู่ในกลุ่มใด",c:["สิทธิพลเมืองและสิทธิทางการเมือง","สิทธิทางเศรษฐกิจ สังคม และวัฒนธรรม","หน้าที่ความรับผิดชอบของทุกคนต่อระเบียบสังคม และการรับรองสิทธิมนุษยชนและเสรีภาพพื้นฐาน","สิทธิมนุษยชนเบื้องต้น"],a:1},
+{n:79,cat:"ปฏิญญาสากล UDHR",q:"มนุษย์ทุกคนมีสิทธิที่จะได้รับการเยียวยาอันมีประสิทธิผลจากศาลต่อการกระทำอันล่วงละเมิดสิทธิขั้นพื้นฐานของตนตามรัฐธรรมนูญหรือกฎหมาย จัดอยู่ในกลุ่มใด",c:["สิทธิพลเมืองและสิทธิทางการเมือง","สิทธิทางเศรษฐกิจ สังคมและวัฒนธรรม","หน้าที่ความรับผิดชอบของทุกคนต่อระเบียบสังคมและการรับรองสิทธิมนุษยชนและเสรีภาพพื้นฐาน","สิทธิมนุษยชนเบื้องต้น"],a:0},
+{n:80,cat:"ปฏิญญาสากล UDHR",q:"ทุกคนมีสิทธิที่จะเข้าร่วมในวัฒนธรรมของชุมชนอย่างอิสระ และทุกคนมีสิทธิได้รับการคุ้มครองผลประโยชน์อันเกิดจากการประดิษฐ์กรรมทางวิทยาศาสตร์ วรรณกรรมและศิลปกรรมซึ่งตนเป็นผู้สร้างขึ้น จัดอยู่ในกลุ่มใด",c:["สิทธิพลเมืองและสิทธิทางการเมือง","สิทธิทางเศรษฐกิจ สังคมและวัฒนธรรม","หน้าที่ความรับผิดชอบของทุกคนต่อระเบียบสังคมและการรับรองสิทธิมนุษยชนและเสรีภาพพื้นฐานระหว่างประเทศ","สิทธิมนุษยชนเบื้องต้น"],a:1},
+{n:81,cat:"ปฏิญญาสากล UDHR",q:"ปฏิญญาสากลว่าด้วยสิทธิมนุษยชนแห่งสหประชาชาติ ข้อ 4 – 23 จัดอยู่ในกลุ่มใด",c:["สิทธิพลเมืองและสิทธิทางการเมือง","สิทธิทางเศรษฐกิจ สังคมและวัฒนธรรม","หน้าที่ความรับผิดชอบของทุกคนต่อระเบียบสังคมและการรับรองสิทธิมนุษยชนและเสรีภาพพื้นฐาน","สิทธิมนุษยชนเบื้องต้น"],a:0},
+{n:82,cat:"ปฏิญญาสากล UDHR",q:"ปฏิญญาสากลว่าด้วยสิทธิมนุษยชนแห่งสหประชาชาติ ข้อ 28 – 30 จัดอยู่ในกลุ่มใด",c:["สิทธิพลเมืองและสิทธิทางการเมือง","สิทธิทางเศรษฐกิจ สังคมและวัฒนธรรม","หน้าที่ความรับผิดชอบของทุกคนต่อระเบียบสังคมและการรับรองสิทธิมนุษยชนและเสรีภาพพื้นฐานระหว่างประเทศ","สิทธิมนุษยชนเบื้องต้น"],a:2},
+{n:83,cat:"ประเภทของสิทธิ",q:"ข้อใดคือ “สิทธิพลเมือง”",c:["Political Rights","Civil Rights","Economic Rights","Social Rights"],a:1},
+{n:84,cat:"ประเภทของสิทธิ",q:"สิทธิที่จะได้รับการปกป้องจากการจับกุมหรือคุมขังโดยมิชอบ จัดอยู่ในประเภทของสิทธิตามข้อใด",c:["สิทธิพลเมือง","สิทธิทางการเมือง","สิทธิทางเศรษฐกิจ","สิทธิทางสังคม"],a:0},
+{n:85,cat:"ประเภทของสิทธิ",q:"สิทธิที่จะได้รับการพิจารณาคดีในศาลอย่างยุติธรรมโดยผู้พิพากษาที่มีอิสระ จัดอยู่ในประเภทของสิทธิตามข้อใด",c:["สิทธิพลเมือง","สิทธิทางการเมือง","สิทธิทางเศรษฐกิจ","สิทธิทางสังคม"],a:0},
+{n:86,cat:"ประเภทของสิทธิ",q:"สิทธิในการได้รับสัญชาติ จัดอยู่ในประเภทสิทธิตามข้อใด",c:["สิทธิพลเมือง","สิทธิทางการเมือง","สิทธิทางเศรษฐกิจ","สิทธิทางสังคม"],a:0},
+{n:87,cat:"ประเภทของสิทธิ",q:"สิทธิในกระบวนการยุติธรรม ได้แก่ สิทธิในความเสมอภาคต่อหน้ากฎหมาย จัดอยู่ในประเภทสิทธิตามข้อใด",c:["สิทธิพลเมือง","สิทธิทางการเมือง","สิทธิทางเศรษฐกิจ","สิทธิทางสังคม"],a:0},
+{n:88,cat:"ประเภทของสิทธิ",q:"เสรีภาพในการแสดงความคิดเห็นและการแสดงออก จัดอยู่ในประเภทสิทธิตามข้อใด",c:["Civil Rights","Political Rights","Social Rights","Cultural Rights"],a:1},
+{n:89,cat:"ประเภทของสิทธิ",q:"สิทธิในการเลือกวิถีชีวิตของตนเองทั้งทางการเมือง เศรษฐกิจ สังคมและวัฒนธรรม รวมถึงการจัดการทรัพยากรธรรมชาติ จัดอยู่ในประเภทสิทธิตามข้อใด",c:["สิทธิพลเมือง","สิทธิทางการเมือง","สิทธิทางเศรษฐกิจ","สิทธิทางสังคม"],a:1},
+{n:90,cat:"ประเภทของสิทธิ",q:"สิทธิการมีส่วนร่วมกับรัฐในการดำเนินกิจการที่เป็นประโยชน์สาธารณะ จัดอยู่ในประเภทสิทธิตามข้อใด",c:["สิทธิพลเมือง","สิทธิทางการเมือง","สิทธิทางเศรษฐกิจ","สิทธิทางสังคม"],a:1},
+{n:91,cat:"ประเภทของสิทธิ",q:"เสรีภาพในการรวมกลุ่ม สิทธิในการเลือกตั้งอย่างเสรี จัดอยู่ในประเภทสิทธิตามข้อใด",c:["สิทธิพลเมือง","สิทธิทางการเมือง","สิทธิทางเศรษฐกิจ","สิทธิทางสังคม"],a:1},
+{n:92,cat:"ประเภทของสิทธิ",q:"สิทธิในการมีงานทำ จัดอยู่ในประเภทสิทธิตามข้อใด",c:["สิทธิทางเศรษฐกิจ","สิทธิทางสังคม","สิทธิทางวัฒนธรรม","Cultural Rights"],a:0},
+{n:93,cat:"ประเภทของสิทธิ",q:"สิทธิในการเป็นเจ้าของทรัพย์ การได้รับมาตรฐานการครองชีพอย่างเพียงพอ จัดอยู่ในประเภทสิทธิตามข้อใด",c:["Cultural Rights","Social Rights","Economic Rights","Civil Rights"],a:2},
+{n:94,cat:"ประเภทของสิทธิ",q:"สิทธิในการได้รับการศึกษา สิทธิในการได้รับหลักประกันด้านสุขภาพ แม่และเด็กต้องได้รับการดูแลเป็นพิเศษ ได้รับการพัฒนาบุคลิกภาพอย่างเต็มที่ ได้รับความมั่นคงทางสังคม มีเสรีภาพในการเลือกคู่ครองและสร้างครอบครัว จัดอยู่ในประเภทสิทธิตามข้อใด",c:["สิทธิทางเศรษฐกิจ","สิทธิทางสังคม","สิทธิทางวัฒนธรรม","Civil Rights"],a:1},
+{n:95,cat:"ประเภทของสิทธิ",q:"สิทธิทางวัฒนธรรม ตรงตามข้อใด",c:["Economic Rights","Social Rights","Cultural Rights","Core Values"],a:2},
+{n:96,cat:"ประเภทของสิทธิ",q:"“คุณค่าสากลแห่งสิทธิมนุษยชน” ตรงกับข้อใด",c:["Non Discrimination","Nonviolence","Freedom","Core Values"],a:3},
+{n:97,cat:"ประเภทของสิทธิ",q:"“หลักความยุติธรรม” ตรงกับข้อใด",c:["Justice","Equity","Freedom","Non Discrimination"],a:0},
+{n:98,cat:"ประเภทของสิทธิ",q:"“การไม่เลือกปฏิบัติ” ตรงกับข้อใด",c:["Nonviolence","Human dignity","Non Discrimination","Equity"],a:2},
+{n:99,cat:"ประเภทของสิทธิ",q:"“หลักความเสมอภาคเท่าเทียม” ตรงกับข้อใด",c:["Equity","Freedom","Human dignity","Cultural Rights"],a:0},
+{n:100,cat:"ประเภทของสิทธิ",q:"“หลักเสรีภาพ” ตรงกับข้อใด",c:["Equity","Freedom","Human dignity","Social Rights"],a:1}
+];
+
+const QUESTIONS = QUESTIONS_PART1.concat(QUESTIONS_PART2);
+
+
+const KEYS = ["ก","ข","ค","ง","จ"];
+const PASS = 70;
+
+let state = {
+  mode:"practice", order:"seq", count:"all", cats:new Set(),
+  list:[], answers:[], revealed:[], idx:0, done:false
+};
+
+/* ---------- setup ---------- */
+const ALL_CATS = [...new Set(QUESTIONS.map(q=>q.cat))];
+document.getElementById("s-total").textContent = QUESTIONS.length;
+document.getElementById("s-cats").textContent = ALL_CATS.length;
+
+function buildOptions(){
+  const counts = [10,20,30,50,"all"];
+  const wrap = document.getElementById("count-opts");
+  wrap.innerHTML = counts.map(c=>
+    `<button class="chip" data-count="${c}" aria-pressed="${c==='all'}" onclick="setCount('${c}')">${c==='all'?'ทั้งหมด ('+QUESTIONS.length+' ข้อ)':c+' ข้อ'}</button>`
+  ).join("");
+  const cw = document.getElementById("cat-opts");
+  cw.innerHTML = `<button class="chip" data-cat="__all" aria-pressed="true" onclick="toggleCat('__all')">ทุกหมวด</button>` +
+    ALL_CATS.map(c=>{
+      const n = QUESTIONS.filter(q=>q.cat===c).length;
+      return `<button class="chip" data-cat="${c}" aria-pressed="false" onclick="toggleCat('${c}')">${c} (${n})</button>`;
+    }).join("");
+}
+buildOptions();
+
+function setMode(m){
+  state.mode = m;
+  document.getElementById("m-practice").setAttribute("aria-pressed", m==="practice");
+  document.getElementById("m-exam").setAttribute("aria-pressed", m==="exam");
+}
+function setOrder(o){
+  state.order = o;
+  document.getElementById("ord-seq").setAttribute("aria-pressed", o==="seq");
+  document.getElementById("ord-rand").setAttribute("aria-pressed", o==="rand");
+}
+function setCount(c){
+  state.count = c;
+  document.querySelectorAll("#count-opts .chip").forEach(b=>
+    b.setAttribute("aria-pressed", b.dataset.count===String(c)));
+}
+function toggleCat(c){
+  if(c==="__all"){ state.cats.clear(); }
+  else {
+    state.cats.has(c) ? state.cats.delete(c) : state.cats.add(c);
+  }
+  document.querySelectorAll("#cat-opts .chip").forEach(b=>{
+    const v = b.dataset.cat;
+    b.setAttribute("aria-pressed", v==="__all" ? state.cats.size===0 : state.cats.has(v));
+  });
+}
+
+/* ---------- start ---------- */
+function shuffle(a){
+  const x = a.slice();
+  for(let i=x.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [x[i],x[j]]=[x[j],x[i]]; }
+  return x;
+}
+function startQuiz(pool){
+  let list = pool || QUESTIONS.filter(q=> state.cats.size===0 || state.cats.has(q.cat));
+  if(!pool){
+    if(state.order==="rand") list = shuffle(list);
+    if(state.count!=="all") list = list.slice(0, Number(state.count));
+  }
+  if(!list.length){ alert("ไม่มีข้อสอบในหมวดที่เลือก"); return; }
+  state.list = list;
+  state.answers = new Array(list.length).fill(null);
+  state.revealed = new Array(list.length).fill(false);
+  state.idx = 0; state.done = false;
+  show("quiz");
+  document.getElementById("q-all").textContent = list.length;
+  const pill = document.getElementById("mode-pill");
+  pill.textContent = state.mode==="practice" ? "โหมดฝึกทำ" : "โหมดสอบจริง";
+  pill.className = "pill" + (state.mode==="exam" ? " exam" : "");
+  document.getElementById("lg-ok").classList.toggle("hidden", state.mode!=="practice");
+  document.getElementById("lg-no").classList.toggle("hidden", state.mode!=="practice");
+  document.getElementById("lg-answered").classList.toggle("hidden", state.mode==="practice");
+  render();
+  window.scrollTo(0,0);
+}
+function show(id){
+  ["home","quiz","results"].forEach(s=>document.getElementById(s).classList.toggle("hidden", s!==id));
+}
+
+/* ---------- render question ---------- */
+function render(){
+  const q = state.list[state.idx];
+  const picked = state.answers[state.idx];
+  const shown = state.mode==="practice" && state.revealed[state.idx];
+
+  document.getElementById("q-now").textContent = state.idx+1;
+  document.getElementById("q-cat").textContent = q.cat;
+  document.getElementById("q-num").textContent = "ข้อ " + q.n + ".";
+  document.getElementById("q-text").textContent = q.q;
+  document.getElementById("bar-fill").style.width =
+    ((state.answers.filter(a=>a!==null).length / state.list.length)*100) + "%";
+
+  const ch = document.getElementById("choices");
+  ch.innerHTML = "";
+  q.c.forEach((text,i)=>{
+    const b = document.createElement("button");
+    b.className = "choice";
+    b.innerHTML = `<span class="k">${KEYS[i]}</span><span>${escapeHtml(text)}</span>`;
+    if(shown){
+      b.disabled = true;
+      if(i===q.a) b.classList.add("correct");
+      else if(i===picked) b.classList.add("wrong");
+    } else if(picked===i){
+      b.classList.add("sel");
+    }
+    b.onclick = ()=>pick(i);
+    ch.appendChild(b);
+  });
+
+  const fb = document.getElementById("feedback");
+  if(shown){
+    const good = picked===q.a;
+    fb.innerHTML = `<div class="feedback ${good?'good':'bad'}">
+      ${good ? "ถูกต้อง" : "ยังไม่ถูก — คำตอบที่ถูกคือ <b>" + KEYS[q.a] + ". " + escapeHtml(q.c[q.a]) + "</b>"}
+      ${q.note ? '<span class="note">'+escapeHtml(q.note)+'</span>' : ""}
+    </div>`;
+  } else fb.innerHTML = "";
+
+  document.getElementById("btn-prev").disabled = state.idx===0;
+  document.getElementById("btn-next").disabled = state.idx===state.list.length-1;
+  document.getElementById("live-score").innerHTML =
+    state.mode==="practice"
+      ? `ถูก <b>${scoreNow()}</b> / ${state.revealed.filter(Boolean).length}`
+      : `ตอบแล้ว <b>${state.answers.filter(a=>a!==null).length}</b> / ${state.list.length}`;
+  buildNav();
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+}
+function scoreNow(){
+  return state.list.reduce((n,q,i)=> n + (state.answers[i]===q.a ? 1 : 0), 0);
+}
+function pick(i){
+  if(state.mode==="practice" && state.revealed[state.idx]) return;
+  state.answers[state.idx] = i;
+  if(state.mode==="practice") state.revealed[state.idx] = true;
+  render();
+}
+function go(d){
+  const n = state.idx + d;
+  if(n<0 || n>=state.list.length) return;
+  state.idx = n; render();
+  document.querySelector(".qcard").scrollIntoView({block:"start", behavior:"smooth"});
+}
+function jump(i){ state.idx = i; render();
+  document.querySelector(".qcard").scrollIntoView({block:"start", behavior:"smooth"});
+}
+function buildNav(){
+  const g = document.getElementById("navgrid");
+  g.innerHTML = "";
+  state.list.forEach((q,i)=>{
+    const b = document.createElement("button");
+    b.textContent = i+1;
+    b.setAttribute("aria-label","ไปข้อที่ "+(i+1));
+    if(state.mode==="practice" && state.revealed[i]){
+      b.classList.add(state.answers[i]===q.a ? "ok" : "no");
+    } else if(state.answers[i]!==null){
+      b.classList.add("answered");
+    }
+    if(i===state.idx) b.classList.add("here");
+    b.onclick = ()=>jump(i);
+    g.appendChild(b);
+  });
+}
+function quitQuiz(){
+  if(confirm("ออกจากการทำข้อสอบ? คำตอบในรอบนี้จะหายไป")) backHome();
+}
+
+/* ---------- results ---------- */
+function submitQuiz(){
+  const blank = state.answers.filter(a=>a===null).length;
+  if(blank>0 && !confirm("ยังเหลือ "+blank+" ข้อที่ยังไม่ได้ตอบ ต้องการส่งข้อสอบเลยหรือไม่?")) return;
+  state.done = true;
+  const total = state.list.length;
+  const right = scoreNow();
+  const wrong = state.answers.filter((a,i)=> a!==null && a!==state.list[i].a).length;
+  const pct = Math.round(right/total*100);
+  const pass = pct >= PASS;
+
+  const badge = document.getElementById("r-badge");
+  badge.textContent = pct + "%";
+  badge.className = "badge " + (pass ? "pass" : "fail");
+  document.getElementById("r-title").textContent = pass ? "ผ่านเกณฑ์" : "ยังไม่ผ่านเกณฑ์";
+  document.getElementById("r-sub").textContent = pass
+    ? "ทำได้ " + right + " จาก " + total + " ข้อ — ผ่านเกณฑ์ 70% แล้ว ลองทำโหมดสอบจริงแบบจับเวลาต่อได้เลย"
+    : "ทำได้ " + right + " จาก " + total + " ข้อ — ต้องได้อย่างน้อย " + Math.ceil(total*PASS/100) + " ข้อจึงจะผ่าน";
+  document.getElementById("r-right").textContent = right;
+  document.getElementById("r-wrong").textContent = wrong;
+  document.getElementById("r-blank").textContent = blank;
+
+  // by category
+  const map = {};
+  state.list.forEach((q,i)=>{
+    map[q.cat] = map[q.cat] || {t:0,r:0};
+    map[q.cat].t++;
+    if(state.answers[i]===q.a) map[q.cat].r++;
+  });
+  document.getElementById("catbreak").innerHTML = Object.entries(map).map(([c,v])=>{
+    const p = Math.round(v.r/v.t*100);
+    return `<div class="catrow"><span class="nm">${escapeHtml(c)}</span>
+      <span class="track"><i style="width:${p}%;background:${p>=PASS?'var(--ok)':'var(--bad)'}"></i></span>
+      <span class="val">${v.r}/${v.t}</span></div>`;
+  }).join("");
+
+  // review
+  const misses = state.list.map((q,i)=>({q,i})).filter(({q,i})=> state.answers[i]!==q.a);
+  const rl = document.getElementById("reviewlist");
+  if(!misses.length){
+    rl.innerHTML = '<p class="empty">ตอบถูกทุกข้อ ไม่มีข้อที่ต้องทบทวน</p>';
+    document.getElementById("btn-retry-wrong").disabled = true;
+  } else {
+    document.getElementById("btn-retry-wrong").disabled = false;
+    rl.innerHTML = misses.map(({q,i})=>{
+      const picked = state.answers[i];
+      return `<div class="rev-item">
+        <div class="qcat">${escapeHtml(q.cat)}</div>
+        <p class="qtext"><span class="num">ข้อ ${q.n}.</span>${escapeHtml(q.q)}</p>
+        <div class="rev-line you"><b>คำตอบของคุณ:</b> ${picked===null ? "ไม่ได้ตอบ" : KEYS[picked]+". "+escapeHtml(q.c[picked])}</div>
+        <div class="rev-line ans"><b>คำตอบที่ถูก:</b> ${KEYS[q.a]}. ${escapeHtml(q.c[q.a])}</div>
+        ${q.note ? '<div class="rev-note">'+escapeHtml(q.note)+'</div>' : ""}
+      </div>`;
+    }).join("");
+  }
+  show("results");
+  window.scrollTo(0,0);
+}
+function retrySame(){ startQuiz(state.list); }
+function retryWrong(){
+  const misses = state.list.filter((q,i)=> state.answers[i]!==q.a);
+  if(!misses.length) return;
+  startQuiz(misses);
+}
+function backHome(){ show("home"); window.scrollTo(0,0); }
+
+/* ---------- keyboard ---------- */
+document.addEventListener("keydown",e=>{
+  if(document.getElementById("quiz").classList.contains("hidden")) return;
+  if(e.key==="ArrowRight") go(1);
+  if(e.key==="ArrowLeft") go(-1);
+  if(["1","2","3","4"].includes(e.key)) pick(Number(e.key)-1);
+});
+</script>
+</body>
+</html>
