@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ข้อสอบอัตนัย – สิทธิมนุษยชนตามปฏิญญาสากลและสนธิสัญญาระหว่างประเทศ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0D1B26;
+  --ink-2:#17303F;
+  --slate:#4A6478;
+  --line:#D3DDE4;
+  --paper:#F2F5F7;
+  --card:#FFFFFF;
+  --blue:#2B5F9E;
+  --blue-soft:#E7EFF8;
+  --brass:#A87B2C;
+  --brass-soft:#F6EEDC;
+  --green:#1C7A5B;
+  --green-soft:#E3F3ED;
+  --amber:#B8791B;
+  --amber-soft:#FBF0DC;
+  --red:#A8382F;
+  --red-soft:#FAE9E7;
+  --radius:6px;
+  --shadow:0 1px 2px rgba(13,27,38,.06), 0 8px 24px -16px rgba(13,27,38,.35);
+  --display:"IBM Plex Sans Thai","Noto Sans Thai","Leelawadee UI",system-ui,sans-serif;
+  --body:"Sarabun","Noto Sans Thai","Leelawadee UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"Courier New",monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.75;
+  -webkit-text-size-adjust:100%;
+}
+button{font-family:var(--display);cursor:pointer;}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+
+/* ---------- masthead ---------- */
+.masthead{
+  background:var(--ink);
+  color:#fff;
+  border-bottom:3px solid var(--brass);
+}
+.masthead-in{
+  max-width:960px;margin:0 auto;padding:22px 20px 20px;
+  display:flex;gap:16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;
+}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:#CBA45E;margin:0 0 6px;
+}
+.masthead h1{
+  font-family:var(--display);font-weight:600;font-size:21px;line-height:1.45;margin:0;letter-spacing:-.01em;
+}
+.masthead p{margin:6px 0 0;font-size:13.5px;color:#9FB3C1;line-height:1.6;}
+.seal{
+  flex:0 0 auto;text-align:center;border:1px solid rgba(203,164,94,.45);border-radius:50%;
+  width:76px;height:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.seal b{font-family:var(--mono);font-size:19px;color:#CBA45E;line-height:1;}
+.seal span{font-size:10px;color:#9FB3C1;letter-spacing:.08em;margin-top:3px;}
+
+/* ---------- layout ---------- */
+.wrap{max-width:960px;margin:0 auto;padding:26px 20px 80px;}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.pad{padding:26px;}
+@media(max-width:620px){.pad{padding:18px;}}
+
+h2.sec{font-family:var(--display);font-size:17px;font-weight:600;margin:0 0 14px;}
+.hint{color:var(--slate);font-size:13.5px;line-height:1.7;}
+
+/* ---------- home ---------- */
+.lede{font-size:15px;color:var(--ink-2);margin:0 0 22px;}
+.lede b{font-weight:600;}
+.optgroup{margin-bottom:24px;}
+.optlabel{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--slate);display:block;margin-bottom:9px;
+}
+.choices{display:grid;gap:10px;}
+.choices.two{grid-template-columns:1fr 1fr;}
+.choices.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:620px){.choices.two,.choices.three{grid-template-columns:1fr;}}
+.choice{
+  text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:13px 15px;font-size:14.5px;color:var(--ink);transition:border-color .15s,background .15s;
+  font-weight:500;
+}
+.choice:hover{border-color:var(--blue);}
+.choice small{display:block;font-family:var(--body);font-weight:400;color:var(--slate);font-size:12.5px;margin-top:3px;line-height:1.5;}
+.choice[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--blue);}
+.choice[aria-pressed="true"] small{color:#3C6EA5;}
+
+.btn{
+  border:1px solid transparent;border-radius:var(--radius);padding:12px 22px;
+  font-size:15px;font-weight:600;transition:opacity .15s,background .15s,border-color .15s;
+}
+.btn-primary{background:var(--ink);color:#fff;}
+.btn-primary:hover{background:var(--ink-2);}
+.btn-ghost{background:#fff;border-color:var(--line);color:var(--ink-2);}
+.btn-ghost:hover{border-color:var(--slate);}
+.btn-brass{background:var(--brass);color:#fff;}
+.btn-brass:hover{filter:brightness(1.07);}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+
+/* ---------- progress bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:20;background:rgba(242,245,247,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+}
+.topbar-in{max-width:960px;margin:0 auto;padding:11px 20px;}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;color:var(--slate);}
+.meta .mode-tag{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--ink-2);background:#fff;
+}
+.meta .count{font-family:var(--mono);}
+.track{height:3px;background:var(--line);border-radius:99px;margin-top:9px;overflow:hidden;}
+.track i{display:block;height:100%;background:var(--brass);transition:width .3s ease;}
+
+/* ---------- question ---------- */
+.qhead{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+.qnum{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.08em;}
+.qcat{font-size:11.5px;color:var(--slate);border-left:1px solid var(--line);padding-left:12px;}
+.qtext{
+  font-family:var(--display);font-size:21px;font-weight:600;line-height:1.6;margin:0 0 20px;
+  letter-spacing:-.005em;
+}
+@media(max-width:620px){.qtext{font-size:18.5px;}}
+textarea{
+  width:100%;min-height:170px;resize:vertical;font-family:var(--body);font-size:15.5px;line-height:1.8;
+  padding:15px 16px;border:1px solid var(--line);border-radius:var(--radius);background:#FCFDFE;color:var(--ink);
+}
+textarea:focus{border-color:var(--blue);background:#fff;}
+textarea::placeholder{color:#9AAAB6;}
+
+.keys{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.keys-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;}
+.keys-head span{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);}
+.keys-head b{font-family:var(--mono);font-size:12.5px;color:var(--brass);}
+.chips{display:flex;flex-wrap:wrap;gap:7px;}
+.chip{
+  font-size:12.5px;padding:5px 11px;border-radius:99px;border:1px dashed var(--line);
+  color:#94A6B2;background:#fff;transition:all .2s;
+}
+.chip.hit{border-style:solid;border-color:var(--green);background:var(--green-soft);color:var(--green);font-weight:500;}
+.chip.masked{color:#B6C3CC;letter-spacing:.05em;}
+
+.answer{
+  margin-top:20px;border:1px solid var(--line);border-left:3px solid var(--brass);
+  background:var(--brass-soft);border-radius:0 var(--radius) var(--radius) 0;padding:18px 20px;
+}
+.answer h4{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--brass);margin:0 0 8px;font-weight:500;
+}
+.answer p{margin:0;font-size:15.5px;line-height:1.85;color:var(--ink-2);}
+
+.grade{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);}
+.grade-q{font-size:14px;color:var(--ink-2);margin:0 0 11px;font-weight:500;}
+.grade-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+@media(max-width:620px){.grade-btns{grid-template-columns:1fr;}}
+.gbtn{
+  border:1px solid var(--line);background:#fff;border-radius:var(--radius);padding:11px 12px;
+  font-size:14px;font-weight:600;color:var(--ink-2);text-align:center;transition:all .15s;
+}
+.gbtn small{display:block;font-family:var(--mono);font-size:11px;font-weight:400;color:var(--slate);margin-top:2px;}
+.gbtn[data-g="1"]:hover,.gbtn[data-g="1"].on{background:var(--green-soft);border-color:var(--green);color:var(--green);}
+.gbtn[data-g="0.5"]:hover,.gbtn[data-g="0.5"].on{background:var(--amber-soft);border-color:var(--amber);color:var(--amber);}
+.gbtn[data-g="0"]:hover,.gbtn[data-g="0"].on{background:var(--red-soft);border-color:var(--red);color:var(--red);}
+
+.navrow{display:flex;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap;}
+
+/* ---------- navigator ---------- */
+.navigator{margin-top:18px;}
+.navigator summary{
+  cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--slate);padding:10px 0;list-style:none;
+}
+.navigator summary::-webkit-details-marker{display:none;}
+.navigator summary::before{content:"▸ ";}
+.navigator[open] summary::before{content:"▾ ";}
+.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:7px;padding:6px 0 4px;}
+.navbtn{
+  aspect-ratio:1;border:1px solid var(--line);background:#fff;border-radius:var(--radius);
+  font-family:var(--mono);font-size:13px;color:var(--slate);display:flex;align-items:center;justify-content:center;
+}
+.navbtn:hover{border-color:var(--ink-2);}
+.navbtn.answered{background:var(--blue-soft);border-color:#B9CFE6;color:var(--blue);}
+.navbtn.g1{background:var(--green-soft);border-color:var(--green);color:var(--green);}
+.navbtn.g05{background:var(--amber-soft);border-color:var(--amber);color:var(--amber);}
+.navbtn.g0{background:var(--red-soft);border-color:var(--red);color:var(--red);}
+.navbtn.cur{outline:2px solid var(--ink);outline-offset:1px;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--slate);margin-top:10px;}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px;}
+
+/* ---------- results ---------- */
+.verdict{text-align:center;padding:34px 24px 30px;border-radius:var(--radius) var(--radius) 0 0;}
+.verdict.pass{background:var(--green-soft);border-bottom:1px solid #BFE0D3;}
+.verdict.fail{background:var(--red-soft);border-bottom:1px solid #EFC9C4;}
+.verdict .stamp{
+  font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  display:inline-block;padding:6px 18px;border-radius:99px;margin-bottom:14px;
+}
+.verdict.pass .stamp{background:var(--green);color:#fff;}
+.verdict.fail .stamp{background:var(--red);color:#fff;}
+.bignum{font-family:var(--mono);font-size:58px;font-weight:500;line-height:1;letter-spacing:-.03em;}
+.verdict.pass .bignum{color:var(--green);}
+.verdict.fail .bignum{color:var(--red);}
+.verdict .sub{font-size:14px;color:var(--ink-2);margin-top:10px;}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);}
+@media(max-width:620px){.statgrid{grid-template-columns:1fr;}}
+.stat{padding:18px;text-align:center;border-right:1px solid var(--line);}
+.stat:last-child{border-right:none;}
+@media(max-width:620px){.stat{border-right:none;border-bottom:1px solid var(--line);}}
+.stat b{display:block;font-family:var(--mono);font-size:26px;font-weight:500;}
+.stat span{font-size:12.5px;color:var(--slate);}
+.stat.s1 b{color:var(--green);} .stat.s05 b{color:var(--amber);} .stat.s0 b{color:var(--red);}
+
+.catrow{display:flex;align-items:center;gap:12px;margin-bottom:11px;font-size:13.5px;}
+.catrow .nm{flex:0 0 40%;color:var(--ink-2);}
+@media(max-width:620px){.catrow{flex-wrap:wrap;} .catrow .nm{flex:0 0 100%;}}
+.catbar{flex:1;height:7px;background:var(--line);border-radius:99px;overflow:hidden;}
+.catbar i{display:block;height:100%;background:var(--blue);}
+.catrow .pct{font-family:var(--mono);font-size:12.5px;color:var(--slate);flex:0 0 46px;text-align:right;}
+
+.review{border:1px solid var(--line);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;}
+.review summary{
+  cursor:pointer;padding:13px 16px;font-size:14.5px;font-weight:500;background:#fff;list-style:none;
+  display:flex;gap:10px;align-items:flex-start;font-family:var(--display);
+}
+.review summary::-webkit-details-marker{display:none;}
+.review summary .tag{
+  font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:99px;flex:0 0 auto;margin-top:3px;
+}
+.review.g05 summary .tag{background:var(--amber-soft);color:var(--amber);}
+.review.g0 summary .tag{background:var(--red-soft);color:var(--red);}
+.review .body{padding:0 16px 16px;border-top:1px solid var(--line);}
+.review .body h5{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);
+  margin:16px 0 6px;font-weight:500;
+}
+.review .body p{margin:0;font-size:15px;line-height:1.85;}
+.mine{background:var(--paper);border-radius:var(--radius);padding:12px 14px;color:var(--ink-2);white-space:pre-wrap;}
+.mine.empty{color:#9AAAB6;font-style:italic;}
+
+.footer{text-align:center;font-size:12.5px;color:var(--slate);margin-top:30px;line-height:1.8;}
+.kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 5px;background:#fff;}
+.hidden{display:none!important;}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+@media print{.topbar,.navrow,.navigator,.btn-row{display:none;}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <div>
+      <p class="eyebrow">แนวข้อสอบอัตนัย · ฉบับฝึกเขียนตอบ</p>
+      <h1>ความรู้เกี่ยวกับสิทธิมนุษยชนตามปฏิญญาสากลว่าด้วยสิทธิมนุษยชน<br>และสนธิสัญญาระหว่างประเทศด้านสิทธิมนุษยชน</h1>
+      <p>50 ข้อ · ตรวจด้วยตนเองจากแนวคำตอบและคำสำคัญ · เกณฑ์ผ่าน 70%</p>
+    </div>
+    <div class="seal"><b>50</b><span>ข้อ</span></div>
+  </div>
+</header>
+
+<!-- progress bar (quiz + grading only) -->
+<div class="topbar hidden" id="topbar">
+  <div class="topbar-in">
+    <div class="meta">
+      <span class="mode-tag" id="modeTag">Practice</span>
+      <span class="count" id="counter">1 / 50</span>
+    </div>
+    <div class="track"><i id="trackFill" style="width:0%"></i></div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <!-- ============ HOME ============ -->
+  <section id="screenHome">
+    <div class="card pad">
+      <p class="lede">ข้อสอบชุดนี้เป็น <b>อัตนัย</b> ทั้งหมด วิธีใช้คือเขียนคำตอบด้วยสำนวนของตัวเองลงในช่อง แล้วเทียบกับแนวคำตอบ และให้คะแนนตนเอง 3 ระดับ ระหว่างพิมพ์ ระบบจะไฮไลต์ <b>คำสำคัญ</b> ที่ตรวจพบในคำตอบ เพื่อให้เห็นว่าประเด็นใดยังตกหล่น</p>
+
+      <div class="optgroup">
+        <span class="optlabel">รูปแบบการทำ</span>
+        <div class="choices two" id="modeChoices">
+          <button class="choice" data-mode="practice" aria-pressed="true">โหมดฝึก (Practice)
+            <small>เฉลยทันทีทีละข้อ เห็นคำสำคัญขณะพิมพ์</small></button>
+          <button class="choice" data-mode="exam" aria-pressed="false">โหมดสอบ (Exam)
+            <small>เขียนให้ครบทุกข้อก่อน แล้วค่อยเฉลยและตรวจตอนจบ</small></button>
+        </div>
+      </div>
+
+      <div class="optgroup">
+        <span class="optlabel">ชุดข้อสอบ</span>
+        <div class="choices three" id="setChoices">
+          <button class="choice" data-set="all" aria-pressed="true">ทั้งหมด 50 ข้อ<small>ตามลำดับในเอกสาร</small></button>
+          <button class="choice" data-set="20" aria-pressed="false">สุ่ม 20 ข้อ<small>ฝึกสั้น ๆ</small></button>
+          <button class="choice" data-set="10" aria-pressed="false">สุ่ม 10 ข้อ<small>อุ่นเครื่อง</small></button>
+        </div>
+      </div>
+
+      <div class="optgroup">
+        <span class="optlabel">เลือกเฉพาะหมวด (ไม่เลือก = ทุกหมวด)</span>
+        <div class="choices two" id="catChoices"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="startBtn">เริ่มทำข้อสอบ</button>
+        <span class="hint" id="startHint"></span>
+      </div>
+    </div>
+
+    <p class="footer">เกณฑ์ให้คะแนนตนเอง: ตอบได้ครบ = 1 คะแนน · ตอบได้บางส่วน = 0.5 คะแนน · ตอบไม่ได้ = 0 คะแนน<br>ที่มาของเนื้อหา: เอกสารแนวข้อสอบ ติวเตอร์ เพียงดิน</p>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="screenQuiz" class="hidden">
+    <div class="card pad">
+      <div class="qhead">
+        <span class="qnum" id="qNum">ข้อ 01</span>
+        <span class="qcat" id="qCat"></span>
+      </div>
+      <h2 class="qtext" id="qText"></h2>
+
+      <textarea id="qInput" placeholder="เขียนคำตอบของคุณที่นี่… ลองเขียนให้ได้ 4–6 บรรทัด ครอบคลุมนิยาม เหตุผล และตัวอย่าง"></textarea>
+
+      <div class="keys" id="keysBox">
+        <div class="keys-head">
+          <span>คำสำคัญที่ควรมีในคำตอบ</span>
+          <b id="keysScore">0/0</b>
+        </div>
+        <div class="chips" id="chips"></div>
+      </div>
+
+      <div class="answer hidden" id="answerBox">
+        <h4>แนวคำตอบ</h4>
+        <p id="answerText"></p>
+      </div>
+
+      <div class="grade hidden" id="gradeBox">
+        <p class="grade-q">ประเมินคำตอบของตนเอง</p>
+        <div class="grade-btns">
+          <button class="gbtn" data-g="1">ตอบได้ครบ<small>1.0</small></button>
+          <button class="gbtn" data-g="0.5">ตอบได้บางส่วน<small>0.5</small></button>
+          <button class="gbtn" data-g="0">ตอบไม่ได้<small>0.0</small></button>
+        </div>
+      </div>
+
+      <div class="navrow">
+        <button class="btn btn-ghost" id="prevBtn">ย้อนกลับ</button>
+        <div class="btn-row">
+          <button class="btn btn-brass" id="revealBtn">ดูแนวคำตอบ</button>
+          <button class="btn btn-primary" id="nextBtn">ข้อถัดไป</button>
+        </div>
+      </div>
+    </div>
+
+    <details class="navigator card pad" id="navigator">
+      <summary>ผังข้อสอบ</summary>
+      <div class="navgrid" id="navGrid"></div>
+      <div class="legend">
+        <span><i style="background:var(--blue-soft);border:1px solid #B9CFE6"></i>เขียนแล้ว</span>
+        <span><i style="background:var(--green-soft);border:1px solid var(--green)"></i>ตอบได้ครบ</span>
+        <span><i style="background:var(--amber-soft);border:1px solid var(--amber)"></i>บางส่วน</span>
+        <span><i style="background:var(--red-soft);border:1px solid var(--red)"></i>ตอบไม่ได้</span>
+      </div>
+      <div class="btn-row" style="margin-top:14px">
+        <button class="btn btn-ghost" id="finishBtn">จบและดูผลคะแนน</button>
+        <button class="btn btn-ghost" id="quitBtn">ออกไปหน้าแรก</button>
+      </div>
+    </details>
+
+    <p class="footer"><span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> ดูแนวคำตอบ · <span class="kbd">Alt</span> + <span class="kbd">→</span> ข้อถัดไป · <span class="kbd">Alt</span> + <span class="kbd">←</span> ย้อนกลับ</p>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section id="screenResult" class="hidden">
+    <div class="card" style="overflow:hidden">
+      <div class="verdict" id="verdict">
+        <div class="stamp" id="stamp">ผ่าน</div>
+        <div class="bignum" id="pctBig">0%</div>
+        <div class="sub" id="scoreSub"></div>
+      </div>
+      <div class="statgrid">
+        <div class="stat s1"><b id="stFull">0</b><span>ตอบได้ครบ</span></div>
+        <div class="stat s05"><b id="stPart">0</b><span>ตอบได้บางส่วน</span></div>
+        <div class="stat s0"><b id="stNone">0</b><span>ตอบไม่ได้</span></div>
+      </div>
+    </div>
+
+    <div class="card pad" style="margin-top:18px">
+      <h2 class="sec">คะแนนรายหมวด</h2>
+      <div id="catStats"></div>
+    </div>
+
+    <div class="card pad" style="margin-top:18px">
+      <h2 class="sec" id="reviewHead">ทบทวนข้อที่ยังไม่ผ่าน</h2>
+      <div id="reviewList"></div>
+    </div>
+
+    <div class="btn-row" style="margin-top:20px">
+      <button class="btn btn-primary" id="retryWrongBtn">ทบทวนเฉพาะข้อที่ยังไม่ผ่าน</button>
+      <button class="btn btn-ghost" id="retryAllBtn">ทำชุดเดิมอีกครั้ง</button>
+      <button class="btn btn-ghost" id="homeBtn">กลับหน้าแรก</button>
+    </div>
+
+    <p class="footer">เกณฑ์ผ่าน 70% ของคะแนนเต็ม · คะแนนคำนวณจากการประเมินตนเอง</p>
+  </section>
+
+</main>
+
+<script>
+/* ============================ DATA ============================ */
+/* ================================================================
+   ชุดข้อสอบอัตนัย: ความรู้เกี่ยวกับสิทธิมนุษยชนตามปฏิญญาสากลว่าด้วย
+   สิทธิมนุษยชน และสนธิสัญญาระหว่างประเทศด้านสิทธิมนุษยชน
+   จำนวน 50 ข้อ  (ที่มา: เอกสารติวเตอร์ เพียงดิน)
+   โครงสร้าง: id, cat (หมวด), q (โจทย์), a (แนวคำตอบ), k (คำสำคัญ)
+   ================================================================ */
+const CATEGORIES = [
+  { id: "A", name: "แนวคิดพื้นฐาน", short: "แนวคิดพื้นฐาน" },
+  { id: "B", name: "ปฏิญญาสากลว่าด้วยสิทธิมนุษยชน (UDHR)", short: "UDHR" },
+  { id: "C", name: "สิทธิพลเมืองและสิทธิทางการเมือง", short: "สิทธิพลเมือง–การเมือง" },
+  { id: "D", name: "สิทธิทางเศรษฐกิจ สังคม และวัฒนธรรม", short: "เศรษฐกิจ–สังคม–วัฒนธรรม" },
+  { id: "E", name: "หลักการสำคัญของสิทธิมนุษยชน", short: "หลักการสำคัญ" },
+  { id: "F", name: "สนธิสัญญาระหว่างประเทศ", short: "สนธิสัญญาระหว่างประเทศ" }
+];
+
+const QUESTIONS = [
+{
+  id: 1, cat: "A",
+  q: "จงอธิบายความหมายของสิทธิมนุษยชน",
+  a: "สิทธิมนุษยชนคือสิทธิและเสรีภาพขั้นพื้นฐานที่มนุษย์ทุกคนมีติดตัวมาตั้งแต่เกิด โดยไม่ต้องรอให้รัฐเป็นผู้มอบให้ และไม่ขึ้นอยู่กับเชื้อชาติ สีผิว เพศ ภาษา ศาสนา ความคิดเห็นทางการเมือง สถานะทางเศรษฐกิจและสังคม สัญชาติ ความพิการ หรืออายุ สิทธิเหล่านี้เป็นสิทธิที่มีอยู่โดยศักดิ์ศรีความเป็นมนุษย์ของแต่ละคน ดังนั้นรัฐจึงมีหน้าที่ต้องเคารพ คุ้มครอง และส่งเสริมให้ทุกคนได้รับสิทธิอย่างเสมอภาค การเข้าใจความหมายของสิทธิมนุษยชนเป็นพื้นฐานสำคัญของการอยู่ร่วมกันในสังคมประชาธิปไตย",
+  k: ["ติดตัวมาตั้งแต่เกิด", "ศักดิ์ศรีความเป็นมนุษย์", "ไม่ต้องรอให้รัฐมอบให้", "ไม่เลือกปฏิบัติ", "เคารพ คุ้มครอง ส่งเสริม", "เสมอภาค", "ประชาธิปไตย"]
+},
+{
+  id: 2, cat: "A",
+  q: "เหตุใดสิทธิมนุษยชนจึงถือว่าเป็นสิทธิที่ไม่อาจถูกเพิกถอนโดยพลการ",
+  a: "สิทธิมนุษยชนเป็นสิทธิที่มีอยู่โดยธรรมชาติของความเป็นมนุษย์ จึงไม่ใช่สิทธิที่ใครจะลบล้างหรือเพิกถอนได้ตามอำเภอใจ แม้รัฐจะมีอำนาจในการออกกฎหมายและบริหารประเทศ แต่การใช้อำนาจนั้นต้องอยู่ภายใต้หลักนิติธรรมและเคารพศักดิ์ศรีของประชาชน การเพิกถอนสิทธิอย่างไม่เป็นธรรมย่อมนำไปสู่การละเมิดสิทธิและทำให้เกิดความไม่เป็นธรรมในสังคม ดังนั้นการจำกัดสิทธิจึงทำได้เฉพาะเท่าที่กฎหมายกำหนดและต้องมีเหตุผลอันชอบธรรม",
+  k: ["มีอยู่โดยธรรมชาติ", "อำเภอใจ", "หลักนิติธรรม", "ศักดิ์ศรี", "จำกัดสิทธิเท่าที่กฎหมายกำหนด", "เหตุผลอันชอบธรรม"]
+},
+{
+  id: 3, cat: "B",
+  q: "จงอธิบายความสำคัญของการประกาศปฏิญญาสากลว่าด้วยสิทธิมนุษยชน",
+  a: "ปฏิญญาสากลว่าด้วยสิทธิมนุษยชนเป็นเอกสารสำคัญที่องค์การสหประชาชาติรับรองเมื่อวันที่ 10 ธันวาคม ค.ศ. 1948 หลังสงครามโลกครั้งที่สอง เพื่อยืนยันว่ามนุษย์ทุกคนมีศักดิ์ศรีและสิทธิเสมอกัน เอกสารฉบับนี้เป็นรากฐานของกฎหมายสิทธิมนุษยชนระหว่างประเทศ และเป็นต้นแบบให้หลายประเทศนำไปใช้เป็นแนวทางในการจัดทำรัฐธรรมนูญและกฎหมายภายในประเทศ ปฏิญญานี้จึงมีความสำคัญทั้งในเชิงหลักการและเชิงพัฒนาอารยธรรมทางกฎหมายของโลก",
+  k: ["สหประชาชาติ", "10 ธันวาคม ค.ศ. 1948", "สงครามโลกครั้งที่สอง", "ศักดิ์ศรีและสิทธิเสมอกัน", "รากฐานกฎหมายสิทธิมนุษยชนระหว่างประเทศ", "ต้นแบบรัฐธรรมนูญ"]
+},
+{
+  id: 4, cat: "B",
+  q: "ปฏิญญาสากลว่าด้วยสิทธิมนุษยชนมีลักษณะสำคัญอย่างไร",
+  a: "ปฏิญญาสากลว่าด้วยสิทธิมนุษยชนมีบทบัญญัติ 30 ข้อ ครอบคลุมสิทธิหลากหลายด้าน ทั้งสิทธิพลเมือง การเมือง เศรษฐกิจ สังคม และวัฒนธรรม จุดเด่นคือยืนยันว่ามนุษย์ทุกคนเกิดมามีศักดิ์ศรีและสิทธิเสมอกัน ต้องได้รับการคุ้มครองโดยไม่เลือกปฏิบัติ รวมทั้งรับรองเสรีภาพพื้นฐาน เช่น เสรีภาพในการแสดงความคิดเห็น ศาสนา การชุมนุม และการมีส่วนร่วมทางการเมือง ปฏิญญานี้จึงเป็นกรอบคุณค่าร่วมของมนุษยชาติในการปกป้องสิทธิและศักดิ์ศรีของคนทุกคน",
+  k: ["30 ข้อ", "สิทธิพลเมือง การเมือง", "เศรษฐกิจ สังคม วัฒนธรรม", "ไม่เลือกปฏิบัติ", "เสรีภาพพื้นฐาน", "กรอบคุณค่าร่วมของมนุษยชาติ"]
+},
+{
+  id: 5, cat: "B",
+  q: "จงอธิบายหลักการ “มนุษย์ทุกคนเกิดมามีศักดิ์ศรีและสิทธิเท่าเทียมกัน”",
+  a: "หลักการนี้หมายความว่า ทุกคนมีคุณค่าในฐานะมนุษย์เท่ากัน ไม่ว่าบุคคลนั้นจะมีฐานะ ความเชื่อ เพศ หรือเชื้อชาติใดก็ตาม ศักดิ์ศรีความเป็นมนุษย์เป็นสิ่งที่ติดตัวมาตั้งแต่เกิดและไม่ควรถูกลดทอนโดยการเลือกปฏิบัติ หลักการนี้เป็นรากฐานของสิทธิมนุษยชนทุกประเภท เพราะถ้าคนไม่เท่าเทียมกันในฐานะมนุษย์ ก็ย่อมไม่อาจรับประกันสิทธิอย่างเป็นธรรมได้ การยอมรับหลักนี้ทำให้สังคมเคารพกันและลดการกดทับทางอำนาจ",
+  k: ["คุณค่าในฐานะมนุษย์เท่ากัน", "ติดตัวมาตั้งแต่เกิด", "ไม่ถูกลดทอนโดยการเลือกปฏิบัติ", "รากฐานของสิทธิทุกประเภท", "ลดการกดทับทางอำนาจ"]
+},
+{
+  id: 6, cat: "B",
+  q: "การไม่เลือกปฏิบัติมีความหมายอย่างไรในทางสิทธิมนุษยชน",
+  a: "การไม่เลือกปฏิบัติหมายถึงการปฏิบัติต่อบุคคลอย่างเสมอภาค ไม่ตัดสินหรือลดทอนสิทธิของใครเพราะเหตุแห่งเชื้อชาติ สีผิว เพศ ศาสนา สถานะทางเศรษฐกิจ หรือความแตกต่างอื่นใด หลักนี้เป็นหัวใจของความเป็นธรรม เพราะหากมีการเลือกปฏิบัติ สิทธิมนุษยชนย่อมไม่เกิดขึ้นอย่างแท้จริง รัฐและสังคมจึงต้องสร้างระบบที่เปิดโอกาสเท่าเทียมแก่ทุกคน ทั้งในการศึกษา การทำงาน การเข้าถึงบริการของรัฐ และการใช้ชีวิตประจำวัน",
+  k: ["ปฏิบัติอย่างเสมอภาค", "เชื้อชาติ สีผิว เพศ ศาสนา", "หัวใจของความเป็นธรรม", "โอกาสเท่าเทียม", "การศึกษา การทำงาน", "บริการของรัฐ"]
+},
+{
+  id: 7, cat: "C",
+  q: "จงอธิบายสิทธิในชีวิต เสรีภาพ และความมั่นคงของบุคคล",
+  a: "สิทธิในชีวิตหมายถึงการที่รัฐต้องคุ้มครองไม่ให้บุคคลถูกพรากชีวิตโดยไม่ชอบด้วยกฎหมาย เสรีภาพหมายถึงการที่บุคคลสามารถใช้ชีวิตตนเองภายใต้กรอบของกฎหมายโดยไม่ถูกกดขี่หรือควบคุมอย่างเกินสมควร ส่วนความมั่นคงของบุคคลคือการคุ้มครองไม่ให้บุคคลถูกคุกคาม ทรมาน หรือใช้อำนาจบังคับอย่างไม่เป็นธรรม สิทธินี้เป็นสิทธิพื้นฐานที่สุด เพราะหากไม่มีชีวิต เสรีภาพ และความปลอดภัย สิทธิอื่น ๆ ก็ไม่อาจเกิดขึ้นได้",
+  k: ["ไม่ถูกพรากชีวิตโดยไม่ชอบด้วยกฎหมาย", "ไม่ถูกกดขี่หรือควบคุมเกินสมควร", "ไม่ถูกคุกคาม ทรมาน", "สิทธิพื้นฐานที่สุด", "เป็นฐานของสิทธิอื่น"]
+},
+{
+  id: 8, cat: "C",
+  q: "เหตุใดการเป็นทาสและการค้าทาสจึงถูกห้ามอย่างเด็ดขาด",
+  a: "การเป็นทาสและการค้าทาสเป็นการลดคุณค่าความเป็นมนุษย์ให้กลายเป็นทรัพย์สินหรือเครื่องมือที่ถูกซื้อขายได้ จึงขัดต่อศักดิ์ศรีความเป็นมนุษย์อย่างร้ายแรง ปฏิญญาสากลว่าด้วยสิทธิมนุษยชนจึงห้ามการกระทำดังกล่าวโดยเด็ดขาด การห้ามนี้สะท้อนว่ามนุษย์ไม่อาจถูกครอบครองหรือบังคับใช้แรงงานอย่างไร้ศักดิ์ศรีได้ หลักการนี้ยังเป็นรากฐานของการคุ้มครองแรงงานและการต่อต้านการค้ามนุษย์ในยุคปัจจุบัน",
+  k: ["ลดคุณค่าความเป็นมนุษย์เป็นทรัพย์สิน", "ขัดต่อศักดิ์ศรีความเป็นมนุษย์", "ห้ามโดยเด็ดขาด", "บังคับใช้แรงงาน", "คุ้มครองแรงงาน", "ต่อต้านการค้ามนุษย์"]
+},
+{
+  id: 9, cat: "C",
+  q: "จงอธิบายเหตุผลที่ปฏิญญาสากลห้ามการทรมานและการปฏิบัติที่โหดร้าย",
+  a: "การทรมานและการปฏิบัติที่โหดร้ายเป็นการกระทำที่ละเมิดทั้งร่างกาย จิตใจ และศักดิ์ศรีของบุคคลอย่างร้ายแรง ไม่มีเหตุผลใดที่ทำให้การกระทำเช่นนี้ชอบธรรมในทางสิทธิมนุษยชนได้ การห้ามดังกล่าวทำให้รัฐต้องควบคุมการใช้อำนาจของเจ้าหน้าที่และห้ามมิให้มีการลงโทษที่ไร้มนุษยธรรม การคุ้มครองนี้ยังเชื่อมโยงกับหลักการยุติธรรมและความรับผิดของรัฐในการไม่ใช้ความรุนแรงเกินกว่าเหตุ",
+  k: ["ละเมิดร่างกาย จิตใจ ศักดิ์ศรี", "ไม่มีเหตุผลใดทำให้ชอบธรรม", "ควบคุมการใช้อำนาจของเจ้าหน้าที่", "ลงโทษที่ไร้มนุษยธรรม", "ความรับผิดของรัฐ"]
+},
+{
+  id: 10, cat: "C",
+  q: "สิทธิที่จะได้รับการยอมรับว่าเป็นบุคคลตามกฎหมายมีความสำคัญอย่างไร",
+  a: "สิทธิที่จะได้รับการยอมรับว่าเป็นบุคคลตามกฎหมายหมายถึงการที่รัฐต้องรับรองการมีตัวตนทางกฎหมายของบุคคล เพื่อให้บุคคลสามารถมีสิทธิและหน้าที่ตามกฎหมายได้ เช่น การทำบัตรประจำตัว การจดทะเบียนเกิด การแต่งงาน หรือการรับมรดก หากไม่มีการรับรองทางกฎหมาย บุคคลอาจถูกกันออกจากระบบสิทธิขั้นพื้นฐาน ทำให้ไม่สามารถเข้าถึงการศึกษา การรักษาพยาบาล หรือการคุ้มครองจากรัฐได้ หลักนี้จึงเป็นรากฐานของการมีตัวตนในทางกฎหมายและการคุ้มครองสิทธิอื่น ๆ",
+  k: ["รับรองการมีตัวตนทางกฎหมาย", "บัตรประจำตัว", "จดทะเบียนเกิด", "รับมรดก", "เข้าถึงการศึกษา การรักษาพยาบาล", "ฐานของสิทธิอื่น"]
+},
+{
+  id: 11, cat: "C",
+  q: "จงอธิบายหลักความเสมอภาคภายใต้กฎหมาย",
+  a: "ความเสมอภาคภายใต้กฎหมายหมายถึงทุกคนอยู่ภายใต้กฎหมายเดียวกันและได้รับการคุ้มครองอย่างเท่าเทียม กฎหมายต้องไม่เลือกปฏิบัติหรือใช้กับบุคคลต่างกันโดยไม่มีเหตุผลอันชอบธรรม หลักนี้ทำให้ประชาชนเชื่อมั่นว่าระบบยุติธรรมเป็นธรรมและไม่ถูกใช้เป็นเครื่องมือของผู้มีอำนาจ การคุ้มครองอย่างเท่าเทียมยังช่วยลดความเหลื่อมล้ำและสร้างความสงบเรียบร้อยในสังคมด้วย",
+  k: ["อยู่ภายใต้กฎหมายเดียวกัน", "คุ้มครองอย่างเท่าเทียม", "ไม่เลือกปฏิบัติ", "ไม่เป็นเครื่องมือของผู้มีอำนาจ", "ลดความเหลื่อมล้ำ"]
+},
+{
+  id: 12, cat: "C",
+  q: "“สิทธิได้รับการเยียวยาเมื่อสิทธิถูกละเมิด” หมายถึงอะไร",
+  a: "เมื่อสิทธิของบุคคลถูกละเมิด บุคคลนั้นต้องมีช่องทางเข้าถึงการเยียวยาที่เป็นธรรมและมีประสิทธิภาพ เช่น การร้องเรียน การฟ้องคดี การได้รับค่าชดเชย หรือการแก้ไขผลของการละเมิด การเยียวยาเป็นองค์ประกอบสำคัญของการคุ้มครองสิทธิมนุษยชน เพราะสิทธิที่ไม่มีทางบังคับใช้ย่อมเป็นสิทธิที่ไม่มีความหมาย รัฐจึงต้องมีระบบยุติธรรมที่เข้าถึงได้ ไม่ล่าช้า และคุ้มครองผู้เสียหายอย่างแท้จริง",
+  k: ["ช่องทางเยียวยาที่เป็นธรรมและมีประสิทธิภาพ", "ร้องเรียน ฟ้องคดี", "ค่าชดเชย", "สิทธิที่บังคับใช้ไม่ได้ย่อมไร้ความหมาย", "ระบบยุติธรรมเข้าถึงได้ ไม่ล่าช้า"]
+},
+{
+  id: 13, cat: "C",
+  q: "จงอธิบายหลักห้ามจับกุม คุมขัง หรือเนรเทศโดยพลการ",
+  a: "การจับกุม คุมขัง หรือเนรเทศจะทำได้ต่อเมื่อมีกฎหมายรองรับและต้องเป็นไปตามกระบวนการที่ชอบธรรม หากใช้อำนาจโดยไม่มีเหตุผลหรือไม่มีขั้นตอนที่เป็นธรรม ย่อมถือเป็นการกระทำโดยพลการและละเมิดสิทธิมนุษยชน หลักนี้ป้องกันไม่ให้รัฐใช้อำนาจกดขี่ประชาชนโดยไม่ผ่านการตรวจสอบ การคุ้มครองดังกล่าวเป็นส่วนหนึ่งของหลักนิติธรรมและการรับรองเสรีภาพของบุคคล",
+  k: ["มีกฎหมายรองรับ", "กระบวนการที่ชอบธรรม", "การกระทำโดยพลการ", "ป้องกันรัฐใช้อำนาจกดขี่", "หลักนิติธรรม"]
+},
+{
+  id: 14, cat: "C",
+  q: "สิทธิที่จะได้รับการพิจารณาคดีอย่างเป็นธรรมมีองค์ประกอบสำคัญอะไรบ้าง",
+  a: "การพิจารณาคดีอย่างเป็นธรรมต้องมีความเป็นกลาง เปิดเผย และให้โอกาสคู่กรณีได้ต่อสู้คดีอย่างเท่าเทียม ผู้ถูกกล่าวหาต้องได้รับการแจ้งข้อหา มีสิทธิในการต่อสู้คดี มีสิทธิใช้ทนาย และได้รับการพิจารณาจากศาลที่เป็นอิสระและเป็นกลาง หลักนี้ป้องกันการตัดสินตามอำเภอใจหรือการใช้อำนาจรัฐโดยไม่เป็นธรรม เมื่อกระบวนการยุติธรรมโปร่งใส ประชาชนก็จะเชื่อมั่นในศาลและระบบกฎหมายมากขึ้น",
+  k: ["เป็นกลาง เปิดเผย", "ต่อสู้คดีอย่างเท่าเทียม", "แจ้งข้อหา", "สิทธิใช้ทนาย", "ศาลอิสระและเป็นกลาง", "ป้องกันการตัดสินตามอำเภอใจ"]
+},
+{
+  id: 15, cat: "C",
+  q: "ทำไมจึงถือว่าผู้ถูกกล่าวหาบริสุทธิ์จนกว่าจะพิสูจน์ได้ว่ามีความผิด",
+  a: "หลักสันนิษฐานไว้ก่อนว่าเป็นผู้บริสุทธิ์เป็นหลักสำคัญของกระบวนการยุติธรรม เพราะช่วยป้องกันไม่ให้บุคคลถูกตัดสินล่วงหน้าโดยไม่มีพยานหลักฐานเพียงพอ หน้าที่พิสูจน์ความผิดจึงเป็นของฝ่ายกล่าวหา ไม่ใช่ของผู้ถูกกล่าวหา หลักนี้ทำให้การดำเนินคดีเป็นธรรม และลดความเสี่ยงของการลงโทษผู้บริสุทธิ์ นอกจากนี้ยังสะท้อนความเคารพในศักดิ์ศรีและความเป็นมนุษย์ของผู้ถูกกล่าวหา",
+  k: ["สันนิษฐานไว้ก่อนว่าบริสุทธิ์", "ไม่ถูกตัดสินล่วงหน้า", "ภาระการพิสูจน์อยู่ที่ฝ่ายกล่าวหา", "ลดความเสี่ยงลงโทษผู้บริสุทธิ์", "เคารพศักดิ์ศรี"]
+},
+{
+  id: 16, cat: "C",
+  q: "จงอธิบายสิทธิในความเป็นส่วนตัว ชื่อเสียง และเกียรติยศ",
+  a: "สิทธิในความเป็นส่วนตัวหมายถึงการที่บุคคลมีพื้นที่ส่วนตัวที่ผู้อื่นและรัฐไม่อาจล่วงละเมิดโดยไม่มีเหตุผลอันชอบธรรม ชื่อเสียงและเกียรติยศเป็นสิ่งที่สะท้อนความน่าเชื่อถือและศักดิ์ศรีของบุคคล หากมีการเปิดเผยข้อมูลส่วนตัวหรือใส่ร้ายโดยไม่เป็นธรรม ย่อมกระทบต่อสิทธิและโอกาสในชีวิตของบุคคลนั้น รัฐจึงต้องมีกฎหมายและมาตรการคุ้มครองเพื่อป้องกันการละเมิดสิทธิเหล่านี้",
+  k: ["พื้นที่ส่วนตัว", "ไม่ล่วงละเมิดโดยไม่มีเหตุผลอันชอบธรรม", "ชื่อเสียงและเกียรติยศ", "เปิดเผยข้อมูลส่วนตัว/ใส่ร้าย", "กฎหมายและมาตรการคุ้มครอง"]
+},
+{
+  id: 17, cat: "C",
+  q: "เสรีภาพในการเดินทางและเลือกถิ่นที่อยู่มีความหมายอย่างไร",
+  a: "เสรีภาพในการเดินทางและเลือกถิ่นที่อยู่หมายถึงบุคคลมีสิทธิย้ายถิ่นฐาน เดินทางภายในประเทศ หรือเลือกอยู่อาศัยในที่ที่ตนต้องการตามกฎหมาย สิทธินี้ช่วยให้บุคคลดำรงชีวิตตามความเหมาะสมต่อการทำงาน การศึกษา หรือครอบครัว อย่างไรก็ตาม การจำกัดเสรีภาพดังกล่าวต้องเป็นไปตามกฎหมายและมีเหตุอันชอบธรรม เช่น ความมั่นคงหรือความปลอดภัยสาธารณะ หลักนี้สะท้อนว่าบุคคลไม่ควรถูกผูกขาดหรือกักไว้โดยไม่มีเหตุผล",
+  k: ["ย้ายถิ่นฐาน เดินทางภายในประเทศ", "เลือกถิ่นที่อยู่", "การทำงาน การศึกษา ครอบครัว", "จำกัดได้ตามกฎหมาย", "ความมั่นคง/ความปลอดภัยสาธารณะ"]
+},
+{
+  id: 18, cat: "C",
+  q: "สิทธิขอลี้ภัยมีความสำคัญอย่างไรในบริบทสิทธิมนุษยชนระหว่างประเทศ",
+  a: "สิทธิขอลี้ภัยเป็นการคุ้มครองบุคคลที่ถูกประหัตประหารหรือมีเหตุอันควรหวาดกลัวว่าจะถูกละเมิดสิทธิอย่างร้ายแรงในประเทศของตน สิทธินี้เปิดโอกาสให้บุคคลได้รับความปลอดภัยและความคุ้มครองจากรัฐอื่นตามหลักมนุษยธรรม อย่างไรก็ตาม การให้ลี้ภัยต้องเป็นไปตามกฎหมายและขั้นตอนระหว่างประเทศที่เกี่ยวข้อง หลักดังกล่าวสะท้อนความร่วมมือของประชาคมโลกในการคุ้มครองผู้ถูกกดขี่",
+  k: ["ถูกประหัตประหาร", "เหตุอันควรหวาดกลัว", "ความคุ้มครองจากรัฐอื่น", "หลักมนุษยธรรม", "ขั้นตอนระหว่างประเทศ", "ความร่วมมือของประชาคมโลก"]
+},
+{
+  id: 19, cat: "C",
+  q: "จงอธิบายสิทธิในสัญชาติ",
+  a: "สิทธิในสัญชาติเป็นสิทธิที่ทำให้บุคคลมีความสัมพันธ์ทางกฎหมายกับรัฐหนึ่งรัฐใด ส่งผลให้ได้รับการคุ้มครองและมีสถานะทางกฎหมายที่ชัดเจน สัญชาติมีความสำคัญต่อการเข้าถึงสิทธิอื่น ๆ เช่น การศึกษา การทำงาน การเดินทาง และการได้รับเอกสารแสดงตัวตน หากบุคคลไร้สัญชาติย่อมเผชิญความยากลำบากในการใช้ชีวิตและเข้าถึงบริการของรัฐ ดังนั้นการรับรองสิทธิในสัญชาติจึงเป็นเรื่องสำคัญอย่างยิ่ง",
+  k: ["ความสัมพันธ์ทางกฎหมายกับรัฐ", "สถานะทางกฎหมายที่ชัดเจน", "เข้าถึงการศึกษา การทำงาน การเดินทาง", "เอกสารแสดงตัวตน", "ไร้สัญชาติ"]
+},
+{
+  id: 20, cat: "C",
+  q: "สิทธิในการสมรสและสร้างครอบครัวต้องตั้งอยู่บนหลักใด",
+  a: "สิทธิในการสมรสและสร้างครอบครัวต้องตั้งอยู่บนความยินยอมโดยเสรีของคู่สมรสทั้งสองฝ่าย การสมรสที่เกิดจากการบังคับย่อมขัดต่อหลักสิทธิมนุษยชนและศักดิ์ศรีความเป็นมนุษย์ ครอบครัวเป็นสถาบันพื้นฐานของสังคม จึงต้องได้รับการคุ้มครองตามกฎหมายและนโยบายของรัฐ หลักนี้ช่วยให้ครอบครัวเกิดจากความสมัครใจ ความเท่าเทียม และความเคารพกัน",
+  k: ["ความยินยอมโดยเสรี", "สมรสโดยถูกบังคับขัดต่อสิทธิมนุษยชน", "ครอบครัวเป็นสถาบันพื้นฐานของสังคม", "รัฐต้องคุ้มครอง", "ความเท่าเทียม"]
+},
+{
+  id: 21, cat: "C",
+  q: "จงอธิบายสิทธิในทรัพย์สินตามปฏิญญาสากล",
+  a: "สิทธิในทรัพย์สินหมายถึงบุคคลมีสิทธิครอบครอง ใช้ และจัดการทรัพย์สินของตนโดยชอบด้วยกฎหมาย รัฐไม่ควรริบหรือยึดทรัพย์สินโดยไม่มีเหตุผลอันชอบธรรมและกระบวนการตามกฎหมาย สิทธินี้สำคัญต่อความมั่นคงทางเศรษฐกิจและการดำรงชีวิตของประชาชน อย่างไรก็ตาม การใช้สิทธินี้ต้องไม่กระทบสิทธิของผู้อื่นหรือประโยชน์สาธารณะ",
+  k: ["ครอบครอง ใช้ และจัดการทรัพย์สิน", "รัฐไม่ริบ/ยึดโดยพลการ", "กระบวนการตามกฎหมาย", "ความมั่นคงทางเศรษฐกิจ", "ไม่กระทบสิทธิผู้อื่น/ประโยชน์สาธารณะ"]
+},
+{
+  id: 22, cat: "C",
+  q: "เสรีภาพทางความคิด มโนธรรม และศาสนามีขอบเขตอย่างไร",
+  a: "เสรีภาพทางความคิดและมโนธรรมคือสิทธิในการเชื่อ คิด และยึดถือหลักการตามความสมัครใจของตน ส่วนเสรีภาพทางศาสนาหมายถึงการนับถือ เปลี่ยนศาสนา แสดงออกทางศาสนา หรือไม่นับถือศาสนาได้ตามความเชื่อส่วนบุคคล สิทธินี้เป็นแกนสำคัญของความหลากหลายทางวัฒนธรรมและความสงบสุขในสังคม การจำกัดสิทธิดังกล่าวต้องทำอย่างระมัดระวังและเฉพาะเมื่อจำเป็นเพื่อคุ้มครองสิทธิของผู้อื่นและความสงบเรียบร้อย",
+  k: ["เชื่อ คิด ยึดถือหลักการโดยสมัครใจ", "นับถือ/เปลี่ยน/ไม่นับถือศาสนา", "แสดงออกทางศาสนา", "ความหลากหลายทางวัฒนธรรม", "จำกัดเฉพาะเมื่อจำเป็น"]
+},
+{
+  id: 23, cat: "C",
+  q: "จงอธิบายเสรีภาพในการแสดงความคิดเห็นและการแสดงออก",
+  a: "เสรีภาพในการแสดงความคิดเห็นและการแสดงออกเป็นสิทธิที่ทำให้ประชาชนสามารถพูด เขียน วิจารณ์ และเผยแพร่ความเห็นได้อย่างอิสระในกรอบของกฎหมาย สิทธินี้มีความสำคัญต่อประชาธิปไตย เพราะทำให้เกิดการแลกเปลี่ยนความคิดและการตรวจสอบการใช้อำนาจรัฐ อย่างไรก็ดี เสรีภาพนี้ต้องใช้ด้วยความรับผิดชอบ ไม่ละเมิดสิทธิผู้อื่น ไม่สร้างความเกลียดชัง และไม่บิดเบือนข้อเท็จจริง หลักนี้จึงต้องสมดุลระหว่างเสรีภาพกับความรับผิดชอบ",
+  k: ["พูด เขียน วิจารณ์ เผยแพร่", "สำคัญต่อประชาธิปไตย", "ตรวจสอบการใช้อำนาจรัฐ", "ไม่สร้างความเกลียดชัง", "สมดุลระหว่างเสรีภาพกับความรับผิดชอบ"]
+},
+{
+  id: 24, cat: "C",
+  q: "เสรีภาพในการชุมนุมและสมาคมโดยสงบมีความหมายอย่างไร",
+  a: "เสรีภาพในการชุมนุมและสมาคมโดยสงบหมายถึงการที่ประชาชนสามารถรวมตัวกันเพื่อแสดงความเห็น เรียกร้องสิทธิ หรือดำเนินกิจกรรมร่วมกันได้โดยไม่ใช้ความรุนแรง สิทธินี้เป็นเครื่องมือสำคัญของการมีส่วนร่วมทางสังคมและการเมือง การชุมนุมโดยสงบช่วยให้ประชาชนส่งเสียงต่อรัฐและสร้างการเปลี่ยนแปลงอย่างสันติ รัฐจึงมีหน้าที่อำนวยความสะดวกและคุ้มครองไม่ให้เกิดการละเมิดสิทธิในการชุมนุมอย่างไม่ชอบธรรม",
+  k: ["รวมตัวกันโดยไม่ใช้ความรุนแรง", "เรียกร้องสิทธิ", "การมีส่วนร่วมทางสังคมและการเมือง", "เปลี่ยนแปลงอย่างสันติ", "รัฐอำนวยความสะดวกและคุ้มครอง"]
+},
+{
+  id: 25, cat: "C",
+  q: "จงอธิบายสิทธิในการมีส่วนร่วมทางการเมือง",
+  a: "สิทธิในการมีส่วนร่วมทางการเมืองหมายถึงประชาชนมีสิทธิเลือกตั้ง สมัครรับเลือกตั้ง แสดงความคิดเห็นต่อสาธารณะ และมีส่วนร่วมในการกำหนดทิศทางประเทศ สิทธินี้เป็นหัวใจของระบอบประชาธิปไตย เพราะอำนาจอธิปไตยเป็นของปวงชน การมีส่วนร่วมทางการเมืองยังทำให้การตัดสินใจของรัฐตอบสนองต่อความต้องการของประชาชนได้ดียิ่งขึ้น เมื่อประชาชนมีส่วนร่วม สังคมก็มีความโปร่งใสและตรวจสอบได้มากขึ้น",
+  k: ["เลือกตั้ง สมัครรับเลือกตั้ง", "กำหนดทิศทางประเทศ", "อำนาจอธิปไตยเป็นของปวงชน", "หัวใจของประชาธิปไตย", "โปร่งใสและตรวจสอบได้"]
+},
+{
+  id: 26, cat: "D",
+  q: "สิทธิได้รับหลักประกันทางสังคมมีความสำคัญอย่างไร",
+  a: "หลักประกันทางสังคมคือระบบคุ้มครองประชาชนจากความเสี่ยงในชีวิต เช่น เจ็บป่วย ชราภาพ ว่างงาน พิการ หรือประสบเหตุฉุกเฉิน สิทธินี้ช่วยลดความเปราะบางของประชาชนและสร้างความมั่นคงในการดำรงชีวิต รัฐที่มีหลักประกันทางสังคมที่เข้มแข็งจะช่วยให้ประชาชนสามารถใช้ชีวิตอย่างมีศักดิ์ศรี การมีระบบดังกล่าวยังสะท้อนความรับผิดชอบของรัฐต่อคุณภาพชีวิตของประชาชน",
+  k: ["ความเสี่ยงในชีวิต", "เจ็บป่วย ชราภาพ ว่างงาน พิการ", "ลดความเปราะบาง", "ใช้ชีวิตอย่างมีศักดิ์ศรี", "ความรับผิดชอบของรัฐ"]
+},
+{
+  id: 27, cat: "D",
+  q: "จงอธิบายสิทธิในการทำงานและเลือกอาชีพ",
+  a: "สิทธิในการทำงานหมายถึงบุคคลมีสิทธิแสวงหาและประกอบอาชีพโดยเสรีภายใต้กฎหมาย ส่วนสิทธิเลือกอาชีพคือการที่บุคคลไม่ควรถูกบังคับให้ทำงานที่ตนไม่ต้องการ เว้นแต่เป็นกรณีที่กฎหมายกำหนดไว้โดยชอบธรรม สิทธินี้สัมพันธ์กับศักดิ์ศรีความเป็นมนุษย์ เพราะการทำงานเป็นช่องทางสำคัญในการดำรงชีวิตและพัฒนาตนเอง รัฐจึงควรคุ้มครองแรงงานและสร้างโอกาสให้ประชาชนเข้าถึงงานที่เป็นธรรม",
+  k: ["ประกอบอาชีพโดยเสรี", "ไม่ถูกบังคับให้ทำงาน", "เว้นแต่กฎหมายกำหนด", "ศักดิ์ศรีความเป็นมนุษย์", "คุ้มครองแรงงาน", "งานที่เป็นธรรม"]
+},
+{
+  id: 28, cat: "D",
+  q: "ค่าตอบแทนที่เป็นธรรมในทางสิทธิมนุษยชนหมายถึงอะไร",
+  a: "ค่าตอบแทนที่เป็นธรรมหมายถึงค่าจ้างหรือผลตอบแทนจากการทำงานที่เหมาะสมกับคุณภาพงาน เวลา และความสามารถของผู้ทำงาน ตลอดจนเพียงพอต่อการดำรงชีวิตอย่างมีศักดิ์ศรี หลักนี้ช่วยป้องกันการเอารัดเอาเปรียบแรงงานและลดความเหลื่อมล้ำทางเศรษฐกิจ การจ่ายค่าตอบแทนอย่างเป็นธรรมยังส่งเสริมความมั่นคงทางสังคมและแรงจูงใจในการทำงานของประชาชน",
+  k: ["เหมาะสมกับคุณภาพงาน เวลา ความสามารถ", "เพียงพอต่อการดำรงชีวิตอย่างมีศักดิ์ศรี", "ป้องกันการเอารัดเอาเปรียบแรงงาน", "ลดความเหลื่อมล้ำ", "แรงจูงใจในการทำงาน"]
+},
+{
+  id: 29, cat: "D",
+  q: "จงอธิบายสิทธิในการพักผ่อนและวันหยุด",
+  a: "สิทธิในการพักผ่อนและวันหยุดมีความสำคัญต่อสุขภาพกายและใจของคนทำงาน เพราะการทำงานต่อเนื่องโดยไม่พักย่อมกระทบคุณภาพชีวิตและประสิทธิภาพในการทำงาน สิทธินี้สะท้อนว่ามนุษย์ไม่ใช่เครื่องจักร และควรมีสมดุลระหว่างงานกับชีวิตส่วนตัว รัฐและนายจ้างจึงต้องกำหนดเวลาทำงาน วันหยุด และสิทธิการลาพักผ่อนอย่างเหมาะสม การคุ้มครองสิทธินี้เป็นส่วนหนึ่งของการคุ้มครองแรงงานที่มีศักดิ์ศรี",
+  k: ["สุขภาพกายและใจ", "มนุษย์ไม่ใช่เครื่องจักร", "สมดุลระหว่างงานกับชีวิตส่วนตัว", "กำหนดเวลาทำงาน วันหยุด การลา", "คุ้มครองแรงงาน"]
+},
+{
+  id: 30, cat: "D",
+  q: "จงอธิบายสิทธิในการมีมาตรฐานการครองชีพที่เพียงพอ",
+  a: "มาตรฐานการครองชีพที่เพียงพอครอบคลุมอาหาร ที่อยู่อาศัย และการรักษาพยาบาลที่เหมาะสมต่อการดำรงชีวิต สิทธินี้หมายความว่าประชาชนไม่ควรถูกปล่อยให้ดำรงชีวิตอย่างยากลำบากจนกระทบศักดิ์ศรีความเป็นมนุษย์ รัฐมีหน้าที่จัดนโยบายสังคมและเศรษฐกิจเพื่อให้ประชาชนเข้าถึงปัจจัยพื้นฐานเหล่านี้ การรับรองสิทธินี้จึงเป็นแกนของความมั่นคงทางสังคมและการพัฒนาที่เป็นธรรม",
+  k: ["อาหาร ที่อยู่อาศัย การรักษาพยาบาล", "ไม่กระทบศักดิ์ศรีความเป็นมนุษย์", "นโยบายสังคมและเศรษฐกิจ", "ปัจจัยพื้นฐาน", "การพัฒนาที่เป็นธรรม"]
+},
+{
+  id: 31, cat: "D",
+  q: "สิทธิในการได้รับการศึกษาเกี่ยวข้องกับสิทธิมนุษยชนอย่างไร",
+  a: "การศึกษาเป็นสิทธิพื้นฐานที่เปิดโอกาสให้บุคคลพัฒนาศักยภาพ ความรู้ และความสามารถในการดำรงชีวิต การเข้าถึงการศึกษาที่มีคุณภาพช่วยลดความเหลื่อมล้ำและสร้างโอกาสทางสังคมอย่างเท่าเทียม การศึกษายังเป็นเครื่องมือสำคัญในการส่งเสริมสิทธิมนุษยชนด้านอื่น ๆ เพราะเมื่อประชาชนมีความรู้ ก็สามารถปกป้องสิทธิของตนเองและเคารพสิทธิผู้อื่นได้มากขึ้น รัฐจึงต้องลงทุนด้านการศึกษาอย่างจริงจังและทั่วถึง",
+  k: ["พัฒนาศักยภาพ", "ลดความเหลื่อมล้ำ", "โอกาสทางสังคมอย่างเท่าเทียม", "เครื่องมือส่งเสริมสิทธิด้านอื่น", "ปกป้องสิทธิตนเองและเคารพสิทธิผู้อื่น", "รัฐลงทุนอย่างทั่วถึง"]
+},
+{
+  id: 32, cat: "D",
+  q: "จงอธิบายสิทธิในการเข้าร่วมชีวิตทางวัฒนธรรม",
+  a: "สิทธิในการเข้าร่วมชีวิตทางวัฒนธรรมหมายถึงการที่บุคคลสามารถเข้าถึงและมีส่วนร่วมในกิจกรรมทางศิลปะ ประเพณี ภาษา และวัฒนธรรมของสังคมตนเองได้อย่างเสรี สิทธินี้สะท้อนความหลากหลายของมนุษย์และช่วยคุ้มครองอัตลักษณ์ของแต่ละกลุ่มคน การเข้าร่วมทางวัฒนธรรมยังส่งเสริมความเข้าใจระหว่างกัน ลดอคติ และสร้างความภาคภูมิใจในชุมชน นอกจากนี้ยังเชื่อมโยงกับการรักษามรดกทางวัฒนธรรมของประเทศด้วย",
+  k: ["ศิลปะ ประเพณี ภาษา", "ความหลากหลาย", "คุ้มครองอัตลักษณ์", "ลดอคติ", "มรดกทางวัฒนธรรม"]
+},
+{
+  id: 33, cat: "D",
+  q: "จงอธิบายความสำคัญของการได้รับประโยชน์จากความก้าวหน้าทางวิทยาศาสตร์",
+  a: "ความก้าวหน้าทางวิทยาศาสตร์และเทคโนโลยีควรถูกนำมาใช้เพื่อประโยชน์ของประชาชนทุกคนอย่างทั่วถึง ไม่ใช่เฉพาะบางกลุ่ม สิทธิข้อนี้ช่วยยืนยันว่าความรู้และนวัตกรรมควรสนับสนุนคุณภาพชีวิต สุขภาพ การศึกษา และการพัฒนาสังคม การเข้าถึงความก้าวหน้าทางวิทยาศาสตร์อย่างเป็นธรรมยังช่วยลดช่องว่างทางดิจิทัลและความเหลื่อมล้ำทางโอกาส รัฐจึงควรวางนโยบายให้ประชาชนได้ประโยชน์จากวิทยาการใหม่อย่างเท่าเทียม",
+  k: ["ประโยชน์ของประชาชนทุกคนอย่างทั่วถึง", "ความรู้และนวัตกรรม", "คุณภาพชีวิต สุขภาพ การศึกษา", "ลดช่องว่างทางดิจิทัล", "นโยบายของรัฐ"]
+},
+{
+  id: 34, cat: "D",
+  q: "สิทธิอยู่ในระเบียบสังคมและระหว่างประเทศที่เอื้อต่อการใช้สิทธิหมายถึงอะไร",
+  a: "สิทธินี้หมายความว่า โลกและสังคมควรมีโครงสร้างทางกฎหมาย การเมือง และเศรษฐกิจที่เปิดโอกาสให้คนใช้สิทธิมนุษยชนได้จริง ไม่ใช่มีเพียงข้อความในเอกสารเท่านั้น หากไม่มีระเบียบสังคมที่เป็นธรรม สิทธิต่าง ๆ ก็อาจไม่สามารถเกิดผลได้จริง หลักนี้จึงมองสิทธิมนุษยชนในมิติของระบบและโครงสร้าง ไม่ใช่เฉพาะสิทธิรายบุคคล การสร้างระเบียบที่เอื้อต่อสิทธิจึงเป็นความรับผิดชอบร่วมกันของรัฐและประชาคมระหว่างประเทศ",
+  k: ["โครงสร้างทางกฎหมาย การเมือง เศรษฐกิจ", "ใช้สิทธิได้จริง ไม่ใช่แค่ข้อความในเอกสาร", "มิติของระบบและโครงสร้าง", "ความรับผิดชอบร่วมกัน", "ประชาคมระหว่างประเทศ"]
+},
+{
+  id: 35, cat: "E",
+  q: "จงอธิบายหลักที่ว่าการใช้สิทธิต้องเคารพสิทธิของผู้อื่นและประโยชน์ส่วนรวม",
+  a: "สิทธิมนุษยชนไม่ใช่สิทธิที่ใช้ได้โดยไร้ขอบเขต การใช้สิทธิต้องไม่ละเมิดสิทธิของผู้อื่นและต้องคำนึงถึงประโยชน์ส่วนรวม หลักนี้ช่วยสร้างสมดุลระหว่างเสรีภาพส่วนบุคคลกับความสงบเรียบร้อยของสังคม ตัวอย่างเช่น การแสดงความคิดเห็นทำได้ แต่ไม่ควรใช้เพื่อหมิ่นประมาทหรือยุยงให้เกิดความเกลียดชัง หลักนี้ทำให้การใช้สิทธิดำเนินไปอย่างรับผิดชอบและเคารพกัน",
+  k: ["ไม่ใช่สิทธิไร้ขอบเขต", "ไม่ละเมิดสิทธิของผู้อื่น", "ประโยชน์ส่วนรวม", "สมดุลเสรีภาพกับความสงบเรียบร้อย", "หมิ่นประมาท/ยุยงความเกลียดชัง"]
+},
+{
+  id: 36, cat: "E",
+  q: "เหตุใดจึงห้ามใช้สิทธิหรือเสรีภาพเพื่อทำลายสิทธิของผู้อื่น",
+  a: "แม้สิทธิมนุษยชนจะรับรองเสรีภาพของบุคคล แต่สิทธินั้นไม่อาจถูกใช้เป็นเครื่องมือทำร้ายผู้อื่นได้ หากใช้สิทธิเพื่อทำลายสิทธิของคนอื่น เช่น ใช้เสรีภาพในการแสดงออกเพื่อปลุกปั่นความรุนแรง ก็จะขัดต่อจุดมุ่งหมายของสิทธิมนุษยชนเอง หลักนี้จึงเป็นการจำกัดอย่างมีเหตุผลเพื่อรักษาสมดุลของสังคม สิทธิมนุษยชนจึงต้องอยู่คู่กับความรับผิดชอบเสมอ",
+  k: ["ไม่เป็นเครื่องมือทำร้ายผู้อื่น", "ปลุกปั่นความรุนแรง", "ขัดต่อจุดมุ่งหมายของสิทธิมนุษยชน", "จำกัดอย่างมีเหตุผล", "สิทธิคู่กับความรับผิดชอบ"]
+},
+{
+  id: 37, cat: "E",
+  q: "จงอธิบายความหมายของความเป็นสากลของสิทธิมนุษยชน",
+  a: "ความเป็นสากลหมายถึงสิทธิมนุษยชนเป็นสิทธิของคนทุกคนทั่วโลก ไม่ขึ้นกับสัญชาติ เชื้อชาติ ศาสนา หรือสถานะทางสังคม หลักนี้ยืนยันว่าความเป็นมนุษย์มีคุณค่าเท่าเทียมกันในทุกประเทศ การยอมรับความเป็นสากลทำให้สิทธิมนุษยชนเป็นมาตรฐานร่วมของนานาประเทศ และเป็นเกณฑ์ตรวจสอบการใช้อำนาจของรัฐในระดับโลก หลักนี้ยังส่งเสริมความร่วมมือระหว่างประเทศในการคุ้มครองสิทธิมนุษยชนด้วย",
+  k: ["สิทธิของคนทุกคนทั่วโลก", "ไม่ขึ้นกับสัญชาติ เชื้อชาติ ศาสนา", "มาตรฐานร่วมของนานาประเทศ", "เกณฑ์ตรวจสอบการใช้อำนาจรัฐ", "ความร่วมมือระหว่างประเทศ"]
+},
+{
+  id: 38, cat: "E",
+  q: "จงอธิบายความหมายของความเสมอภาคและไม่เลือกปฏิบัติในฐานะหลักสิทธิมนุษยชน",
+  a: "ความเสมอภาคและไม่เลือกปฏิบัติหมายถึงการปฏิบัติต่อทุกคนอย่างเท่าเทียมบนพื้นฐานของศักดิ์ศรีความเป็นมนุษย์ ไม่ให้ใครถูกตัดสิทธิหรือถูกลดคุณค่าจากความแตกต่างส่วนบุคคล หลักนี้ไม่ใช่การทำให้ทุกคนเหมือนกันทั้งหมด แต่คือการให้โอกาสและการคุ้มครองอย่างเป็นธรรมตามความจำเป็น การขจัดการเลือกปฏิบัติเป็นเงื่อนไขสำคัญของสังคมที่เป็นธรรมและสงบสุข",
+  k: ["ปฏิบัติอย่างเท่าเทียมบนฐานศักดิ์ศรี", "ไม่ถูกลดคุณค่าจากความแตกต่าง", "ไม่ใช่การทำให้ทุกคนเหมือนกัน", "โอกาสและการคุ้มครองตามความจำเป็น", "สังคมที่เป็นธรรม"]
+},
+{
+  id: 39, cat: "E",
+  q: "จงอธิบายหลักสิทธิไม่อาจแบ่งแยกได้",
+  a: "สิทธิไม่อาจแบ่งแยกได้หมายถึงสิทธิมนุษยชนทุกด้านมีความสำคัญเท่าเทียมกัน ไม่สามารถเลือกคุ้มครองบางสิทธิแล้วละเลยอีกบางสิทธิหนึ่งได้ ตัวอย่างเช่น สิทธิในชีวิต สิทธิในการศึกษา และสิทธิในการทำงานต่างมีความสำคัญต่อการดำรงชีวิตของคนทั้งสิ้น หลักนี้ทำให้เห็นว่าสิทธิต่าง ๆ เชื่อมโยงกันและต้องได้รับการคุ้มครองอย่างครอบคลุม หากขาดสิทธิด้านหนึ่ง ย่อมกระทบสิทธิด้านอื่นด้วย",
+  k: ["ทุกด้านสำคัญเท่าเทียมกัน", "เลือกคุ้มครองบางสิทธิไม่ได้", "สิทธิในชีวิต การศึกษา การทำงาน", "คุ้มครองอย่างครอบคลุม", "ขาดสิทธิหนึ่งกระทบสิทธิอื่น"]
+},
+{
+  id: 40, cat: "E",
+  q: "จงอธิบายหลักสิทธิพึ่งพาอาศัยกัน",
+  a: "สิทธิพึ่งพาอาศัยกันหมายถึงการที่สิทธิแต่ละด้านส่งผลต่อกันและกัน เช่น หากคนไม่มีการศึกษา ก็อาจเข้าถึงงานที่ดีได้ยาก หรือหากไม่มีสุขภาพที่ดี ก็อาจใช้สิทธิทางการเมืองหรือเศรษฐกิจได้ไม่เต็มที่ หลักนี้แสดงว่าสิทธิมนุษยชนเป็นระบบที่เชื่อมโยงกัน ไม่ใช่สิทธิที่แยกจากกันอย่างเด็ดขาด ดังนั้นการคุ้มครองสิทธิต้องมองแบบองค์รวมและพัฒนาไปพร้อมกัน",
+  k: ["สิทธิแต่ละด้านส่งผลต่อกัน", "ไม่มีการศึกษาเข้าถึงงานยาก", "สุขภาพกระทบการใช้สิทธิอื่น", "เป็นระบบที่เชื่อมโยงกัน", "คุ้มครองแบบองค์รวม"]
+},
+{
+  id: 41, cat: "E",
+  q: "จงอธิบายหลักการมีส่วนร่วมในบริบทสิทธิมนุษยชน",
+  a: "การมีส่วนร่วมหมายถึงประชาชนมีสิทธิและโอกาสเข้าไปมีบทบาทในการกำหนดนโยบาย ติดตาม และตรวจสอบการใช้อำนาจของรัฐ หลักนี้ทำให้ประชาชนไม่ใช่เพียงผู้รับผลจากนโยบาย แต่เป็นเจ้าของอำนาจอธิปไตยร่วมกัน การมีส่วนร่วมช่วยให้การตัดสินใจของรัฐสะท้อนความต้องการจริงของประชาชนมากขึ้น และยังเพิ่มความโปร่งใสและความรับผิดชอบของผู้ใช้อำนาจรัฐด้วย",
+  k: ["กำหนดนโยบาย ติดตาม ตรวจสอบ", "ไม่ใช่เพียงผู้รับผลจากนโยบาย", "เจ้าของอำนาจอธิปไตยร่วมกัน", "สะท้อนความต้องการจริง", "โปร่งใสและรับผิดชอบ"]
+},
+{
+  id: 42, cat: "E",
+  q: "จงอธิบายความรับผิดชอบของรัฐต่อการละเมิดสิทธิมนุษยชน",
+  a: "รัฐมีหน้าที่ต้องรับผิดชอบเมื่อมีการละเมิดสิทธิมนุษยชน ไม่ว่าจะเกิดจากเจ้าหน้าที่ของรัฐหรือจากเอกชนที่รัฐละเลยไม่ป้องกัน ความรับผิดชอบนี้รวมถึงการป้องกัน แก้ไข และเยียวยาความเสียหายที่เกิดขึ้น รัฐต้องมีกฎหมาย นโยบาย และระบบตรวจสอบที่มีประสิทธิภาพเพื่อไม่ให้เกิดการละเมิดซ้ำ หลักความรับผิดชอบจึงเป็นหัวใจของการเปลี่ยนสิทธิบนกระดาษให้เป็นสิทธิที่ใช้ได้จริง",
+  k: ["ละเมิดโดยเจ้าหน้าที่รัฐหรือเอกชนที่รัฐละเลย", "ป้องกัน แก้ไข เยียวยา", "ระบบตรวจสอบที่มีประสิทธิภาพ", "ไม่ให้เกิดการละเมิดซ้ำ", "สิทธิบนกระดาษเป็นสิทธิที่ใช้ได้จริง"]
+},
+{
+  id: 43, cat: "F",
+  q: "ICCPR มีสาระสำคัญอย่างไร",
+  a: "ICCPR หรือกติการะหว่างประเทศว่าด้วยสิทธิพลเมืองและสิทธิทางการเมือง เป็นสนธิสัญญาที่คุ้มครองสิทธิพื้นฐานเกี่ยวกับเสรีภาพและความยุติธรรม เช่น สิทธิในชีวิต เสรีภาพจากการทรมาน เสรีภาพในการแสดงความคิดเห็น เสรีภาพทางศาสนา สิทธิได้รับการพิจารณาคดีอย่างเป็นธรรม และสิทธิในการเลือกตั้ง สนธิสัญญานี้มีผลผูกพันทางกฎหมายต่อรัฐภาคี ดังนั้นประเทศไทยในฐานะภาคีจึงต้องปรับกฎหมายและการปฏิบัติให้สอดคล้องกับพันธกรณีดังกล่าว",
+  k: ["กติการะหว่างประเทศว่าด้วยสิทธิพลเมืองและสิทธิทางการเมือง", "สิทธิในชีวิต", "เสรีภาพจากการทรมาน", "พิจารณาคดีอย่างเป็นธรรม", "สิทธิในการเลือกตั้ง", "ผูกพันทางกฎหมายต่อรัฐภาคี"]
+},
+{
+  id: 44, cat: "F",
+  q: "สิทธิที่ได้รับความคุ้มครองภายใต้ ICCPR มีลักษณะเด่นอย่างไร",
+  a: "สิทธิภายใต้ ICCPR มุ่งคุ้มครองเสรีภาพส่วนบุคคลและความเป็นธรรมของกระบวนการยุติธรรมเป็นหลัก เช่น สิทธิในชีวิต ความปลอดภัย เสรีภาพจากการทรมาน การแสดงความคิดเห็น ศาสนา การชุมนุมโดยสงบ และการมีส่วนร่วมทางการเมือง สิทธิเหล่านี้เป็นฐานของรัฐประชาธิปไตยและหลักนิติธรรม การคุ้มครองสิทธิตาม ICCPR ช่วยป้องกันการใช้อำนาจรัฐโดยไม่ชอบและทำให้ประชาชนมีเสรีภาพในการกำหนดชีวิตตนเอง",
+  k: ["เสรีภาพส่วนบุคคล", "ความเป็นธรรมของกระบวนการยุติธรรม", "ชุมนุมโดยสงบ", "มีส่วนร่วมทางการเมือง", "ฐานของรัฐประชาธิปไตยและหลักนิติธรรม"]
+},
+{
+  id: 45, cat: "F",
+  q: "ICESCR คืออะไร และคุ้มครองสิทธิด้านใดบ้าง",
+  a: "ICESCR หรือกติการะหว่างประเทศว่าด้วยสิทธิทางเศรษฐกิจ สังคม และวัฒนธรรม เป็นสนธิสัญญาที่คุ้มครองสิทธิซึ่งเกี่ยวกับคุณภาพชีวิตของประชาชน เช่น สิทธิในการทำงาน ค่าจ้างที่เป็นธรรม ประกันสังคม สุขภาพ การศึกษา ที่อยู่อาศัย อาหาร และการเข้าถึงวัฒนธรรม สนธิสัญญานี้เน้นให้รัฐดำเนินมาตรการอย่างต่อเนื่องเพื่อให้ประชาชนได้รับสิทธิเหล่านี้อย่างเต็มที่ตามศักยภาพของประเทศ จึงเป็นกรอบสำคัญของรัฐสวัสดิการและการพัฒนาคุณภาพชีวิต",
+  k: ["กติการะหว่างประเทศว่าด้วยสิทธิทางเศรษฐกิจ สังคม และวัฒนธรรม", "สิทธิในการทำงาน ค่าจ้างที่เป็นธรรม", "ประกันสังคม สุขภาพ การศึกษา", "ที่อยู่อาศัย อาหาร", "ดำเนินมาตรการตามศักยภาพของประเทศ"]
+},
+{
+  id: 46, cat: "F",
+  q: "ความแตกต่างระหว่าง ICCPR และ ICESCR คืออะไร",
+  a: "ICCPR เน้นสิทธิพลเมืองและสิทธิทางการเมือง ซึ่งเกี่ยวกับเสรีภาพส่วนบุคคล กระบวนการยุติธรรม และการมีส่วนร่วมทางการเมือง ส่วน ICESCR เน้นสิทธิทางเศรษฐกิจ สังคม และวัฒนธรรม ซึ่งเกี่ยวกับคุณภาพชีวิตและการเข้าถึงโอกาสพื้นฐาน แม้เนื้อหาจะต่างกัน แต่ทั้งสองชุดสิทธิสัมพันธ์กันและต้องได้รับการคุ้มครองควบคู่กัน เพื่อให้มนุษย์มีชีวิตอย่างมีศักดิ์ศรีและสมบูรณ์ การเข้าใจความแตกต่างนี้ช่วยให้มองสิทธิมนุษยชนอย่างเป็นระบบมากขึ้น",
+  k: ["ICCPR: เสรีภาพส่วนบุคคล/กระบวนการยุติธรรม/การเมือง", "ICESCR: คุณภาพชีวิต/โอกาสพื้นฐาน", "สัมพันธ์กัน", "คุ้มครองควบคู่กัน", "มีชีวิตอย่างมีศักดิ์ศรี"]
+},
+{
+  id: 47, cat: "F",
+  q: "CEDAW มีเป้าหมายสำคัญอย่างไร",
+  a: "CEDAW คืออนุสัญญาว่าด้วยการขจัดการเลือกปฏิบัติต่อสตรีทุกรูปแบบ มีเป้าหมายเพื่อให้ผู้หญิงได้รับความเสมอภาคกับผู้ชายในทุกด้าน ไม่ว่าจะเป็นการศึกษา การจ้างงาน การเมือง สาธารณสุข การสมรส ครอบครัว และการคุ้มครองจากความรุนแรง อนุสัญญานี้ไม่ได้มุ่งเพียงความเท่าเทียมในทางกฎหมายเท่านั้น แต่ยังมุ่งขจัดอคติและโครงสร้างที่กดทับสตรีในสังคมด้วย จึงเป็นเครื่องมือสำคัญในการส่งเสริมความเสมอภาคทางเพศ",
+  k: ["ขจัดการเลือกปฏิบัติต่อสตรีทุกรูปแบบ", "เสมอภาคกับผู้ชายในทุกด้าน", "การศึกษา การจ้างงาน การเมือง", "คุ้มครองจากความรุนแรง", "ขจัดอคติและโครงสร้างที่กดทับ"]
+},
+{
+  id: 48, cat: "F",
+  q: "CRC ให้ความสำคัญกับหลักการใดเป็นพิเศษ",
+  a: "CRC หรืออนุสัญญาว่าด้วยสิทธิเด็กให้ความสำคัญกับหลักการสำคัญ 4 ประการ ได้แก่ การไม่เลือกปฏิบัติ ประโยชน์สูงสุดของเด็ก สิทธิในการมีชีวิตและการพัฒนา และการรับฟังความคิดเห็นของเด็ก หลักเหล่านี้สะท้อนว่าเด็กไม่ใช่เพียงผู้รับการดูแล แต่เป็นผู้ทรงสิทธิที่ต้องได้รับการคุ้มครองและสนับสนุนอย่างเหมาะสม CRC ยังครอบคลุมสิทธิด้านการศึกษา สุขภาพ และการคุ้มครองจากการแสวงหาประโยชน์ ซึ่งมีความสำคัญต่อการเติบโตอย่างรอบด้านของเด็ก",
+  k: ["หลักการสำคัญ 4 ประการ", "ไม่เลือกปฏิบัติ", "ประโยชน์สูงสุดของเด็ก", "สิทธิในการมีชีวิตและการพัฒนา", "การรับฟังความคิดเห็นของเด็ก", "เด็กเป็นผู้ทรงสิทธิ"]
+},
+{
+  id: 49, cat: "F",
+  q: "CRPD มีความมุ่งหมายและสาระสำคัญอย่างไร",
+  a: "CRPD หรืออนุสัญญาว่าด้วยสิทธิคนพิการ มุ่งรับรองว่าคนพิการสามารถใช้สิทธิได้อย่างเท่าเทียมกับบุคคลทั่วไป ไม่ว่าจะเป็นการเข้าถึงสถานที่และบริการ การศึกษาแบบเรียนรวม การทำงาน การมีส่วนร่วมทางการเมือง และการดำรงชีวิตอย่างอิสระในชุมชน อนุสัญญานี้มองคนพิการในฐานะผู้ทรงสิทธิ ไม่ใช่ผู้รับความสงสารหรือการสงเคราะห์เพียงอย่างเดียว จึงเน้นการขจัดอุปสรรคและสร้างสภาพแวดล้อมที่เอื้อต่อการใช้ชีวิตอย่างมีศักดิ์ศรี",
+  k: ["อนุสัญญาว่าด้วยสิทธิคนพิการ", "เข้าถึงสถานที่และบริการ", "การศึกษาแบบเรียนรวม", "ดำรงชีวิตอย่างอิสระในชุมชน", "ผู้ทรงสิทธิ ไม่ใช่ผู้รับการสงเคราะห์", "ขจัดอุปสรรค"]
+},
+{
+  id: 50, cat: "F",
+  q: "จงอธิบายความสำคัญของ CERD และ CAT ต่อการคุ้มครองสิทธิมนุษยชน",
+  a: "CERD และ CAT เป็นสนธิสัญญาที่ช่วยปกป้องมนุษย์จากการเลือกปฏิบัติและความรุนแรงอย่างร้ายแรง CERD มุ่งขจัดการเลือกปฏิบัติทางเชื้อชาติ สีผิว หรือชาติกำเนิด เพื่อให้ทุกคนได้รับความเสมอภาคและได้รับการปฏิบัติอย่างเท่าเทียม ส่วน CAT มุ่งห้ามการทรมานและการปฏิบัติที่โหดร้าย ไร้มนุษยธรรม หรือย่ำยีศักดิ์ศรี พร้อมกำหนดให้รัฐมีมาตรการป้องกันและเยียวยาเมื่อเกิดการละเมิด ทั้งสองอนุสัญญานี้จึงเป็นกลไกสำคัญในการปกป้องศักดิ์ศรีของมนุษย์และสร้างสังคมที่เคารพสิทธิอย่างแท้จริง",
+  k: ["CERD: ขจัดการเลือกปฏิบัติทางเชื้อชาติ สีผิว ชาติกำเนิด", "CAT: ห้ามการทรมาน", "โหดร้าย ไร้มนุษยธรรม ย่ำยีศักดิ์ศรี", "มาตรการป้องกันและเยียวยา", "กลไกปกป้องศักดิ์ศรีของมนุษย์"]
+}
+];
+
+
+/* ============================ STATE ============================ */
+const PASS_MARK = 0.70;
+const S = {
+  mode: "practice",
+  set: "all",
+  cats: new Set(),
+  list: [],        // questions in play
+  idx: 0,
+  answers: {},     // id -> text
+  grades: {},      // id -> 1 | 0.5 | 0
+  revealed: {},    // id -> bool
+  phase: "quiz"    // "quiz" | "grading"  (grading = exam mode review pass)
+};
+const $ = (id) => document.getElementById(id);
+const catName = (id) => (CATEGORIES.find(c => c.id === id) || {}).name || "";
+
+/* ============================ HOME ============================ */
+function buildCatChoices(){
+  $("catChoices").innerHTML = CATEGORIES.map(c => {
+    const n = QUESTIONS.filter(q => q.cat === c.id).length;
+    return `<button class="choice" data-cat="${c.id}" aria-pressed="false">${c.short}<small>${n} ข้อ</small></button>`;
+  }).join("");
+  $("catChoices").querySelectorAll("button").forEach(b => {
+    b.addEventListener("click", () => {
+      const on = b.getAttribute("aria-pressed") === "true";
+      b.setAttribute("aria-pressed", on ? "false" : "true");
+      on ? S.cats.delete(b.dataset.cat) : S.cats.add(b.dataset.cat);
+      updateStartHint();
+    });
+  });
+}
+function pickGroup(containerId, key){
+  $(containerId).querySelectorAll("button").forEach(b => {
+    b.addEventListener("click", () => {
+      $(containerId).querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed","false"));
+      b.setAttribute("aria-pressed","true");
+      S[key] = b.dataset[key];
+      updateStartHint();
+    });
+  });
+}
+function pool(){
+  let p = QUESTIONS.slice();
+  if (S.cats.size) p = p.filter(q => S.cats.has(q.cat));
+  return p;
+}
+function updateStartHint(){
+  const n = Math.min(pool().length, S.set === "all" ? 999 : +S.set);
+  $("startHint").textContent = n ? `ชุดนี้มี ${n} ข้อ · คะแนนผ่าน ${Math.ceil(n * PASS_MARK * 10) / 10} คะแนน` : "ยังไม่มีข้อสอบในหมวดที่เลือก";
+  $("startBtn").disabled = n === 0;
+}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function start(list){
+  S.list = list;
+  S.idx = 0;
+  S.answers = {}; S.grades = {}; S.revealed = {};
+  S.phase = "quiz";
+  show("quiz");
+  render();
+}
+$("startBtn").addEventListener("click", () => {
+  let p = pool();
+  if (S.set !== "all") p = shuffle(p).slice(0, +S.set).sort((a,b)=>a.id-b.id);
+  start(p);
+});
+
+/* ============================ SCREENS ============================ */
+function show(which){
+  $("screenHome").classList.toggle("hidden", which !== "home");
+  $("screenQuiz").classList.toggle("hidden", which !== "quiz");
+  $("screenResult").classList.toggle("hidden", which !== "result");
+  $("topbar").classList.toggle("hidden", which !== "quiz");
+  window.scrollTo({top:0, behavior:"instant" in window ? "instant" : "auto"});
+}
+
+/* ============================ KEYWORD MATCH ============================ */
+function normalize(s){ return (s||"").replace(/[\s\u200B.,;:!?()"'“”‘’\-–—/]/g, ""); }
+/* วัดว่าคำสำคัญถูกครอบคลุมด้วยข้อความของผู้ตอบมากน้อยเพียงใด
+   โดยหาชิ้นส่วนตรงกันที่ยาวที่สุด (อย่างน้อย 3 ตัวอักษร) แบบซ้อนชั้น */
+function covered(k, t){
+  if (k.length < 4) return 0;
+  let bi = 0, bl = 0;
+  for (let i = 0; i < k.length; i++){
+    for (let len = k.length - i; len >= 4; len--){
+      if (len <= bl) break;
+      if (t.indexOf(k.substr(i, len)) !== -1){ bi = i; bl = len; break; }
+    }
+  }
+  if (bl < 4) return 0;
+  return bl + covered(k.slice(0, bi), t) + covered(k.slice(bi + bl), t);
+}
+function keywordHits(q, text){
+  const t = normalize(text);
+  if (t.length < 3) return q.k.map(() => false);
+  return q.k.map(k => {
+    const nk = normalize(k);
+    if (!nk) return false;
+    return covered(nk, t) / nk.length >= 0.7;
+  });
+}
+function suggestGrade(ratio){ return ratio >= 0.7 ? "1" : ratio >= 0.35 ? "0.5" : "0"; }
+
+/* ============================ RENDER ============================ */
+function render(){
+  const q = S.list[S.idx];
+  const grading = S.phase === "grading";
+  const examWriting = S.mode === "exam" && !grading;
+
+  $("modeTag").textContent = grading ? "Grading" : (S.mode === "exam" ? "Exam" : "Practice");
+  $("counter").textContent = `${S.idx + 1} / ${S.list.length}`;
+  $("trackFill").style.width = ((S.idx) / S.list.length * 100) + "%";
+
+  $("qNum").textContent = "ข้อ " + String(q.id).padStart(2, "0");
+  $("qCat").textContent = catName(q.cat);
+  $("qText").textContent = q.q;
+  $("qInput").value = S.answers[q.id] || "";
+  $("qInput").readOnly = grading;
+  $("answerText").textContent = q.a;
+
+  const revealed = grading || !!S.revealed[q.id];
+  $("answerBox").classList.toggle("hidden", !revealed);
+  $("gradeBox").classList.toggle("hidden", !revealed);
+  $("revealBtn").classList.toggle("hidden", revealed || examWriting);
+  $("revealBtn").textContent = "ดูแนวคำตอบ";
+
+  // keyword chips: hidden in exam-writing phase
+  $("keysBox").classList.toggle("hidden", examWriting);
+  drawChips();
+
+  document.querySelectorAll(".gbtn").forEach(b =>
+    b.classList.toggle("on", String(S.grades[q.id]) === b.dataset.g));
+
+  $("prevBtn").disabled = S.idx === 0;
+  const last = S.idx === S.list.length - 1;
+  $("nextBtn").textContent = last ? (grading || S.mode === "practice" ? "ดูผลคะแนน" : "ตรวจคำตอบ") : "ข้อถัดไป";
+  drawNav();
+}
+
+function drawChips(){
+  const q = S.list[S.idx];
+  const hits = keywordHits(q, $("qInput").value);
+  const n = hits.filter(Boolean).length;
+  $("keysScore").textContent = `${n}/${q.k.length}`;
+  const revealed = S.phase === "grading" || !!S.revealed[q.id];
+  $("chips").innerHTML = q.k.map((k, i) => {
+    const hit = hits[i];
+    const label = (hit || revealed) ? k : maskKeyword(k);
+    return `<span class="chip ${hit ? "hit" : (revealed ? "" : "masked")}">${label}</span>`;
+  }).join("");
+}
+function maskKeyword(k){
+  // เผยคำแรกไว้เป็นใบ้ ที่เหลือปิดไว้
+  const w = k.split(" ");
+  return w.map((x, i) => i === 0 ? x : "•".repeat(Math.min(x.length, 6))).join(" ");
+}
+
+function drawNav(){
+  $("navGrid").innerHTML = S.list.map((q, i) => {
+    const g = S.grades[q.id];
+    let cls = "";
+    if (g === 1) cls = "g1"; else if (g === 0.5) cls = "g05"; else if (g === 0) cls = "g0";
+    else if ((S.answers[q.id] || "").trim()) cls = "answered";
+    return `<button class="navbtn ${cls} ${i === S.idx ? "cur" : ""}" data-i="${i}">${q.id}</button>`;
+  }).join("");
+  $("navGrid").querySelectorAll("button").forEach(b =>
+    b.addEventListener("click", () => { saveAnswer(); S.idx = +b.dataset.i; render(); }));
+}
+
+/* ============================ INTERACTIONS ============================ */
+function saveAnswer(){
+  const q = S.list[S.idx];
+  if (q && !$("qInput").readOnly) S.answers[q.id] = $("qInput").value;
+}
+$("qInput").addEventListener("input", () => {
+  const q = S.list[S.idx];
+  S.answers[q.id] = $("qInput").value;
+  if (!$("keysBox").classList.contains("hidden")) drawChips();
+});
+
+$("revealBtn").addEventListener("click", reveal);
+function reveal(){
+  const q = S.list[S.idx];
+  S.revealed[q.id] = true;
+  const hits = keywordHits(q, S.answers[q.id] || "");
+  const ratio = hits.filter(Boolean).length / q.k.length;
+  if (S.grades[q.id] === undefined) {
+    const g = suggestGrade(ratio);
+    document.querySelectorAll(".gbtn").forEach(b => b.classList.toggle("on", b.dataset.g === g));
+  }
+  render();
+  $("answerBox").scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+document.querySelectorAll(".gbtn").forEach(b => b.addEventListener("click", () => {
+  const q = S.list[S.idx];
+  S.grades[q.id] = parseFloat(b.dataset.g);
+  document.querySelectorAll(".gbtn").forEach(x => x.classList.toggle("on", x === b));
+  drawNav();
+  if (S.idx < S.list.length - 1) setTimeout(next, 260);
+}));
+
+$("prevBtn").addEventListener("click", () => { saveAnswer(); if (S.idx > 0) { S.idx--; render(); } });
+$("nextBtn").addEventListener("click", next);
+function next(){
+  saveAnswer();
+  if (S.idx < S.list.length - 1) { S.idx++; render(); return; }
+  // last question
+  if (S.mode === "exam" && S.phase === "quiz") { S.phase = "grading"; S.idx = 0; render(); return; }
+  finish();
+}
+$("finishBtn").addEventListener("click", () => { saveAnswer(); finish(); });
+$("quitBtn").addEventListener("click", () => { if (confirm("ออกจากการทำข้อสอบ คะแนนที่ทำไว้จะหายไป")) show("home"); });
+
+document.addEventListener("keydown", (e) => {
+  if ($("screenQuiz").classList.contains("hidden")) return;
+  if (e.ctrlKey && e.key === "Enter") { e.preventDefault(); if (!$("revealBtn").classList.contains("hidden")) reveal(); }
+  if (e.altKey && e.key === "ArrowRight") { e.preventDefault(); next(); }
+  if (e.altKey && e.key === "ArrowLeft") { e.preventDefault(); if (S.idx > 0) { saveAnswer(); S.idx--; render(); } }
+});
+
+/* ============================ RESULTS ============================ */
+function finish(){
+  const total = S.list.length;
+  let sum = 0, full = 0, part = 0, none = 0;
+  S.list.forEach(q => {
+    const g = S.grades[q.id];
+    if (g === 1) { full++; sum += 1; }
+    else if (g === 0.5) { part++; sum += 0.5; }
+    else { none++; }
+  });
+  const pct = total ? (sum / total) * 100 : 0;
+  const passed = pct >= PASS_MARK * 100;
+
+  $("verdict").className = "verdict " + (passed ? "pass" : "fail");
+  $("stamp").textContent = passed ? "ผ่านเกณฑ์" : "ยังไม่ผ่านเกณฑ์";
+  $("pctBig").textContent = pct.toFixed(0) + "%";
+  $("scoreSub").innerHTML = `ได้ ${(+sum.toFixed(1))} จาก ${total} คะแนน · เกณฑ์ผ่าน ${(total*PASS_MARK).toFixed(1)} คะแนน (70%)` +
+    (passed ? "" : ` · ยังขาดอีก ${(total*PASS_MARK - sum).toFixed(1)} คะแนน`);
+  $("stFull").textContent = full; $("stPart").textContent = part; $("stNone").textContent = none;
+
+  // by category
+  const used = CATEGORIES.filter(c => S.list.some(q => q.cat === c.id));
+  $("catStats").innerHTML = used.map(c => {
+    const qs = S.list.filter(q => q.cat === c.id);
+    const got = qs.reduce((s,q) => s + (S.grades[q.id] || 0), 0);
+    const p = qs.length ? got / qs.length * 100 : 0;
+    return `<div class="catrow">
+      <span class="nm">${c.name}</span>
+      <span class="catbar"><i style="width:${p.toFixed(0)}%;background:${p>=70?"var(--green)":p>=40?"var(--amber)":"var(--red)"}"></i></span>
+      <span class="pct">${p.toFixed(0)}%</span>
+    </div>`;
+  }).join("");
+
+  // review list
+  const wrong = S.list.filter(q => (S.grades[q.id] || 0) < 1);
+  $("reviewHead").textContent = wrong.length ? `ทบทวนข้อที่ยังไม่ผ่าน (${wrong.length} ข้อ)` : "ทบทวน";
+  $("reviewList").innerHTML = wrong.length ? wrong.map(q => {
+    const g = S.grades[q.id];
+    const mine = (S.answers[q.id] || "").trim();
+    return `<details class="review ${g === 0.5 ? "g05" : "g0"}">
+      <summary><span class="tag">${g === 0.5 ? "0.5" : "0.0"}</span><span>ข้อ ${q.id} · ${q.q}</span></summary>
+      <div class="body">
+        <h5>คำตอบของคุณ</h5>
+        <div class="mine ${mine ? "" : "empty"}">${mine ? escapeHtml(mine) : "— ไม่ได้เขียนคำตอบ —"}</div>
+        <h5>แนวคำตอบ</h5>
+        <p>${escapeHtml(q.a)}</p>
+        <h5>คำสำคัญ</h5>
+        <div class="chips">${q.k.map(k => `<span class="chip">${k}</span>`).join("")}</div>
+      </div>
+    </details>`;
+  }).join("") : `<p class="hint">ตอบได้ครบทุกข้อ ไม่มีข้อที่ต้องทบทวน</p>`;
+
+  $("retryWrongBtn").classList.toggle("hidden", wrong.length === 0);
+  S._wrong = wrong;
+  S._lastList = S.list.slice();
+  show("result");
+}
+function escapeHtml(s){ return s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+$("retryWrongBtn").addEventListener("click", () => start(S._wrong.slice()));
+$("retryAllBtn").addEventListener("click", () => start(S._lastList.slice()));
+$("homeBtn").addEventListener("click", () => show("home"));
+
+/* ============================ INIT ============================ */
+buildCatChoices();
+pickGroup("modeChoices", "mode");
+pickGroup("setChoices", "set");
+updateStartHint();
+</script>
+</body>
+</html>
