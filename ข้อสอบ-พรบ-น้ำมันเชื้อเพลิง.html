@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ข้อสอบโต้ตอบ พ.ร.บ. น้ำมันเชื้อเพลิง</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #071018;
+      --bg2: #0d1a26;
+      --card: #122233;
+      --card2: #163044;
+      --line: #234058;
+      --text: #e8f0f6;
+      --muted: #8aa3b5;
+      --gold: #e2b04a;
+      --gold2: #f3d27a;
+      --teal: #2ec4b6;
+      --blue: #3d8bfd;
+      --ok: #2ecc71;
+      --bad: #ff6b6b;
+      --warn: #f5a524;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+    body {
+      font-family: "Sarabun", system-ui, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #1a3a55 0%, transparent 55%),
+        radial-gradient(900px 500px at 110% 0%, #3a2a10 0%, transparent 50%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 80px; }
+    header.app {
+      display: flex; gap: 16px; align-items: center;
+      margin-bottom: 22px; flex-wrap: wrap;
+    }
+    .logo {
+      width: 58px; height: 58px; border-radius: 16px;
+      background: linear-gradient(145deg, #e2b04a, #b07a18);
+      display: grid; place-items: center;
+      font-family: Prompt, sans-serif; font-weight: 700; color: #1a1204;
+      box-shadow: 0 8px 24px rgba(226,176,74,.28);
+      flex-shrink: 0;
+    }
+    h1 { font-family: Prompt, sans-serif; font-size: 1.35rem; font-weight: 700; letter-spacing: -.02em; }
+    .sub { color: var(--muted); font-size: .95rem; }
+    .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+    .pill {
+      font-size: .75rem; padding: 3px 10px; border-radius: 999px;
+      background: #1c3348; color: var(--gold2); border: 1px solid #3a4f2a00;
+    }
+
+    .screen { display: none; animation: fade .28s ease; }
+    .screen.active { display: block; }
+    @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: linear-gradient(180deg, var(--card), #0e1c29);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .law-card { cursor: pointer; transition: transform .15s, border-color .15s; }
+    .law-card:hover { transform: translateY(-3px); border-color: var(--gold); }
+    .law-card h2 { font-family: Prompt, sans-serif; font-size: 1.05rem; margin: 8px 0 6px; }
+    .badge {
+      display: inline-block; font-size: .72rem; font-weight: 700;
+      background: #243b20; color: #c6e48b; padding: 2px 8px; border-radius: 999px;
+    }
+    .badge.b2 { background: #1c3558; color: #9ec5ff; }
+    .modes { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+    button {
+      font-family: inherit; cursor: pointer; border: 0;
+    }
+    .btn {
+      background: #1b3044; color: var(--text);
+      border: 1px solid var(--line);
+      padding: 10px 14px; border-radius: 12px; font-weight: 600;
+      transition: .15s;
+    }
+    .btn:hover { background: #234058; }
+    .btn.primary {
+      background: linear-gradient(180deg, #e8be5d, #c7922a);
+      color: #1a1204; border: 0; font-weight: 700;
+    }
+    .btn.primary:hover { filter: brightness(1.05); }
+    .btn.ghost { background: transparent; }
+    .btn.ok { background: #1e4a32; color: #b8f0cc; border-color: #2d6a48; }
+    .btn.bad { background: #4a1e24; color: #ffc4c4; border-color: #7a3038; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+    .topbar {
+      display: flex; justify-content: space-between; gap: 10px; align-items: center;
+      margin-bottom: 14px; flex-wrap: wrap;
+    }
+    .progress {
+      height: 8px; background: #163044; border-radius: 99px; overflow: hidden; margin: 10px 0 16px;
+    }
+    .progress > i {
+      display: block; height: 100%; width: 0;
+      background: linear-gradient(90deg, var(--gold), var(--teal));
+      transition: width .25s ease;
+    }
+    .qnum { color: var(--gold); font-weight: 700; font-size: .85rem; }
+    .question { font-size: 1.12rem; font-weight: 600; margin: 8px 0 16px; }
+    .choices { display: flex; flex-direction: column; gap: 8px; }
+    .choice {
+      text-align: left; width: 100%;
+      background: #0f2130; border: 1px solid var(--line);
+      padding: 12px 14px; border-radius: 12px; color: var(--text);
+      font-size: 1rem; transition: .12s;
+    }
+    .choice:hover:not(:disabled) { border-color: var(--gold); background: #163044; }
+    .choice.correct { background: #163a28; border-color: #2ecc71; }
+    .choice.wrong { background: #3a1a20; border-color: #ff6b6b; }
+    .choice.dim { opacity: .55; }
+    .choice:disabled { cursor: default; }
+
+    .flash {
+      min-height: 220px; display: flex; flex-direction: column; justify-content: center;
+      cursor: pointer; user-select: none;
+    }
+    .flash .hint { color: var(--muted); font-size: .85rem; margin-bottom: 8px; }
+    .flash .ans {
+      margin-top: 16px; padding: 14px; border-radius: 12px;
+      background: #10283a; border: 1px dashed #3a6a4a; color: #c8f5d4;
+      display: none;
+    }
+    .flash.show .ans { display: block; }
+
+    .stat {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0;
+    }
+    .stat div {
+      background: #0f2130; border: 1px solid var(--line); border-radius: 12px; padding: 12px; text-align: center;
+    }
+    .stat b { display: block; font-size: 1.4rem; font-family: Prompt, sans-serif; color: var(--gold2); }
+    .stat span { color: var(--muted); font-size: .8rem; }
+
+    .review-item {
+      border-bottom: 1px solid var(--line); padding: 12px 0;
+    }
+    .review-item summary { cursor: pointer; font-weight: 600; list-style: none; }
+    .review-item summary::-webkit-details-marker { display: none; }
+    .review-item .a { margin-top: 8px; color: #b8f0cc; background: #10283a; padding: 10px 12px; border-radius: 10px; }
+
+    .footer-note { margin-top: 22px; color: var(--muted); font-size: .82rem; }
+    .tag { font-size: .75rem; color: var(--muted); }
+    #toast {
+      position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: #122233; border: 1px solid var(--line); padding: 10px 16px; border-radius: 12px;
+      opacity: 0; pointer-events: none; transition: .25s; z-index: 9;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .search {
+      width: 100%; background: #0f2130; border: 1px solid var(--line); color: var(--text);
+      padding: 10px 12px; border-radius: 12px; font-family: inherit; margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="app">
+      <div class="logo">พธ</div>
+      <div>
+        <h1>ข้อสอบโต้ตอบ พ.ร.บ. น้ำมันเชื้อเพลิง</h1>
+        <div class="sub">พ.ร.บ. การค้าน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๓ และ พ.ร.บ. ควบคุมน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๒</div>
+        <div class="pills">
+          <span class="pill">100 ข้อ</span>
+          <span class="pill">4 ตัวเลือก / บัตรคำ / ทบทวน</span>
+          <span class="pill">ไม่บันทึกข้อมูลออกเครื่อง</span>
+        </div>
+      </div>
+    </header>
+
+    <section id="home" class="screen active">
+      <div class="grid">
+        <article class="card law-card" data-law="trade">
+          <span class="badge">ชุดที่ 1 · 50 ข้อ</span>
+          <h2>พ.ร.บ. การค้าน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๓</h2>
+          <p class="tag">ผู้ค้าน้ำมัน · สำรอง · คุณภาพ · โทษทางอาญา · ค่าธรรมเนียม</p>
+          <div class="modes">
+            <button class="btn primary" data-start="quiz" data-law="trade">ทำแบบทดสอบ 4 ตัวเลือก</button>
+            <button class="btn" data-start="flash" data-law="trade">ทบทวนแบบบัตรคำ</button>
+            <button class="btn" data-start="list" data-law="trade">ดูเฉลยทั้งหมด</button>
+          </div>
+        </article>
+        <article class="card law-card" data-law="control">
+          <span class="badge b2">ชุดที่ 2 · 50 ข้อ</span>
+          <h2>พ.ร.บ. ควบคุมน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๒</h2>
+          <p class="tag">กิจการควบคุม 3 ประเภท · ท่อส่ง · สัมปทาน · คณะกรรมการ</p>
+          <div class="modes">
+            <button class="btn primary" data-start="quiz" data-law="control">ทำแบบทดสอบ 4 ตัวเลือก</button>
+            <button class="btn" data-start="flash" data-law="control">ทบทวนแบบบัตรคำ</button>
+            <button class="btn" data-start="list" data-law="control">ดูเฉลยทั้งหมด</button>
+          </div>
+        </article>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="row" style="justify-content:space-between">
+          <div>
+            <strong>ทำทั้ง 2 ฉบับ</strong>
+            <div class="tag">สุ่มหรือเรียงตามเลขข้อ รวม 100 ข้อ</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" data-start="quiz" data-law="all">สอบรวม 100 ข้อ</button>
+            <button class="btn" data-start="quiz20" data-law="all">สุ่ม 20 ข้อ</button>
+          </div>
+        </div>
+      </div>
+      <p class="footer-note">คำถามและเฉลยอ้างอิงจากแนวข้อสอบที่แนบมา ตัวเลือกผิดสุ่มจากคำตอบข้ออื่นในหมวดเดียวกัน ใช้สำหรับทบทวน ไม่ใช่ข้อสอบทางการ</p>
+    </section>
+
+    <section id="quiz" class="screen">
+      <div class="topbar">
+        <button class="btn ghost" id="backHome">← หน้าแรก</button>
+        <div class="tag" id="quizMeta"></div>
+        <div class="row">
+          <span class="tag" id="scoreLive">ถูก 0 / ผิด 0</span>
+        </div>
+      </div>
+      <div class="progress"><i id="bar"></i></div>
+      <div class="card">
+        <div class="qnum" id="qnum"></div>
+        <div class="question" id="qtext"></div>
+        <div class="choices" id="choices"></div>
+        <div class="row" style="margin-top:14px;justify-content:space-between">
+          <button class="btn" id="skipBtn">ข้าม</button>
+          <button class="btn primary" id="nextBtn" disabled>ข้อถัดไป →</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="result" class="screen">
+      <div class="card">
+        <h2 style="font-family:Prompt">สรุปผล</h2>
+        <div class="stat">
+          <div><b id="rScore">0%</b><span>คะแนน</span></div>
+          <div><b id="rOk">0</b><span>ตอบถูก</span></div>
+          <div><b id="rBad">0</b><span>ตอบผิด / ข้าม</span></div>
+        </div>
+        <p id="rMsg" class="tag"></p>
+        <div class="row" style="margin-top:16px">
+          <button class="btn primary" id="retryBtn">ทำอีกครั้ง</button>
+          <button class="btn" id="reviewWrong">ดูข้อที่ผิด</button>
+          <button class="btn ghost" id="toHome">กลับหน้าแรก</button>
+        </div>
+        <div id="wrongList" style="margin-top:16px"></div>
+      </div>
+    </section>
+
+    <section id="flash" class="screen">
+      <div class="topbar">
+        <button class="btn ghost" id="flashHome">← หน้าแรก</button>
+        <div class="tag" id="flashMeta"></div>
+        <div class="tag" id="flashCount"></div>
+      </div>
+      <div class="progress"><i id="flashBar"></i></div>
+      <div class="card flash" id="flashCard">
+        <div class="hint">แตะการ์ดเพื่อเปิด/ปิดเฉลย</div>
+        <div class="qnum" id="fnum"></div>
+        <div class="question" id="ftext"></div>
+        <div class="ans" id="fans"></div>
+      </div>
+      <div class="row" style="margin-top:12px;justify-content:space-between">
+        <button class="btn" id="fPrev">← ก่อนหน้า</button>
+        <div class="row">
+          <button class="btn bad" id="fHard">ยังไม่คล่อง</button>
+          <button class="btn ok" id="fEasy">จำได้แล้ว</button>
+        </div>
+        <button class="btn" id="fNext">ถัดไป →</button>
+      </div>
+    </section>
+
+    <section id="list" class="screen">
+      <div class="topbar">
+        <button class="btn ghost" id="listHome">← หน้าแรก</button>
+        <div class="tag" id="listMeta"></div>
+      </div>
+      <input class="search" id="searchBox" placeholder="ค้นหาคำถามหรือคำตอบ..." />
+      <div class="card" id="listBox"></div>
+    </section>
+  </div>
+  <div id="toast"></div>
+
+<script>
+const DATA = {
+  trade: {
+    title: "พ.ร.บ. การค้าน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๓",
+    items: [
+      {n:2, q:"ตาม พ.ร.บ. การค้าน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๓ นิยามคำว่า ‘ผู้ค้าน้ำมัน’ ไม่รวมถึงบุคคลใด", a:"ผู้ได้รับสัมปทานตามกฎหมายว่าด้วยปิโตรเลียม"},
+      {n:3, q:"บุคคลใดถือเป็น ‘ผู้ขนส่งน้ำมัน’ ตาม พ.ร.บ. การค้าน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๓", a:"ผู้รับจ้างขนส่งน้ำมันเชื้อเพลิงซึ่งมิใช่ของตนเอง"},
+      {n:4, q:"คำว่า ‘ปริมาณการค้าประจำปี’ ตาม พ.ร.บ. การค้าน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๓ ไม่รวมถึงปริมาณน้ำมันในข้อใด", a:"ปริมาณน้ำมันที่จัดหามาเพื่อสำรองตามกฎหมาย"},
+      {n:5, q:"หน่วยงานใดที่ พ.ร.บ. การค้าน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๓ ไม่อาจบังคับใช้แก่หน่วยงานนั้นได้ตามมาตรา ๕", a:"กระทรวง ทบวง กรม"},
+      {n:6, q:"ผู้ค้าน้ำมันที่มีปริมาณการค้าทุกชนิดรวมกันปีละเท่าใดขึ้นไป ต้องได้รับใบอนุญาตจากรัฐมนตรีตามมาตรา ๗", a:"100,000 เมตริกตัน ขึ้นไป"},
+      {n:7, q:"กรณีเป็นผู้ค้าน้ำมันชนิดก๊าซปิโตรเลียมเหลว (LPG) แต่เพียงชนิดเดียว จะต้องมีปริมาณการค้าปีละเท่าใดขึ้นไป จึงจัดเป็นผู้ค้าตามมาตรา ๗", a:"50,000 เมตริกตัน ขึ้นไป"},
+      {n:8, q:"ผู้ขอรับใบอนุญาตเป็นผู้ค้าน้ำมันตามมาตรา ๗ จะต้องไม่เป็นผู้ที่เคยถูกเพิกถอนใบอนุญาตโดยยังไม่พ้นกำหนดเวลากี่ปี", a:"1 ปี"},
+      {n:9, q:"ผู้ค้าน้ำมันตามมาตรา ๗ ที่ประสงค์จะเลิกประกอบกิจการ ต้องแจ้งให้รัฐมนตรีทราบล่วงหน้าเป็นเวลาไม่น้อยกว่ากี่วัน", a:"90 วัน ก่อนเลิกประกอบกิจการ โดยแจ้งต่อ รมต.กระทรวงพลังงาน"},
+      {n:10, q:"หากผู้ค้าน้ำมันตามมาตรา ๗ เลิกประกอบกิจการและมีน้ำมันเชื้อเพลิงเหลืออยู่ ต้องจำหน่ายน้ำมันที่เหลือให้เสร็จสิ้นภายในกำหนดเวลาเท่าใด", a:"90 วัน นับตั้งแต่เลิกประกอบกิจการ"},
+      {n:11, q:"ผู้ค้าน้ำมันที่มีปริมาณการค้าไม่ถึงเกณฑ์ตามมาตรา ๗ แต่เกินปริมาณที่รัฐมนตรีประกาศกำหนด ต้องดำเนินการอย่างไร", a:"ยื่นขอจดทะเบียนต่ออธิบดี (กรมธุรกิจพลังงาน)"},
+      {n:12, q:"ผู้ค้าน้ำมันซึ่งดำเนินกิจการโดยจัดตั้งเป็น ‘สถานีบริการ’ ต้องดำเนินการอย่างไร", a:"ยื่นขอจดทะเบียนต่ออธิบดี (กรมธุรกิจพลังงาน)"},
+      {n:13, q:"เรื่องการจดทะเบียนสถานีบริการ ไม่ใช้บังคับแก่บุคคลใดต่อไปนี้", a:"ผู้ค้าน้ำมันตามมาตรา 7 และผู้ค้าตามมาตรา 10"},
+      {n:14, q:"ผู้ขนส่งน้ำมันเชื้อเพลิงตามชนิดและปริมาณที่รัฐมนตรีประกาศกำหนด ต้องดำเนินการอย่างไร", a:"แจ้งต่ออธิบดีภายใน 60 วัน"},
+      {n:15, q:"เมื่อรายการที่ได้แจ้งไว้สำหรับการขนส่งน้ำมันเปลี่ยนแปลงไป ผู้ขนส่งต้องแจ้งเพิ่มเติมภายในกี่วันนับแต่วันที่เปลี่ยนแปลง", a:"30 วัน"},
+      {n:16, q:"หากผู้ค้าน้ำมันไม่ชำระค่าธรรมเนียมรายปีภายในเวลาที่กำหนด จะต้องเสียเงินเพิ่มอีกเท่าใด", a:"ร้อยละ 3 ต่อเดือน"},
+      {n:17, q:"กรณีผู้ประกอบกิจการไม่ยินยอมชำระค่าธรรมเนียมและเงินเพิ่มโดยไม่มีเหตุสมควร พนักงานเจ้าหน้าที่มีอำนาจดำเนินการอย่างไร", a:"สั่งให้หยุดประกอบกิจการไว้จนกว่าจะชำระครบ"},
+      {n:18, q:"ผู้ค้าน้ำมันตามมาตรา ๗ และมาตรา ๑๐ ต้องส่งบัญชีปริมาณและสถานที่เก็บน้ำมันเชื้อเพลิงต่อพนักงานเจ้าหน้าที่ภายในกำหนดเวลาใด", a:"ภายในวันที่ 15 ของเดือนถัดไป"},
+      {n:19, q:"ผู้ค้าน้ำมันตามมาตรา ๗ ต้องส่งแผนการนำเข้า ซื้อ กลั่น ผลิต หรือจำหน่าย ในช่วงสามเดือนถัดไปภายในกำหนดเวลาใดของทุกเดือน", a:"ภายในวันที่ 20 ของทุกเดือนนั้น"},
+      {n:20, q:"ผู้ค้าน้ำมันตามมาตรา ๗ ต้องยื่นปริมาณการค้าประจำปีเพื่อขอความเห็นชอบต่ออธิบดีก่อนปีที่จะทำการค้าเป็นเวลาไม่น้อยกว่ากี่วัน", a:"ไม่น้อยกว่า 45 วัน"},
+      {n:21, q:"ในการกำหนดอัตราน้ำมันเชื้อเพลิงที่ผู้ค้าน้ำมันตามมาตรา ๗ ต้องสำรอง กฎหมายกำหนดอัตราสูงสุดไว้ไม่เกินร้อยละเท่าใดของปริมาณการค้าประจำปี", a:"ร้อยละ 30"},
+      {n:22, q:"กรณีผู้ค้าน้ำมันเริ่มทำการค้าระหว่างปี การคำนวณปริมาณการค้าประจำปีเพื่อประโยชน์ในการสำรองน้ำมันให้คำนวณอย่างไร", a:"คิดตามอัตราเฉลี่ยรายเดือนในช่วงที่ทำการค้า × 12 เดือน"},
+      {n:23, q:"หากอธิบดีมิได้ให้ความเห็นชอบปริมาณการค้าประจำปีของผู้ค้าน้ำมันก่อนเริ่มต้นปีใหม่ ผู้ค้าน้ำมันต้องสำรองน้ำมันอย่างไร", a:"สำรองตามปริมาณที่เคยเก็บในปีที่ผ่านมาไปก่อน จนกว่าได้รับความเห็นชอบจากอธิบดี"},
+      {n:24, q:"การประกาศเปลี่ยนแปลงชนิดและเพิ่มอัตราน้ำมันเชื้อเพลิงที่ต้องสำรอง จะมีผลใช้บังคับเมื่อพ้นกำหนดเวลาเท่าใดนับแต่วันประกาศในราชกิจจานุเบกษา", a:"90 วัน (ถ้าเป็นเรื่องคุณภาพน้ำมัน 60 วันหลังประกาศ)"},
+      {n:25, q:"กรณีเกิดภาวะวิกฤตหรือมีความจำเป็นเพื่อป้องกันการขาดแคลนน้ำมัน อธิบดีมีอำนาจสั่งการตามมาตรา ๒๔ อย่างไร", a:"สั่งให้งดจำหน่ายหรือให้จำหน่ายน้ำมันสำรองได้"},
+      {n:26, q:"ผู้ใดมีอำนาจประกาศกำหนดลักษณะและคุณภาพของน้ำมันเชื้อเพลิงเพื่อใช้บังคับทั่วราชอาณาจักร", a:"อธิบดีกรมธุรกิจพลังงาน"},
+      {n:27, q:"ข้อใดได้รับการยกเว้นจากการห้ามจำหน่ายน้ำมันเชื้อเพลิงที่มีลักษณะแตกต่างจากที่อธิบดีกำหนด", a:"น้ำมันหล่อลื่นใช้แล้วที่ไม่จำหน่ายอย่างน้ำมันหล่อลื่น"},
+      {n:28, q:"เมื่อพนักงานเจ้าหน้าที่พบว่าผู้ค้าน้ำมันจำหน่ายน้ำมันเชื้อเพลิงที่ไม่ตรงตามคุณภาพที่ประกาศกำหนด พนักงานเจ้าหน้าที่มีอำนาจตามมาตรา ๒๙ อย่างไร", a:"สั่งห้ามจำหน่ายและผนึกหัวจ่ายน้ำมันเชื้อเพลิง"},
+      {n:29, q:"ห้ามมิให้ผู้ค้าน้ำมันตามมาตรา ๗, ๑๐, ๑๑ ขนส่งน้ำมันเชื้อเพลิงคราวละกี่ลิตรขึ้นไป ให้แก่บุคคลอื่นที่ไม่ใช่ผู้ขนส่งตามมาตรา ๑๒ โดยไม่ได้รับอนุญาต", a:"3,000 ลิตร"},
+      {n:30, q:"ในการเข้าไปปฏิบัติหน้าที่ตรวจสถานที่ของพนักงานเจ้าหน้าที่ตามมาตรา ๓๑ สามารถกระทำได้ในช่วงเวลาใด", a:"ระหว่างพระอาทิตย์ขึ้นถึงพระอาทิตย์ตก หรือในระหว่างเวลาทำการ"},
+      {n:31, q:"พนักงานเจ้าหน้าที่มีอำนาจเก็บตัวอย่างน้ำมันเชื้อเพลิงเพื่อนำไปตรวจสอบได้ปริมาณไม่เกินเท่าใดต่อหนึ่งตัวอย่าง", a:"ตัวอย่างละไม่เกิน 5 ลิตร"},
+      {n:32, q:"ใครเป็นผู้มีอำนาจสั่งเพิกถอนใบอนุญาตที่ออกให้แก่ผู้ค้าน้ำมันตามมาตรา ๗", a:"รัฐมนตรีว่าการกระทรวงพลังงาน"},
+      {n:33, q:"ผู้ค้าน้ำมันตามมาตรา ๗ ไม่สำรองน้ำมันเชื้อเพลิงเป็นระยะเวลาเท่าใด จึงจะเข้าเงื่อนไขถูกเพิกถอนใบอนุญาต", a:"ต่อเนื่องกันเกิน 30 วัน หรือไม่ต่อเนื่องกันแต่รวมกันเกิน 60 วัน"},
+      {n:34, q:"หากผู้ค้าน้ำมันตามมาตรา ๗ ไม่เริ่มทำการค้าภายในกี่ปีนับแต่วันได้รับใบอนุญาต อาจถูกเพิกถอนใบอนุญาตได้", a:"2 ปี"},
+      {n:35, q:"ผู้ใดประกอบกิจการค้าน้ำมันตามมาตรา ๗ โดยไม่ได้รับใบอนุญาต ต้องระวางโทษอย่างไร", a:"จำคุกไม่เกิน 1 ปี หรือปรับตั้งแต่ 300,000–3,000,000 บาท หรือทั้งจำทั้งปรับ"},
+      {n:36, q:"ผู้ใดกระทำความผิดลักลอบ ‘ปลอมปนน้ำมันเชื้อเพลิง’ เพื่อจำหน่าย ต้องระวางโทษสูงสุดตามมาตรา ๔๙ วรรคหนึ่ง อย่างไร", a:"จำคุกไม่เกิน 3 ปี หรือปรับไม่เกิน 300,000 บาท หรือทั้งจำทั้งปรับ"},
+      {n:37, q:"หากผู้กระทำการปลอมปนน้ำมันเชื้อเพลิงเป็นผู้ค้าน้ำมันตามมาตรา ๗ จะได้รับโทษตามมาตรา ๔๙ วรรคสอง อย่างไร", a:"จำคุกไม่เกิน 5 ปี หรือปรับตั้งแต่ 50,000–500,000 บาท หรือทั้งจำทั้งปรับ"},
+      {n:38, q:"ผู้ใดมีน้ำมันเชื้อเพลิงที่มีลักษณะ/คุณภาพต่างจากที่กำหนดไว้ในครอบครองตั้งแต่กี่ลิตรขึ้นไป ให้สันนิษฐานไว้ก่อนว่ามีไว้เพื่อปลอมปนจำหน่าย", a:"200 ลิตรขึ้นไป"},
+      {n:39, q:"ผู้ใดทำลายตราผนึกหัวจ่ายน้ำมันเชื้อเพลิงที่พนักงานเจ้าหน้าที่ทำไว้ตามมาตรา ๒๙ ต้องระวางโทษตามมาตรา ๕๕ อย่างไร", a:"จำคุกไม่เกิน 6 เดือน หรือปรับไม่เกิน 50,000 บาท หรือทั้งจำทั้งปรับ"},
+      {n:40, q:"ทรัพย์สินที่ศาลมีคำพิพากษาให้ริบตาม พ.ร.บ. การค้าน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๓ ให้ส่งมอบแก่หน่วยงานใดตามมาตรา ๖๑", a:"กรมธุรกิจพลังงาน"},
+      {n:41, q:"อธิบดีกรมธุรกิจพลังงานมีอำนาจเปรียบเทียบปรับ สำหรับความผิดตาม พ.ร.บ. การค้าน้ำมันเชื้อเพลิง ในกรณีใดตามมาตรา ๖๒", a:"ความผิดที่มีโทษปรับสถานเดียว หรือจำคุกไม่เกิน 1 ปี"},
+      {n:42, q:"เมื่อผู้ต้องหายินยอมให้เปรียบเทียบปรับ พนักงานสอบสวนต้องส่งเรื่องให้อธิบดีภายในกี่วันนับแต่วันที่ยินยอม", a:"ภายใน 7 วันนับแต่ผู้ถูกปรับแสดงความยินยอม"},
+      {n:43, q:"ค่าธรรมเนียมใบอนุญาตเป็นผู้ค้าน้ำมันตามมาตรา ๗ มีอัตราท้ายพระราชบัญญัติฉบับละเท่าใด", a:"20,000 บาท"},
+      {n:44, q:"ค่าธรรมเนียมประกอบกิจการค้าน้ำมันตามมาตรา ๗ มีอัตราสูงสุดท้ายพระราชบัญญัติปีละเท่าใด", a:"100,000 บาท"},
+      {n:45, q:"ผู้ค้าน้ำมันตามมาตรา ๗ ผู้ใดไม่ยื่นปริมาณการค้าประจำปีเพื่อขอความเห็นชอบต่ออธิบดี ต้องระวางโทษปรับรายวันตามมาตรา ๔๔ เท่าใด", a:"ปรับรายวัน วันละ 5,000 บาท"},
+      {n:46, q:"ผู้ค้าน้ำมันตามมาตรา ๗ ที่ไม่ส่งแผนการนำเข้าหรือผลิตตามมาตรา ๑๗ ต้องระวางโทษตามมาตรา ๔๓ อย่างไร", a:"จำคุกไม่เกิน 6 เดือน หรือปรับไม่เกิน 50,000 บาท หรือทั้งจำทั้งปรับ"},
+      {n:47, q:"การออกประกาศหรือกำหนดเงื่อนไขการค้าเพื่อความมั่นคงแห่งประเทศตามมาตรา ๘ เป็นอำนาจของใคร", a:"รัฐมนตรีว่าการกระทรวงพลังงาน"},
+      {n:48, q:"ในกรณีที่ศาลพิพากษาลงโทษจำคุกบุคคลตามมาตรา ๖๐ (ผู้แทนนิติบุคคล) ตั้งแต่กี่เดือนขึ้นไป รัฐมนตรีจึงจะใช้อำนาจเพิกถอนใบอนุญาตตามมาตรา ๓๔ (๔) ได้", a:"ตั้งแต่ 3 เดือนขึ้นไป"},
+      {n:49, q:"เมื่อผู้ขนส่งน้ำมันเชื้อเพลิงเลิกประกอบกิจการ ต้องแจ้งต่ออธิบดีภายในกี่วันตามมาตรา ๑๔ วรรคสอง", a:"30 วันนับแต่วันเลิกกิจการ"},
+      {n:50, q:"หากพนักงานเจ้าหน้าที่พยายามเข้าไปตรวจสถานที่แล้วแต่ถูกขัดขวาง พนักงานเจ้าหน้าที่มีอำนาจตามมาตรา ๓๑ (๔) อย่างไร", a:"เปิดหรือทำลายรั้วประตูได้ และทำลายตราผนึกได้ แต่ต้องให้เสียหายน้อยเท่าที่จะทำได้"},
+      {n:51, q:"เหตุผลสำคัญในการตรา พ.ร.บ. การค้าน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๓ แทนกฎหมายฉบับเดิม (พ.ศ. ๒๕๒๑) คือข้อใด", a:"เพื่อจัดระดับผู้ค้าตามมาตรา 7, มาตรา 10 และมาตรา 11 และมีการปรับโทษให้สูงขึ้น"}
+    ]
+  },
+  control: {
+    title: "พ.ร.บ. ควบคุมน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๒",
+    items: [
+      {n:1, q:"ตาม พ.ร.บ. ควบคุมน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๒ ข้อใดจัดอยู่ในนิยาม ‘น้ำมันเชื้อเพลิง’ ตามมาตรา ๔", a:"น้ำมันดิบ เบนซิน ดีเซล น้ำมันเตา ก๊าซธรรมชาติ น้ำมันหล่อลื่น และสิ่งอื่นตามที่กำหนดในกฎกระทรวง"},
+      {n:2, q:"ความใน พ.ร.บ. ควบคุมน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๒ มีข้อยกเว้นไม่ใช้บังคับแก่กิจการในข้อใดตามมาตรา ๖", a:"น้ำมันเชื้อเพลิงที่ใช้ในราชการทหารโดยเฉพาะ"},
+      {n:3, q:"หากข้อบัญญัติท้องถิ่นหรือกฎหมายควบคุมอาคารขัดหรือแย้งกับกฎกระทรวงที่ออกตาม พ.ร.บ. ควบคุมน้ำมันเชื้อเพลิง ผลจะเป็นอย่างไรตามมาตรา ๗", a:"ข้อบังคับท้องถิ่นนั้นย่อมไม่มีผลบังคับใช้หรือสิ้นผลบังคับใช้"},
+      {n:4, q:"ผู้ใดดำรงตำแหน่งเป็นประธานกรรมการในคณะกรรมการควบคุมน้ำมันเชื้อเพลิง ตามมาตรา ๘", a:"ปลัดกระทรวงพลังงาน"},
+      {n:5, q:"คณะกรรมการควบคุมน้ำมันเชื้อเพลิง มีกรรมการผู้ทรงคุณวุฒิซึ่งคณะรัฐมนตรีแต่งตั้งจำนวนกี่คน", a:"6 คน"},
+      {n:6, q:"กรรมการผู้ทรงคุณวุฒิอย่างน้อยกี่คนในคณะกรรมการควบคุมน้ำมันเชื้อเพลิง ต้องแต่งตั้งจากผู้ดำเนินงานในองค์การสาธารณประโยชน์", a:"อย่างน้อย 2 คน (ด้านคุ้มครองอนามัยและสิ่งแวดล้อม)"},
+      {n:7, q:"กรรมการผู้ทรงคุณวุฒิมีวาระอยู่ในตำแหน่งคราวละกี่ปี และมีเงื่อนไขการดำรงตำแหน่งติดต่อกันอย่างไรตามมาตรา ๑๐", a:"2 ปี และดำรงตำแหน่งติดต่อกันไม่เกิน 2 คราว"},
+      {n:8, q:"กรรมการและคณะอนุกรรมการตาม พ.ร.บ. ควบคุมน้ำมันเชื้อเพลิง มีสถานะตามกฎหมายอาญาอย่างไรตามมาตรา ๑๔ วรรคสอง", a:"เป็นเจ้าพนักงานตามประมวลกฎหมายอาญา"},
+      {n:9, q:"หน่วยงานใดรับผิดชอบปฏิบัติงานเกี่ยวกับงานวิชาการและงานธุรการให้แก่คณะกรรมการควบคุมน้ำมันเชื้อเพลิงตามมาตรา ๑๖", a:"กรมธุรกิจพลังงาน"},
+      {n:10, q:"การประกอบกิจการควบคุมตาม พ.ร.บ. ควบคุมน้ำมันเชื้อเพลิง แบ่งออกเป็นกี่ประเภทตามมาตรา ๑๗", a:"3 ประเภท"},
+      {n:11, q:"การประกอบกิจการควบคุมประเภทที่ ๑ มีลักษณะการควบคุมอย่างไรตามมาตรา ๑๗ (๑)", a:"สามารถประกอบกิจการได้ทันทีตามความประสงค์ของผู้ประกอบการ"},
+      {n:12, q:"การประกอบกิจการควบคุมประเภทที่ ๒ มีเงื่อนไขการเริ่มประกอบการอย่างไรตามมาตรา ๑๙", a:"ต้องแจ้งเจ้าหน้าที่ทราบก่อน และสามารถประกอบกิจการได้ตั้งแต่วันที่ได้แจ้ง"},
+      {n:13, q:"ผู้ประกอบกิจการควบคุมประเภทที่ ๒ ต้องแจ้งการเลิกประกอบกิจการหรือโอนกิจการต่อพนักงานเจ้าหน้าที่ภายในกี่วันตามมาตรา ๑๙ วรรคห้า", a:"30 วัน โดยแจ้งเป็นหนังสือ"},
+      {n:14, q:"ข้อใดถูกต้องเกี่ยวกับกิจการควบคุมประเภทที่ ๓ ตามมาตรา ๒๐", a:"ต้องขอใบอนุญาตจากผู้อนุญาต (อธิบดีกรมธุรกิจพลังงาน)"},
+      {n:15, q:"คำว่า ‘ผู้อนุญาต’ สำหรับการประกอบกิจการควบคุมประเภทที่ ๓ หมายถึงใครตามมาตรา ๔", a:"อธิบดีกรมธุรกิจพลังงาน"},
+      {n:16, q:"การขอต่ออายุใบอนุญาตประกอบกิจการควบคุมประเภทที่ ๓ ผู้รับใบอนุญาตต้องยื่นคำขอก่อนเมื่อใด", a:"ยื่นคำขอก่อนที่ใบอนุญาตจะสิ้นอายุ"},
+      {n:17, q:"เมื่อผู้รับใบอนุญาตยื่นคำขอต่ออายุใบอนุญาตก่อนวันสิ้นอายุแล้ว ผลทางกฎหมายระหว่างรอคำสั่งเป็นอย่างไร", a:"ให้ถือว่าอยู่ในฐานะผู้รับใบอนุญาตจนกว่าจะได้รับแจ้งคำสั่งไม่อนุญาต"},
+      {n:18, q:"ในกรณีผู้อนุญาตมีคำสั่งไม่ออกใบอนุญาตหรือไม่ต่ออายุใบอนุญาตประเภทที่ ๓ ผู้ขอมีสิทธิอุทธรณ์ต่อใครภายในกี่วันตามมาตรา ๒๔", a:"อุทธรณ์ต่อรัฐมนตรีภายใน 30 วัน"},
+      {n:19, q:"รัฐมนตรีต้องพิจารณาวินิจฉัยอุทธรณ์คำสั่งไม่ออกใบอนุญาตหรือไม่ต่ออายุใบอนุญาตให้แล้วเสร็จภายในกี่วัน และคำวินิจฉัยเป็นอย่างไร", a:"ภายใน 60 วัน และคำวินิจฉัยถือว่าเป็นที่สุด"},
+      {n:20, q:"ในกรณีผู้รับใบอนุญาตประเภทที่ ๓ ตายหรือสิ้นสภาพนิติบุคคล ทายาทหรือผู้ชำระบัญชีต้องยื่นคำขอรับโอนใบอนุญาตภายในกี่วันตามมาตรา ๒๖", a:"90 วัน"},
+      {n:21, q:"หากใบอนุญาตประกอบกิจการควบคุมประเภทที่ ๓ สูญหายหรือถูกทำลาย ผู้รับใบอนุญาตต้องยื่นขอรับใบแทนภายในกี่วันตามมาตรา ๒๘", a:"ภายใน 15 วัน"},
+      {n:22, q:"ใครเป็นผู้มีอำนาจออกกฎกระทรวงกำหนดให้ท้องที่หนึ่งท้องที่ใดเป็นเขตห้ามประกอบกิจการควบคุม ตามมาตรา ๒๙", a:"รัฐมนตรีว่าการกระทรวงพลังงาน"},
+      {n:23, q:"กรณีที่มีการประกาศเขตห้ามประกอบกิจการควบคุม ผู้ที่ประกอบกิจการอยู่ก่อนแล้วจะได้รับสิทธิอย่างไรตามมาตรา ๓๐", a:"ประกอบกิจการต่อไปได้ แต่อธิบดีกำหนดเงื่อนไขแก้ไขได้ และถ้าอันตรายอาจสั่งระงับได้"},
+      {n:24, q:"หากคำสั่งของอธิบดีในการปรับปรุงกิจการเดิมในเขตห้ามกระทำให้เกิดความเสียหายเกินสมควร ผู้ประกอบการมีสิทธิอย่างไร", a:"มีสิทธิได้รับค่าทดแทนตามความเป็นธรรม"},
+      {n:25, q:"การเข้าไปใช้สอยอสังหาริมทรัพย์ชั่วคราวเพื่อสร้างหรือบำรุงรักษาท่อส่งน้ำมันของรัฐ ต้องแจ้งเป็นหนังสือล่วงหน้าไม่น้อยกว่ากี่วันตามมาตรา ๓๓", a:"ไม่น้อยกว่า 7 วัน"},
+      {n:26, q:"หากไม่อาจติดต่อเจ้าของอสังหาริมทรัพย์ได้ การปิดประกาศเพื่อเข้าไปใช้สอยที่ดินชั่วคราวต้องประกาศล่วงหน้าไม่น้อยกว่ากี่วัน", a:"ไม่น้อยกว่า 30 วัน"},
+      {n:27, q:"ในเขตระบบการขนส่งน้ำมันเชื้อเพลิงทางท่อ ห้ามมิให้ผู้ใดปลูกสร้างอาคาร ต้นไม้ หรือขุดดิน เว้นแต่ได้รับอนุญาตเป็นหนังสือจากใครตามมาตรา ๓๘", a:"รัฐมนตรีว่าการกระทรวงพลังงาน"},
+      {n:28, q:"กรณีผู้ฝ่าฝืนไม่รื้อถอนสิ่งปลูกสร้างในเขตระบบท่อส่งน้ำมัน หน่วยงานของรัฐจะเข้ารื้อถอนเองและคิดเงินเพิ่มร้อยละเท่าใดต่อปีตามมาตรา ๓๘", a:"ร้อยละ 30 ต่อปี"},
+      {n:29, q:"ในเขตระบบการขนส่งน้ำมันเชื้อเพลิงทางท่อในทางสัญจรทางน้ำ ข้อใดถือเป็นการกระทำอันต้องห้ามตามมาตรา ๓๙", a:"ทอดสมอเรือ เกาสมอ หรือลากแหอวน"},
+      {n:30, q:"เรือที่แล่นข้ามเขตระบบท่อน้ำมันในน้ำ หากมิได้กระทำการตามข้อใด ให้ถือว่าเป็นการ ‘เกาสมอ’ ตามมาตรา ๓๙ วรรคสอง", a:"มิได้ชักสมอขึ้นพ้นจากน้ำจนแลเห็นได้"},
+      {n:31, q:"ในกรณีจำเป็นและเร่งด่วน เจ้าหน้าที่ของหน่วยงานรัฐมีอำนาจเข้าไปในที่ดินของบุคคลใดเพื่อซ่อมระบบท่อน้ำมันได้ตามมาตรา ๔๑ อย่างไร", a:"เข้าไปได้ทุกเวลา แต่ถ้าเจ้าของอยู่ ณ ที่นั้นต้องแจ้งให้ทราบก่อน"},
+      {n:32, q:"ผู้ใดมีอำนาจอนุมัติให้เอกชนเป็นผู้รับสัมปทานจัดให้มีคลังน้ำมันหรือระบบขนส่งน้ำมันทางท่อ ตามมาตรา ๔๓", a:"คณะรัฐมนตรี"},
+      {n:33, q:"ลำดับขั้นตอนการยื่นขอรับสัมปทานระบบท่อน้ำมันเชื้อเพลิงหรือคลังน้ำมันตามมาตรา ๔๔ ต้องยื่นเรื่องต่อใครเป็นลำดับแรก", a:"อธิบดีกรมธุรกิจพลังงาน"},
+      {n:34, q:"เงื่อนไขสำคัญในการโอนสัมปทานตามมาตรา ๔๕ คือข้อใด", a:"โอนได้เมื่อมีความจำเป็นและได้รับอนุญาตจากรัฐมนตรี"},
+      {n:35, q:"ในกรณีผู้รับสัมปทานจำเป็นต้องเวนคืนอสังหาริมทรัพย์และไม่สามารถตกลงซื้อขายได้ หน่วยงานใดจะเป็นผู้ดำเนินการเวนคืนให้ตามมาตรา ๕๑", a:"กรมธุรกิจพลังงาน โดยผู้รับสัมปทานเป็นผู้เสียค่าใช้จ่าย"},
+      {n:36, q:"พนักงานเจ้าหน้าที่มีอำนาจตามมาตรา ๕๓ (๒) ในการเก็บตัวอย่างน้ำมันเชื้อเพลิงเพื่อตรวจสอบในปริมาณเท่าใด", a:"ปริมาณพอสมควร"},
+      {n:37, q:"กรณีผู้ประกอบกิจการไม่แก้ไขหรือปรับปรุงตามคำสั่งพนักงานเจ้าหน้าที่ พนักงานเจ้าหน้าที่มีอำนาจตามมาตรา ๕๕ อย่างไร", a:"สั่งห้ามประกอบกิจการ หรือให้ผู้อนุญาต (อธิบดี) เพิกถอนใบอนุญาต"},
+      {n:38, q:"กรณีพนักงานเจ้าหน้าที่เข้าดำเนินการขนย้ายน้ำมันเชื้อเพลิงแทนผู้ประกอบการที่ไม่ปฏิบัติตามคำสั่ง ผู้ประกอบการต้องจ่ายเบี้ยปรับในอัตราร้อยละเท่าใดตามมาตรา ๕๕ (๒)", a:"เบี้ยปรับร้อยละ 30"},
+      {n:39, q:"ผู้ใดประกอบกิจการควบคุมประเภทที่ ๓ โดยไม่ได้รับใบอนุญาต ต้องระวางโทษตามมาตรา ๖๕ อย่างไร", a:"จำคุกไม่เกิน 1 ปี หรือปรับไม่เกิน 100,000 บาท หรือทั้งจำทั้งปรับ"},
+      {n:40, q:"ผู้ประกอบกิจการควบคุมประเภทที่ ๒ ที่ไม่แจ้งการเริ่มประกอบกิจการต่อพนักงานเจ้าหน้าที่ ต้องระวางโทษอย่างไร", a:"จำคุกไม่เกิน 6 เดือน หรือปรับไม่เกิน 50,000 บาท หรือทั้งจำทั้งปรับ"},
+      {n:41, q:"ผู้ใดกระทำการอันอาจเป็นอันตรายต่อระบบการขนส่งน้ำมันเชื้อเพลิงทางท่อตามมาตรา ๓๗ ต้องระวางโทษหนักสุดอย่างไร", a:"จำคุกไม่เกิน 10 ปี หรือปรับไม่เกิน 1,000,000 บาท หรือทั้งจำทั้งปรับ"},
+      {n:42, q:"ผู้ใดทอดสมอเรือ หรือเกาสมอ ในเขตระบบขนส่งน้ำมันเชื้อเพลิงทางท่อตามมาตรา ๓๙ ต้องระวางโทษอย่างไร", a:"จำคุกไม่เกิน 5 ปี หรือปรับไม่เกิน 500,000 บาท หรือทั้งจำทั้งปรับ"},
+      {n:43, q:"ผู้ใดขัดขวางการปฏิบัติหน้าที่ของพนักงานเจ้าหน้าที่ตามมาตรา ๕๓ ต้องระวางโทษอย่างไร", a:"จำคุกไม่เกิน 1 ปี หรือปรับไม่เกิน 100,000 บาท หรือทั้งจำทั้งปรับ"},
+      {n:44, q:"หากนิติบุคคลกระทำความผิดตาม พ.ร.บ. ควบคุมน้ำมันเชื้อเพลิง กรรมการหรือผู้จัดการจะมีความรับผิดอย่างไรตามมาตรา ๖๐", a:"ต้องรับโทษตามที่บัญญัติไว้สำหรับความผิดนั้นด้วย หากเกิดจากการสั่งการหรือละเว้นการสั่งการ"},
+      {n:45, q:"คณะกรรมการควบคุมน้ำมันเชื้อเพลิงมีอำนาจเรียกบุคคลมาให้ถ้อยคำหรือส่งเอกสารประกอบการพิจารณาตามมาตรา ๑๕ ได้อย่างไร", a:"มีอำนาจออกคำสั่งเป็นหนังสือให้บุคคลมาให้ถ้อยคำหรือส่งเอกสารได้"},
+      {n:46, q:"กฎกระทรวงตามมาตรา ๗ สามารถกำหนดคุณสมบัติและการฝึกอบรมเรื่องใดต่อไปนี้", a:"คุณสมบัติและการฝึกอบรมผู้ปฏิบัติงานเกี่ยวกับการควบคุมน้ำมันเชื้อเพลิง"},
+      {n:47, q:"ในกรณีเกิดเหตุฉุกเฉินหรือเหตุอันตรายจากคลังน้ำมัน รัฐมนตรีมีอำนาจออกกฎกระทรวงตามมาตรา ๗ เพื่อวัตถุประสงค์ใด", a:"ป้องกันหรือระงับเหตุเดือดร้อนรำคาญหรืออันตรายต่อบุคคล ทรัพย์สิน หรือสิ่งแวดล้อม"},
+      {n:48, q:"ใบอนุญาตประกอบกิจการควบคุมประเภทที่ ๓ ที่ได้รับไปแล้ว ต่อมาหากพฤติการณ์เปลี่ยนแปลงไป ผู้อนุญาตมีอำนาจอย่างไรตามมาตรา ๒๒ วรรคสาม", a:"อธิบดีสั่งแก้ไขเพิ่มเติมเงื่อนไขในการอนุญาตได้ตามความจำเป็น"},
+      {n:49, q:"การแสดงใบอนุญาตประกอบกิจการควบคุมประเภทที่ ๓ ต้องปฏิบัติตามมาตรา ๒๗ อย่างไร", a:"ต้องแสดงใบอนุญาตไว้ในที่เปิดเผยเห็นได้ง่าย ณ สถานประกอบการ"},
+      {n:50, q:"เหตุผลหลักในการตรา พ.ร.บ. ควบคุมน้ำมันเชื้อเพลิง พ.ศ. ๒๕๔๒ แทนกฎหมายว่าด้วยการเก็บรักษาน้ำมันเชื้อเพลิง พ.ศ. ๒๔๗๔ คือข้อใด", a:"ปรับปรุงกฎหมายเก็บรักษาน้ำมันให้ครอบคลุมการขนส่ง คลัง ท่อส่งน้ำมัน และความปลอดภัยต่อสิ่งแวดล้อม"}
+    ]
+  }
+};
+
+const $ = (s) => document.querySelector(s);
+const screens = ["home","quiz","result","flash","list"];
+function show(id){
+  screens.forEach(s => $("#"+s).classList.toggle("active", s===id));
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function toast(t){
+  const el = $("#toast"); el.textContent = t; el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"), 1600);
+}
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function pool(law){
+  if(law==="all"){
+    return [
+      ...DATA.trade.items.map(x=>({...x, law:"trade", lawTitle:DATA.trade.title})),
+      ...DATA.control.items.map(x=>({...x, law:"control", lawTitle:DATA.control.title}))
+    ];
+  }
+  return DATA[law].items.map(x=>({...x, law, lawTitle:DATA[law].title}));
+}
+
+let state = {};
+
+function startQuiz(law, limit){
+  let items = pool(law);
+  if(limit) items = shuffle(items).slice(0, limit);
+  state = {
+    mode:"quiz", law, items,
+    i:0, ok:0, bad:0, answered:false,
+    log:[]
+  };
+  $("#quizMeta").textContent = limit ? `สุ่ม ${items.length} ข้อ` : (law==="all" ? "สอบรวม 2 ฉบับ" : DATA[law].title);
+  show("quiz");
+  renderQ();
+}
+
+function renderQ(){
+  const {items,i} = state;
+  const it = items[i];
+  state.answered = false;
+  $("#nextBtn").disabled = true;
+  $("#qnum").textContent = `${it.lawTitle} · ข้อ ${it.n}  (${i+1}/${items.length})`;
+  $("#qtext").textContent = it.q;
+  $("#bar").style.width = ((i)/items.length*100) + "%";
+  $("#scoreLive").textContent = `ถูก ${state.ok} / ผิด ${state.bad}`;
+
+  const others = items.filter(x => x.a !== it.a).map(x=>x.a);
+  const uniq = [...new Set(others)];
+  const distractors = shuffle(uniq).slice(0,3);
+  while(distractors.length < 3){
+    distractors.push(["กรมศุลกากร","กระทรวงมหาดไทย","15 วัน","ร้อยละ 10","จำคุกไม่เกิน 2 ปี"][distractors.length]);
+  }
+  const choices = shuffle([it.a, ...distractors.slice(0,3)]);
+  const box = $("#choices");
+  box.innerHTML = "";
+  const letters = ["ก","ข","ค","ง"];
+  choices.forEach((c,idx)=>{
+    const b = document.createElement("button");
+    b.className = "choice";
+    b.innerHTML = `<strong>${letters[idx]}.</strong> ${c}`;
+    b.onclick = () => pick(b, c, it.a, it);
+    box.appendChild(b);
+  });
+}
+
+function pick(btn, chosen, correct, it){
+  if(state.answered) return;
+  state.answered = true;
+  $("#nextBtn").disabled = false;
+  const good = chosen === correct;
+  if(good) state.ok++; else state.bad++;
+  state.log.push({...it, chosen, good});
+  [...$("#choices").children].forEach(el=>{
+    const txt = el.textContent.replace(/^[กขคง]\.\s/,"");
+    if(txt === correct) el.classList.add("correct");
+    else el.classList.add("dim");
+    el.disabled = true;
+  });
+  if(!good) btn.classList.remove("dim"), btn.classList.add("wrong");
+  $("#scoreLive").textContent = `ถูก ${state.ok} / ผิด ${state.bad}`;
+  $("#bar").style.width = ((state.i+1)/state.items.length*100) + "%";
+}
+
+function nextQ(){
+  if(!state.answered){
+    const it = state.items[state.i];
+    state.bad++;
+    state.log.push({...it, chosen:"(ข้าม)", good:false});
+  }
+  state.i++;
+  if(state.i >= state.items.length) finish();
+  else renderQ();
+}
+
+function finish(){
+  const total = state.items.length;
+  const pct = Math.round(state.ok/total*100);
+  $("#rScore").textContent = pct + "%";
+  $("#rOk").textContent = state.ok;
+  $("#rBad").textContent = total - state.ok;
+  let msg = "เริ่มต้นได้ดี ลองทบทวนบัตรคำแล้วสอบใหม่";
+  if(pct >= 90) msg = "ยอดเยี่ยม พร้อมสอบแล้ว";
+  else if(pct >= 70) msg = "ผ่านเกณฑ์ดี เก็บรายละเอียดโทษและระยะเวลาเพิ่มอีกนิด";
+  else if(pct >= 50) msg = "กลางๆ แนะนำทบทวนหมวดสำรองน้ำมัน / ประเภทกิจการควบคุม";
+  $("#rMsg").textContent = msg;
+  $("#wrongList").innerHTML = "";
+  show("result");
+}
+
+function showWrong(){
+  const wrong = state.log.filter(x=>!x.good);
+  if(!wrong.length){ $("#wrongList").innerHTML = "<p class='tag'>ไม่มีข้อผิด</p>"; return; }
+  $("#wrongList").innerHTML = wrong.map(x=>`
+    <div class="review-item">
+      <div class="qnum">${x.lawTitle} ข้อ ${x.n}</div>
+      <div>${x.q}</div>
+      <div class="a">เฉลย: ${x.a}<br><span style="color:#ffb4b4">ที่เลือก: ${x.chosen}</span></div>
+    </div>`).join("");
+}
+
+function startFlash(law){
+  state = {mode:"flash", law, items: pool(law), i:0};
+  $("#flashMeta").textContent = law==="all" ? "ทั้ง 2 ฉบับ" : DATA[law].title;
+  show("flash");
+  renderFlash();
+}
+function renderFlash(){
+  const it = state.items[state.i];
+  $("#flashCard").classList.remove("show");
+  $("#fnum").textContent = `${it.lawTitle} · ข้อ ${it.n}`;
+  $("#ftext").textContent = it.q;
+  $("#fans").textContent = "คำตอบ: " + it.a;
+  $("#flashCount").textContent = `${state.i+1} / ${state.items.length}`;
+  $("#flashBar").style.width = ((state.i)/state.items.length*100)+"%";
+}
+
+function startList(law){
+  const items = pool(law);
+  $("#listMeta").textContent = law==="all" ? "เฉลยทั้งหมด 100 ข้อ" : DATA[law].title;
+  const html = items.map(it=>`
+    <details class="review-item">
+      <summary>ข้อ ${it.n}. ${it.q}</summary>
+      <div class="a">${it.a}</div>
+    </details>`).join("");
+  $("#listBox").innerHTML = html;
+  $("#searchBox").value = "";
+  $("#searchBox").oninput = function(){
+    const k = this.value.trim();
+    [...$("#listBox").children].forEach(el=>{
+      el.style.display = !k || el.textContent.includes(k) ? "" : "none";
+    });
+  };
+  show("list");
+}
+
+document.querySelectorAll("[data-start]").forEach(btn=>{
+  btn.addEventListener("click", e=>{
+    e.stopPropagation();
+    const law = btn.dataset.law;
+    const start = btn.dataset.start;
+    if(start==="quiz") startQuiz(law);
+    else if(start==="quiz20") startQuiz(law, 20);
+    else if(start==="flash") startFlash(law);
+    else if(start==="list") startList(law);
+  });
+});
+
+$("#backHome").onclick = $("#flashHome").onclick = $("#listHome").onclick = $("#toHome").onclick = () => show("home");
+$("#nextBtn").onclick = nextQ;
+$("#skipBtn").onclick = () => { state.answered = false; nextQ(); };
+$("#retryBtn").onclick = () => startQuiz(state.law, state.items.length<=20 && state.law==="all" ? 20 : null);
+$("#reviewWrong").onclick = showWrong;
+
+$("#flashCard").onclick = () => $("#flashCard").classList.toggle("show");
+$("#fNext").onclick = () => { state.i = (state.i+1)%state.items.length; renderFlash(); };
+$("#fPrev").onclick = () => { state.i = (state.i-1+state.items.length)%state.items.length; renderFlash(); };
+$("#fEasy").onclick = () => { toast("จำได้แล้ว"); state.i = (state.i+1)%state.items.length; renderFlash(); };
+$("#fHard").onclick = () => {
+  toast("เก็บไว้ทบทวน");
+  const cur = state.items.splice(state.i,1)[0];
+  state.items.push(cur);
+  if(state.i>=state.items.length) state.i=0;
+  renderFlash();
+};
+
+document.addEventListener("keydown", e=>{
+  if(!$("#quiz").classList.contains("active")) return;
+  const map = {Digit1:0,Digit2:1,Digit3:2,Digit4:3,Numpad1:0,Numpad2:1,Numpad3:2,Numpad4:3};
+  if(map[e.code] != null){
+    const b = $("#choices").children[map[e.code]];
+    if(b) b.click();
+  }
+  if(e.key==="Enter" || e.key==="ArrowRight") $("#nextBtn").click();
+});
+</script>
+</body>
+</html>
